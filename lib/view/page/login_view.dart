@@ -1,8 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_model.dart';
 
 import '../../view_model/login_view/login_view_state.dart';
+import '../component/touchableopacity.dart';
+import '../designsystem/base_color.dart';
 
 class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   @override
@@ -10,8 +15,55 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
 
   @override
   Widget render(BuildContext context, LoginViewModel action, LoginViewState state) {
-    // TODO: implement render
-    throw UnimplementedError();
+    return Scaffold(
+      backgroundColor: BaseColor.defaultBackgroundColor,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '매일 당신의 이야기를 들어드릴게요',
+                      style: TextStyle(
+                          color: BaseColor.warmGray800,
+                          fontSize: 12.sp,
+                          fontFamily: 'GmarketSans'
+                      ),
+                    ),
+                    Text(
+                      '매지구름',
+                      style: TextStyle(
+                          color: BaseColor.warmGray800,
+                          fontSize: 30.sp,
+                          fontFamily: 'GmarketSans'
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    TouchableOpacity(
+                        onTap: action.onAppleLogin,
+                        child: Image.asset(
+                            'assets/images/sign_in_with_apple_4x.png')),
+                    SizedBox(height: 8.sp),
+                    TouchableOpacity(
+                      onTap: action.onGoogleLogin,
+                      child: Image.asset(
+                          'assets/images/sign_in_with_google_4x.png'),
+                    ),
+                  ],
+                )
+              ]
+          ),
+        ),
+      ),
+    );
   }
 
 }

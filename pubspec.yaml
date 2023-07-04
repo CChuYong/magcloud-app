@@ -21,20 +21,28 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.0.2 <4.0.0'
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
+  intl:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  retrofit: '>=4.0.0 <5.0.0'
   cupertino_icons: ^1.0.2
+  flutter_screenutil: ^5.8.3
+  get: ^4.6.5
+  injectable:
+  get_it:
+  json_annotation:
+  shared_preferences:
+  http:
+  sign_in_with_apple: ^4.3.0
+  firebase_messaging: ^14.6.3
+  firebase_core: ^2.14.0
+  flutter_local_notifications: ^14.1.1
+  google_sign_in: ^6.1.4
+  device_info: ^2.0.3
+  sqflite: ^2.2.8+4
+  image_picker: ^0.8.9
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

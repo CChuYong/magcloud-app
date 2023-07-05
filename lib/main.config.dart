@@ -12,8 +12,9 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
+import 'core/repository/diary_repository.dart' as _i4;
 import 'core/service/auth_service.dart' as _i3;
-import 'core/service/diary_service.dart' as _i4;
+import 'core/service/diary_service.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -27,7 +28,8 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     gh.factory<_i3.AuthService>(() => _i3.AuthService());
-    gh.factory<_i4.DiaryService>(() => _i4.DiaryService());
+    gh.singleton<_i4.DiaryRepository>(_i4.DiaryRepository());
+    gh.factory<_i5.DiaryService>(() => _i5.DiaryService());
     return this;
   }
 }

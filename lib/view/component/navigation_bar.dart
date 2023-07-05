@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
+import 'package:magcloud_app/view/page/friend_view.dart';
 
 class BaseNavigationBar extends StatefulWidget {
   @override
@@ -18,21 +20,23 @@ class _NavigationBarState extends State<BaseNavigationBar> {
 
   void _setPage(int index) async {
     final isForward = currentPage() < index;
-    await Get.offNamed(pageToRoute(index));
+    await GlobalRoute.horizontalRoute(pageToRoute(index), isForward);
   }
 
   int routeToPage(String route) {
     switch(route) {
-      case "/friends":
+      case "/FriendView":
         return 0;
-      case "/calendar":
+      case "/CalendarView":
         return 1;
-      case "/more":
+      case "/MoreView":
         return 2;
       default:
         return 1;
     }
   }
+
+  String typeName(Type type) => type.toString();
 
   String pageToRoute(int page) {
     switch(page) {

@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -29,7 +30,16 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       ),
   );
 
+
   Future<void> setScope(CalendarViewScope scope) async {
+    if(state.scope == CalendarViewScope.DAILY) {
+      final scopeData = state.scopeData as CalendarDailyViewScopeData;
+      final lastDiary = scopeData.currentDiary;
+      diaryService.updateDiary(
+        lastDiary,
+        scopeData.diaryTextController.text
+      );
+    }
     state.scope = scope;
     switch(state.scope) {
       case CalendarViewScope.YEAR:

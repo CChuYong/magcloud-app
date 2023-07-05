@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 class DateParser {
   static DateFormat dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
   static DateFormat dateFormat = DateFormat('yyyy.MM.dd.');
+  static DateFormat ymdSimpleFormat = DateFormat('yyyyMMdd');
   static DateFormat krMMdd = DateFormat('MM월 dd일');
   static DateFormat lastMessageTimeFormat = DateFormat("hh:mm");
 
@@ -10,12 +11,16 @@ class DateParser {
     return DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: false);
   }
 
-  static String timeStampAsDateTime(int timestamp) {
-    return dateTimeFormat.format(fromTimeStamp(timestamp));
+  static String formatYmd(int year, int month, int day) {
+    final dateTime = DateTime(year, month, day);
+    return ymdSimpleFormat.format(dateTime);
   }
 
-  static String timeStampAsDate(int timestamp) {
-    return dateFormat.format(fromTimeStamp(timestamp));
+  static DateTime parseYmd(String ymd) {
+    int year = int.parse(ymd.substring(0, 4));
+    int month = int.parse(ymd.substring(4, 6));
+    int day = int.parse(ymd.substring(6, 8));
+    return DateTime(year, month, day);
   }
 
   static String lastMessageFormat(int timestamp) {

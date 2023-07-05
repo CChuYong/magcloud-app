@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/view/component/touchableopacity.dart';
 
 import '../../view_model/friend_view/friend_view_model.dart';
 import '../../view_model/friend_view/friend_view_state.dart';
@@ -44,7 +47,8 @@ class FriendView extends BaseView<FriendView, FriendViewModel, FriendViewState> 
                     fontFamily: 'GmarketSans'
                 ),
               ),
-              Icon(Icons.ac_unit)
+              TouchableOpacity(onTap: () => Get.offNamed('/'),child: Icon(Icons.ac_unit))
+
           ],
         )
       );

@@ -22,35 +22,30 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
   Widget render(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state) {
     //final diary = state.currentDiary!;
     final scopeData = state.scopeData as CalendarDailyViewScopeData;
-    return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            dailyViewTopBar(action, state),
-            dailyDiaryMoodBox(scopeData),
-            Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                  child: TextField(
-                    style: TextStyle(
-                      fontFamily: "KyoboHandWriting",
-                      fontSize: 16.sp,
-                    ),
-                    controller: scopeData.diaryTextController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                    ),
+    return  SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          dailyViewTopBar(action, state),
+          dailyDiaryMoodBox(scopeData),
+          Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                child: TextField(
+                  style: TextStyle(
+                    fontFamily: "KyoboHandWriting",
+                    fontSize: 16.sp,
                   ),
-                )
-
-            )
-          ],
-        ),
+                  controller: scopeData.diaryTextController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+          )
+        ],
       ),
     );
   }

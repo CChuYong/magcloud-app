@@ -14,13 +14,10 @@ class BaseNavigationBar extends StatefulWidget {
 class _NavigationBarState extends State<BaseNavigationBar> {
   final iconSize = 24.sp;
   final fontSize = 10.sp;
-  int _currentPage = 1;
 
 
   void _setPage(int index) async {
-    setState(() {
-      _currentPage = index;
-    });
+    final isForward = currentPage() < index;
     await Get.offNamed(pageToRoute(index));
   }
 
@@ -79,9 +76,11 @@ class _NavigationBarState extends State<BaseNavigationBar> {
             label: message("navigation_more"),
           )
         ],
-      currentIndex: _currentPage,
-      onTap: (number) => {if (number != _currentPage) _setPage(number)},
+      currentIndex: currentPage(),
+      onTap: (number) => {if (number != currentPage()) _setPage(number)},
     );
   }
+
+  int currentPage() => routeToPage(Get.currentRoute);
 
 }

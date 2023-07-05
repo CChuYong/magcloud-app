@@ -26,30 +26,26 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
     final boxWidth = (fullWidth - horizontalPaddingSize * 2 - boxGap * 6) / 7;
     final scopeData = state.scopeData as CalendarMonthViewScopeData;
 
-    return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            monthViewTopBar(action, state),
-            SizedBox(height: 20.sp),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPaddingSize),
-              child: Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: boxWidth / 2 - (dayOfWeekFontSize / 2)),
-                    child: dayOfWeekTitle(),
-                  ),
-                  SizedBox(height: 10.sp),
-                  drawCalendar(action, state, boxWidth: boxWidth, boxGap: boxGap)
-                ],
-              ),
-            )
-          ],
-        ),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          monthViewTopBar(action, state),
+          SizedBox(height: 20.sp),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: horizontalPaddingSize),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: boxWidth / 2 - (dayOfWeekFontSize / 2)),
+                  child: dayOfWeekTitle(),
+                ),
+                SizedBox(height: 10.sp),
+                drawCalendar(action, state, boxWidth: boxWidth, boxGap: boxGap)
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

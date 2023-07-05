@@ -22,29 +22,25 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
     final scopeData = state.scopeData as CalendarYearViewScopeData;
     final fullWidth = MediaQuery.of(context).size.width;
     final boxWidth = (fullWidth - 100.sp) / 4;
-    return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            yearViewTopBar(action, state),
-            SizedBox(height: 20.sp),
-            for(int j = 0; j < 3; j++)... [
-              Row(
-                children: [
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          yearViewTopBar(action, state),
+          SizedBox(height: 20.sp),
+          for(int j = 0; j < 3; j++)... [
+            Row(
+              children: [
+                SizedBox(width: 20.sp),
+                for(int x = (j*4) + 1; x<= (j*4) + 4;x++)...[
+                  createMonthBox(action, month: x, boxWidth: boxWidth),
                   SizedBox(width: 20.sp),
-                  for(int x = (j*4) + 1; x<= (j*4) + 4;x++)...[
-                    createMonthBox(action, month: x, boxWidth: boxWidth),
-                    SizedBox(width: 20.sp),
-                  ],
                 ],
-              ),
-              SizedBox(height: 20.sp),
-            ]
-          ],
-        ),
+              ],
+            ),
+            SizedBox(height: 20.sp),
+          ]
+        ],
       ),
     );
   }

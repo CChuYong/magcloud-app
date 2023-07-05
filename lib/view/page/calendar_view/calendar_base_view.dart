@@ -14,7 +14,19 @@ import '../../designsystem/base_color.dart';
 
 class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     CalendarBaseViewState> {
-  const CalendarBaseView({super.key});
+  CalendarBaseView({super.key});
+
+  final Duration aniamtionDuration = Duration(milliseconds: 200);
+
+  double getAnimationOffset(CalendarBaseViewModel action) {
+    final initialRate = 0.3;
+    if (action.verticalAnimationStart) {
+      action.verticalAnimationStart = false;
+      return action.verticalForwardAction ? -1 * initialRate : initialRate;
+    } else {
+      return action.verticalForwardAction ? initialRate : -1 * initialRate;
+    }
+  }
 
   @override
   CalendarBaseViewModel initViewModel() => CalendarBaseViewModel();
@@ -26,71 +38,121 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
-        child: Column(
+      body: Container(
+        color: BaseColor.defaultBackgroundColor,
+        //child : //SafeArea(
+        child: Stack(
           children: [
-            titleBar(action),
-            AnimatedSwitcher(
-              switchInCurve: curve,
-              switchOutCurve: curve,
-              duration: const Duration(milliseconds: 220),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return SizeTransition(
-                  sizeFactor: animation,
-                  axis: Axis.vertical,
-                  axisAlignment: -1,
-                  child: child,
-                );
-              },
-              child: action.isFriendBarOpen ?
-              Column(
-                children: [
-                  SizedBox(height: 18.sp),
-                  friendBar(action),
-                ],
-              ) : Container(),
+            SafeArea(child: AnimatedPadding(
+                padding: EdgeInsets.only(
+                    top: action.isFriendBarOpen ? 130.sp : 45.sp),
+                curve: curve,
+                duration: aniamtionDuration,
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: AnimatedSwitcher(
+                          duration: aniamtionDuration,
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            return SlideTransition(
+                              position: Tween<Offset>(
+                                  begin:
+                                  Offset(0.0, getAnimationOffset(action)),
+                                  end: const Offset(0.0, 0.0))
+                                  .animate(animation),
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                            );
+                          },
+                          child: action.getRoutedWidgetBuilder()(),
+                        ))
+                  ],
+                )))
+            ,
+            Container(
+              width: double.infinity,
+              height: 50.sp,
+              color: BaseColor.defaultBackgroundColor,
             ),
-            Divider(),
-            Expanded(
-                child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return ScaleTransition(scale: animation, child: child);
-              },
-              child: action.getRoutedWidgetBuilder()(),
-            )),
+            SafeArea(child: Column(
+              children: [
+                titleBar(action),
+                AnimatedSwitcher(
+                  switchInCurve: curve,
+                  switchOutCurve: curve,
+                  duration: const Duration(milliseconds: 220),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    return SizeTransition(
+                      sizeFactor: animation,
+                      axis: Axis.vertical,
+                      axisAlignment: -1,
+                      child: child,
+                    );
+                  },
+                  child: action.isFriendBarOpen
+                      ? Column(
+                    children: [
+                      Container(
+                          color: BaseColor.defaultBackgroundColor,
+                          height: 18.sp,
+                          width: double.infinity),
+                      friendBar(action),
+                    ],
+                  )
+                      : Container(),
+                ),
+                Container(
+                  color: BaseColor.defaultBackgroundColor,
+                  child: Divider(),
+                )
+                ,
+              ],
+            ))
+            ,
           ],
         ),
-      ),
-    );
+    //  ),
+    ));
   }
 
   Widget titleBar(CalendarBaseViewModel action) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.sp),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              message("magcloud"),
-              style: TextStyle(
-                  color: BaseColor.warmGray800,
-                  fontSize: 22.sp,
-                  fontFamily: 'GmarketSans'),
-            ),
-            TouchableOpacity(
-              onTap: action.toggleFriendBar,
-                child: Icon(action.isFriendBarOpen ? BaseIcon.arrowUp : BaseIcon.arrowDown, size: 22.sp))
-            ,
-          ],
-        ));
+    return Container(
+      color: BaseColor.defaultBackgroundColor,
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.sp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TouchableOpacity(
+                  child: Text(
+                message("magcloud"),
+                style: TextStyle(
+                    color: BaseColor.warmGray800,
+                    fontSize: 22.sp,
+                    fontFamily: 'GmarketSans'),
+              )),
+              TouchableOpacity(
+                  onTap: action.toggleFriendBar,
+                  child: Icon(
+                      action.isFriendBarOpen
+                          ? BaseIcon.arrowUp
+                          : BaseIcon.arrowDown,
+                      size: 22.sp)),
+            ],
+          )),
+    );
   }
 
   Widget friendBar(CalendarBaseViewModel action) {
     return Stack(
-     // fit: StackFit.expand,
+      // fit: StackFit.expand,
       children: [
         Container(
+          color: BaseColor.defaultBackgroundColor,
           width: double.infinity,
           height: 64.sp,
           child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
@@ -103,22 +165,25 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
           ]),
         ),
-        action.isOnline ? Container() :
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: 4, sigmaY: 3), child: Container(
-          width: double.infinity,
-          height: 64.sp,
-          color: Colors.transparent,
-          child: Center(
-            child: Text(
-              message('message_offline_cannot_view_friends'),
-              style: TextStyle(
-                color: BaseColor.warmGray700,
-                fontSize: 12.sp,
-              ),),
-          ),
-        ),
-        ),
-
+        action.isOnline
+            ? Container()
+            : BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 3),
+                child: Container(
+                  width: double.infinity,
+                  height: 64.sp,
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      message('message_offline_cannot_view_friends'),
+                      style: TextStyle(
+                        color: BaseColor.warmGray700,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
       ],
     );
   }

@@ -5,7 +5,7 @@ import 'package:magcloud_app/view/page/more_view.dart';
 
 class GlobalRoute {
   static final routes = {
-    '/calendar': () => const CalendarBaseView(),
+    '/calendar': () => CalendarBaseView(),
     '/more': () => const MoreView(),
     '/friends': () => const FriendView()
   };

@@ -57,7 +57,7 @@ void main() async {
             initialRoute: '/calendar',
             getPages: [
               GetPage(name: '/', page: () => LoginView()),
-              GetPage(name: '/calendar', page: () => const CalendarBaseView()),
+              GetPage(name: '/calendar', page: () => CalendarBaseView()),
               GetPage(name: '/more', page: () => const MoreView()),
               GetPage(name: '/friends', page: () => const FriendView()),
             ],

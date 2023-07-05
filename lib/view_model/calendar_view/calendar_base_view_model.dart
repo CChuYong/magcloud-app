@@ -24,6 +24,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   bool forwardAction = false;
   bool animationStart = false;
 
+  bool verticalForwardAction = false;
+  bool verticalAnimationStart = false;
+
   bool isFriendBarOpen = true;
 
   void toggleFriendBar() {
@@ -102,6 +105,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     animationStart = true;
   }
 
+  void setupVerticalAnimation(bool forward) {
+    verticalForwardAction = forward;
+    verticalAnimationStart = true;
+  }
+
   Future<void> changeDay(int delta) async {
     final now = DateTime.now();
     final afterDelta = DateTime(
@@ -168,6 +176,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   Future<void> onTapMonthBox(int month) async {
+    setupVerticalAnimation(true);
     setStateAsync(() async {
       state.currentMonth = month;
       await setScope(CalendarViewScope.MONTH);
@@ -175,6 +184,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   Future<void> onTapDayBox(int day) async {
+    setupVerticalAnimation(true);
     setStateAsync(() async {
       state.currentDay = day;
       await setScope(CalendarViewScope.DAILY);
@@ -186,12 +196,14 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   Future<void> onTapMonthTitle() async {
+    setupVerticalAnimation(false);
     setStateAsync(() async {
       await setScope(CalendarViewScope.YEAR);
     });
   }
 
   Future<void> onTapDayTitle() async {
+    setupVerticalAnimation(false);
     setStateAsync(() async {
       await setScope(CalendarViewScope.MONTH);
     });

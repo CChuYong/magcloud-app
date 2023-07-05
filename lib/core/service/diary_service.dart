@@ -27,37 +27,13 @@ class DiaryService {
   }
 
   Future<Map<int, Mood>> getMonthlyMood(int year) async {
-    return {
-      1: Mood.sad,
-      2: Mood.happy,
-      3: Mood.angry,
-      4: Mood.sad,
-      5: Mood.sad,
-      6: Mood.angry,
-      7: Mood.sad,
-      8: Mood.sad,
-      9: Mood.amazed,
-      10: Mood.sad,
-      11: Mood.sad,
-      12: Mood.sad,
-    };
+    final monthlyMood = await diaryRepository.findMonthlyMood(year);
+    return monthlyMood;
   }
 
 
   Future<Map<int, Mood>> getDailyMood(int year, int month) async {
-    return {
-      1: Mood.sad,
-      2: Mood.happy,
-      3: Mood.angry,
-      4: Mood.sad,
-      5: Mood.neutral,
-      6: Mood.angry,
-      7: Mood.sad,
-      8: Mood.sad,
-      9: Mood.amazed,
-      10: Mood.sad,
-      11: Mood.sad,
-      12: Mood.sad,
-    };
+    final dailyMood = await diaryRepository.findDailyMood(year, month);
+    return dailyMood;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/repository/base_repository.dart';
@@ -28,6 +30,10 @@ class DiaryRepository extends BaseRepository {
     await database.execute('''
       CREATE UNIQUE INDEX IF NOT EXISTS ${tableName}_idx1 ON $tableName (ymd)
     ''');
+
+    await database.execute('''
+      CREATE UNIQUE INDEX IF NOT EXISTS ${tableName}_idx2 ON $tableName (mood)
+    ''');
   }
 
   Future<Diary?> findDiary(int year, int month, int day) async {
@@ -36,6 +42,29 @@ class DiaryRepository extends BaseRepository {
         .rawQuery('SELECT * FROM $tableName WHERE ymd = ? LIMIT 1', [ymd]);
     if(result.isEmpty) return null;
     return result.first.let(readDiary);
+  }
+
+  Future<Map<int, Mood>> findDailyMood(int year, int month) async {
+    final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
+    final result = await database
+        .rawQuery("SELECT ymd, mood FROM $tableName WHERE ymd LIKE '$ym%'");
+    final resultMap = HashMap<int, Mood>();
+    result.forEach((row) {
+      final day = int.parse((row["ymd"] as String).substring(6, 8));
+      resultMap[day] = Mood.parseMood(row["mood"] as String);
+    });
+    return resultMap;
+  }
+
+  Future<Map<int, Mood>> findMonthlyMood(int year) async {
+    final resultMap = HashMap<int, Mood>();
+    for(int month = 1; month <= 12; month++) {
+      final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
+      final result = await database
+          .rawQuery("SELECT mood, COUNT(*) cnt FROM $tableName WHERE ymd LIKE '$ym%' GROUP BY mood ORDER BY COUNT(*) LIMIT 1");
+      if(result.isNotEmpty) resultMap[month] = Mood.parseMood(result.first["mood"] as String);
+    }
+    return resultMap;
   }
 
   Future<Diary> saveDiary(Diary diary) async {

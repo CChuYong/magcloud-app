@@ -93,10 +93,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
-    setState(() {
+    setStateAsync(() async {
       state.currentYear = afterDelta.year;
       state.currentMonth = afterDelta.month;
       state.currentDay = afterDelta.day;
+      await setScope(CalendarViewScope.DAILY);
     });
   }
 
@@ -121,9 +122,10 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
         SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
-    setState(() {
+    setStateAsync(() async {
       state.currentYear = targetYear;
       state.currentMonth = targetMonth;
+      await setScope(CalendarViewScope.MONTH);
     });
   }
 
@@ -133,8 +135,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
-    setState(() {
+    setStateAsync(() async {
       state.currentYear = afterDelta;
+      await setScope(CalendarViewScope.YEAR);
     });
   }
 

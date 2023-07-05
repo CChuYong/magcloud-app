@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -18,8 +19,18 @@ enum CalendarViewScope { YEAR, MONTH, DAILY }
 class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
+  final isOnline = inject<OnlineService>().isOnlineMode();
+
   bool forwardAction = false;
   bool animationStart = false;
+
+  bool isFriendBarOpen = true;
+
+  void toggleFriendBar() {
+    setState(() {
+      isFriendBarOpen = !isFriendBarOpen;
+    });
+  }
 
   CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay})
       : super(

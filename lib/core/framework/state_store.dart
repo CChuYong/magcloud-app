@@ -27,11 +27,11 @@ class StateStore {
     return jsonDecode(data);
   }
 
-  static void clearState(Type key) {
+  static void clear(String key) {
     sharedPreferences!.remove(key.toString());
   }
 
-  static void clear() {
+  static void clearAll() {
     sharedPreferences!.clear();
   }
 

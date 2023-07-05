@@ -89,8 +89,16 @@ class AuthService {
   }
 
   Future<void> authenticate(AuthToken token) async {
+    this.token = token;
     StateStore.setString('accessToken', token.accessToken);
     StateStore.setString('refreshToken', token.refreshToken);
+
+  }
+
+  Future<void> logout() async {
+    token = null;
+    StateStore.clear('accessToken');
+    StateStore.clear('refreshToken');
   }
 }
 

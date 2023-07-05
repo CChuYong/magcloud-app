@@ -34,16 +34,26 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
     switch(state.scope) {
       case CalendarViewScope.YEAR:
         final mood = await diaryService.getMonthlyMood(state.currentYear);
-        state.scopeData = CalendarYearViewScopeData(mood);
+        setScopeData(CalendarYearViewScopeData(mood));
         break;
       case CalendarViewScope.MONTH:
         final mood = await diaryService.getDailyMood(state.currentYear, state.currentMonth);
-        state.scopeData = CalendarMonthViewScopeData(mood);
+        setScopeData(CalendarMonthViewScopeData(mood));
         break;
       case CalendarViewScope.DAILY:
         final diary = await diaryService.getDiary(state.currentYear, state.currentMonth, state.currentDay);
-        state.scopeData = CalendarDailyViewScopeData(diary);
+        setScopeData(CalendarDailyViewScopeData(diary));
         break;
+    }
+  }
+
+  Future<void> setScopeData(CalendarScopeData data) async {
+    if(
+      (state.scope == CalendarViewScope.YEAR && data is CalendarYearViewScopeData) ||
+          (state.scope == CalendarViewScope.MONTH && data is CalendarMonthViewScopeData) ||
+          (state.scope == CalendarViewScope.DAILY && data is CalendarDailyViewScopeData)
+    ) {
+      state.scopeData = data;
     }
   }
 

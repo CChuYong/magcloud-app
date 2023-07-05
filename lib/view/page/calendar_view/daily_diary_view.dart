@@ -6,6 +6,7 @@ import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
+import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
 import '../../component/navigation_bar.dart';
@@ -41,7 +42,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
           TouchableOpacity(
             onTap: action.onTapDayTitle,
               child: Text(
-            '${state.currentYear}년 ${state.currentMonth}월 ${state.currentDay}일',
+            '${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")} ${state.currentDay}${message("generic_day")}',
             style: TextStyle(
               color: BaseColor.warmGray600,
               fontSize: 16.sp,

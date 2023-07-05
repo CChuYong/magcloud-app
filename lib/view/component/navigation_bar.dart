@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class BaseNavigationBar extends StatefulWidget {
@@ -67,15 +68,15 @@ class _NavigationBarState extends State<BaseNavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(
                 Icons.people_alt, size: iconSize),
-            label: '내 친구',
+            label: message("navigation_friends"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month, size: iconSize),
-            label: '달력',
+            label: message("navigation_calendar"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu, size: iconSize),
-            label: '더보기',
+            label: message("navigation_more"),
           )
         ],
       currentIndex: _currentPage,

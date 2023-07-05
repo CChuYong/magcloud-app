@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
-import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
+import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
 import '../../component/navigation_bar.dart';
@@ -62,7 +62,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
           TouchableOpacity(
             onTap: action.onTapMonthTitle,
               child: Text(
-            '${state.currentYear}년 ${state.currentMonth}월',
+            '${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")}',
             style: TextStyle(
               color: BaseColor.warmGray600,
               fontSize: 16.sp,
@@ -122,49 +122,49 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '일',
+          message("generic_simple_sunday"),
           style: TextStyle(
             color: BaseColor.red400,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '월',
+          message("generic_simple_monday"),
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '화',
+          message("generic_simple_tuesday"),
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '수',
+          message("generic_simple_wednesday"),
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '목',
+          message("generic_simple_thursday"),
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '금',
+          message("generic_simple_friday"),
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
           ),
         ),
         Text(
-          '토',
+          message("generic_simple_saturday"),
           style: TextStyle(
             color: BaseColor.green400,
             fontSize: dayOfWeekFontSize,

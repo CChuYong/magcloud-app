@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_model.dart';
 
 import '../../view_model/login_view/login_view_state.dart';
@@ -28,7 +29,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '매일 당신의 이야기를 들어드릴게요',
+                      message("message_login_view_description"),
                       style: TextStyle(
                           color: BaseColor.warmGray800,
                           fontSize: 12.sp,
@@ -36,7 +37,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                       ),
                     ),
                     Text(
-                      '매지구름',
+                      message("magcloud"),
                       style: TextStyle(
                           color: BaseColor.warmGray800,
                           fontSize: 30.sp,

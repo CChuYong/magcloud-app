@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
@@ -46,7 +47,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
     final now = DateTime.now();
     final afterDelta = DateTime(state.currentYear, state.currentMonth, state.currentDay + delta);
     if (afterDelta.isAfter(now)) {
-      SnackBarUtil.errorSnackBar(message: '미래로는 이동할 수 없어요!');
+      SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
     setState(() {
@@ -74,7 +75,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
     final currentMonth = DateParser.getCurrentMonth();
     if ((targetYear == currentYear && targetMonth > currentMonth) ||
         targetYear > currentYear) {
-        SnackBarUtil.errorSnackBar(message: '미래로는 이동할 수 없어요!');
+        SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
     setState(() {
@@ -86,7 +87,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
   Future<void> changeYear(int delta) async {
     final afterDelta = state.currentYear + delta;
     if(afterDelta > DateParser.getCurrentYear()) {
-      SnackBarUtil.errorSnackBar(message: '미래로는 이동할 수 없어요!');
+      SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
     setState(() {

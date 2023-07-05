@@ -5,12 +5,14 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
+import 'package:dio/dio.dart';
 
 import 'core/framework/state_store.dart';
 
@@ -32,7 +34,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await StateStore.init();
+  final dio = Dio(); // Provide a dio instance
+  //dio.options.headers["Demo-Header"] = "demo header"; // config your dio headers globally
+  final client = OpenAPI(dio, baseUrl: 'https://magcloud.chuyong.kr/api/v1');
+
+  inject.registerSingleton(client);
   configureDependencies();
+
   runApp(ScreenUtilInit(
       builder: (context, widget) =>
           GetMaterialApp(

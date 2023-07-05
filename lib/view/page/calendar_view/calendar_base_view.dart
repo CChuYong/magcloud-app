@@ -56,7 +56,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
               fontFamily: 'GmarketSans'
           ),
         ),
-        Icon(Icons.add_photo_alternate_outlined)
+        Icon(Icons.notifications_none_rounded, size: 22.sp),
       ],
     ) )
      ;

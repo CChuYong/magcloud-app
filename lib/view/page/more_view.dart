@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/view_model/more_view/more_view_model.dart';
 import 'package:magcloud_app/view_model/more_view/more_view_state.dart';
 
+import '../../core/util/i18n.dart';
 import '../../view_model/friend_view/friend_view_model.dart';
 import '../../view_model/friend_view/friend_view_state.dart';
 import '../component/navigation_bar.dart';
@@ -24,10 +26,28 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+            titleBar()
           ],
         ),
       ),
+    );
+  }
+
+  Widget titleBar() {
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 20.sp),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              message('navigation_more'),
+              style: TextStyle(
+                  color: BaseColor.warmGray800,
+                  fontSize: 22.sp,
+                  fontFamily: 'GmarketSans'
+              ),
+            ),
+          ],
+        )
     );
   }
 

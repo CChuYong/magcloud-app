@@ -20,7 +20,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
 
   void _setPage(int index) async {
     final isForward = currentPage() < index;
-    await GlobalRoute.horizontalRoute(pageToRoute(index), isForward);
+    await GlobalRoute.fadeRoute(pageToRoute(index));
   }
 
   int routeToPage(String route) {
@@ -72,7 +72,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
             label: message("navigation_friends"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month, size: iconSize),
+            icon: Icon(Icons.home, size: iconSize),
             label: message("navigation_calendar"),
           ),
           BottomNavigationBarItem(

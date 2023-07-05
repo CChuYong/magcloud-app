@@ -15,4 +15,9 @@ class GlobalRoute {
     final routeBuilder = routes[target];
     await Get.off(routeBuilder, transition: !forward ? Transition.leftToRight : Transition.rightToLeft);
   }
+
+  static Future<void> fadeRoute(String target) async {
+    final routeBuilder = routes[target];
+    await Get.off(routeBuilder, transition: Transition.fadeIn, duration: Duration(milliseconds: 100));
+  }
 }

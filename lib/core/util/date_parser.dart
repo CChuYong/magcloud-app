@@ -65,7 +65,7 @@ class DateParser {
 
   static String formatLocaleYmd(int year, int month, int day) {
     final date = DateTime(year, month, day);
-    if(isKorea) {
+    if (isKorea) {
       return DateFormat('y년 MMM d일 E요일', 'ko_KR').format(date);
     }
     return DateFormat('EEE, MMM d, y', 'en_US').format(date);

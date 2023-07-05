@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -6,12 +5,14 @@ import 'package:get/get.dart';
 import '../../view/designsystem/base_icon.dart';
 
 enum SnackBarType { RED, GREEN, YELLOW, GREY }
+
 class SnackBarUtil {
   //static SnackbarController? lastSnackBar;
   static void ensureSnackBarClosed() {
     SnackbarController.cancelAllSnackbars();
-   // await lastSnackBar?.close(withAnimations: false);
+    // await lastSnackBar?.close(withAnimations: false);
   }
+
   static Future<void> errorSnackBar({
     required String message,
     SnackBarType type = SnackBarType.GREY, // neutral
@@ -20,7 +21,7 @@ class SnackBarUtil {
     SnackPosition position = SnackPosition.TOP,
   }) async {
     ensureSnackBarClosed();
-     _snackbar(
+    _snackbar(
       '',
       message,
       barBlur: 100.0,
@@ -55,46 +56,46 @@ class SnackBarUtil {
   }
 
   static SnackbarController _snackbar(
-      String title,
-      String message, {
-        Color? colorText,
-        Duration? duration = const Duration(seconds: 3),
+    String title,
+    String message, {
+    Color? colorText,
+    Duration? duration = const Duration(seconds: 3),
 
-        /// with instantInit = false you can put snackbar on initState
-        bool instantInit = true,
-        SnackPosition? snackPosition,
-        Widget? titleText,
-        Widget? messageText,
-        Widget? icon,
-        bool? shouldIconPulse,
-        double? maxWidth,
-        EdgeInsets? margin,
-        EdgeInsets? padding,
-        double? borderRadius,
-        Color? borderColor,
-        double? borderWidth,
-        Color? backgroundColor,
-        Color? leftBarIndicatorColor,
-        List<BoxShadow>? boxShadows,
-        Gradient? backgroundGradient,
-        TextButton? mainButton,
-        OnTap? onTap,
-        bool? isDismissible,
-        bool? showProgressIndicator,
-        DismissDirection? dismissDirection,
-        AnimationController? progressIndicatorController,
-        Color? progressIndicatorBackgroundColor,
-        Animation<Color>? progressIndicatorValueColor,
-        SnackStyle? snackStyle,
-        Curve? forwardAnimationCurve,
-        Curve? reverseAnimationCurve,
-        Duration? animationDuration,
-        double? barBlur,
-        double? overlayBlur,
-        SnackbarStatusCallback? snackbarStatus,
-        Color? overlayColor,
-        Form? userInputForm,
-      }) {
+    /// with instantInit = false you can put snackbar on initState
+    bool instantInit = true,
+    SnackPosition? snackPosition,
+    Widget? titleText,
+    Widget? messageText,
+    Widget? icon,
+    bool? shouldIconPulse,
+    double? maxWidth,
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+    double? borderRadius,
+    Color? borderColor,
+    double? borderWidth,
+    Color? backgroundColor,
+    Color? leftBarIndicatorColor,
+    List<BoxShadow>? boxShadows,
+    Gradient? backgroundGradient,
+    TextButton? mainButton,
+    OnTap? onTap,
+    bool? isDismissible,
+    bool? showProgressIndicator,
+    DismissDirection? dismissDirection,
+    AnimationController? progressIndicatorController,
+    Color? progressIndicatorBackgroundColor,
+    Animation<Color>? progressIndicatorValueColor,
+    SnackStyle? snackStyle,
+    Curve? forwardAnimationCurve,
+    Curve? reverseAnimationCurve,
+    Duration? animationDuration,
+    double? barBlur,
+    double? overlayBlur,
+    SnackbarStatusCallback? snackbarStatus,
+    Color? overlayColor,
+    Form? userInputForm,
+  }) {
     final getSnackBar = GetSnackBar(
         snackbarStatus: snackbarStatus,
         titleText: null,

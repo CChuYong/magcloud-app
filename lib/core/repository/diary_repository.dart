@@ -47,7 +47,7 @@ class DiaryRepository extends BaseRepository {
     final ymd = DateParser.formatYmd(year, month, day);
     final result = await database
         .rawQuery('SELECT * FROM $tableName WHERE ymd = ? LIMIT 1', [ymd]);
-    if(result.isEmpty) return null;
+    if (result.isEmpty) return null;
     return result.first.let(readDiary);
   }
 
@@ -65,11 +65,12 @@ class DiaryRepository extends BaseRepository {
 
   Future<Map<int, Mood>> findMonthlyMood(int year) async {
     final resultMap = HashMap<int, Mood>();
-    for(int month = 1; month <= 12; month++) {
+    for (int month = 1; month <= 12; month++) {
       final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
-      final result = await database
-          .rawQuery("SELECT mood, COUNT(*) cnt FROM $tableName WHERE ymd LIKE '$ym%' GROUP BY mood ORDER BY COUNT(*) LIMIT 1");
-      if(result.isNotEmpty) resultMap[month] = Mood.parseMood(result.first["mood"] as String);
+      final result = await database.rawQuery(
+          "SELECT mood, COUNT(*) cnt FROM $tableName WHERE ymd LIKE '$ym%' GROUP BY mood ORDER BY COUNT(*) LIMIT 1");
+      if (result.isNotEmpty)
+        resultMap[month] = Mood.parseMood(result.first["mood"] as String);
     }
     return resultMap;
   }
@@ -84,17 +85,16 @@ class DiaryRepository extends BaseRepository {
   }
 
   Diary readDiary(Map<String, Object?> row) => Diary(
-    content: (row["content"] as String),
-    mood: Mood.parseMood(row["mood"] as String),
-    ymd: DateParser.parseYmd(row["ymd"] as String),
-    hash: row["hash"] as String,
-  );
+        content: (row["content"] as String),
+        mood: Mood.parseMood(row["mood"] as String),
+        ymd: DateParser.parseYmd(row["ymd"] as String),
+        hash: row["hash"] as String,
+      );
 
   Map<String, Object> writeDiary(Diary diary) => {
-    "content": diary.content,
-    "mood": diary.mood.name,
-    "ymd": DateParser.ymdSimpleFormat.format(diary.ymd),
-    "hash": diary.hash,
-  };
-
+        "content": diary.content,
+        "mood": diary.mood.name,
+        "ymd": DateParser.ymdSimpleFormat.format(diary.ymd),
+        "hash": diary.hash,
+      };
 }

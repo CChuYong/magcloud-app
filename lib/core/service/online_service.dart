@@ -13,41 +13,44 @@ class OnlineService {
   late Timer timer;
 
   int offlineCount = 0;
+
   OnlineService() {
     timer = Timer.periodic(const Duration(seconds: 15), healthCheck);
   }
 
   void healthCheck(Timer timer) async {
-    try{
+    try {
       await openAPI.onlineCheck();
       _handleOnline();
-    } catch(e){
+    } catch (e) {
       _handleOffline();
     }
   }
 
   void _handleOnline() {
-    if(_online == null) {
+    if (_online == null) {
       _online = true;
       return;
     }
-    if(_online == false) {
+    if (_online == false) {
       _online = true;
-      SnackBarUtil.infoSnackBar(message: message("message_online_mode_activated"));
+      SnackBarUtil.infoSnackBar(
+          message: message("message_online_mode_activated"));
     }
   }
 
   void _handleOffline() {
-    if(_online == null) {
+    if (_online == null) {
       _online = false;
       return;
     }
-    if(_online == true) {
+    if (_online == true) {
       offlineCount++;
-      if(offlineCount > 3) {
+      if (offlineCount > 3) {
         _online = false;
         offlineCount = 0;
-        SnackBarUtil.infoSnackBar(message: message("message_offline_mode_activated"));
+        SnackBarUtil.infoSnackBar(
+            message: message("message_offline_mode_activated"));
       }
     }
   }

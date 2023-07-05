@@ -13,10 +13,10 @@ class StateStore {
   }
 
   static void saveState(Type key, Map<String, dynamic> state) async {
-    try{
+    try {
       print('saving state with ${key.toString()} as ${jsonEncode(state)}');
       await sharedPreferences!.setString(key.toString(), jsonEncode(state));
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }

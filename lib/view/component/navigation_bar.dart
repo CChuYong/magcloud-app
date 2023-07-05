@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
-import 'package:magcloud_app/view/page/friend_view.dart';
 
 class BaseNavigationBar extends StatefulWidget {
   @override
@@ -17,14 +14,13 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   final iconSize = 24.sp;
   final fontSize = 10.sp;
 
-
   void _setPage(int index) async {
     final isForward = currentPage() < index;
     await GlobalRoute.fadeRoute(pageToRoute(index));
   }
 
   int routeToPage(String route) {
-    switch(route) {
+    switch (route) {
       case "/FriendView":
         return 0;
       case "/CalendarView":
@@ -39,7 +35,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   String typeName(Type type) => type.toString();
 
   String pageToRoute(int page) {
-    switch(page) {
+    switch (page) {
       case 0:
         return "/friends";
       case 1:
@@ -54,37 +50,37 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        backgroundColor: BaseColor.warmGray100,
-        selectedItemColor: BaseColor.warmGray700,
-        unselectedItemColor: BaseColor.warmGray300,
-        unselectedIconTheme: IconThemeData(color: BaseColor.warmGray300, size: 24.sp),
-        selectedIconTheme: IconThemeData(color: BaseColor.warmGray700, size: 24.sp),
-        selectedLabelStyle: TextStyle(
-          fontSize: fontSize,
+      backgroundColor: BaseColor.warmGray100,
+      selectedItemColor: BaseColor.warmGray700,
+      unselectedItemColor: BaseColor.warmGray300,
+      unselectedIconTheme:
+          IconThemeData(color: BaseColor.warmGray300, size: 24.sp),
+      selectedIconTheme:
+          IconThemeData(color: BaseColor.warmGray700, size: 24.sp),
+      selectedLabelStyle: TextStyle(
+        fontSize: fontSize,
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontSize: fontSize,
+      ),
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.people_alt, size: iconSize),
+          label: message("navigation_friends"),
         ),
-        unselectedLabelStyle: TextStyle(
-          fontSize: fontSize,
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home, size: iconSize),
+          label: message("navigation_calendar"),
         ),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-                Icons.people_alt, size: iconSize),
-            label: message("navigation_friends"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: iconSize),
-            label: message("navigation_calendar"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu, size: iconSize),
-            label: message("navigation_more"),
-          )
-        ],
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu, size: iconSize),
+          label: message("navigation_more"),
+        )
+      ],
       currentIndex: currentPage(),
       onTap: (number) => {if (number != currentPage()) _setPage(number)},
     );
   }
 
   int currentPage() => routeToPage(Get.currentRoute);
-
 }

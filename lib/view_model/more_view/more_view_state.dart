@@ -1,3 +1,1 @@
-class MoreViewState {
-
-}
+class MoreViewState {}

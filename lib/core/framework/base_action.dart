@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -115,7 +114,8 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
       transitionDuration: Duration(milliseconds: 350),
       transitionBuilder: (context, anim1, anim2, child) {
         return SlideTransition(
-          position: Tween(begin: Offset(0, -1), end: Offset(0, 0)).animate(anim1),
+          position:
+              Tween(begin: Offset(0, -1), end: Offset(0, 0)).animate(anim1),
           child: child,
         );
       },
@@ -137,13 +137,14 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 5.sp),
-                  content ?? Text(contentText ?? '내용을 입력해주세요',
-                      style: TextStyle(
-                        color: BaseColor.warmGray600,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      )),
+                  content ??
+                      Text(contentText ?? '내용을 입력해주세요',
+                          style: TextStyle(
+                            color: BaseColor.warmGray600,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
+                          )),
                   SizedBox(height: 15.sp),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -168,7 +169,7 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
                           fontWeight: FontWeight.w600,
                           height: 1.2,
                         ),
-                    ),
+                      ),
                     ),
                   )
                 ],

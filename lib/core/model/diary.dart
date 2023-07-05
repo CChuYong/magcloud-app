@@ -5,5 +5,10 @@ class Diary {
   final DateTime ymd;
   final String content;
   final String hash;
-  Diary({required this.mood, required this.content, required this.ymd, required this.hash});
+
+  Diary(
+      {required this.mood,
+      required this.content,
+      required this.ymd,
+      required this.hash});
 }

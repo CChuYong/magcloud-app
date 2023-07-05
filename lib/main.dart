@@ -1,10 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:magcloud_app/core/api/api_interceptor.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
@@ -13,19 +13,13 @@ import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
-import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
-import 'package:dio/dio.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import 'core/framework/state_store.dart';
-
 import 'di.dart';
 import 'firebase_options.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,13 +46,12 @@ void main() async {
   inject.registerSingleton(DiaryService(onlineService, diary));
 
   runApp(ScreenUtilInit(
-      builder: (context, widget) =>
-          GetMaterialApp(
+      builder: (context, widget) => GetMaterialApp(
             // home: const MyApp(),
             theme: ThemeData(
               fontFamily: 'GmarketSans',
               colorScheme:
-              ColorScheme.fromSeed(seedColor: BaseColor.defaultGreen),
+                  ColorScheme.fromSeed(seedColor: BaseColor.defaultGreen),
               useMaterial3: true,
             ),
             initialRoute: '/calendar',

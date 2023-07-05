@@ -1,3 +1,1 @@
-class FriendViewState {
-
-}
+class FriendViewState {}

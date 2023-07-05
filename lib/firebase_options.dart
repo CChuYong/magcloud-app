@@ -66,8 +66,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '218693469610',
     projectId: 'magcloud-c3867',
     storageBucket: 'magcloud-c3867.appspot.com',
-    androidClientId: '218693469610-tjni5qpi95joqvj4vmn595d8lr957jf3.apps.googleusercontent.com',
-    iosClientId: '218693469610-2mf21gapn3hloaemktlopg1gihgc4i2c.apps.googleusercontent.com',
+    androidClientId:
+        '218693469610-tjni5qpi95joqvj4vmn595d8lr957jf3.apps.googleusercontent.com',
+    iosClientId:
+        '218693469610-2mf21gapn3hloaemktlopg1gihgc4i2c.apps.googleusercontent.com',
     iosBundleId: 'co.bearus.magcloud',
   );
 
@@ -77,8 +79,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '218693469610',
     projectId: 'magcloud-c3867',
     storageBucket: 'magcloud-c3867.appspot.com',
-    androidClientId: '218693469610-tjni5qpi95joqvj4vmn595d8lr957jf3.apps.googleusercontent.com',
-    iosClientId: '218693469610-ev1nmk1e2vt6v7bgtg540gj7tg8rmfjd.apps.googleusercontent.com',
+    androidClientId:
+        '218693469610-tjni5qpi95joqvj4vmn595d8lr957jf3.apps.googleusercontent.com',
+    iosClientId:
+        '218693469610-ev1nmk1e2vt6v7bgtg540gj7tg8rmfjd.apps.googleusercontent.com',
     iosBundleId: 'com.example.magcloudApp.RunnerTests',
   );
 }

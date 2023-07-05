@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -15,14 +13,15 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   LoginViewModel initViewModel() => LoginViewModel();
 
   @override
-  Widget render(BuildContext context, LoginViewModel action, LoginViewState state) {
+  Widget render(
+      BuildContext context, LoginViewModel action, LoginViewState state) {
     return Scaffold(
       backgroundColor: BaseColor.warmGray200,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
@@ -33,16 +32,14 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                       style: TextStyle(
                           color: BaseColor.warmGray800,
                           fontSize: 12.sp,
-                          fontFamily: 'GmarketSans'
-                      ),
+                          fontFamily: 'GmarketSans'),
                     ),
                     Text(
                       message("magcloud"),
                       style: TextStyle(
                           color: BaseColor.warmGray800,
                           fontSize: 30.sp,
-                          fontFamily: 'GmarketSans'
-                      ),
+                          fontFamily: 'GmarketSans'),
                     ),
                   ],
                 ),
@@ -60,11 +57,9 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                     ),
                   ],
                 )
-              ]
-          ),
+              ]),
         ),
       ),
     );
   }
-
 }

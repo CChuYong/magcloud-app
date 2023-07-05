@@ -29,7 +29,8 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     gh.factory<_i3.AuthService>(() => _i3.AuthService());
-    await gh.singletonAsync<_i4.DiaryRepository>(() => _i4.DiaryRepository.create());
+    await gh.singletonAsync<_i4.DiaryRepository>(
+        () => _i4.DiaryRepository.create());
     gh.singleton<_i5.OnlineService>(_i5.OnlineService());
     await gh.singletonAsync<_i6.DiaryService>(() async => _i6.DiaryService(
           gh<_i5.OnlineService>(),

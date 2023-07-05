@@ -10,21 +10,28 @@ class CalendarBaseViewState {
   CalendarViewScope scope;
   CalendarScopeData scopeData;
 
-  CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay, this.scope, this.scopeData);
+  CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay,
+      this.scope, this.scopeData);
 
   List<List<int>> getMonthGrid() {
     //바깥쪽 리스트 -> 주
     //안쪽 리스트 -> 일
-    final weekList = List.generate(6, (index) => List.generate(7, (index) => -1));
+    final weekList =
+        List.generate(6, (index) => List.generate(7, (index) => -1));
     final lastDay = DateParser.getLastDayOfMonth(currentYear, currentMonth);
     final now = DateTime.now();
     var currentWeekPointer = 0;
 
-    final monthlyFirstDayOfWeek = DateParser.getFirstDayOfWeekOfMonth(currentYear, currentMonth);
-    var currentDayOfWeek = monthlyFirstDayOfWeek == 7 ? 1 : monthlyFirstDayOfWeek + 1;
-    for(int day = 1; day <= lastDay; day++){
-      weekList[currentWeekPointer][currentDayOfWeek - 1] = DateTime(currentYear, currentMonth, day).isAfter(now) ? -1 * day : day;
-      if(currentDayOfWeek == 7) {
+    final monthlyFirstDayOfWeek =
+        DateParser.getFirstDayOfWeekOfMonth(currentYear, currentMonth);
+    var currentDayOfWeek =
+        monthlyFirstDayOfWeek == 7 ? 1 : monthlyFirstDayOfWeek + 1;
+    for (int day = 1; day <= lastDay; day++) {
+      weekList[currentWeekPointer][currentDayOfWeek - 1] =
+          DateTime(currentYear, currentMonth, day).isAfter(now)
+              ? -1 * day
+              : day;
+      if (currentDayOfWeek == 7) {
         currentDayOfWeek = 1;
         currentWeekPointer++;
       } else {

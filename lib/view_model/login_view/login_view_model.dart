@@ -4,15 +4,14 @@ import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_state.dart';
 
-class LoginViewModel extends BaseViewModel<LoginView, LoginViewModel, LoginViewState> {
+class LoginViewModel
+    extends BaseViewModel<LoginView, LoginViewModel, LoginViewState> {
   LoginViewModel() : super(LoginViewState());
 
   final AuthService authService = inject<AuthService>();
 
   @override
-  Future<void> initState() async {
-
-  }
+  Future<void> initState() async {}
 
   Future<void> onAppleLogin() async {
     await authService.signInWithApple();

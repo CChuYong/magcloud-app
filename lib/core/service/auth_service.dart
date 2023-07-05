@@ -9,13 +9,16 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 @injectable
 class AuthService {
   AuthToken? token;
+
   AuthService() {
     final accessToken = StateStore.getString('accessToken');
     final refreshToken = StateStore.getString('refreshToken');
-    if(accessToken != null && refreshToken != null) {
-      authenticate(AuthToken(accessToken: accessToken, refreshToken: refreshToken));
+    if (accessToken != null && refreshToken != null) {
+      authenticate(
+          AuthToken(accessToken: accessToken, refreshToken: refreshToken));
     }
   }
+
   bool isAuthenticated() => token != null;
 
   String? getAccessToken() => token?.accessToken;
@@ -92,5 +95,6 @@ class AuthService {
 }
 
 enum AuthResult {
-  SUCCEED, FAILED;
+  SUCCEED,
+  FAILED;
 }

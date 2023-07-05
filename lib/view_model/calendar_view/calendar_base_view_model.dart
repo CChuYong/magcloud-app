@@ -1,7 +1,5 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
-import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -15,62 +13,63 @@ import '../../view/page/calendar_view/calendar_base_view.dart';
 import '../../view/page/calendar_view/daily_diary_view.dart';
 import 'calendar_base_view_state.dart';
 
-enum CalendarViewScope{
-  YEAR, MONTH, DAILY
-}
-class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBaseViewModel, CalendarBaseViewState> {
+enum CalendarViewScope { YEAR, MONTH, DAILY }
+
+class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
+    CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
   bool forwardAction = false;
   bool animationStart = false;
-  CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay}) : super(
-      CalendarBaseViewState(
-          initialYear ?? DateParser.getCurrentYear(),
-          initialMonth ?? DateParser.getCurrentMonth(),
-          initialDay ?? DateParser.getCurrentDay(),
-          CalendarViewScope.MONTH,
-        CalendarMonthViewScopeData({}),
-      ),
-  );
 
+  CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay})
+      : super(
+          CalendarBaseViewState(
+            initialYear ?? DateParser.getCurrentYear(),
+            initialMonth ?? DateParser.getCurrentMonth(),
+            initialDay ?? DateParser.getCurrentDay(),
+            CalendarViewScope.MONTH,
+            CalendarMonthViewScopeData({}),
+          ),
+        );
 
   Future<void> setScope(CalendarViewScope scope) async {
-    if(state.scope == CalendarViewScope.DAILY) {
+    if (state.scope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
       final lastDiary = scopeData.currentDiary;
-      diaryService.updateDiary(
-        lastDiary,
-        scopeData.diaryTextController.text
-      );
+      diaryService.updateDiary(lastDiary, scopeData.diaryTextController.text);
     }
     state.scope = scope;
-    switch(state.scope) {
+    switch (state.scope) {
       case CalendarViewScope.YEAR:
         final mood = await diaryService.getMonthlyMood(state.currentYear);
         setScopeData(CalendarYearViewScopeData(mood));
         break;
       case CalendarViewScope.MONTH:
-        final mood = await diaryService.getDailyMood(state.currentYear, state.currentMonth);
+        final mood = await diaryService.getDailyMood(
+            state.currentYear, state.currentMonth);
         setScopeData(CalendarMonthViewScopeData(mood));
         break;
       case CalendarViewScope.DAILY:
-        final diary = await diaryService.getDiary(state.currentYear, state.currentMonth, state.currentDay);
+        final diary = await diaryService.getDiary(
+            state.currentYear, state.currentMonth, state.currentDay);
         setScopeData(CalendarDailyViewScopeData(diary));
         break;
     }
   }
 
   Future<void> setScopeData(CalendarScopeData data) async {
-    if(
-      (state.scope == CalendarViewScope.YEAR && data is CalendarYearViewScopeData) ||
-          (state.scope == CalendarViewScope.MONTH && data is CalendarMonthViewScopeData) ||
-          (state.scope == CalendarViewScope.DAILY && data is CalendarDailyViewScopeData)
-    ) {
+    if ((state.scope == CalendarViewScope.YEAR &&
+            data is CalendarYearViewScopeData) ||
+        (state.scope == CalendarViewScope.MONTH &&
+            data is CalendarMonthViewScopeData) ||
+        (state.scope == CalendarViewScope.DAILY &&
+            data is CalendarDailyViewScopeData)) {
       state.scopeData = data;
     }
   }
 
   Widget Function() getRoutedWidgetBuilder() {
-    switch(state.scope) {
+    switch (state.scope) {
       case CalendarViewScope.YEAR:
         return () => CalendarYearView();
       case CalendarViewScope.MONTH:
@@ -79,7 +78,6 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
         return () => CalendarDailyDiaryView();
     }
   }
-
 
   @override
   Future<void> initState() async {
@@ -95,9 +93,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
 
   Future<void> changeDay(int delta) async {
     final now = DateTime.now();
-    final afterDelta = DateTime(state.currentYear, state.currentMonth, state.currentDay + delta);
+    final afterDelta = DateTime(
+        state.currentYear, state.currentMonth, state.currentDay + delta);
     if (afterDelta.isAfter(now)) {
-      SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
+      SnackBarUtil.errorSnackBar(
+          message: message("message_cannot_move_to_future"));
       return;
     }
     setupAnimation(delta);
@@ -110,7 +110,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
   }
 
   Future<void> changeMonth(int delta) async {
-    if(state.scopeData is! CalendarMonthViewScopeData) return;
+    if (state.scopeData is! CalendarMonthViewScopeData) return;
 
     final afterDelta = state.currentMonth + delta;
     int targetMonth = state.currentMonth;
@@ -129,7 +129,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
     final currentMonth = DateParser.getCurrentMonth();
     if ((targetYear == currentYear && targetMonth > currentMonth) ||
         targetYear > currentYear) {
-        SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
+      SnackBarUtil.errorSnackBar(
+          message: message("message_cannot_move_to_future"));
       return;
     }
     setupAnimation(delta);
@@ -143,8 +144,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
 
   Future<void> changeYear(int delta) async {
     final afterDelta = state.currentYear + delta;
-    if(afterDelta > DateParser.getCurrentYear()) {
-      SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
+    if (afterDelta > DateParser.getCurrentYear()) {
+      SnackBarUtil.errorSnackBar(
+          message: message("message_cannot_move_to_future"));
       return;
     }
     setupAnimation(delta);

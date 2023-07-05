@@ -1,10 +1,11 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-abstract class BaseRepository{
+abstract class BaseRepository {
   late Database database;
   final String fileName;
   final String tableName;
+
   BaseRepository(this.fileName, this.tableName);
 
   Future<void> prepareTable();

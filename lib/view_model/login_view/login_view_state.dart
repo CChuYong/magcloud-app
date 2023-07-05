@@ -1,3 +1,1 @@
-class LoginViewState {
-
-}
+class LoginViewState {}

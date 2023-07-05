@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 
 class DateParser {
   static DateFormat dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
@@ -50,9 +51,23 @@ class DateParser {
     return dateTime.weekday;
   }
 
+  static int getWeekday(int year, int month, int day) {
+    final dateTime = DateTime(year, month, day);
+    final weekDay = dateTime.weekday;
+    return weekDay == 7 ? 1 : weekDay + 1;
+  }
+
   static int getCurrentYear() => DateTime.now().year;
 
   static int getCurrentMonth() => DateTime.now().month;
 
   static int getCurrentDay() => DateTime.now().day;
+
+  static String formatLocaleYmd(int year, int month, int day) {
+    final date = DateTime(year, month, day);
+    if(isKorea) {
+      return DateFormat('y년 MMM d일 E요일', 'ko_KR').format(date);
+    }
+    return DateFormat('EEE, MMM d, y', 'en_US').format(date);
+  }
 }

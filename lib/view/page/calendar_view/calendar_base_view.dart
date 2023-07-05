@@ -24,6 +24,8 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
         child: Column(
           children: [
             titleBar(),
+            SizedBox(height: 18.sp),
+            friendBar(),
             Divider(),
             Expanded(child:  AnimatedSwitcher(
               duration: const Duration(milliseconds: 250),
@@ -58,6 +60,48 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
       ],
     ) )
      ;
+  }
+
+  Widget friendBar() {
+    return Container(
+      width: double.infinity,
+      height: 64.sp,
+      child: CustomScrollView(
+          scrollDirection: Axis.horizontal,
+          slivers: [
+            SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+            for(int i = 0; i < 10; i++)...[
+              SliverToBoxAdapter(child: friendIcon()),
+              SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
+
+            ],
+            SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+          ]),
+    )
+      ;
+  }
+
+  Widget friendIcon() {
+    return Column(
+      children: [
+        Container(
+          width: 42.sp,
+          height: 42.sp,
+          decoration: BoxDecoration(
+            color: BaseColor.warmGray700,
+            shape: BoxShape.circle,
+            border: Border.all(color: BaseColor.red300, width: 2.0)
+          ),
+        ),
+        Text(
+          '송영민',
+          style: TextStyle(
+              color: BaseColor.warmGray500,
+              fontSize: 12.sp,
+          ),
+        ),
+      ],
+    );
   }
 
 }

@@ -1,3 +1,5 @@
+final isKorea = true;
+
 final map = {
   "magcloud": "매지구름",
   "navigation_friends": "내 친구",
@@ -12,13 +14,20 @@ final map = {
   "generic_year" : "년",
   "generic_month": "월",
   "generic_day": "일",
-  "generic_simple_monday" : "일",
-  "generic_simple_tuesday" : "월",
-  "generic_simple_wednesday" : "화",
-  "generic_simple_thursday" : "수",
-  "generic_simple_friday" : "목",
-  "generic_simple_saturday" : "금",
-  "generic_simple_sunday" : "토",
+  "generic_simple_monday" : "월",
+  "generic_simple_tuesday" : "화",
+  "generic_simple_wednesday" : "수",
+  "generic_simple_thursday" : "목",
+  "generic_simple_friday" : "금",
+  "generic_simple_saturday" : "토",
+  "generic_simple_sunday" : "일",
+  "generic_full_monday" : "월요일",
+  "generic_full_tuesday" : "화요일",
+  "generic_full_wednesday" : "수요일",
+  "generic_full_thursday" : "목요일",
+  "generic_full_friday" : "금요일",
+  "generic_full_saturday" : "토요일",
+  "generic_full_sunday" : "일요일",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래로는 이동할 수 없어요",
   "message_offline_mode_activated": "오프라인 모드가 되었어요",
@@ -40,13 +49,20 @@ final engMap = {
   "generic_year" : "",
   "generic_month": "",
   "generic_day": "",
-  "generic_simple_monday" : "S",
-  "generic_simple_tuesday" : "M",
-  "generic_simple_wednesday" : "T",
-  "generic_simple_thursday" : "W",
-  "generic_simple_friday" : "T",
-  "generic_simple_saturday" : "F",
+  "generic_simple_monday" : "M",
+  "generic_simple_tuesday" : "T",
+  "generic_simple_wednesday" : "W",
+  "generic_simple_thursday" : "T",
+  "generic_simple_friday" : "F",
+  "generic_simple_saturday" : "S",
   "generic_simple_sunday" : "S",
+  "generic_full_monday" : "MON",
+  "generic_full_tuesday" : "TUE",
+  "generic_full_wednesday" : "WED",
+  "generic_full_thursday" : "THU",
+  "generic_full_friday" : "FRI",
+  "generic_full_saturday" : "SAT",
+  "generic_full_sunday" : "SUN",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
   "message_offline_mode_activated": "You've been away from server...",
@@ -57,5 +73,17 @@ final engMap = {
 
 
 String message(String key) {
-  return map[key] ?? "UNKNOWN KEYWORD";
+  return (isKorea ? map : engMap)[key] ?? "UNKNOWN KEYWORD";
+}
+
+String dayOfWeek(int ordinal) {
+  switch(ordinal){
+    case 1: return message("generic_full_sunday");
+    case 2: return message("generic_full_monday");
+    case 3: return message("generic_full_tuesday");
+    case 4: return message("generic_full_wednesday");
+    case 5: return message("generic_full_thursday");
+    case 6: return message("generic_full_friday");
+    case 7: default: return message("generic_full_saturday");
+  }
 }

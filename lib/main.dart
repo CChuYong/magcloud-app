@@ -17,6 +17,7 @@ import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'core/framework/state_store.dart';
 
@@ -27,6 +28,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ko_KR', null);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

@@ -4,6 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/model/diary.dart';
+import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -87,7 +88,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
           TouchableOpacity(
             onTap: action.onTapDayTitle,
               child: Text(
-            '${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")} ${state.currentDay}${message("generic_day")}',
+                DateParser.formatLocaleYmd(state.currentYear, state.currentMonth, state.currentDay),
+            //'${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")} ${state.currentDay}${message("generic_day")} ${dayOfWeek(DateParser.getWeekday(state.currentYear, state.currentMonth, state.currentDay))}',
             style: TextStyle(
               color: BaseColor.warmGray600,
               fontSize: 16.sp,

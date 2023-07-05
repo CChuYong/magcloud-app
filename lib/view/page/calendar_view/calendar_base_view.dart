@@ -18,7 +18,13 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       bottomNavigationBar: BaseNavigationBar(),
-      body: action.getRoutedWidgetBuilder()(),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        child: action.getRoutedWidgetBuilder()(),
+      ),
     );
   }
 

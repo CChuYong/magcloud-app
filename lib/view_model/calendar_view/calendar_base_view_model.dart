@@ -20,6 +20,8 @@ enum CalendarViewScope{
 }
 class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
+  bool forwardAction = false;
+  bool animationStart = false;
   CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay}) : super(
       CalendarBaseViewState(
           initialYear ?? DateParser.getCurrentYear(),
@@ -86,6 +88,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
     });
   }
 
+  void setupAnimation(int delta) {
+    forwardAction = delta > 0;
+    animationStart = true;
+  }
+
   Future<void> changeDay(int delta) async {
     final now = DateTime.now();
     final afterDelta = DateTime(state.currentYear, state.currentMonth, state.currentDay + delta);
@@ -93,6 +100,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
+    setupAnimation(delta);
     setStateAsync(() async {
       state.currentYear = afterDelta.year;
       state.currentMonth = afterDelta.month;
@@ -102,6 +110,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
   }
 
   Future<void> changeMonth(int delta) async {
+    if(state.scopeData is! CalendarMonthViewScopeData) return;
+
     final afterDelta = state.currentMonth + delta;
     int targetMonth = state.currentMonth;
     int targetYear = state.currentYear;
@@ -122,6 +132,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
         SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
+    setupAnimation(delta);
+
     setStateAsync(() async {
       state.currentYear = targetYear;
       state.currentMonth = targetMonth;
@@ -135,6 +147,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       SnackBarUtil.errorSnackBar(message: message("message_cannot_move_to_future"));
       return;
     }
+    setupAnimation(delta);
     setStateAsync(() async {
       state.currentYear = afterDelta;
       await setScope(CalendarViewScope.YEAR);

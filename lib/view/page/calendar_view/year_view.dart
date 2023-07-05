@@ -17,6 +17,14 @@ import 'calendar_base_view.dart';
 class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewModel, CalendarBaseViewState> {
    CalendarYearView({super.key});
 
+   double getAnimationOffset() {
+     if(action.animationStart) {
+       action.animationStart = false;
+       return action.forwardAction ? -0.8 : 0.8;
+     } else {
+       return action.forwardAction ? 0.8 : -0.8;
+     }
+   }
   @override
   Widget render(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state) {
     final scopeData = state.scopeData as CalendarYearViewScopeData;
@@ -28,18 +36,34 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
         children: [
           yearViewTopBar(action, state),
           SizedBox(height: 20.sp),
-          for(int j = 0; j < 3; j++)... [
-            Row(
-              children: [
-                SizedBox(width: 20.sp),
-                for(int x = (j*4) + 1; x<= (j*4) + 4;x++)...[
-                  createMonthBox(action, month: x, boxWidth: boxWidth),
-                  SizedBox(width: 20.sp),
+          AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(
+                          getAnimationOffset(), 0.0), // adjust the position as you need
+                      end: const Offset(0.0, 0.0),
+                    ).animate(animation),
+                    child: child);
+              },
+              child: Column(
+                key: Key(state.currentYear.toString()),
+                children: [
+                  for(int j = 0; j < 3; j++)... [
+                    Row(
+                      children: [
+                        SizedBox(width: 20.sp),
+                        for(int x = (j*4) + 1; x<= (j*4) + 4;x++)...[
+                          createMonthBox(action, month: x, boxWidth: boxWidth),
+                          SizedBox(width: 20.sp),
+                        ],
+                      ],
+                    ),
+                    SizedBox(height: 20.sp),
+                  ]
                 ],
-              ],
-            ),
-            SizedBox(height: 20.sp),
-          ]
+              )),
         ],
       ),
     );

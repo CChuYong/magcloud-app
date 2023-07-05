@@ -6,6 +6,8 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
+import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
+import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 
 import 'core/framework/state_store.dart';
@@ -34,14 +36,15 @@ void main() async {
           GetMaterialApp(
             // home: const MyApp(),
             theme: ThemeData(
-              fontFamily: 'Pretendard',
+              fontFamily: 'GmarketSans',
               colorScheme:
               ColorScheme.fromSeed(seedColor: BaseColor.defaultGreen),
               useMaterial3: true,
             ),
-            initialRoute: '/',
+            initialRoute: '/calendar',
             getPages: [
               GetPage(name: '/', page: () => LoginView()),
+              GetPage(name: '/calendar', page: () => CalendarBaseView())
             ],
           )));
 }

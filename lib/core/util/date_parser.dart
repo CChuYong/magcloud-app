@@ -34,4 +34,18 @@ class DateParser {
         .difference(DateTime(now.year, now.month, now.day))
         .inDays;
   }
+
+  static int getLastDayOfMonth(int year, int month) {
+    final dateTime = DateTime(year, month + 1, 0);
+    return dateTime.day;
+  }
+
+  static int getFirstDayOfWeekOfMonth(int year, int month) {
+    final dateTime = DateTime(year, month, 1);
+    return dateTime.weekday;
+  }
+
+  static int getCurrentYear() => DateTime.now().year;
+
+  static int getCurrentMonth() => DateTime.now().month;
 }

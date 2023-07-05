@@ -4,11 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../view/designsystem/base_color.dart';
-import '../../view/designsystem/base_icon.dart';
 import '../util/debouncer.dart';
 import 'base_view.dart';
-
-enum SnackBarType { RED, GREEN, YELLOW, GREY }
 
 abstract class BaseViewModel<V extends BaseView<V, A, S>,
     A extends BaseViewModel<V, A, S>, S> extends GetxController {
@@ -90,47 +87,6 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
     } finally {
       setLoading(false);
     }
-  }
-
-  static void errorSnackBar({
-    required String message,
-    SnackBarType type = SnackBarType.GREY, // neutral
-    EdgeInsets margin = const EdgeInsets.all(12),
-    int msDuration = 2000,
-    SnackPosition position = SnackPosition.TOP,
-  }) {
-    print("Invoking snackbar");
-    Get.snackbar(
-      '',
-      message,
-      // backgroundColor: bgColor,
-      // colorText: txtColor,
-      icon: Icon(BaseIcon.snackBarError),
-      titleText: Container(),
-      duration: Duration(milliseconds: msDuration),
-      margin: margin,
-      snackPosition: position,
-    );
-  }
-
-  void infoSnackBar({
-    required String message,
-    SnackBarType type = SnackBarType.GREY, // neutral
-    EdgeInsets margin = const EdgeInsets.all(12),
-    int msDuration = 2000,
-    SnackPosition position = SnackPosition.TOP,
-  }) {
-    Get.snackbar(
-      '',
-      message,
-      // backgroundColor: bgColor,
-      // colorText: txtColor,
-      icon: Icon(BaseIcon.snackBarInfo),
-      titleText: Container(),
-      duration: Duration(milliseconds: msDuration),
-      margin: margin,
-      snackPosition: position,
-    );
   }
 
   void confirmModal({

@@ -23,6 +23,8 @@ final class BaseColor {
   static const green100 = Color(0xffDCFCE7);
   static const green50 = Color(0xffF0FDF4);
 
+  static const red400 = Color(0xffF87171);
+
   static const defaultGreen = Color(0xff10B981);
   static const defaultRed = Color(0xffFF8282);
 

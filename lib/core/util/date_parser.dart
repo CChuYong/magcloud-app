@@ -48,4 +48,6 @@ class DateParser {
   static int getCurrentYear() => DateTime.now().year;
 
   static int getCurrentMonth() => DateTime.now().month;
+
+  static int getCurrentDay() => DateTime.now().day;
 }

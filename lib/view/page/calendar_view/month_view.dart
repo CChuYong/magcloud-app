@@ -60,7 +60,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
         children: [
           TouchableOpacity(onTap: () => action.changeMonth(-1), child: const Icon(BaseIcon.arrowLeft)),
           TouchableOpacity(
-            onTap: action.onTapTitle,
+            onTap: action.onTapMonthTitle,
               child: Text(
             '${state.currentYear}년 ${state.currentMonth}월',
             style: TextStyle(
@@ -82,7 +82,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
         Row(
           children: [
             for(int dayOfWeek = 0; dayOfWeek < week.length; dayOfWeek++)...[
-              week[dayOfWeek] == -1 ? SizedBox(width: boxWidth) : createDayBox(day: week[dayOfWeek], color: BaseColor.red400, boxWidth: boxWidth),
+              week[dayOfWeek] == -1 ? SizedBox(width: boxWidth) : createDayBox(action, day: week[dayOfWeek], color: BaseColor.red400, boxWidth: boxWidth),
               if (dayOfWeek != week.length - 1) SizedBox(width: boxGap)
             ]
           ],
@@ -92,8 +92,10 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
     ]);
   }
 
-  Widget createDayBox({required int day, required Color color, required double boxWidth}) {
-    return Container(
+  Widget createDayBox(CalendarBaseViewModel action, {required int day, required Color color, required double boxWidth}) {
+    return TouchableOpacity(
+      onTap: () => day> 0 ? action.onTapDayBox(day) : null,
+        child: Container(
       width: boxWidth,
       height: boxWidth,
       decoration: BoxDecoration(
@@ -103,15 +105,16 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
       ),
       child:   Center(
         child: Text(
-          day.toString(),
+          day.abs().toString(),
           style: TextStyle(
-            color: BaseColor.warmGray500,
+            color: day > 0 ? BaseColor.warmGray500 : BaseColor.warmGray300,
             fontSize: 18.sp,
           ),
         ),
       )
       ,
-    );
+    ))
+      ;
   }
 
   Widget dayOfWeekTitle() {

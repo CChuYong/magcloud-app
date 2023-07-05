@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
+import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -69,15 +70,16 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
   }
 
   Widget createMonthBox(CalendarBaseViewModel action, {required int month, required Color color, required double boxWidth}) {
+    final isInvisible = DateParser.getCurrentYear() == action.state.currentYear && DateParser.getCurrentMonth() < month;
     return TouchableOpacity(
-      onTap: () => action.onTapMonthBox(month),
+      onTap: () => isInvisible ? null : action.onTapMonthBox(month),
         child: Container(
           width: boxWidth,
           height: boxWidth,
           decoration: BoxDecoration(
             border: Border.all(color: BaseColor.warmGray300),
             borderRadius: BorderRadius.circular(15),
-            color: BaseColor.warmGray300,
+            color: isInvisible ? BaseColor.warmGray200 : BaseColor.warmGray300,
           ),
           child:   Center(
             child: Text(

@@ -43,6 +43,7 @@ dependencies:
   sqflite: ^2.2.8+4
   image_picker: ^0.8.9
   cached_network_image: ^3.2.3
+  flutter_markdown: ^0.6.15+1
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,9 @@ flutter:
     - assets/images/sign_in_with_apple_4x.png
     - assets/images/sign_in_with_google_4x.png
   fonts:
+    - family: KyoboHandWriting
+      fonts:
+        - asset: assets/fonts/KyoboHandwriting2021sjy.ttf
     - family: GmarketSans
       fonts:
         - asset: assets/fonts/GmarketSansTTF/GmarketSansTTFMedium.ttf

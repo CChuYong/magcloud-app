@@ -70,13 +70,13 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
     render();
   }
 
-  void setState(VoidCallback fn) {
-    fn();
+  Future<void> setStateAsync(Future Function() lambda) async {
+    await lambda();
     render();
   }
 
-  void setStateAsync(Future fn) async {
-    await fn;
+  void setState(VoidCallback fn) {
+    fn();
     render();
   }
 

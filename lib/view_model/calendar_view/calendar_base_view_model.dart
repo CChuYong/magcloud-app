@@ -1,9 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
+import 'package:magcloud_app/main.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 
@@ -15,6 +17,8 @@ enum CalendarViewScope{
   YEAR, MONTH, DAILY
 }
 class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBaseViewModel, CalendarBaseViewState> {
+  final DiaryService diaryService = inject<DiaryService>();
+  final TextEditingController diaryTextController = TextEditingController();
   CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay}) : super(
       CalendarBaseViewState(
           initialYear ?? DateParser.getCurrentYear(),
@@ -24,8 +28,14 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
       ),
   );
 
-  void setScope(CalendarViewScope scope) {
+  Future<void> setScope(CalendarViewScope scope) async {
     state.scope = scope;
+    if(scope == CalendarViewScope.DAILY) {
+      state.currentDiary = await diaryService.getDiary(state.currentYear, state.currentMonth, state.currentDay);
+      diaryTextController.text = state.currentDiary!.content;
+    } else {
+      state.currentDiary = null;
+    }
   }
 
   Widget Function() getRoutedWidgetBuilder() {
@@ -96,16 +106,16 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
   }
 
   Future<void> onTapMonthBox(int month) async {
-    setState(() {
+    setStateAsync(() async {
       state.currentMonth = month;
-      setScope(CalendarViewScope.MONTH);
+      await setScope(CalendarViewScope.MONTH);
     });
   }
 
   Future<void> onTapDayBox(int day) async {
-    setState(() {
+    setStateAsync(() async {
       state.currentDay = day;
-      setScope(CalendarViewScope.DAILY);
+      await setScope(CalendarViewScope.DAILY);
     });
   }
 
@@ -114,14 +124,14 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBase
   }
 
   Future<void> onTapMonthTitle() async {
-    setState(() {
-      setScope(CalendarViewScope.YEAR);
+    setStateAsync(() async {
+      await setScope(CalendarViewScope.YEAR);
     });
   }
 
   Future<void> onTapDayTitle() async {
-    setState(() {
-      setScope(CalendarViewScope.MONTH);
+    setStateAsync(() async {
+      await setScope(CalendarViewScope.MONTH);
     });
   }
 }

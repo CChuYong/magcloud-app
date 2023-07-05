@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 final class BaseColor {
   static const warmGray900 = Color(0xff1C1917);
   static const warmGray800 = Color(0xff292524);
@@ -35,5 +37,5 @@ final class BaseColor {
   static const defaultGreen = Color(0xff10B981);
   static const defaultRed = Color(0xffFF8282);
 
-  static const defaultBackgroundColor = warmGray200;
+  static const defaultBackgroundColor = Colors.white;
 }

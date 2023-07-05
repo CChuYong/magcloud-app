@@ -13,9 +13,16 @@ import '../model/diary.dart';
 class DiaryRepository extends BaseRepository {
   DiaryRepository() : super('diaries.db', 'diaries');
 
+  @factoryMethod
+  static Future<DiaryRepository> create() async {
+    final DiaryRepository repository = DiaryRepository();
+    await repository.initDatabase();
+    return repository;
+  }
+
   @override
   Future<void> prepareTable() async {
-    await database.execute('DROP TABLE $tableName');
+    //await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (

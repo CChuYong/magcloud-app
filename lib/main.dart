@@ -6,6 +6,10 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
+import 'package:magcloud_app/core/repository/diary_repository.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
+import 'package:magcloud_app/core/service/diary_service.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
@@ -16,17 +20,10 @@ import 'package:dio/dio.dart';
 
 import 'core/framework/state_store.dart';
 
+import 'di.dart';
 import 'firebase_options.dart';
-import 'main.config.dart';
 
-final inject = GetIt.instance;
 
-@InjectableInit(
-  initializerName: 'init', // default
-  preferRelativeImports: true, // default
-  asExtension: true, // default
-)
-void configureDependencies() => inject.init();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +36,12 @@ void main() async {
   final client = OpenAPI(dio, baseUrl: 'https://magcloud.chuyong.kr/api/v1');
 
   inject.registerSingleton(client);
-  configureDependencies();
+  inject.registerSingleton(AuthService());
+  final diary = await DiaryRepository.create();
+  inject.registerSingleton(diary);
+  final onlineService = OnlineService();
+  inject.registerSingleton(onlineService);
+  inject.registerSingleton(DiaryService(onlineService, diary));
 
   runApp(ScreenUtilInit(
       builder: (context, widget) =>

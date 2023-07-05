@@ -30,8 +30,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
       }
     }
     final scopeData = state.scopeData as CalendarDailyViewScopeData;
-    return  SafeArea(
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           dailyViewTopBar(action, state),
@@ -75,8 +74,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
 
 
         ],
-      ),
-    );
+      );
   }
 
   Widget dailyViewTopBar(CalendarBaseViewModel action, CalendarBaseViewState state) {
@@ -85,7 +83,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TouchableOpacity(onTap: () => action.changeDay(-1), child: const Icon(BaseIcon.arrowLeft)),
+
           TouchableOpacity(
             onTap: action.onTapDayTitle,
               child: Text(
@@ -95,9 +93,13 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
               fontSize: 16.sp,
             ),
             )
+          ),
+          Row(
+            children: [
+              TouchableOpacity(onTap: () => action.changeDay(-1), child: const Icon(BaseIcon.arrowLeft)),
+              TouchableOpacity(onTap: () => action.changeDay(1), child: const Icon(BaseIcon.arrowRight)),
+            ],
           )
-          ,
-          TouchableOpacity(onTap: () => action.changeDay(1), child: const Icon(BaseIcon.arrowRight)),
         ],
       ),
     );

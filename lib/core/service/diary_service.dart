@@ -6,12 +6,13 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/hash_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
-import 'package:magcloud_app/main.dart';
+import 'package:magcloud_app/di.dart';
 
-@injectable
+@singleton
 class DiaryService {
-  final OnlineService onlineService = inject<OnlineService>();
-  final DiaryRepository diaryRepository = inject<DiaryRepository>();
+  DiaryService(this.onlineService, this.diaryRepository);
+  final OnlineService onlineService;
+  final DiaryRepository diaryRepository;
   Future<Diary> getDiary(int year, int month, int day) async {
     final localDiary = await diaryRepository.findDiary(year, month, day);
     return localDiary ?? Diary(mood: Mood.neutral, content: '', ymd: DateTime(year, month, day), hash: HashUtil.emptyHash());

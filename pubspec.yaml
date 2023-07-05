@@ -29,7 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.8.3
   get: ^4.6.5
-  injectable:
+  injectable: ^2.1.2
   get_it:
   json_annotation:
   shared_preferences:
@@ -55,9 +55,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  injectable_generator:
+  injectable_generator: ^2.1.6
   retrofit_generator: '>=5.0.0 <6.0.0'
-  build_runner: '>=2.3.0 <4.0.0'
+  build_runner: ^2.4.6
   json_serializable:
 
 # For information on the generic Dart part of this file, see the

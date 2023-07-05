@@ -6,7 +6,7 @@ import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
-import 'package:magcloud_app/main.dart';
+import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';

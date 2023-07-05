@@ -35,8 +35,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
     final boxWidth = (fullWidth - horizontalPaddingSize * 2 - boxGap * 6) / 7;
     final scopeData = state.scopeData as CalendarMonthViewScopeData;
 
-    return SafeArea(
-        child: Column(
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             monthViewTopBar(action, state),
@@ -69,8 +68,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
             ),
 
           ],
-        ),
-    );
+        );
   }
 
   Widget monthViewTopBar(CalendarBaseViewModel action, CalendarBaseViewState state) {
@@ -79,7 +77,6 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TouchableOpacity(onTap: () => action.changeMonth(-1), child: const Icon(BaseIcon.arrowLeft)),
           TouchableOpacity(
             onTap: action.onTapMonthTitle,
               child: Text(
@@ -90,7 +87,12 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
             ),
           )
           ),
-          TouchableOpacity(onTap: () => action.changeMonth(1), child: const Icon(BaseIcon.arrowRight)),
+          Row(
+            children: [
+              TouchableOpacity(onTap: () => action.changeMonth(-1), child: const Icon(BaseIcon.arrowLeft)),
+              TouchableOpacity(onTap: () => action.changeMonth(1), child: const Icon(BaseIcon.arrowRight)),
+            ],
+          )
         ],
       ),
     );

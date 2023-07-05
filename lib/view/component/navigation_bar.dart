@@ -54,11 +54,11 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        backgroundColor: BaseColor.warmGray300,
-        selectedItemColor: BaseColor.warmGray800,
-        unselectedItemColor: BaseColor.warmGray400,
-        unselectedIconTheme: IconThemeData(color: BaseColor.warmGray400, size: 24.sp),
-        selectedIconTheme: IconThemeData(color: BaseColor.warmGray800, size: 24.sp),
+        backgroundColor: BaseColor.warmGray100,
+        selectedItemColor: BaseColor.warmGray700,
+        unselectedItemColor: BaseColor.warmGray300,
+        unselectedIconTheme: IconThemeData(color: BaseColor.warmGray300, size: 24.sp),
+        selectedIconTheme: IconThemeData(color: BaseColor.warmGray700, size: 24.sp),
         selectedLabelStyle: TextStyle(
           fontSize: fontSize,
         ),

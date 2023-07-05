@@ -5,9 +5,7 @@ abstract class BaseRepository{
   late Database database;
   final String fileName;
   final String tableName;
-  BaseRepository(this.fileName, this.tableName) {
-    initDatabase();
-  }
+  BaseRepository(this.fileName, this.tableName);
 
   Future<void> prepareTable();
 

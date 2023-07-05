@@ -1,6 +1,6 @@
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
-import 'package:magcloud_app/main.dart';
+import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_state.dart';
 

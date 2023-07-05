@@ -30,8 +30,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
     final scopeData = state.scopeData as CalendarYearViewScopeData;
     final fullWidth = MediaQuery.of(context).size.width;
     final boxWidth = (fullWidth - 100.sp) / 4;
-    return SafeArea(
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           yearViewTopBar(action, state),
@@ -65,17 +64,16 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
                 ],
               )),
         ],
-      ),
-    );
+      );
   }
 
-  Widget yearViewTopBar(CalendarBaseViewModel action, CalendarBaseViewState state) {
+  Widget yearViewTopBar(
+      CalendarBaseViewModel action, CalendarBaseViewState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TouchableOpacity(onTap: () => action.changeYear(-1), child: const Icon(BaseIcon.arrowLeft)),
           TouchableOpacity(
               child: Text(
             '${state.currentYear}${message("generic_year")}',
@@ -83,10 +81,18 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
               color: BaseColor.warmGray600,
               fontSize: 16.sp,
             ),
+          )),
+          Row(
+            children: [
+              TouchableOpacity(
+                  onTap: () => action.changeYear(-1),
+                  child: const Icon(BaseIcon.arrowLeft)),
+              TouchableOpacity(
+                  onTap: () => action.changeYear(1),
+                  child: const Icon(BaseIcon.arrowRight))
+            ],
           )
-          )
-          ,
-          TouchableOpacity(onTap: () => action.changeYear(1), child: const Icon(BaseIcon.arrowRight)),
+      ,
         ],
       ),
     );

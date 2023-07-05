@@ -36,7 +36,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
                 children: [
                   SizedBox(width: 20.sp),
                   for(int x = (j*4) + 1; x<= (j*4) + 4;x++)...[
-                    createMonthBox(action, month: x, color: BaseColor.green200, boxWidth: boxWidth),
+                    createMonthBox(action, month: x, boxWidth: boxWidth),
                     SizedBox(width: 20.sp),
                   ],
                 ],
@@ -72,8 +72,9 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
     );
   }
 
-  Widget createMonthBox(CalendarBaseViewModel action, {required int month, required Color color, required double boxWidth}) {
+  Widget createMonthBox(CalendarBaseViewModel action, {required int month, required double boxWidth}) {
     final isInvisible = DateParser.getCurrentYear() == action.state.currentYear && DateParser.getCurrentMonth() < month;
+    final scopeData = action.state.scopeData as CalendarYearViewScopeData;
     return TouchableOpacity(
       onTap: () => isInvisible ? null : action.onTapMonthBox(month),
         child: Container(
@@ -82,7 +83,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
           decoration: BoxDecoration(
             border: Border.all(color: BaseColor.warmGray300),
             borderRadius: BorderRadius.circular(15),
-            color: isInvisible ? BaseColor.warmGray200 : BaseColor.warmGray300,
+            color: isInvisible ? BaseColor.warmGray200 : (scopeData.monthlyMood[month]?.moodColor),
           ),
           child:   Center(
             child: Text(

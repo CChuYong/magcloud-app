@@ -84,7 +84,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
         Row(
           children: [
             for(int dayOfWeek = 0; dayOfWeek < week.length; dayOfWeek++)...[
-              week[dayOfWeek] == -1 ? SizedBox(width: boxWidth) : createDayBox(action, day: week[dayOfWeek], color: BaseColor.red400, boxWidth: boxWidth),
+              week[dayOfWeek] == -1 ? SizedBox(width: boxWidth) : createDayBox(action, day: week[dayOfWeek], boxWidth: boxWidth),
               if (dayOfWeek != week.length - 1) SizedBox(width: boxGap)
             ]
           ],
@@ -94,7 +94,8 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
     ]);
   }
 
-  Widget createDayBox(CalendarBaseViewModel action, {required int day, required Color color, required double boxWidth}) {
+  Widget createDayBox(CalendarBaseViewModel action, {required int day, required double boxWidth}) {
+    final scopeData = action.state.scopeData as CalendarMonthViewScopeData;
     return TouchableOpacity(
       onTap: () => day> 0 ? action.onTapDayBox(day) : null,
         child: Container(
@@ -103,7 +104,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
       decoration: BoxDecoration(
         border: Border.all(color: BaseColor.warmGray300),
         borderRadius: BorderRadius.circular(15),
-
+        color: scopeData.dailyMood[day]?.moodColor
       ),
       child:   Center(
         child: Text(

@@ -14,7 +14,7 @@ class OnlineService {
 
   int offlineCount = 0;
   OnlineService() {
-    timer = Timer.periodic(const Duration(seconds: 1), healthCheck);
+    timer = Timer.periodic(const Duration(seconds: 15), healthCheck);
   }
 
   void healthCheck(Timer timer) async {

@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:magcloud_app/core/api/api_interceptor.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
@@ -34,11 +35,16 @@ void main() async {
   );
   await StateStore.init();
   final dio = Dio(); // Provide a dio instance
+  inject.registerSingleton(dio);
   //dio.options.headers["Demo-Header"] = "demo header"; // config your dio headers globally
   final client = OpenAPI(dio, baseUrl: 'https://magcloud.chuyong.kr/api/v1');
 
   inject.registerSingleton(client);
-  inject.registerSingleton(AuthService());
+  final authService = AuthService();
+  inject.registerSingleton(authService);
+
+  dio.interceptors.add(ApiInterceptor());
+
   final diary = await DiaryRepository.create();
   inject.registerSingleton(diary);
   final onlineService = OnlineService();

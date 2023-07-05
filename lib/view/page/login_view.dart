@@ -17,7 +17,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   @override
   Widget render(BuildContext context, LoginViewModel action, LoginViewState state) {
     return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
+      backgroundColor: BaseColor.warmGray200,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),

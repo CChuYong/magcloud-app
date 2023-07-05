@@ -32,7 +32,8 @@ final map = {
   "message_cannot_move_to_future": "미래로는 이동할 수 없어요",
   "message_offline_mode_activated": "오프라인 모드가 되었어요",
   "message_online_mode_activated": "온라인으로 전환되었어요",
-  "message_diary_saved_offline": "서버와 연결할 수 없어 오프라인에 일기를 저장했어요. 서버와 연결되면 다시 저장할게요!"
+  "message_diary_saved_offline": "서버와 연결할 수 없어 오프라인에 일기를 저장했어요. 서버와 연결되면 다시 저장할게요!",
+  "message_login_failed": "로그인에 실패했어요"
 };
 
 final engMap = {
@@ -67,7 +68,8 @@ final engMap = {
   "message_cannot_move_to_future": "You cannot travel to future!",
   "message_offline_mode_activated": "You've been away from server...",
   "message_online_mode_activated": "You've been connected to server",
-  "message_diary_saved_offline": "Diary saved locally due to internet connection"
+  "message_diary_saved_offline": "Diary saved locally due to internet connection",
+  "message_login_failed": "Login failed.."
 };
 
 

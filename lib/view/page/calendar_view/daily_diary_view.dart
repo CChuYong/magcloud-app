@@ -11,6 +11,7 @@ import 'package:magcloud_app/view/designsystem/base_icon.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
+import '../../../view_model/calendar_view/calendar_scope_data_state.dart';
 import '../../component/navigation_bar.dart';
 import 'calendar_base_view.dart';
 
@@ -20,6 +21,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
   @override
   Widget render(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state) {
     //final diary = state.currentDiary!;
+    final scopeData = state.scopeData as CalendarDailyViewScopeData;
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       bottomNavigationBar: BaseNavigationBar(),
@@ -28,7 +30,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             dailyViewTopBar(action, state),
-            dailyDiaryMoodBox(state),
+            dailyDiaryMoodBox(scopeData),
             Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -37,7 +39,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
                       fontFamily: "KyoboHandWriting",
                       fontSize: 16.sp,
                     ),
-                    controller: action.diaryTextController,
+                    controller: scopeData.diaryTextController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -77,8 +79,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView, CalendarBas
     );
   }
 
-  Widget dailyDiaryMoodBox(CalendarBaseViewState state) {
-    final Diary diary = state.currentDiary!;
+  Widget dailyDiaryMoodBox(CalendarDailyViewScopeData data) {
+    final Diary diary = data.currentDiary;
     return TouchableOpacity(
         onTap: () => {},
         child: Padding(

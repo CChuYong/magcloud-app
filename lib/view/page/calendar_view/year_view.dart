@@ -6,6 +6,7 @@ import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
+import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
@@ -18,6 +19,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView, CalendarBaseViewM
 
   @override
   Widget render(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state) {
+    final scopeData = state.scopeData as CalendarYearViewScopeData;
     final fullWidth = MediaQuery.of(context).size.width;
     final boxWidth = (fullWidth - 100.sp) / 4;
     return Scaffold(

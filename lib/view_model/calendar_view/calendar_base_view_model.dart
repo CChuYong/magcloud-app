@@ -8,6 +8,7 @@ import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/main.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
+import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
 import '../../view/page/calendar_view/calendar_base_view.dart';
 import '../../view/page/calendar_view/daily_diary_view.dart';
@@ -18,23 +19,29 @@ enum CalendarViewScope{
 }
 class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView, CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
-  final TextEditingController diaryTextController = TextEditingController();
   CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay}) : super(
       CalendarBaseViewState(
           initialYear ?? DateParser.getCurrentYear(),
           initialMonth ?? DateParser.getCurrentMonth(),
           initialDay ?? DateParser.getCurrentDay(),
           CalendarViewScope.MONTH,
+        CalendarMonthViewScopeData(),
       ),
   );
 
   Future<void> setScope(CalendarViewScope scope) async {
     state.scope = scope;
-    if(scope == CalendarViewScope.DAILY) {
-      state.currentDiary = await diaryService.getDiary(state.currentYear, state.currentMonth, state.currentDay);
-      diaryTextController.text = state.currentDiary!.content;
-    } else {
-      state.currentDiary = null;
+    switch(state.scope) {
+      case CalendarViewScope.YEAR:
+        state.scopeData = CalendarYearViewScopeData();
+        break;
+      case CalendarViewScope.MONTH:
+        state.scopeData = CalendarMonthViewScopeData();
+        break;
+      case CalendarViewScope.DAILY:
+        final diary = await diaryService.getDiary(state.currentYear, state.currentMonth, state.currentDay);
+        state.scopeData = CalendarDailyViewScopeData(diary);
+        break;
     }
   }
 

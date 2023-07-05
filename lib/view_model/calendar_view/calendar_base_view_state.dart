@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_base_view_model.dart';
+
+import 'calendar_scope_data_state.dart';
 
 class CalendarBaseViewState {
   int currentYear;
   int currentMonth;
   int currentDay;
-  Diary? currentDiary;
   CalendarViewScope scope;
+  CalendarScopeData scopeData;
 
-  CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay, this.scope);
+  CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay, this.scope, this.scopeData);
 
   List<List<int>> getMonthGrid() {
     //바깥쪽 리스트 -> 주

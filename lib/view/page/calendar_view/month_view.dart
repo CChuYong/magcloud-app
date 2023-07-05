@@ -5,6 +5,7 @@ import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
+import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
@@ -23,6 +24,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView, CalendarBaseView
   Widget render(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state) {
     final fullWidth = MediaQuery.of(context).size.width;
     final boxWidth = (fullWidth - horizontalPaddingSize * 2 - boxGap * 6) / 7;
+    final scopeData = state.scopeData as CalendarMonthViewScopeData;
 
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,

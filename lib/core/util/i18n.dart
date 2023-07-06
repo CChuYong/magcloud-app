@@ -37,6 +37,9 @@ final map = {
   "generic_full_sunday": "일요일",
   "generic_search": "검색",
   "generic_add_friend": "친구 추가",
+  "generic_friend_share_diary": "일기 공유",
+  "generic_friend_unshare_diary": "일기 공유 취소",
+  "generic_friend_delete": "삭제",
   "generic_login_with_apple": "Apple로 로그인",
   "generic_login_with_google": "Google로 로그인",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
@@ -46,7 +49,8 @@ final map = {
   "message_diary_saved_offline":
       "서버와 연결할 수 없어 오프라인에 일기를 저장했어요. 서버와 연결되면 다시 저장할게요!",
   "message_login_failed": "로그인에 실패했어요",
-  "message_offline_cannot_view_friends": "오프라인 모드는 친구의 일기를 볼 수 없어요"
+  "message_offline_cannot_view_friends": "오프라인 모드는 친구의 일기를 볼 수 없어요",
+  "message_total_friend_count": "총 %s 명의 친구"
 };
 
 final engMap = {
@@ -79,6 +83,9 @@ final engMap = {
   "generic_full_sunday": "SUN",
   "generic_search": "Search",
   "generic_add_friend": "Add Friend",
+  "generic_friend_share_diary": "Share Diary",
+  "generic_friend_unshare_diary": "UnShare Diary",
+  "generic_friend_delete": "Delete",
   "generic_login_with_apple": "Login with Apple",
   "generic_login_with_google": "Login with Google",
   "message_login_view_description": "Your daily heart listener,",
@@ -88,7 +95,8 @@ final engMap = {
   "message_diary_saved_offline":
       "Diary saved locally due to internet connection",
   "message_login_failed": "Login failed..",
-  "message_offline_cannot_view_friends": "Offline mode cannot see friends"
+  "message_offline_cannot_view_friends": "Offline mode cannot see friends",
+  "message_total_friend_count": "Total %s friends"
 };
 
 String message(String key) {

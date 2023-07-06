@@ -54,12 +54,10 @@ void main() async {
                   ColorScheme.fromSeed(seedColor: BaseColor.defaultGreen),
               useMaterial3: true,
             ),
-            initialRoute: '/calendar',
+            initialRoute: authService.isAuthenticated() ? '/calendar' : '/',
             getPages: [
               GetPage(name: '/', page: () => LoginView()),
               GetPage(name: '/calendar', page: () => CalendarBaseView()),
-              GetPage(name: '/more', page: () => const MoreView()),
-              GetPage(name: '/friends', page: () => const FriendView()),
             ],
           )));
 }

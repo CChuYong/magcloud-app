@@ -1,3 +1,5 @@
+import 'package:sprintf/sprintf.dart';
+
 extension Example<T> on T {
   R let<R>(R Function(T) function) => function(this);
 
@@ -8,4 +10,8 @@ extension Example<T> on T {
       return null;
     }
   }
+}
+
+extension StringFormatExtension on String {
+  String format(var arguments) => sprintf(this, arguments);
 }

@@ -6,6 +6,8 @@ import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class BaseNavigationBar extends StatefulWidget {
+  void Function()? onTapSelf;
+  BaseNavigationBar({this.onTapSelf});
   @override
   State<StatefulWidget> createState() => _NavigationBarState();
 }
@@ -46,6 +48,13 @@ class _NavigationBarState extends State<BaseNavigationBar> {
     }
   }
 
+  void onTapNavigation(int number) {
+    if (number != currentPage()) _setPage(number);
+    else {
+      if(widget.onTapSelf != null) widget.onTapSelf!();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -77,7 +86,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
         )
       ],
       currentIndex: currentPage(),
-      onTap: (number) => {if (number != currentPage()) _setPage(number)},
+      onTap: onTapNavigation,
     );
   }
 

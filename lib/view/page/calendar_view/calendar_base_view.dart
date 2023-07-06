@@ -43,7 +43,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     const Curve curve = Curves.easeInOutSine;
     return Scaffold(
         backgroundColor: BaseColor.defaultBackgroundColor,
-        bottomNavigationBar: BaseNavigationBar(),
+        bottomNavigationBar: BaseNavigationBar(onTapSelf: action.refreshPage),
         body: Container(
           color: BaseColor.defaultBackgroundColor,
           child: Stack(

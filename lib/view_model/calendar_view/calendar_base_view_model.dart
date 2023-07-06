@@ -42,6 +42,13 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     StateStore.setInt("currentDay", state.currentDay);
   }
 
+  void refreshPage() async {
+    setupVerticalAnimation(state.scope == CalendarViewScope.YEAR);
+    setStateAsync(() async {
+      await setScope(CalendarViewScope.MONTH);
+    });
+  }
+
   void toggleFriendBar() {
     setState(() {
       isFriendBarOpen = !isFriendBarOpen;

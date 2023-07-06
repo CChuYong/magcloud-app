@@ -77,14 +77,64 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                   children: [
                     TouchableOpacity(
                         onTap: action.onAppleLogin,
-                        child: Image.asset(
-                            'assets/images/sign_in_with_apple_4x.png')),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Colors.black,
+                            ),
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14.sp),
+                              child:Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Row(
+                                    children: [
+                                      Image.asset(
+                                          'assets/images/apple_23px.png', height: 21.sp, width: 21.sp),
+                                      SizedBox(width: 12.sp),
+                                      Text(
+                                        message('generic_login_with_apple'),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Pretendard',
+                                          fontSize: 18.sp,
+                                        ),
+                                      )
+                                    ]
+
+                                )],
+                              ),
+                            ))),
                     SizedBox(height: 8.sp),
                     TouchableOpacity(
-                      onTap: action.onGoogleLogin,
-                      child: Image.asset(
-                          'assets/images/sign_in_with_google_4x.png'),
-                    ),
+                        onTap: action.onGoogleLogin,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.sp),
+                            color: Colors.white,
+                          ),
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 14.sp),
+                            child:Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Row(
+                              children: [
+                                Image.asset(
+                                    'assets/images/google_23px.png', height: 21.sp, width: 21.sp),
+                                SizedBox(width: 12.sp),
+                                Text(
+                                  message('generic_login_with_google'),
+                                  style: TextStyle(
+                                    fontFamily: 'Pretendard',
+                                    fontSize: 18.sp,
+                                  ),
+                                )
+                              ]
+
+                            )],
+                          ),
+                        )))
                   ],
                 )
               ]),

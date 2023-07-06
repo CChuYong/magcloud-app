@@ -176,7 +176,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                 ? Container(
                     color: BaseColor.defaultBackgroundColor,
                     width: double.infinity,
-                    height: 65.sp,
+                    height: 66.sp,
                     child: CustomScrollView(
                         scrollDirection: Axis.horizontal,
                         slivers: [
@@ -192,7 +192,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                 : Container(
                     color: BaseColor.defaultBackgroundColor,
                     width: double.infinity,
-                    height: 65.sp,
+                    height: 66.sp,
                     child: CustomScrollView(
                         scrollDirection: Axis.horizontal,
                         slivers: [

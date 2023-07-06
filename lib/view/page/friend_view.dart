@@ -30,6 +30,7 @@ class FriendView
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 5.sp),
             titleBar(),
             SizedBox(height: 14.sp),
             searchBar(action),

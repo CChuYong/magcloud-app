@@ -54,6 +54,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
                       child: TextField(
+                        readOnly: !action.isMeSelected(),
                         focusNode: scopeData.focusNode,
                         style: TextStyle(
                           fontFamily: "KyoboHandWriting",

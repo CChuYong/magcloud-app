@@ -27,6 +27,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 5.sp),
             titleBar(),
             SizedBox(height: 15.sp),
             meBox(action, state),

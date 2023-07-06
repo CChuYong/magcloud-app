@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final class BaseColor {
-  static const warmGray900 = Color(0xff1C1917);
+  // static const warmGray900 = Color(0xff1C1917);
   static const warmGray800 = Color(0xff292524);
   static const warmGray700 = Color(0xff44403C);
   static const warmGray600 = Color(0xff57534E);
@@ -12,11 +12,11 @@ final class BaseColor {
   static const warmGray100 = Color(0xffF5F5F4);
   static const warmGray50 = Color(0xffFAFAF9);
 
-  static const green900 = Color(0xff14532D);
-  static const green800 = Color(0xff166534);
-  static const green700 = Color(0xff15803D);
-  static const green600 = Color(0xff16A34A);
-  static const green500 = Color(0xff22C55E);
+  //static const green900 = Color(0xff14532D);
+  // static const green800 = Color(0xff166534);
+  // static const green700 = Color(0xff15803D);
+   static const green600 = Color(0xff16A34A);
+  // static const green500 = Color(0xff22C55E);
   static const green400 = Color(0xff4ADE80);
   static const green300 = Color(0xff86EFAC);
   static const green200 = Color(0xffBBF7D0);
@@ -25,15 +25,10 @@ final class BaseColor {
 
   static const red300 = Color(0xffFCA5A5);
   static const red400 = Color(0xffF87171);
-
   static const yellow300 = Color(0xffFCD34D);
-
   static const orange300 = Color(0xffFDBA74);
-
   static const blue300 = Color(0xff93C5FD);
 
-  static const defaultGreen = Color(0xff10B981);
-  static const defaultRed = Color(0xffFF8282);
 
   static const defaultBackgroundColor = Colors.white;
 }

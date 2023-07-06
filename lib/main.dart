@@ -53,7 +53,7 @@ void main() async {
             theme: ThemeData(
               fontFamily: 'GmarketSans',
               colorScheme:
-                  ColorScheme.fromSeed(seedColor: BaseColor.defaultGreen),
+                  ColorScheme.fromSeed(seedColor: BaseColor.defaultBackgroundColor),
               useMaterial3: true,
             ),
             initialRoute: authService.isAuthenticated() ? '/calendar' : '/',

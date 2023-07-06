@@ -137,10 +137,10 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
               TouchableOpacity(
                   onTap: () => action.toggleOnline(),
                   child: Text(
-                    message("magcloud"),
+                    action.isFriendBarOpen ? message("magcloud") : (action.isMeSelected() ? message("magcloud_with_me") : message("magcloud_with_name").format([action.state.selectedUser?.name ?? ''])),
                     style: TextStyle(
                         color: BaseColor.warmGray800,
-                        fontSize: 22.sp,
+                        fontSize: action.isFriendBarOpen ? 22.sp : 20.sp,
                         fontFamily: 'GmarketSans'),
                   )),
               TouchableOpacity(

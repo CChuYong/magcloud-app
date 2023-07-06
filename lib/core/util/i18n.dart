@@ -9,6 +9,8 @@ void toggleEng() {
 
 final map = {
   "magcloud": "매지구름",
+  "magcloud_with_name": "%s님의 매지구름",
+  "magcloud_with_me": "나의 매지구름",
   "navigation_friends": "내 친구",
   "navigation_calendar": "달력",
   "navigation_more": "더보기",
@@ -66,6 +68,8 @@ final map = {
 
 final engMap = {
   "magcloud": "MagCloud",
+  "magcloud_with_name": "%s's MagCloud",
+  "magcloud_with_me": "My MagCloud",
   "navigation_friends": "Friends",
   "navigation_calendar": "Calendar",
   "navigation_more": "More",

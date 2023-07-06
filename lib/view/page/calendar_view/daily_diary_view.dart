@@ -122,7 +122,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               padding: EdgeInsets.symmetric(vertical: 13.sp),
               child: Center(
                 child: Text(
-                  diary.mood.localizedName,
+                  diary.mood.getLocalizedName(),
                   style: TextStyle(
                     color: BaseColor.warmGray500,
                     fontSize: 14.sp,

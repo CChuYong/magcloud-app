@@ -68,7 +68,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         borderRadius: BorderRadius.circular(10)
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 10.sp),
+        padding: EdgeInsets.symmetric(vertical: 14.sp, horizontal: 14.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

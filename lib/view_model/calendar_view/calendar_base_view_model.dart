@@ -56,6 +56,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   bool isOnline() => onlineService.isOnlineMode();
 
+  bool isMeSelected() => state.selectedUser?.userId == state.dailyMe?.userId;
+
   CalendarBaseViewModel()
       : super(
           CalendarBaseViewState(

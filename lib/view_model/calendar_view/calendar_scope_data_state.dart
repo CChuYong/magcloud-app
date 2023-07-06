@@ -19,6 +19,7 @@ class CalendarMonthViewScopeData extends CalendarScopeData {
 
 class CalendarDailyViewScopeData extends CalendarScopeData {
   final TextEditingController diaryTextController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
   final Diary currentDiary;
 
   CalendarDailyViewScopeData(this.currentDiary) {

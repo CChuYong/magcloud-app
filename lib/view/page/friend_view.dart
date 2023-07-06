@@ -26,7 +26,13 @@ class FriendView
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [titleBar()],
+          children: [
+            titleBar(),
+            SizedBox(height: 14.sp),
+            searchBar(action),
+            SizedBox(height: 5.sp),
+            Divider(color: BaseColor.warmGray200),
+          ],
         ),
       ),
     );
@@ -49,5 +55,47 @@ class FriendView
                 onTap: () => Get.offNamed('/'), child: Icon(Icons.ac_unit))
           ],
         ));
+  }
+
+  Widget searchBar(FriendViewModel action) {
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.sp),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: BaseColor.warmGray100,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.sp),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.search, size: 20.sp, color: BaseColor.warmGray300),
+                SizedBox(width: 8.sp),
+                Expanded(child:
+                TextField(
+                  controller: action.searchController,
+                  style: TextStyle(
+                    color: BaseColor.warmGray600,
+                    fontSize: 15.sp,
+                    height: 1.2,
+                  ),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                    hintText: message('generic_search'),
+                    hintStyle: TextStyle(
+                      color: BaseColor.warmGray400,
+                      fontSize: 15.sp,
+                    )
+                  ),
+                ))
+              ],
+            ),
+          )
+
+          ,
+        )
+
+    );
   }
 }

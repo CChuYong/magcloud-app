@@ -70,4 +70,20 @@ class DateParser {
     }
     return DateFormat('EEE, MMM d, y', 'en_US').format(date);
   }
+
+  static String formatLocaleYm(int year, int month) {
+    final date = DateTime(year, month);
+    if (isKorea) {
+      return DateFormat('y년 MMM', 'ko_KR').format(date);
+    }
+    return DateFormat('MMM y', 'en_US').format(date);
+  }
+
+  static String formatLocaleMonth(int month) {
+    final date = DateTime(2020, month);
+    if (isKorea) {
+      return DateFormat('MMM', 'ko_KR').format(date);
+    }
+    return DateFormat('MMM', 'en_US').format(date);
+  }
 }

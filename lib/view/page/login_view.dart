@@ -18,29 +18,59 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
     return Scaffold(
       backgroundColor: BaseColor.warmGray200,
       body: SafeArea(
-        child: Padding(
+        child: fadeable(Padding(
+          key: Key(isKorea.toString()),
           padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      message("message_login_view_description"),
-                      style: TextStyle(
-                          color: BaseColor.warmGray800,
-                          fontSize: 12.sp,
-                          fontFamily: 'GmarketSans'),
-                    ),
-                    Text(
-                      message("magcloud"),
-                      style: TextStyle(
-                          color: BaseColor.warmGray800,
-                          fontSize: 30.sp,
-                          fontFamily: 'GmarketSans'),
-                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message("message_login_view_description"),
+                              style: TextStyle(
+                                  color: BaseColor.warmGray800,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'GmarketSans'),
+                            ),
+                            Text(
+                              message("magcloud"),
+                              style: TextStyle(
+                                  color: BaseColor.warmGray800,
+                                  fontSize: 30.sp,
+                                  fontFamily: 'GmarketSans'),
+                            ),
+                          ],
+                        ),
+                        TouchableOpacity(
+                          onTap: action.toggleLanguage,
+                            child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: BaseColor.warmGray100,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 6.sp),
+                            child: Row(
+                              children: [
+                                Icon(Icons.cloudy_snowing),
+                                SizedBox(width: 3.sp),
+                                Text(isKorea ? 'KOR' : 'ENG')
+                              ],
+                            ),
+                          ),
+                        ))
+
+                      ],
+                    )
                   ],
                 ),
                 Column(
@@ -59,7 +89,21 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                 )
               ]),
         ),
-      ),
+      )),
+    );
+  }
+
+  Widget fadeable(Widget widget) {
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 300),
+      transitionBuilder:
+          (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      child: widget,
     );
   }
 }

@@ -1,4 +1,11 @@
-final isKorea = true;
+import 'package:magcloud_app/core/framework/state_store.dart';
+
+bool isKorea = true;
+
+void toggleEng() {
+  isKorea = !isKorea;
+  StateStore.setBool('isKorea', isKorea);
+}
 
 final map = {
   "magcloud": "매지구름",
@@ -28,6 +35,8 @@ final map = {
   "generic_full_friday": "금요일",
   "generic_full_saturday": "토요일",
   "generic_full_sunday": "일요일",
+  "generic_search": "검색",
+  "generic_add_friend": "친구 추가",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래로는 이동할 수 없어요",
   "message_offline_mode_activated": "오프라인 모드가 되었어요",
@@ -66,6 +75,8 @@ final engMap = {
   "generic_full_friday": "FRI",
   "generic_full_saturday": "SAT",
   "generic_full_sunday": "SUN",
+  "generic_search": "Search",
+  "generic_add_friend": "Add Friend",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
   "message_offline_mode_activated": "You've been away from server...",

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
@@ -27,7 +28,15 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   bool verticalForwardAction = false;
   bool verticalAnimationStart = false;
 
-  bool isFriendBarOpen = true;
+  bool isFriendBarOpen = StateStore.getBool("isFriendBarOpen", true);
+
+  @override
+  void dispose() {
+    StateStore.setBool("isFriendBarOpen", isFriendBarOpen);
+    StateStore.setInt("currentYear", state.currentYear);
+    StateStore.setInt("currentMonth", state.currentMonth);
+    StateStore.setInt("currentDay", state.currentDay);
+  }
 
   void toggleFriendBar() {
     setState(() {
@@ -35,12 +44,12 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     });
   }
 
-  CalendarBaseViewModel({int? initialMonth, int? initialYear, int? initialDay})
+  CalendarBaseViewModel()
       : super(
           CalendarBaseViewState(
-            initialYear ?? DateParser.getCurrentYear(),
-            initialMonth ?? DateParser.getCurrentMonth(),
-            initialDay ?? DateParser.getCurrentDay(),
+            StateStore.getInt("currentYear") ?? DateParser.getCurrentYear(),
+            StateStore.getInt("currentMonth") ?? DateParser.getCurrentMonth(),
+            StateStore.getInt("currentDay") ?? DateParser.getCurrentDay(),
             CalendarViewScope.MONTH,
             CalendarMonthViewScopeData({}),
           ),
@@ -66,7 +75,13 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       case CalendarViewScope.DAILY:
         final diary = await diaryService.getDiary(
             state.currentYear, state.currentMonth, state.currentDay);
-        setScopeData(CalendarDailyViewScopeData(diary));
+        final dailyScopeData = CalendarDailyViewScopeData(diary);
+        setScopeData(dailyScopeData);
+        dailyScopeData.focusNode.addListener(() {
+          if(isFriendBarOpen) {
+            toggleFriendBar();
+          }
+        });
         break;
     }
   }
@@ -96,7 +111,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   @override
   Future<void> initState() async {
     setStateAsync(() async {
-      await setScope(CalendarViewScope.MONTH);
+      await setScope(state.scope);
     });
   }
 
@@ -115,8 +130,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     final afterDelta = DateTime(
         state.currentYear, state.currentMonth, state.currentDay + delta);
     if (afterDelta.isAfter(now)) {
-      SnackBarUtil.errorSnackBar(
-          message: message("message_cannot_move_to_future"));
+      snackNoFuture();
       return;
     }
     setupAnimation(delta);
@@ -148,8 +162,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     final currentMonth = DateParser.getCurrentMonth();
     if ((targetYear == currentYear && targetMonth > currentMonth) ||
         targetYear > currentYear) {
-      SnackBarUtil.errorSnackBar(
-          message: message("message_cannot_move_to_future"));
+      snackNoFuture();
       return;
     }
     setupAnimation(delta);
@@ -164,8 +177,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   Future<void> changeYear(int delta) async {
     final afterDelta = state.currentYear + delta;
     if (afterDelta > DateParser.getCurrentYear()) {
-      SnackBarUtil.errorSnackBar(
-          message: message("message_cannot_move_to_future"));
+      snackNoFuture();
       return;
     }
     setupAnimation(delta);
@@ -207,5 +219,10 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     setStateAsync(() async {
       await setScope(CalendarViewScope.MONTH);
     });
+  }
+
+  void snackNoFuture() {
+    SnackBarUtil.errorSnackBar(
+        message: message("message_cannot_move_to_future"));
   }
 }

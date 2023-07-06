@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
+import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -81,7 +82,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           TouchableOpacity(
               onTap: action.onTapMonthTitle,
               child: Text(
-                '${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")}',
+                DateParser.formatLocaleYm(state.currentYear, state.currentMonth),
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,
@@ -127,7 +128,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
       {required int day, required double boxWidth}) {
     final scopeData = action.state.scopeData as CalendarMonthViewScopeData;
     return TouchableOpacity(
-        onTap: () => day > 0 ? action.onTapDayBox(day) : null,
+        onTap: () => day > 0 ? action.onTapDayBox(day) : (day == -1 ? null : action.snackNoFuture()),
         child: Container(
           width: boxWidth,
           height: boxWidth,

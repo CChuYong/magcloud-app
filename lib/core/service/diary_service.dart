@@ -21,7 +21,8 @@ class DiaryService {
             mood: Mood.neutral,
             content: '',
             ymd: DateTime(year, month, day),
-            hash: HashUtil.emptyHash());
+            hash: HashUtil.emptyHash()
+        );
   }
 
   Future<Diary> updateDiary(Diary currentDiary, String content) async {

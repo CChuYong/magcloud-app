@@ -15,7 +15,6 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   final fontSize = 10.sp;
 
   void _setPage(int index) async {
-    final isForward = currentPage() < index;
     await GlobalRoute.fadeRoute(pageToRoute(index));
   }
 

@@ -45,6 +45,7 @@ class SnackBarUtil {
     _snackbar(
       '',
       message,
+      barBlur: 100.0,
       // backgroundColor: bgColor,
       // colorText: txtColor,
       icon: Icon(BaseIcon.snackBarInfo),

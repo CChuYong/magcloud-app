@@ -107,7 +107,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                 ),
                 Container(
                   color: BaseColor.defaultBackgroundColor,
-                  child: Divider(),
+                  child:      Divider(color: BaseColor.warmGray200),
                 )
                 ,
               ],
@@ -201,7 +201,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           child: Icon(Icons.add),
         ),
         Text(
-          '친구추가',
+          message('generic_add_friend'),
           style: TextStyle(
             color: BaseColor.warmGray500,
             fontSize: 12.sp,

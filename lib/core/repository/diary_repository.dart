@@ -22,12 +22,11 @@ class DiaryRepository extends BaseRepository {
 
   @override
   Future<void> prepareTable() async {
-    //await database.execute('DROP TABLE $tableName');
+    await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
-        diary_id TEXT PRIMARY KEY,
-        ymd TEXT NOT NULL,
+        ymd TEXT NOT NULL PRIMARY KEY,
         content TEXT NOT NULL,
         mood TEXT NOT NULL,
         hash TEXT NOT NULL
@@ -35,11 +34,7 @@ class DiaryRepository extends BaseRepository {
     ''');
 
     await database.execute('''
-      CREATE UNIQUE INDEX IF NOT EXISTS ${tableName}_idx1 ON $tableName (ymd)
-    ''');
-
-    await database.execute('''
-      CREATE UNIQUE INDEX IF NOT EXISTS ${tableName}_idx2 ON $tableName (mood)
+      CREATE INDEX IF NOT EXISTS ${tableName}_idx1 ON $tableName (mood)
     ''');
   }
 

@@ -105,22 +105,20 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
             DateParser.getCurrentMonth() < month;
     final scopeData = action.state.scopeData as CalendarYearViewScopeData;
     return TouchableOpacity(
-        onTap: () => isInvisible ? null : action.onTapMonthBox(month),
+        onTap: () => isInvisible ? action.snackNoFuture() : action.onTapMonthBox(month),
         child: Container(
           width: boxWidth,
           height: boxWidth,
           decoration: BoxDecoration(
             border: Border.all(color: BaseColor.warmGray300),
             borderRadius: BorderRadius.circular(15),
-            color: isInvisible
-                ? BaseColor.warmGray200
-                : (scopeData.monthlyMood[month]?.moodColor),
+            color: scopeData.monthlyMood[month]?.moodColor,
           ),
           child: Center(
             child: Text(
-              '${month}${message("generic_month")}',
+              DateParser.formatLocaleMonth(month),
               style: TextStyle(
-                color: BaseColor.warmGray500,
+                color: isInvisible ? BaseColor.warmGray200 : BaseColor.warmGray500,
                 fontSize: 18.sp,
               ),
             ),

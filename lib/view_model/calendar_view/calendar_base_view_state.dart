@@ -1,6 +1,9 @@
+import 'package:magcloud_app/core/model/daily_user.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_base_view_model.dart';
 
+import '../../core/model/user.dart';
 import 'calendar_scope_data_state.dart';
 
 class CalendarBaseViewState {
@@ -9,6 +12,7 @@ class CalendarBaseViewState {
   int currentDay;
   CalendarViewScope scope;
   CalendarScopeData scopeData;
+  List<DailyUser> dailyFriends = List.empty();
 
   CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay,
       this.scope, this.scopeData);

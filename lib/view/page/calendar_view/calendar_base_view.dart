@@ -1,11 +1,15 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
+import 'package:magcloud_app/core/model/daily_user.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
+import '../../../core/model/user.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
@@ -34,13 +38,12 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   @override
   Widget render(BuildContext context, CalendarBaseViewModel action,
       CalendarBaseViewState state) {
-    final Curve curve = Curves.easeInOutSine;
+    const Curve curve = Curves.easeInOutSine;
     return Scaffold(
         backgroundColor: BaseColor.defaultBackgroundColor,
         bottomNavigationBar: BaseNavigationBar(),
         body: Container(
           color: BaseColor.defaultBackgroundColor,
-          //child : //SafeArea(
           child: Stack(
             children: [
               SafeArea(
@@ -127,6 +130,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TouchableOpacity(
+                onTap: () => OnlineService.invokeOnlineToggle(),
                   child: Text(
                 message("magcloud"),
                 style: TextStyle(
@@ -156,8 +160,8 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           height: 64.sp,
           child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
             SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
-            for (int i = 0; i < 1; i++) ...[
-              SliverToBoxAdapter(child: friendIcon()),
+            for (DailyUser user in action.state.dailyFriends) ...[
+              SliverToBoxAdapter(child: friendIcon(user)),
               SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
             ],
             SliverToBoxAdapter(child: addFriend(action)),
@@ -210,7 +214,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     );
   }
 
-  Widget friendIcon() {
+  Widget friendIcon(DailyUser user) {
     return Column(
       children: [
         Container(
@@ -219,10 +223,15 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           decoration: BoxDecoration(
               color: BaseColor.warmGray700,
               shape: BoxShape.circle,
-              border: Border.all(color: BaseColor.red300, width: 2.0)),
+              border: Border.all(color: user.diary.mood.moodColor, width: 3.0),
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(user.profileImageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         Text(
-          '송영민',
+          user.name,
           style: TextStyle(
             color: BaseColor.warmGray500,
             fontSize: 12.sp,

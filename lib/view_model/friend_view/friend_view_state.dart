@@ -2,7 +2,7 @@ import '../../core/model/user.dart';
 
 class FriendViewState {
   String filterWord = "";
-  final List<User> friends = List.empty(growable: true);
+  List<User> friends = List.empty(growable: false);
 
   Iterable<User> getFilteredFriends() => friends.where((element) => element.name.contains(filterWord));
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,7 @@ class FriendView
             searchBar(action),
             SizedBox(height: 5.sp),
             Divider(color: BaseColor.warmGray200),
-            Expanded(child: friendContainer(state))
+            Expanded(child: friendContainer(action, state))
           ],
         ),
       ),
@@ -52,10 +53,12 @@ class FriendView
               style: TextStyle(
                   color: BaseColor.warmGray800,
                   fontSize: 22.sp,
-                  fontFamily: 'GmarketSans'),
+                  fontFamily: 'GmarketSans'
+              ),
             ),
             TouchableOpacity(
-                onTap: () => Get.offNamed('/'), child: Icon(Icons.ac_unit))
+                onTap: () => Get.offNamed('/'), child: Icon(Icons.ac_unit)
+            )
           ],
         ));
   }
@@ -97,7 +100,7 @@ class FriendView
         ));
   }
 
-  Widget friendContainer(FriendViewState state) {
+  Widget friendContainer(FriendViewModel action, FriendViewState state) {
     final friends = state.getFilteredFriends();
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 17.sp, vertical: 10.sp),
@@ -106,7 +109,7 @@ class FriendView
             Expanded(
               child: RefreshIndicator(
                 triggerMode: RefreshIndicatorTriggerMode.onEdge,
-                onRefresh: () async {},
+                onRefresh: action.reloadFriends,
                 child: CustomScrollView(reverse: false, slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(
@@ -146,9 +149,13 @@ class FriendView
                   width: 42.sp,
                   height: 42.sp,
                   decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: CachedNetworkImageProvider(user.profileImageUrl),
+                      fit: BoxFit.cover,
+                    ),
                       color: BaseColor.warmGray700,
                       shape: BoxShape.circle,
-                      border: Border.all(color: BaseColor.warmGray300, width: 1.0)),
+                      border: Border.all(color: BaseColor.warmGray300, width: 0.5)),
                 ),
                 SizedBox(width: 10.sp),
                 Column(

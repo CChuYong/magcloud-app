@@ -11,6 +11,7 @@ import 'package:magcloud_app/core/repository/diary_repository.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
+import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
@@ -44,6 +45,7 @@ void main() async {
   final onlineService = OnlineService();
   inject.registerSingleton(onlineService);
   inject.registerSingleton(DiaryService(onlineService, diary));
+  inject.registerSingleton(UserService());
 
   runApp(ScreenUtilInit(
       builder: (context, widget) => GetMaterialApp(

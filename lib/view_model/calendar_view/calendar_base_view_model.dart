@@ -3,6 +3,7 @@ import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
+import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -20,6 +21,7 @@ enum CalendarViewScope { YEAR, MONTH, DAILY }
 class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
+  final UserService userService = inject<UserService>();
   final isOnline = inject<OnlineService>().isOnlineMode();
 
   bool forwardAction = false;
@@ -39,6 +41,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void toggleFriendBar() {
+    print(isOnline);
     setState(() {
       isFriendBarOpen = !isFriendBarOpen;
     });
@@ -113,6 +116,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     setStateAsync(() async {
       await setScope(state.scope);
     });
+    if (isOnline) {
+      setStateAsync(() async {
+        state.dailyFriends = await userService.getDailyFriends();
+      });
+    }
   }
 
   void setupAnimation(int delta) {

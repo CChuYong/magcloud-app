@@ -12,7 +12,9 @@ class MoreViewModel
   MoreViewModel() : super(MoreViewState());
 
   @override
-  Future<void> initState() async {}
+  Future<void> initState() async {
+    state.me = await inject<UserService>().getMe();
+  }
 
   Future<void> onTapMyProfiles() async {
 

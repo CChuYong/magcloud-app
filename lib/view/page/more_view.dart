@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
@@ -25,7 +26,11 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [titleBar(),
+          children: [
+            titleBar(),
+            SizedBox(height: 15.sp),
+            meBox(action, state),
+            SizedBox(height: 15.sp),
             Expanded(child:  menuBox(action))
           ],
         ),
@@ -50,6 +55,66 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         ));
   }
 
+  Widget meBox(MoreViewModel action, MoreViewState state) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.sp),
+        child: TouchableOpacity(
+          onTap: action.onTapMyProfiles,
+            child:
+        Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: BaseColor.warmGray100,
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 10.sp),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 50.sp,
+                height: 50.sp,
+                decoration: BoxDecoration(
+                    image: state.me != null ? DecorationImage(
+                      image: CachedNetworkImageProvider(state.me!.profileImageUrl),
+                      fit: BoxFit.cover,
+                    ) : null,
+                    color: BaseColor.warmGray700,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: BaseColor.warmGray300, width: 0.5)),
+              ),
+              SizedBox(width: 13.sp),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.me?.name ?? '',
+                    style: TextStyle(
+                        color: BaseColor.warmGray800,
+                        fontSize: 16.sp,
+                        fontFamily: 'GmarketSans'),
+                  ),
+                  Text(
+                    state.me?.nameTag ?? '',
+                    style: TextStyle(
+                        color: BaseColor.warmGray600,
+                        fontSize: 12.sp,
+                        fontFamily: 'GmarketSans'),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Icon(BaseIcon.arrowRight, color: BaseColor.warmGray400)
+
+        ],
+      ),
+    ))));
+  }
+
   Widget menuBox( MoreViewModel action) {
     final boxGap = 10.sp;
     return Padding(padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -64,11 +129,11 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             message('menu_settings'),
             style: TextStyle(
                 color: BaseColor.warmGray500,
-                fontSize: 20.sp,
+                fontSize: 18.sp,
                 fontFamily: 'GmarketSans'),
           ),
-          SizedBox(height: boxGap),
-          menuBtn(Icons.person, message('menu_my_profiles'), action.onTapMyProfiles),
+          // SizedBox(height: boxGap),
+          // menuBtn(Icons.person, message('menu_my_profiles'), action.onTapMyProfiles),
           SizedBox(height: boxGap),
           menuBtn(Icons.notifications, message('menu_notification'), action.onTapNotification),
           SizedBox(height: boxGap),
@@ -80,7 +145,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             message('menu_info'),
             style: TextStyle(
                 color: BaseColor.warmGray500,
-                fontSize: 20.sp,
+                fontSize: 18.sp,
                 fontFamily: 'GmarketSans'),
           ),
           SizedBox(height: boxGap),
@@ -99,6 +164,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   }
 
   Widget menuBtn(IconData icon, String name, void Function() onTap) {
+    final iconSize = 20.sp;
     return TouchableOpacity(
         onTap: onTap,
         child: Padding(
@@ -112,16 +178,16 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 24.sp,
-                      width: 24.sp,
-                      child: Center(child: Icon(icon, size: 24.sp, color: BaseColor.warmGray500)),
+                      height: iconSize,
+                      width: iconSize,
+                      child: Center(child: Icon(icon, size: iconSize, color: BaseColor.warmGray500)),
                     ),
                     SizedBox(width: 10.sp),
                     Text(
                       name,
                       style: TextStyle(
                           color: BaseColor.warmGray500,
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                           height: 1.2,
                           fontFamily: 'GmarketSans'),
                     ),

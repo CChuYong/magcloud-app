@@ -233,7 +233,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           width: 40.sp,
           height: 40.sp,
           decoration: BoxDecoration(
-            color: BaseColor.warmGray700,
+            color: BaseColor.defaultBackgroundColor,
             shape: BoxShape.circle,
             image: url != null ? DecorationImage(
               image: CachedNetworkImageProvider(url),

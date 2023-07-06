@@ -83,7 +83,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                       image: CachedNetworkImageProvider(state.me!.profileImageUrl),
                       fit: BoxFit.cover,
                     ) : null,
-                    color: BaseColor.warmGray700,
+                    color: BaseColor.defaultBackgroundColor,
                     shape: BoxShape.circle,
                     border: Border.all(color: BaseColor.warmGray300, width: 0.5)),
               ),

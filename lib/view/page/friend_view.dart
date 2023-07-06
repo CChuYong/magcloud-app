@@ -57,7 +57,7 @@ class FriendView
               ),
             ),
             TouchableOpacity(
-                onTap: () => Get.offNamed('/'), child: Icon(Icons.ac_unit)
+                onTap: () => Get.offNamed('/'), child: Icon(Icons.people)
             )
           ],
         ));

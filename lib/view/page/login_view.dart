@@ -63,7 +63,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                                     vertical: 3.sp, horizontal: 6.sp),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.cloudy_snowing),
+                                    Icon(Icons.language),
                                     SizedBox(width: 3.sp),
                                     Text(isKorea ? 'KOR' : 'ENG')
                                   ],

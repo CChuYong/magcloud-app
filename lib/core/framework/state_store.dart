@@ -48,7 +48,8 @@ class StateStore {
     await sharedPreferences!.setBool(key, value);
   }
 
-  static bool getBool(String key, bool def) => sharedPreferences!.getBool(key) ?? def;
+  static bool getBool(String key, bool def) =>
+      sharedPreferences!.getBool(key) ?? def;
 
   static void setInt(String key, int value) async {
     await sharedPreferences!.setInt(key, value);

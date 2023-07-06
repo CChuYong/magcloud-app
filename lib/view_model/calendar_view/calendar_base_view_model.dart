@@ -78,7 +78,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
         final dailyScopeData = CalendarDailyViewScopeData(diary);
         setScopeData(dailyScopeData);
         dailyScopeData.focusNode.addListener(() {
-          if(isFriendBarOpen) {
+          if (isFriendBarOpen) {
             toggleFriendBar();
           }
         });

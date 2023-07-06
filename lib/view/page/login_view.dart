@@ -18,7 +18,8 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
     return Scaffold(
       backgroundColor: BaseColor.warmGray200,
       body: SafeArea(
-        child: fadeable(Padding(
+          child: fadeable(
+        Padding(
           key: Key(isKorea.toString()),
           padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),
           child: Column(
@@ -51,24 +52,24 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                           ],
                         ),
                         TouchableOpacity(
-                          onTap: action.toggleLanguage,
+                            onTap: action.toggleLanguage,
                             child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: BaseColor.warmGray100,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 6.sp),
-                            child: Row(
-                              children: [
-                                Icon(Icons.cloudy_snowing),
-                                SizedBox(width: 3.sp),
-                                Text(isKorea ? 'KOR' : 'ENG')
-                              ],
-                            ),
-                          ),
-                        ))
-
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: BaseColor.warmGray100,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.sp, horizontal: 6.sp),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.cloudy_snowing),
+                                    SizedBox(width: 3.sp),
+                                    Text(isKorea ? 'KOR' : 'ENG')
+                                  ],
+                                ),
+                              ),
+                            ))
                       ],
                     )
                   ],
@@ -85,56 +86,54 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                             width: double.infinity,
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 14.sp),
-                              child:Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [Row(
-                                    children: [
-                                      Image.asset(
-                                          'assets/images/apple_23px.png', height: 21.sp, width: 21.sp),
-                                      SizedBox(width: 12.sp),
-                                      Text(
-                                        message('generic_login_with_apple'),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Pretendard',
-                                          fontSize: 18.sp,
-                                        ),
-                                      )
-                                    ]
-
-                                )],
+                                children: [
+                                  Row(children: [
+                                    Image.asset('assets/images/apple_23px.png',
+                                        height: 21.sp, width: 21.sp),
+                                    SizedBox(width: 12.sp),
+                                    Text(
+                                      message('generic_login_with_apple'),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Pretendard',
+                                        fontSize: 18.sp,
+                                      ),
+                                    )
+                                  ])
+                                ],
                               ),
                             ))),
                     SizedBox(height: 8.sp),
                     TouchableOpacity(
                         onTap: action.onGoogleLogin,
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.sp),
-                            color: Colors.white,
-                          ),
-                          width: double.infinity,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 14.sp),
-                            child:Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Row(
-                              children: [
-                                Image.asset(
-                                    'assets/images/google_23px.png', height: 21.sp, width: 21.sp),
-                                SizedBox(width: 12.sp),
-                                Text(
-                                  message('generic_login_with_google'),
-                                  style: TextStyle(
-                                    fontFamily: 'Pretendard',
-                                    fontSize: 18.sp,
-                                  ),
-                                )
-                              ]
-
-                            )],
-                          ),
-                        )))
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Colors.white,
+                            ),
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14.sp),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(children: [
+                                    Image.asset('assets/images/google_23px.png',
+                                        height: 21.sp, width: 21.sp),
+                                    SizedBox(width: 12.sp),
+                                    Text(
+                                      message('generic_login_with_google'),
+                                      style: TextStyle(
+                                        fontFamily: 'Pretendard',
+                                        fontSize: 18.sp,
+                                      ),
+                                    )
+                                  ])
+                                ],
+                              ),
+                            )))
                   ],
                 )
               ]),
@@ -146,8 +145,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   Widget fadeable(Widget widget) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 300),
-      transitionBuilder:
-          (Widget child, Animation<double> animation) {
+      transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(
           opacity: animation,
           child: child,

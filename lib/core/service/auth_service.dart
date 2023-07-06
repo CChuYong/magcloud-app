@@ -92,7 +92,6 @@ class AuthService {
     this.token = token;
     StateStore.setString('accessToken', token.accessToken);
     StateStore.setString('refreshToken', token.refreshToken);
-
   }
 
   Future<void> logout() async {

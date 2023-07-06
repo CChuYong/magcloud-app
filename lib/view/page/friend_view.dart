@@ -72,8 +72,8 @@ class FriendView
               children: [
                 Icon(Icons.search, size: 20.sp, color: BaseColor.warmGray300),
                 SizedBox(width: 8.sp),
-                Expanded(child:
-                TextField(
+                Expanded(
+                    child: TextField(
                   controller: action.searchController,
                   style: TextStyle(
                     color: BaseColor.warmGray600,
@@ -82,20 +82,15 @@ class FriendView
                   ),
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                    hintText: message('generic_search'),
-                    hintStyle: TextStyle(
-                      color: BaseColor.warmGray400,
-                      fontSize: 15.sp,
-                    )
-                  ),
+                      hintText: message('generic_search'),
+                      hintStyle: TextStyle(
+                        color: BaseColor.warmGray400,
+                        fontSize: 15.sp,
+                      )),
                 ))
               ],
             ),
-          )
-
-          ,
-        )
-
-    );
+          ),
+        ));
   }
 }

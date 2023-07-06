@@ -82,7 +82,8 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           TouchableOpacity(
               onTap: action.onTapMonthTitle,
               child: Text(
-                DateParser.formatLocaleYm(state.currentYear, state.currentMonth),
+                DateParser.formatLocaleYm(
+                    state.currentYear, state.currentMonth),
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,
@@ -128,7 +129,9 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
       {required int day, required double boxWidth}) {
     final scopeData = action.state.scopeData as CalendarMonthViewScopeData;
     return TouchableOpacity(
-        onTap: () => day > 0 ? action.onTapDayBox(day) : (day == -1 ? null : action.snackNoFuture()),
+        onTap: () => day > 0
+            ? action.onTapDayBox(day)
+            : (day == -1 ? null : action.snackNoFuture()),
         child: Container(
           width: boxWidth,
           height: boxWidth,

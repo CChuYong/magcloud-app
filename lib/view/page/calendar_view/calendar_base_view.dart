@@ -36,87 +36,86 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
       CalendarBaseViewState state) {
     final Curve curve = Curves.easeInOutSine;
     return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: Container(
-        color: BaseColor.defaultBackgroundColor,
-        //child : //SafeArea(
-        child: Stack(
-          children: [
-            SafeArea(child: AnimatedPadding(
-                padding: EdgeInsets.only(
-                    top: action.isFriendBarOpen ? 130.sp : 45.sp),
-                curve: curve,
-                duration: aniamtionDuration,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: AnimatedSwitcher(
-                          duration: aniamtionDuration,
-                          transitionBuilder:
-                              (Widget child, Animation<double> animation) {
-                            return SlideTransition(
-                              position: Tween<Offset>(
-                                  begin:
-                                  Offset(0.0, getAnimationOffset(action)),
-                                  end: const Offset(0.0, 0.0))
-                                  .animate(animation),
-                              child: FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              ),
-                            );
-                          },
-                          child: action.getRoutedWidgetBuilder()(),
-                        ))
-                  ],
-                )))
-            ,
-            Container(
-              width: double.infinity,
-              height: 50.sp,
-              color: BaseColor.defaultBackgroundColor,
-            ),
-            SafeArea(child: Column(
-              children: [
-                titleBar(action),
-                AnimatedSwitcher(
-                  switchInCurve: curve,
-                  switchOutCurve: curve,
-                  duration: const Duration(milliseconds: 220),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return SizeTransition(
-                      sizeFactor: animation,
-                      axis: Axis.vertical,
-                      axisAlignment: -1,
-                      child: child,
-                    );
-                  },
-                  child: action.isFriendBarOpen
-                      ? Column(
-                    children: [
-                      Container(
-                          color: BaseColor.defaultBackgroundColor,
-                          height: 18.sp,
-                          width: double.infinity),
-                      friendBar(action),
-                    ],
-                  )
-                      : Container(),
-                ),
-                Container(
-                  color: BaseColor.defaultBackgroundColor,
-                  child:      Divider(color: BaseColor.warmGray200),
-                )
-                ,
-              ],
-            ))
-            ,
-          ],
-        ),
-    //  ),
-    ));
+        backgroundColor: BaseColor.defaultBackgroundColor,
+        bottomNavigationBar: BaseNavigationBar(),
+        body: Container(
+          color: BaseColor.defaultBackgroundColor,
+          //child : //SafeArea(
+          child: Stack(
+            children: [
+              SafeArea(
+                  child: AnimatedPadding(
+                      padding: EdgeInsets.only(
+                          top: action.isFriendBarOpen ? 130.sp : 45.sp),
+                      curve: curve,
+                      duration: aniamtionDuration,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: AnimatedSwitcher(
+                            duration: aniamtionDuration,
+                            transitionBuilder:
+                                (Widget child, Animation<double> animation) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                        begin: Offset(
+                                            0.0, getAnimationOffset(action)),
+                                        end: const Offset(0.0, 0.0))
+                                    .animate(animation),
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: action.getRoutedWidgetBuilder()(),
+                          ))
+                        ],
+                      ))),
+              Container(
+                width: double.infinity,
+                height: 50.sp,
+                color: BaseColor.defaultBackgroundColor,
+              ),
+              SafeArea(
+                  child: Column(
+                children: [
+                  titleBar(action),
+                  AnimatedSwitcher(
+                    switchInCurve: curve,
+                    switchOutCurve: curve,
+                    duration: const Duration(milliseconds: 220),
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return SizeTransition(
+                        sizeFactor: animation,
+                        axis: Axis.vertical,
+                        axisAlignment: -1,
+                        child: child,
+                      );
+                    },
+                    child: action.isFriendBarOpen
+                        ? Column(
+                            children: [
+                              Container(
+                                  color: BaseColor.defaultBackgroundColor,
+                                  height: 18.sp,
+                                  width: double.infinity),
+                              friendBar(action),
+                            ],
+                          )
+                        : Container(),
+                  ),
+                  Container(
+                    color: BaseColor.defaultBackgroundColor,
+                    child: Divider(color: BaseColor.warmGray200),
+                  ),
+                ],
+              )),
+            ],
+          ),
+          //  ),
+        ));
   }
 
   Widget titleBar(CalendarBaseViewModel action) {

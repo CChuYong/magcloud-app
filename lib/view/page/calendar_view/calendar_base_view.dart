@@ -6,9 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/daily_user.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
+import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
+import '../../../core/model/mood.dart';
 import '../../../core/model/user.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
@@ -104,7 +106,10 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                                   color: BaseColor.defaultBackgroundColor,
                                   height: 18.sp,
                                   width: double.infinity),
-                              friendBar(action),
+                              Container(
+                                color: BaseColor.defaultBackgroundColor,
+                                child: friendBar(action),
+                              ),
                             ],
                           )
                         : Container(),
@@ -130,14 +135,14 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TouchableOpacity(
-                onTap: () => OnlineService.invokeOnlineToggle(),
+                  onTap: () => action.toggleOnline(),
                   child: Text(
-                message("magcloud"),
-                style: TextStyle(
-                    color: BaseColor.warmGray800,
-                    fontSize: 22.sp,
-                    fontFamily: 'GmarketSans'),
-              )),
+                    message("magcloud"),
+                    style: TextStyle(
+                        color: BaseColor.warmGray800,
+                        fontSize: 22.sp,
+                        fontFamily: 'GmarketSans'),
+                  )),
               TouchableOpacity(
                   onTap: action.toggleFriendBar,
                   child: Icon(
@@ -151,42 +156,99 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   }
 
   Widget friendBar(CalendarBaseViewModel action) {
-    return Stack(
-      // fit: StackFit.expand,
+    final isOnline = action.isOnline();
+    return IntrinsicHeight(
+      child: Row(
       children: [
-        Container(
-          color: BaseColor.defaultBackgroundColor,
-          width: double.infinity,
-          height: 64.sp,
-          child: CustomScrollView(scrollDirection: Axis.horizontal, slivers: [
-            SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
-            for (DailyUser user in action.state.dailyFriends) ...[
-              SliverToBoxAdapter(child: friendIcon(user)),
-              SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
-            ],
-            SliverToBoxAdapter(child: addFriend(action)),
-            SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
-          ]),
+        SizedBox(width: 15.sp),
+        meIcon(action, action.state.dailyMe),
+        SizedBox(width: 15.sp),
+        VerticalDivider(
+            width: 1,
+          color: BaseColor.warmGray200,
         ),
-        action.isOnline
-            ? Container()
-            : BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 3),
-                child: Container(
-                  width: double.infinity,
-                  height: 64.sp,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      message('message_offline_cannot_view_friends'),
-                      style: TextStyle(
-                        color: BaseColor.warmGray700,
-                        fontSize: 12.sp,
+        Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+          // fit: StackFit.expand,
+          children: [
+            isOnline
+                ? Container(
+                    color: BaseColor.defaultBackgroundColor,
+                    width: double.infinity,
+                    height: 65.sp,
+                    child: CustomScrollView(
+                        scrollDirection: Axis.horizontal,
+                        slivers: [
+                          SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+                          for (DailyUser user in action.state.dailyFriends) ...[
+                            SliverToBoxAdapter(child: friendIcon(action, user)),
+                            SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
+                          ],
+                          SliverToBoxAdapter(child: addFriend(action)),
+                          SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+                        ]),
+                  )
+                : Container(
+                    color: BaseColor.defaultBackgroundColor,
+                    width: double.infinity,
+                    height: 65.sp,
+                    child: CustomScrollView(
+                        scrollDirection: Axis.horizontal,
+                        slivers: [
+                          SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+                          SliverToBoxAdapter(child: addFriend(action)),
+                        ]),
+                  ),
+            isOnline
+                ? Container()
+                : ClipRect(child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Text(
+                          message('message_offline_cannot_view_friends'),
+                          style: TextStyle(
+                            color: BaseColor.warmGray700,
+                            fontSize: 12.sp,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
+
+          ],
+        ))
+      ],
+    ));
+  }
+
+  Widget friendProfileIcon(Color color, String? url) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: 40.sp,
+          height: 40.sp,
+          decoration: BoxDecoration(
+            color: BaseColor.warmGray700,
+            shape: BoxShape.circle,
+            image: url != null ? DecorationImage(
+              image: CachedNetworkImageProvider(url),
+              fit: BoxFit.cover,
+            ) : null,
+          ),
+        ),
+        Container(
+          width: 48.sp,
+          height: 48.sp,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: color, width: 3.0),
+          ),
+        )
       ],
     );
   }
@@ -194,14 +256,26 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   Widget addFriend(CalendarBaseViewModel action) {
     return Column(
       children: [
-        Container(
-          width: 42.sp,
-          height: 42.sp,
-          decoration: BoxDecoration(
-              color: BaseColor.warmGray100,
-              shape: BoxShape.circle,
-              border: Border.all(color: BaseColor.warmGray200, width: 2.0)),
-          child: Icon(Icons.add),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: 40.sp,
+              height: 40.sp,
+              decoration: BoxDecoration(
+                  color: BaseColor.warmGray100,
+                  shape: BoxShape.circle,),
+              child: Icon(Icons.add),
+            ),
+            Container(
+              width: 48.sp,
+              height: 48.sp,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: BaseColor.warmGray300, width: 3.0),
+              ),
+            )
+          ],
         ),
         Text(
           message('generic_add_friend'),
@@ -214,30 +288,43 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     );
   }
 
-  Widget friendIcon(DailyUser user) {
-    return Column(
+  Widget friendIcon(CalendarBaseViewModel action, DailyUser user) {
+    return TouchableOpacity(
+      onTap: () => action.onTapFriendIcon(user),
+        child:
+      Column(
       children: [
-        Container(
-          width: 42.sp,
-          height: 42.sp,
-          decoration: BoxDecoration(
-              color: BaseColor.warmGray700,
-              shape: BoxShape.circle,
-              border: Border.all(color: user.diary.mood.moodColor, width: 3.0),
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(user.profileImageUrl),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        friendProfileIcon(user.diary.mood.moodColor, user.profileImageUrl),
         Text(
           user.name,
           style: TextStyle(
             color: BaseColor.warmGray500,
             fontSize: 12.sp,
+            decoration: action.state.selectedUser == user ? TextDecoration.underline : null,
+            decorationStyle: TextDecorationStyle.wavy
           ),
         ),
       ],
-    );
+    ));
+  }
+
+  Widget meIcon(CalendarBaseViewModel action, DailyUser? me) {
+    final mood = me?.diary.mood ?? Mood.neutral;
+    return TouchableOpacity(
+        onTap: () => me?.let(action.onTapFriendIcon),
+        child: Column(
+      children: [
+        friendProfileIcon(mood.moodColor, me?.profileImageUrl),
+        Text(
+          message('generic_me'),
+          style: TextStyle(
+            color: BaseColor.warmGray500,
+            fontSize: 12.sp,
+              decoration: action.state.selectedUser == me ? TextDecoration.underline : null,
+              decorationStyle: TextDecorationStyle.wavy
+          ),
+        ),
+      ],
+    ));
   }
 }

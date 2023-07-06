@@ -12,6 +12,8 @@ class CalendarBaseViewState {
   int currentDay;
   CalendarViewScope scope;
   CalendarScopeData scopeData;
+  DailyUser? dailyMe;
+  User? selectedUser;
   List<DailyUser> dailyFriends = List.empty();
 
   CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay,

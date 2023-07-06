@@ -4,5 +4,5 @@ import 'diary.dart';
 
 class DailyUser extends User {
   final Diary diary;
-  DailyUser({required super.name, required super.nameTag, required super.isDiaryShared, required this.diary});
+  DailyUser({required super.userId, required super.name, required super.nameTag, required super.isDiaryShared, required this.diary});
 }

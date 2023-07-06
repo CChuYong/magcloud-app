@@ -26,7 +26,7 @@ class GlobalRoute {
   static Future<void> refresh() async {
     final currentRoute = Get.routing.route! as GetPageRoute;
     //Get.global(null).currentState!.pop();
-    Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
+   // Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
 
 
 

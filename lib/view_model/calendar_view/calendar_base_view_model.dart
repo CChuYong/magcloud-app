@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
+import 'package:magcloud_app/core/model/daily_user.dart';
+import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
@@ -22,7 +24,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     CalendarBaseViewModel, CalendarBaseViewState> {
   final DiaryService diaryService = inject<DiaryService>();
   final UserService userService = inject<UserService>();
-  final isOnline = inject<OnlineService>().isOnlineMode();
+  final OnlineService onlineService = inject<OnlineService>();
 
   bool forwardAction = false;
   bool animationStart = false;
@@ -41,11 +43,18 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void toggleFriendBar() {
-    print(isOnline);
     setState(() {
       isFriendBarOpen = !isFriendBarOpen;
     });
   }
+
+  void toggleOnline() {
+    setState(() {
+      OnlineService.invokeOnlineToggle();
+    });
+  }
+
+  bool isOnline() => onlineService.isOnlineMode();
 
   CalendarBaseViewModel()
       : super(
@@ -115,12 +124,20 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   Future<void> initState() async {
     setStateAsync(() async {
       await setScope(state.scope);
+      state.dailyMe = await userService.getDailyMe();
+      state.selectedUser = state.dailyMe; //기본값은 나 선택 ㅇㅅㅇ
     });
-    if (isOnline) {
+    if (isOnline()) {
       setStateAsync(() async {
         state.dailyFriends = await userService.getDailyFriends();
       });
     }
+  }
+
+  Future<void> onTapFriendIcon(User user) async {
+    await setStateAsync(() async {
+      state.selectedUser = user;
+    });
   }
 
   void setupAnimation(int delta) {

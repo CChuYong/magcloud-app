@@ -10,6 +10,7 @@ import 'package:magcloud_app/view/page/settings_view/application_info_view.dart'
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
+import 'package:magcloud_app/view/page/settings_view/notification_config_view.dart';
 import 'package:magcloud_app/view/page/splash_view.dart';
 import 'package:magcloud_app/view/page/webview_view.dart';
 
@@ -20,6 +21,7 @@ class GlobalRoute {
     '/navigator': () => NavigatorView(),
     '/settings/language': () => LanguageSettingView(),
     '/settings/font': () => FontSettingView(),
+    '/settings/notification': () => NotificationConfigView(),
     '/settings/app-info': () => ApplicationInfoView()
   };
 

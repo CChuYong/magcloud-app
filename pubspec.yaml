@@ -32,6 +32,7 @@ dependencies:
   rainbow_color: ^2.0.1
   webview_javascript_bridge:
   webview_flutter:
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:

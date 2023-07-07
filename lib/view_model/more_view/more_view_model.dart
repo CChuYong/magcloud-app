@@ -18,7 +18,9 @@ class MoreViewModel
 
   Future<void> onTapMyProfiles() async {}
 
-  Future<void> onTapNotification() async {}
+  Future<void> onTapNotification() async {
+    GlobalRoute.rightToLeftRouteTo('/settings/notification');
+  }
 
   Future<void> onTapFonts() async {
     setStateAsync(() async {

@@ -3,9 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
-import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
@@ -16,41 +14,17 @@ import 'package:magcloud_app/view_model/navigator_view.dart';
 class GlobalRoute {
   static final observer = CommonRouteObserver();
   static final routes = {
-    '/calendar': () => CalendarBaseView(),
-    '/more': () => const MoreView(),
-    '/friends': () => const FriendView(),
     '/login': () => LoginView(),
+    '/navigator': () => NavigatorView(),
     '/settings/language': () => LanguageSettingView(),
     '/settings/font': () => const FontSettingView(),
     '/settings/app-info': () => const ApplicationInfoView()
   };
 
-  static Future<void> horizontalRoute(String target, bool forward) async {
-    final routeBuilder = routes[target];
-    await Get.off(routeBuilder,
-        transition: !forward ? Transition.leftToRight : Transition.rightToLeft);
-  }
-
   static Future<void> fadeRoute(String target) async {
     final routeBuilder = routes[target];
     await Get.off(routeBuilder,
         transition: Transition.fadeIn,
-        duration: const Duration(milliseconds: 80));
-  }
-
-  static Future<void> route(String target) async {
-    final routeBuilder = routes[target];
-    await Get.off(routeBuilder, transition: Transition.noTransition);
-  }
-
-  static Future<void> routeTo(String target) async {
-    final routeBuilder = routes[target];
-    await Get.to(routeBuilder, transition: Transition.noTransition);
-  }
-
-  static Future<void> fadeRouteTo(String target) async {
-    final routeBuilder = routes[target];
-    await Get.to(routeBuilder,   transition: Transition.fadeIn,
         duration: const Duration(milliseconds: 80));
   }
 
@@ -63,6 +37,10 @@ class GlobalRoute {
     Get.back();
   }
 
+  static Future<void> untilNavigator() async {
+    Get.until((route) => route.settings.name == '/NavigatorView');
+  }
+
   static Future<void> refresh() async {
     final currentRoute = Get.routing.route! as GetPageRoute;
 
@@ -71,41 +49,7 @@ class GlobalRoute {
   }
 
   static void goMain() {
-    Get.off(NavigatorView());
-  }
-
-  static void test(String target){
-    final routeBuilder = routes[target];
-    final name = _cleanRouteName(routeBuilder.runtimeType.toString());
-    if(observer.hasRoute(name)) {
-      print('잇음');
-      Get.until((route) {
-        if(route is GetPageRoute) {
-          return route.routeName == name;
-        }
-        return false;
-      });
-    } else{
-      print('$name djq음');
-      Get.to(routeBuilder);
-    }
-  }
-
-  static String _cleanRouteName(String name) {
-    name = name.replaceAll('() => ', '');
-
-    /// uncommonent for URL styling.
-    // name = name.paramCase!;
-    if (!name.startsWith('/')) {
-      name = '/$name';
-    }
-    return Uri.tryParse(name)?.toString() ?? name;
-  }
-
-  static Future<bool> isCurrentRouteFirst() {
-    var completer = Completer<bool>();
-
-    return completer.future;
+    fadeRoute('/navigator');
   }
 
 }

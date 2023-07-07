@@ -131,26 +131,53 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     }
   }
 
+  void unFocusTextField() {
+    if(state.scope != CalendarViewScope.DAILY) return;
+    final dailyScope = state.scopeData as CalendarDailyViewScopeData;
+    dailyScope.focusNode.unfocus();
+  }
+
+  void onTextFieldMove(PointerMoveEvent event) {
+    if(event.delta.dx.abs() < 15) return;
+    dragDebouncer.runLastCall(() {
+      final isPositive = event.delta.dx < 0;
+      final moveAmount = isPositive ? 1 : -1;
+      changeDay(moveAmount);
+    });
+  }
+
   void onVerticalDrag(DragEndDetails details) {
     dragDebouncer.runLastCall(() {
       final isPositive = (details.primaryVelocity ?? 0) > 0;
-      if(!isPositive) return;
       if(state.scope == CalendarViewScope.DAILY) {
         final dailyScope = state.scopeData as CalendarDailyViewScopeData;
-        if(dailyScope.focusNode.hasFocus) {
-          dailyScope.focusNode.unfocus();
-        }else{
-          onTapDayTitle();
+        if(isPositive) {
+          if(dailyScope.focusNode.hasFocus) {
+            dailyScope.focusNode.unfocus();
+          }else{
+            onTapDayTitle();
+          }
+        }else {
+          dailyScope.focusNode.requestFocus();
         }
+
       } else if (state.scope == CalendarViewScope.MONTH) {
-        onTapMonthTitle();
-      } else {
-        if(!isFriendBarOpen) {
-          setState(() {
-            isFriendBarOpen = true;
-          });
+        if(isPositive) {
+          onTapMonthTitle();
         } else {
-          onTapYearTitle();
+          onTapDayBox(state.currentDay);
+        }
+      } else {
+        if(isPositive) {
+          if(!isFriendBarOpen) {
+            setState(() {
+              isFriendBarOpen = true;
+            });
+          } else {
+            onTapYearTitle();
+          }
+        } else {
+          onTapMonthBox(state.currentMonth);
         }
       }
     });
@@ -161,7 +188,6 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       final isPositive = (details.primaryVelocity ?? 0) < 0;
       final moveAmount = isPositive ? 1 : -1;
       if(state.scope == CalendarViewScope.DAILY) {
-        print("?? ${moveAmount}");
         changeDay(moveAmount);
       } else if (state.scope == CalendarViewScope.MONTH) {
         changeMonth(moveAmount);

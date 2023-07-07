@@ -54,7 +54,10 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                      child: TextField(
+                      child: Listener(
+                        onPointerMove: action.onTextFieldMove,
+                          child: TextField(
+                            onTapOutside: (e) => action.unFocusTextField(),
                         readOnly: !action.isMeSelected(),
                         focusNode: scopeData.focusNode,
                         style: TextStyle(
@@ -67,7 +70,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                         ),
-                      ),
+                      )),
                     ))
                   ],
                 )))

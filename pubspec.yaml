@@ -30,6 +30,8 @@ dependencies:
   sprintf:
   package_info_plus: ^4.0.2
   rainbow_color: ^2.0.1
+  webview_javascript_bridge:
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:

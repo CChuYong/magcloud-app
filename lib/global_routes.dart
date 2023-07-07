@@ -11,6 +11,7 @@ import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/splash_view.dart';
+import 'package:magcloud_app/view/page/webview_view.dart';
 
 class GlobalRoute {
   static final observer = CommonRouteObserver();
@@ -55,6 +56,14 @@ class GlobalRoute {
 
   static void goMain() {
     fadeRoute('/navigator');
+  }
+
+  static Future<void> privacyPage() async {
+    await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/privacy'), transition: Transition.rightToLeft, popGesture: true);
+  }
+
+  static Future<void> noticePage() async {
+    await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/notice'), transition: Transition.rightToLeft, popGesture: true);
   }
 
 }

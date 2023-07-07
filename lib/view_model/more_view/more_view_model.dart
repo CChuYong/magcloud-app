@@ -32,9 +32,13 @@ class MoreViewModel
     });
   }
 
-  Future<void> onTapNotice() async {}
+  Future<void> onTapNotice() async {
+    await GlobalRoute.noticePage();
+  }
 
-  Future<void> onTapPrivacy() async {}
+  Future<void> onTapPrivacy() async {
+    await GlobalRoute.privacyPage();
+  }
 
   Future<void> onTapAppInfo() async {
     GlobalRoute.rightToLeftRouteTo('/settings/app-info');

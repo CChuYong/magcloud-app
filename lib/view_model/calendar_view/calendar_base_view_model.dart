@@ -86,7 +86,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       diaryService.updateDiary(lastDiary, scopeData.diaryTextController.text);
     }
     state.scope = scope;
-    switch (state.scope) {
+    switch (scope) {
       case CalendarViewScope.YEAR:
         final mood = await diaryService.getMonthlyMood(state.currentYear);
         setScopeData(CalendarYearViewScopeData(mood));

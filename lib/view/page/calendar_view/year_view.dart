@@ -100,13 +100,13 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
 
   Widget createMonthBox(CalendarBaseViewModel action,
       {required int month, required double boxWidth}) {
-    final isInvisible =
-        DateParser.getCurrentYear() == action.state.currentYear &&
-            DateParser.getCurrentMonth() < month;
+    final currentYear = DateParser.getCurrentYear();
+    final isInvisible = currentYear < action.state.currentYear ||
+        (currentYear == action.state.currentYear &&
+            DateParser.getCurrentMonth() < month);
     final scopeData = action.state.scopeData as CalendarYearViewScopeData;
     return TouchableOpacity(
-        onTap: () =>
-            isInvisible ? action.snackNoFuture() : action.onTapMonthBox(month),
+        onTap: () => action.onTapMonthBox(month),
         child: Container(
           width: boxWidth,
           height: boxWidth,

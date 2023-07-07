@@ -19,7 +19,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
   final fontSize = 10.sp;
 
   void _setPage(int index) async {
-    await GlobalRoute.fadeRoute(pageToRoute(index));
+    await GlobalRoute.fadeRouteTo(pageToRoute(index));
   }
 
   int routeToPage(String route) {

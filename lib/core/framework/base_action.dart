@@ -36,7 +36,10 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
     render();
   }
 
-  Future<bool> onWillPop() async => true;
+  Future<bool> onWillPop() async {
+    print("ONWILLPOP");
+    return true;
+  }
 
   @override
   Future<void> onReady() async {

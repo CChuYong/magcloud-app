@@ -14,12 +14,9 @@ class DiaryService {
 
   Future<Diary> getDiary(int year, int month, int day) async {
     final localDiary = await diaryRepository.findDiary(year, month, day);
+    final today = DateTime(year, month, day);
     return localDiary ??
-        Diary(
-            mood: Mood.neutral,
-            content: '',
-            ymd: DateTime(year, month, day),
-            hash: HashUtil.emptyHash());
+        Diary.mock(ymd: today);
   }
 
   Future<Diary> updateDiary(Diary currentDiary, String content) async {

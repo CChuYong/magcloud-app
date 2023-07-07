@@ -6,6 +6,7 @@ import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
+import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
@@ -39,6 +40,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   @override
   void dispose() {
     StateStore.setBool("isFriendBarOpen", isFriendBarOpen);
+    StateStore.setString("lastScope", state.scope.name);
     StateStore.setInt("currentYear", state.currentYear);
     StateStore.setInt("currentMonth", state.currentMonth);
     StateStore.setInt("currentDay", state.currentDay);
@@ -73,8 +75,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
             StateStore.getInt("currentYear") ?? DateParser.getCurrentYear(),
             StateStore.getInt("currentMonth") ?? DateParser.getCurrentMonth(),
             StateStore.getInt("currentDay") ?? DateParser.getCurrentDay(),
-            CalendarViewScope.MONTH,
-            CalendarMonthViewScopeData({}),
+            StateStore.getString("lastScope")?.let((scope) => CalendarViewScope.values.byName(scope)) ?? CalendarViewScope.MONTH,
           ),
         );
 
@@ -163,19 +164,20 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
       } else if (state.scope == CalendarViewScope.MONTH) {
         if(isPositive) {
-          onTapMonthTitle();
+          if(!isFriendBarOpen) {
+            setState(() {
+              isFriendBarOpen = true;
+            });
+          }else {
+            onTapMonthTitle();
+          }
+
         } else {
           onTapDayBox(state.currentDay);
         }
       } else {
         if(isPositive) {
-          if(!isFriendBarOpen) {
-            setState(() {
-              isFriendBarOpen = true;
-            });
-          } else {
-            onTapYearTitle();
-          }
+          onTapYearTitle();
         } else {
           onTapMonthBox(state.currentMonth);
         }
@@ -217,14 +219,30 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     });
   }
 
-  void setupAnimation(int delta) {
-    forwardAction = delta > 0;
+  void setupHorizontalAnimation(bool forward) {
+    forwardAction = forward;
     animationStart = true;
   }
 
   void setupVerticalAnimation(bool forward) {
     verticalForwardAction = forward;
     verticalAnimationStart = true;
+  }
+
+  Future<void> navigateToNow() async {
+    final now = DateTime.now();
+    final before = DateTime(
+        state.currentYear, state.currentMonth, state.currentDay);
+    if(state.currentYear == now.year && state.currentMonth == now.month && state.currentDay == now.day) return;
+    final after = before.isAfter(now);
+    setupHorizontalAnimation(!after);
+
+    setStateAsync(() async {
+      state.currentYear = now.year;
+      state.currentMonth = now.month;
+      state.currentDay = now.day;
+      await setScope(state.scope);
+    });
   }
 
   Future<void> changeDay(int delta) async {
@@ -235,7 +253,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       snackNoFuture();
       return;
     }
-    setupAnimation(delta);
+    setupHorizontalAnimation(delta > 0);
     setStateAsync(() async {
       state.currentYear = afterDelta.year;
       state.currentMonth = afterDelta.month;
@@ -259,15 +277,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     } else {
       targetMonth = afterDelta;
     }
-
-    final currentYear = DateParser.getCurrentYear();
-    final currentMonth = DateParser.getCurrentMonth();
-    if ((targetYear == currentYear && targetMonth > currentMonth) ||
-        targetYear > currentYear) {
-      snackNoFuture();
-      return;
-    }
-    setupAnimation(delta);
+    setupHorizontalAnimation(delta > 0);
 
     setStateAsync(() async {
       state.currentYear = targetYear;
@@ -278,11 +288,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> changeYear(int delta) async {
     final afterDelta = state.currentYear + delta;
-    if (afterDelta > DateParser.getCurrentYear()) {
-      snackNoFuture();
-      return;
-    }
-    setupAnimation(delta);
+    setupHorizontalAnimation(delta > 0);
     setStateAsync(() async {
       state.currentYear = afterDelta;
       await setScope(CalendarViewScope.YEAR);
@@ -298,6 +304,12 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   Future<void> onTapDayBox(int day) async {
+    final now = DateTime.now();
+    final target = DateTime(state.currentYear, state.currentMonth, state.currentDay);
+    if(target.isAfter(now)) {
+      snackNoFuture();
+      return;
+    }
     setupVerticalAnimation(true);
     setStateAsync(() async {
       state.currentDay = day;
@@ -307,6 +319,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> onTapYearTitle() async {
     //이럼 머야???
+    await navigateToNow();
   }
 
   Future<void> onTapMonthTitle() async {

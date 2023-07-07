@@ -10,13 +10,25 @@ class CalendarBaseViewState {
   int currentMonth;
   int currentDay;
   CalendarViewScope scope;
-  CalendarScopeData scopeData;
+  late CalendarScopeData scopeData;
   DailyUser? dailyMe;
   User? selectedUser;
   List<DailyUser> dailyFriends = List.empty();
 
   CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay,
-      this.scope, this.scopeData);
+      this.scope) {
+    switch(scope) {
+      case CalendarViewScope.MONTH:
+        scopeData = CalendarMonthViewScopeData.mock();
+        break;
+      case CalendarViewScope.YEAR:
+        scopeData = CalendarYearViewScopeData.mock();
+        break;
+      case CalendarViewScope.DAILY:
+        scopeData = CalendarDailyViewScopeData.mock();
+        break;
+    }
+  }
 
   List<List<int>> getMonthGrid() {
     //바깥쪽 리스트 -> 주

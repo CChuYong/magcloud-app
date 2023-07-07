@@ -19,7 +19,6 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView, ApplicationInfoV
   @override
   Widget render(BuildContext context, ApplicationInfoViewModel action,
       ApplicationInfoViewState state) {
-    action.onWillPop().then((value) => print(value));
     final gapBetweenElements = 10.sp;
     return  BaseSettingLayout(
       key: Key(isKorea.toString()),

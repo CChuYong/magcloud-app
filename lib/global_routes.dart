@@ -41,6 +41,12 @@ class GlobalRoute {
     await Get.to(routeBuilder, transition: Transition.noTransition);
   }
 
+  static Future<void> fadeRouteTo(String target) async {
+    final routeBuilder = routes[target];
+    await Get.to(routeBuilder,   transition: Transition.fadeIn,
+        duration: const Duration(milliseconds: 80));
+  }
+
   static Future<void> rightToLeftRouteTo(String target) async {
     final routeBuilder = routes[target];
     await Get.to(routeBuilder, transition: Transition.rightToLeft, popGesture: true);

@@ -74,7 +74,8 @@ final map = {
   "message_offline_cannot_view_friends": "오프라인 모드는 친구의 일기를 볼 수 없어요",
   "message_total_friend_count": "총 %s 명의 친구",
   "message_language_settings_info": "앱 내부에서 표기되는 언어에요. 일기 내용, 친구 이름등은 변하지 않아요",
-  "message_font_settings_info": "일기장에서 표기되는 글씨체에요. 나에게 보여지는 폰트여서 친구에게는 적용되지 않아요.",
+  "message_font_settings_info":
+      "일기장에서 표기되는 글씨체에요. 나에게 보여지는 폰트여서 친구에게는 적용되지 않아요.",
 };
 
 final engMap = {
@@ -139,8 +140,10 @@ final engMap = {
   "message_login_failed": "Login failed..",
   "message_offline_cannot_view_friends": "Offline mode cannot see friends",
   "message_total_friend_count": "Total %s friends",
-  "message_language_settings_info": "Only applied to MagCloud application. This settings cannot translate diaries.",
-  "message_font_settings_info": "This is display font for diary. Only applied to me, not friends.",
+  "message_language_settings_info":
+      "Only applied to MagCloud application. This settings cannot translate diaries.",
+  "message_font_settings_info":
+      "This is display font for diary. Only applied to me, not friends.",
 };
 
 String message(String key) {

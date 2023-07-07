@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,8 +13,10 @@ class StateStore {
   static Future<SharedPreferences> init() async {
     sharedPreferences = await _instance;
     isKorea = sharedPreferences!.getBool('isKorea') ?? true;
-    diaryFont = sharedPreferences!.getString("diaryFont") ?? 'KyoboHandWriting2019';
-    diaryFontSize = sharedPreferences!.getDouble("diaryFontSize") ?? defaultFontSize;
+    diaryFont =
+        sharedPreferences!.getString("diaryFont") ?? 'KyoboHandWriting2019';
+    diaryFontSize =
+        sharedPreferences!.getDouble("diaryFontSize") ?? defaultFontSize;
     return sharedPreferences!;
   }
 

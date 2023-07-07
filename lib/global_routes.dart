@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
@@ -26,19 +25,18 @@ class GlobalRoute {
   static Future<void> fadeRoute(String target) async {
     final routeBuilder = routes[target];
     await Get.off(routeBuilder,
-        transition: Transition.fadeIn, duration: const Duration(milliseconds: 80));
+        transition: Transition.fadeIn,
+        duration: const Duration(milliseconds: 80));
   }
 
   static Future<void> route(String target) async {
     final routeBuilder = routes[target];
-    await Get.off(routeBuilder,
-        transition: Transition.noTransition);
+    await Get.off(routeBuilder, transition: Transition.noTransition);
   }
 
   static Future<void> routeTo(String target) async {
     final routeBuilder = routes[target];
-    await Get.to(routeBuilder,
-        transition: Transition.noTransition);
+    await Get.to(routeBuilder, transition: Transition.noTransition);
   }
 
   static Future<void> back() async {
@@ -48,9 +46,6 @@ class GlobalRoute {
   static Future<void> refresh() async {
     final currentRoute = Get.routing.route! as GetPageRoute;
     //Get.global(null).currentState!.pop();
-   // Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
-
-
-
+    // Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
   }
 }

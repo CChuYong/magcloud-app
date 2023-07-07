@@ -6,8 +6,6 @@ import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-import '../model/user.dart';
-
 @injectable
 class AuthService {
   AuthToken? token;

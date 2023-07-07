@@ -1,5 +1,4 @@
 import 'package:magcloud_app/core/model/daily_user.dart';
-import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_base_view_model.dart';
 

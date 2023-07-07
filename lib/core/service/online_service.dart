@@ -64,9 +64,11 @@ class OnlineService {
 
   //bool isOnlineMode() => _online ?? true;
   static bool tempOnline = true;
+
   static void invokeOnlineToggle() {
     tempOnline = !tempOnline;
     inject<OnlineService>()._onModeSwitch(tempOnline);
   }
+
   bool isOnlineMode() => tempOnline;
 }

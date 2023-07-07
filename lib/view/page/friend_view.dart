@@ -54,12 +54,10 @@ class FriendView
               style: TextStyle(
                   color: BaseColor.warmGray800,
                   fontSize: 22.sp,
-                  fontFamily: 'GmarketSans'
-              ),
+                  fontFamily: 'GmarketSans'),
             ),
             TouchableOpacity(
-                onTap: () => Get.offNamed('/'), child: Icon(Icons.people)
-            )
+                onTap: () => Get.offNamed('/'), child: Icon(Icons.people))
           ],
         ));
   }
@@ -114,13 +112,13 @@ class FriendView
                 child: CustomScrollView(reverse: false, slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(
-                        friends.map(friendBox).toList()
-                      )),
+                          friends.map(friendBox).toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                   SliverToBoxAdapter(
                       child: Center(
                           child: Text(
-                    message('message_total_friend_count').format([friends.length.toString()]),
+                    message('message_total_friend_count')
+                        .format([friends.length.toString()]),
                     style: TextStyle(
                       color: BaseColor.warmGray500,
                       fontSize: 12.sp,
@@ -135,97 +133,100 @@ class FriendView
   }
 
   Widget friendBox(User user) {
-    return  Column(
+    return Column(
       children: [
         Stack(
           alignment: Alignment.center,
           children: [
             TouchableOpacity(
                 child: SizedBox(
-                  width: double.infinity,
-                    child:
-                Row(
-              children: [
-                Container(
-                  width: 42.sp,
-                  height: 42.sp,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(user.profileImageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                      color: BaseColor.warmGray700,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: BaseColor.warmGray300, width: 0.5)),
-                ),
-                SizedBox(width: 10.sp),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user.name,
-                      style: TextStyle(
-                        color: BaseColor.warmGray700,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    Text(
-                      user.nameTag,
-                      style: TextStyle(
-                        color: BaseColor.warmGray500,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            )))
-            ,
-            Positioned(
-              right: 0,
-                child: Row(
-              children: [
-                user.isDiaryShared ?
-                TouchableOpacity(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: BaseColor.warmGray300),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.sp, horizontal: 7.sp),
-                        child: Text(
-                          message('generic_friend_unshare_diary'),
-                          style: TextStyle(
-                            color: BaseColor.warmGray700,
-                            fontSize: 12.sp,
-                          ),
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 42.sp,
+                          height: 42.sp,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                    user.profileImageUrl),
+                                fit: BoxFit.cover,
+                              ),
+                              color: BaseColor.warmGray700,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: BaseColor.warmGray300, width: 0.5)),
                         ),
-                      ),
-                    ))
-                    : TouchableOpacity(child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: BaseColor.green200),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 6.sp, horizontal: 7.sp),
-                    child: Text(
-                      message('generic_friend_share_diary'),
-                      style: TextStyle(
-                        color: BaseColor.warmGray700,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ),
-                ))
-                ,
-                SizedBox(width: 5.sp),
-                TouchableOpacity(
-                    child: Container(
+                        SizedBox(width: 10.sp),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.name,
+                              style: TextStyle(
+                                color: BaseColor.warmGray700,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            Text(
+                              user.nameTag,
+                              style: TextStyle(
+                                color: BaseColor.warmGray500,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ))),
+            Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    user.isDiaryShared
+                        ? TouchableOpacity(
+                            child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: BaseColor.warmGray300),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 6.sp, horizontal: 7.sp),
+                              child: Text(
+                                message('generic_friend_unshare_diary'),
+                                style: TextStyle(
+                                  color: BaseColor.warmGray700,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ),
+                          ))
+                        : TouchableOpacity(
+                            child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: BaseColor.green200),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 6.sp, horizontal: 7.sp),
+                              child: Text(
+                                message('generic_friend_share_diary'),
+                                style: TextStyle(
+                                  color: BaseColor.warmGray700,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ),
+                          )),
+                    SizedBox(width: 5.sp),
+                    TouchableOpacity(
+                        child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: BaseColor.red300),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.sp, horizontal: 7.sp),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 6.sp, horizontal: 7.sp),
                         child: Text(
                           message('generic_friend_delete'),
                           style: TextStyle(
@@ -234,17 +235,13 @@ class FriendView
                           ),
                         ),
                       ),
-                    )
-                )
-
-              ],
-            ))
-
+                    ))
+                  ],
+                ))
           ],
         ),
         SizedBox(height: 8.sp),
       ],
-    )
-      ;
+    );
   }
 }

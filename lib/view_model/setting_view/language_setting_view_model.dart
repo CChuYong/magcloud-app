@@ -3,21 +3,19 @@ import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart'
 
 import '../../core/framework/base_action.dart';
 
-class LanguageSettingViewState{}
+class LanguageSettingViewState {}
 
-class LanguageSettingViewModel extends BaseViewModel<LanguageSettingView, LanguageSettingViewModel, LanguageSettingViewState>{
+class LanguageSettingViewModel extends BaseViewModel<LanguageSettingView,
+    LanguageSettingViewModel, LanguageSettingViewState> {
   LanguageSettingViewModel() : super(LanguageSettingViewState());
 
   @override
-  Future<void> initState() async {
-
-  }
+  Future<void> initState() async {}
 
   void onLanguageTap(bool korea) {
-    if(korea == isKorea) return;
+    if (korea == isKorea) return;
     setState(() {
       setLanguage(korea);
     });
   }
-
 }

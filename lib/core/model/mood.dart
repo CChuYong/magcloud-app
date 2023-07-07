@@ -5,16 +5,11 @@ import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class Mood {
   static Mood sad = Mood(BaseColor.blue300, 'sad');
-  static Mood angry =
-      Mood(BaseColor.red300, 'angry');
-  static Mood happy =
-      Mood(BaseColor.green300, 'happy');
-  static Mood amazed =
-      Mood(BaseColor.yellow300, 'amazed');
-  static Mood nervous =
-      Mood(BaseColor.orange300, 'nervous');
-  static Mood neutral =
-      Mood(BaseColor.warmGray300, 'neutral');
+  static Mood angry = Mood(BaseColor.red300, 'angry');
+  static Mood happy = Mood(BaseColor.green300, 'happy');
+  static Mood amazed = Mood(BaseColor.yellow300, 'amazed');
+  static Mood nervous = Mood(BaseColor.orange300, 'nervous');
+  static Mood neutral = Mood(BaseColor.warmGray300, 'neutral');
 
   static Mood parseMood(String value) {
     switch (value.toLowerCase()) {

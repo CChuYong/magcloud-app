@@ -14,9 +14,7 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
-import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
-import 'package:magcloud_app/view/page/more_view.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';
@@ -52,8 +50,8 @@ void main() async {
             // home: const MyApp(),
             theme: ThemeData(
               fontFamily: 'GmarketSans',
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: BaseColor.defaultBackgroundColor),
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: BaseColor.defaultBackgroundColor),
               useMaterial3: true,
             ),
             initialRoute: authService.isAuthenticated() ? '/calendar' : '/',

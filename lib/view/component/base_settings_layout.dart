@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/global_routes.dart';
@@ -10,7 +9,10 @@ import '../designsystem/base_color.dart';
 class BaseSettingLayout extends StatelessWidget {
   final String title;
   final Widget child;
-  const BaseSettingLayout({super.key, required this.title, required this.child});
+
+  const BaseSettingLayout(
+      {super.key, required this.title, required this.child});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +20,7 @@ class BaseSettingLayout extends StatelessWidget {
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            titleBar(),
-            Expanded(child: child)
-          ],
+          children: [titleBar(), Expanded(child: child)],
         ),
       ),
     );
@@ -29,11 +28,13 @@ class BaseSettingLayout extends StatelessWidget {
 
   Widget titleBar() {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 8.sp),
+      padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 8.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TouchableOpacity(onTap: GlobalRoute.back, child: Icon(BaseIcon.arrowLeft, size: 16.sp)),
+          TouchableOpacity(
+              onTap: GlobalRoute.back,
+              child: Icon(BaseIcon.arrowLeft, size: 16.sp)),
           Text(title,
               style: TextStyle(
                   color: BaseColor.warmGray600,
@@ -42,8 +43,6 @@ class BaseSettingLayout extends StatelessWidget {
           SizedBox(width: 16.sp, height: 16.sp),
         ],
       ),
-    )
-      ;
+    );
   }
-
 }

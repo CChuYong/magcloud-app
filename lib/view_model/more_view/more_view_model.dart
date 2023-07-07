@@ -16,13 +16,9 @@ class MoreViewModel
     state.me = await inject<UserService>().getMe();
   }
 
-  Future<void> onTapMyProfiles() async {
+  Future<void> onTapMyProfiles() async {}
 
-  }
-
-  Future<void> onTapNotification() async {
-
-  }
+  Future<void> onTapNotification() async {}
 
   Future<void> onTapFonts() async {
     setStateAsync(() async {
@@ -36,17 +32,11 @@ class MoreViewModel
     });
   }
 
-  Future<void> onTapNotice() async {
+  Future<void> onTapNotice() async {}
 
-  }
+  Future<void> onTapPrivacy() async {}
 
-  Future<void> onTapPrivacy() async {
-
-  }
-
-  Future<void> onTapAppInfo() async {
-
-  }
+  Future<void> onTapAppInfo() async {}
 
   Future<void> logout() async {
     await inject<AuthService>().logout();

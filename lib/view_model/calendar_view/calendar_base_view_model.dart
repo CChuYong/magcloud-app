@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
-import 'package:magcloud_app/core/model/daily_user.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';

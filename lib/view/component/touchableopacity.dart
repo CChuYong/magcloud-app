@@ -9,7 +9,8 @@ class TouchableOpacity extends StatefulWidget {
   final double scale = 0.98;
   final HitTestBehavior? behavior;
 
-  const TouchableOpacity({super.key, required this.child, this.onTap, this.behavior});
+  const TouchableOpacity(
+      {super.key, required this.child, this.onTap, this.behavior});
 
   @override
   State createState() => _TouchableOpacityState();

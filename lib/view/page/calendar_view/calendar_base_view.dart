@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/daily_user.dart';
-import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
 import '../../../core/model/mood.dart';
-import '../../../core/model/user.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
@@ -137,7 +135,12 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
               TouchableOpacity(
                   onTap: () => action.toggleOnline(),
                   child: Text(
-                    action.isFriendBarOpen ? message("magcloud") : (action.isMeSelected() ? message("magcloud_with_me") : message("magcloud_with_name").format([action.state.selectedUser?.name ?? ''])),
+                    action.isFriendBarOpen
+                        ? message("magcloud")
+                        : (action.isMeSelected()
+                            ? message("magcloud_with_me")
+                            : message("magcloud_with_name").format(
+                                [action.state.selectedUser?.name ?? ''])),
                     style: TextStyle(
                         color: BaseColor.warmGray800,
                         fontSize: action.isFriendBarOpen ? 22.sp : 20.sp,
@@ -158,18 +161,18 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   Widget friendBar(CalendarBaseViewModel action) {
     final isOnline = action.isOnline();
     return IntrinsicHeight(
-      child: Row(
+        child: Row(
       children: [
         SizedBox(width: 15.sp),
         meIcon(action, action.state.dailyMe),
         SizedBox(width: 15.sp),
         VerticalDivider(
-            width: 1,
+          width: 1,
           color: BaseColor.warmGray200,
         ),
         Expanded(
             child: Stack(
-              alignment: Alignment.center,
+          alignment: Alignment.center,
           // fit: StackFit.expand,
           children: [
             isOnline
@@ -202,7 +205,8 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                   ),
             isOnline
                 ? Container()
-                : ClipRect(child: BackdropFilter(
+                : ClipRect(
+                    child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                     child: Container(
                       width: double.infinity,
@@ -218,7 +222,6 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                       ),
                     ),
                   )),
-
           ],
         ))
       ],
@@ -235,10 +238,12 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           decoration: BoxDecoration(
             color: BaseColor.defaultBackgroundColor,
             shape: BoxShape.circle,
-            image: url != null ? DecorationImage(
-              image: CachedNetworkImageProvider(url),
-              fit: BoxFit.cover,
-            ) : null,
+            image: url != null
+                ? DecorationImage(
+                    image: CachedNetworkImageProvider(url),
+                    fit: BoxFit.cover,
+                  )
+                : null,
           ),
         ),
         Container(
@@ -263,8 +268,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
               width: 40.sp,
               height: 40.sp,
               decoration: BoxDecoration(
-                  color: BaseColor.warmGray100,
-                  shape: BoxShape.circle,),
+                color: BaseColor.warmGray100,
+                shape: BoxShape.circle,
+              ),
               child: Icon(Icons.add),
             ),
             Container(
@@ -290,22 +296,22 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
 
   Widget friendIcon(CalendarBaseViewModel action, DailyUser user) {
     return TouchableOpacity(
-      onTap: () => action.onTapFriendIcon(user),
-        child:
-      Column(
-      children: [
-        friendProfileIcon(user.diary.mood.moodColor, user.profileImageUrl),
-        Text(
-          user.name,
-          style: TextStyle(
-            color: BaseColor.warmGray500,
-            fontSize: 12.sp,
-            decoration: action.state.selectedUser == user ? TextDecoration.underline : null,
-            decorationStyle: TextDecorationStyle.wavy
-          ),
-        ),
-      ],
-    ));
+        onTap: () => action.onTapFriendIcon(user),
+        child: Column(
+          children: [
+            friendProfileIcon(user.diary.mood.moodColor, user.profileImageUrl),
+            Text(
+              user.name,
+              style: TextStyle(
+                  color: BaseColor.warmGray500,
+                  fontSize: 12.sp,
+                  decoration: action.state.selectedUser == user
+                      ? TextDecoration.underline
+                      : null,
+                  decorationStyle: TextDecorationStyle.wavy),
+            ),
+          ],
+        ));
   }
 
   Widget meIcon(CalendarBaseViewModel action, DailyUser? me) {
@@ -313,18 +319,19 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     return TouchableOpacity(
         onTap: () => me?.let(action.onTapFriendIcon),
         child: Column(
-      children: [
-        friendProfileIcon(mood.moodColor, me?.profileImageUrl),
-        Text(
-          message('generic_me'),
-          style: TextStyle(
-            color: BaseColor.warmGray500,
-            fontSize: 12.sp,
-              decoration: action.state.selectedUser == me ? TextDecoration.underline : null,
-              decorationStyle: TextDecorationStyle.wavy
-          ),
-        ),
-      ],
-    ));
+          children: [
+            friendProfileIcon(mood.moodColor, me?.profileImageUrl),
+            Text(
+              message('generic_me'),
+              style: TextStyle(
+                  color: BaseColor.warmGray500,
+                  fontSize: 12.sp,
+                  decoration: action.state.selectedUser == me
+                      ? TextDecoration.underline
+                      : null,
+                  decorationStyle: TextDecorationStyle.wavy),
+            ),
+          ],
+        ));
   }
 }

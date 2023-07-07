@@ -2,22 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/util/font.dart';
 
 import '../../core/framework/base_action.dart';
-import '../../core/util/debouncer.dart';
 import '../../core/util/i18n.dart';
 import '../../view/page/settings_view/font_setting_view.dart';
 
-class FontSettingViewState{
+class FontSettingViewState {
   double fontSize = diaryFontSize;
 }
 
-class FontSettingViewModel extends BaseViewModel<FontSettingView, FontSettingViewModel, FontSettingViewState>{
+class FontSettingViewModel extends BaseViewModel<FontSettingView,
+    FontSettingViewModel, FontSettingViewState> {
   FontSettingViewModel() : super(FontSettingViewState());
-  TextEditingController controller = TextEditingController(text: message('message_font_example_text'));
+  TextEditingController controller =
+      TextEditingController(text: message('message_font_example_text'));
 
   @override
-  Future<void> initState() async {
-
-  }
+  Future<void> initState() async {}
 
   @override
   void dispose() {
@@ -36,5 +35,4 @@ class FontSettingViewModel extends BaseViewModel<FontSettingView, FontSettingVie
       state.fontSize = nextValue;
     });
   }
-
 }

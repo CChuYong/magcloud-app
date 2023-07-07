@@ -3,6 +3,7 @@ import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
+import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 
@@ -13,7 +14,8 @@ class GlobalRoute {
     '/friends': () => const FriendView(),
     '/login': () => LoginView(),
     '/settings/language': () => LanguageSettingView(),
-    '/settings/font': () => FontSettingView(),
+    '/settings/font': () => const FontSettingView(),
+    '/settings/app-info': () => const ApplicationInfoView()
   };
 
   static Future<void> horizontalRoute(String target, bool forward) async {
@@ -37,6 +39,11 @@ class GlobalRoute {
   static Future<void> routeTo(String target) async {
     final routeBuilder = routes[target];
     await Get.to(routeBuilder, transition: Transition.noTransition);
+  }
+
+  static Future<void> rightToLeftRouteTo(String target) async {
+    final routeBuilder = routes[target];
+    await Get.to(routeBuilder, transition: Transition.rightToLeft, popGesture: true);
   }
 
   static Future<void> back() async {

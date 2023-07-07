@@ -52,7 +52,11 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                           top: action.isFriendBarOpen ? 130.sp : 45.sp),
                       curve: curve,
                       duration: aniamtionDuration,
-                      child: Column(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                          onVerticalDragEnd: action.onVerticalDrag,
+                          onHorizontalDragEnd: action.onHorizontalDrag,
+                          child: Column(
                         children: [
                           Expanded(
                               child: AnimatedSwitcher(
@@ -74,7 +78,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                             child: action.getRoutedWidgetBuilder()(),
                           ))
                         ],
-                      ))),
+                      )))),
               Container(
                 width: double.infinity,
                 height: 50.sp,

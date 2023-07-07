@@ -13,6 +13,7 @@ import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
+import '../../core/util/debouncer.dart';
 import '../../view/page/calendar_view/calendar_base_view.dart';
 import '../../view/page/calendar_view/daily_diary_view.dart';
 import 'calendar_base_view_state.dart';
@@ -32,6 +33,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   bool verticalAnimationStart = false;
 
   bool isFriendBarOpen = StateStore.getBool("isFriendBarOpen", true);
+
+  final Debouncer dragDebouncer = Debouncer(const Duration(milliseconds: 25));
 
   @override
   void dispose() {
@@ -126,6 +129,46 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       case CalendarViewScope.DAILY:
         return () => CalendarDailyDiaryView();
     }
+  }
+
+  void onVerticalDrag(DragEndDetails details) {
+    dragDebouncer.runLastCall(() {
+      final isPositive = (details.primaryVelocity ?? 0) > 0;
+      if(!isPositive) return;
+      if(state.scope == CalendarViewScope.DAILY) {
+        final dailyScope = state.scopeData as CalendarDailyViewScopeData;
+        if(dailyScope.focusNode.hasFocus) {
+          dailyScope.focusNode.unfocus();
+        }else{
+          onTapDayTitle();
+        }
+      } else if (state.scope == CalendarViewScope.MONTH) {
+        onTapMonthTitle();
+      } else {
+        if(!isFriendBarOpen) {
+          setState(() {
+            isFriendBarOpen = true;
+          });
+        } else {
+          onTapYearTitle();
+        }
+      }
+    });
+  }
+
+  void onHorizontalDrag(DragEndDetails details) {
+    dragDebouncer.runLastCall(() {
+      final isPositive = (details.primaryVelocity ?? 0) < 0;
+      final moveAmount = isPositive ? 1 : -1;
+      if(state.scope == CalendarViewScope.DAILY) {
+        print("?? ${moveAmount}");
+        changeDay(moveAmount);
+      } else if (state.scope == CalendarViewScope.MONTH) {
+        changeMonth(moveAmount);
+      } else {
+        changeYear(moveAmount);
+      }
+    });
   }
 
   @override

@@ -18,21 +18,18 @@ abstract class BaseView<V extends BaseView<V, A, S>,
       didChangeDependencies: (State state) => action.didChangeDependencies(
         state.context,
       ),
-      builder: (A action) => WillPopScope(
-        child: Stack(
-          children: [
-            render(context, action, action.state),
-            action.isLoading
-                ? Positioned(
-                    child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: Colors.black.withOpacity(0.1),
-                  ))
-                : Container(),
-          ],
-        ),
-        onWillPop: () => action.onWillPop(),
+      builder: (A action) => Stack(
+        children: [
+          render(context, action, action.state),
+          action.isLoading
+              ? Positioned(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.1),
+              ))
+              : Container(),
+        ],
       ),
     );
   }

@@ -22,13 +22,13 @@ class MoreViewModel
 
   Future<void> onTapFonts() async {
     setStateAsync(() async {
-      await GlobalRoute.routeTo('/settings/font');
+      await GlobalRoute.rightToLeftRouteTo('/settings/font');
     });
   }
 
   Future<void> onTapLanguage() async {
     setStateAsync(() async {
-      await GlobalRoute.routeTo('/settings/language');
+      await GlobalRoute.rightToLeftRouteTo('/settings/language');
     });
   }
 
@@ -36,7 +36,9 @@ class MoreViewModel
 
   Future<void> onTapPrivacy() async {}
 
-  Future<void> onTapAppInfo() async {}
+  Future<void> onTapAppInfo() async {
+    GlobalRoute.rightToLeftRouteTo('/settings/app-info');
+  }
 
   Future<void> logout() async {
     await inject<AuthService>().logout();

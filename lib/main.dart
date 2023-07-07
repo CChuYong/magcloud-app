@@ -16,7 +16,7 @@ import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
-import 'package:magcloud_app/view_model/navigator_view.dart';
+import 'package:magcloud_app/view/navigator_view.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';

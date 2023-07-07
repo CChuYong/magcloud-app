@@ -3,11 +3,11 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../view/component/navigation_bar.dart';
-import '../view/designsystem/base_color.dart';
-import '../view/page/calendar_view/calendar_base_view.dart';
-import '../view/page/friend_view.dart';
-import '../view/page/more_view.dart';
+import 'component/navigation_bar.dart';
+import 'designsystem/base_color.dart';
+import 'page/calendar_view/calendar_base_view.dart';
+import 'page/friend_view.dart';
+import 'page/more_view.dart';
 
 class NavigatorView extends StatefulWidget{
   NavigatorView({super.key});

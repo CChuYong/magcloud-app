@@ -9,7 +9,7 @@ import 'package:magcloud_app/view/page/more_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
-import 'package:magcloud_app/view_model/navigator_view.dart';
+import 'package:magcloud_app/view/navigator_view.dart';
 
 class GlobalRoute {
   static final observer = CommonRouteObserver();

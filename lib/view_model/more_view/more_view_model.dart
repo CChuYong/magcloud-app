@@ -1,10 +1,13 @@
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view_model/more_view/more_view_state.dart';
 
+import '../../core/util/i18n.dart';
+import '../../core/util/snack_bar_util.dart';
 import '../../view/page/more_view.dart';
 
 class MoreViewModel
@@ -19,6 +22,10 @@ class MoreViewModel
   Future<void> onTapMyProfiles() async {}
 
   Future<void> onTapNotification() async {
+    if(!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+      return;
+    }
     GlobalRoute.rightToLeftRouteTo('/settings/notification');
   }
 

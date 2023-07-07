@@ -23,7 +23,7 @@ class FriendViewModel
 
   @override
   void dispose() {
-    searchController.dispose();
+
   }
 
   void applySearch() {

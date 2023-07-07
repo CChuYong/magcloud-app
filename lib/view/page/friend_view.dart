@@ -10,7 +10,6 @@ import 'package:magcloud_app/view/component/touchableopacity.dart';
 
 import '../../view_model/friend_view/friend_view_model.dart';
 import '../../view_model/friend_view/friend_view_state.dart';
-import '../component/navigation_bar.dart';
 import '../designsystem/base_color.dart';
 
 class FriendView
@@ -18,15 +17,15 @@ class FriendView
   const FriendView({super.key});
 
   @override
+  bool isAutoRemove() => false;
+
+  @override
   FriendViewModel initViewModel() => FriendViewModel();
 
   @override
   Widget render(
       BuildContext context, FriendViewModel action, FriendViewState state) {
-    return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
+    return SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +38,6 @@ class FriendView
             Expanded(child: friendContainer(action, state))
           ],
         ),
-      ),
     );
   }
 

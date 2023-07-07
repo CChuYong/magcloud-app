@@ -13,12 +13,14 @@ import '../../../core/model/mood.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
-import '../../component/navigation_bar.dart';
 import '../../designsystem/base_color.dart';
 
 class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     CalendarBaseViewState> {
   CalendarBaseView({super.key});
+
+  @override
+  bool isAutoRemove() => false;
 
   final Duration aniamtionDuration = Duration(milliseconds: 200);
 
@@ -39,10 +41,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   Widget render(BuildContext context, CalendarBaseViewModel action,
       CalendarBaseViewState state) {
     const Curve curve = Curves.easeInOutSine;
-    return Scaffold(
-        backgroundColor: BaseColor.defaultBackgroundColor,
-        bottomNavigationBar: BaseNavigationBar(onTapSelf: action.refreshPage),
-        body: Container(
+    return Container(
           color: BaseColor.defaultBackgroundColor,
           child: Stack(
             children: [
@@ -125,7 +124,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             ],
           ),
           //  ),
-        ));
+        );
   }
 
   Widget titleBar(CalendarBaseViewModel action) {

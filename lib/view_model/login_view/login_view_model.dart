@@ -21,7 +21,7 @@ class LoginViewModel
 
   Future<void> onGoogleLogin() async {
     await authService.signInWithGoogle();
-    GlobalRoute.fadeRoute('/calendar');
+    GlobalRoute.goMain();
   }
 
   void toggleLanguage() {

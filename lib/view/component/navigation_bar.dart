@@ -7,8 +7,11 @@ import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class BaseNavigationBar extends StatefulWidget {
   void Function()? onTapSelf;
+  void Function(int)? onTap;
+  final int currentPage;
 
-  BaseNavigationBar({this.onTapSelf});
+
+  BaseNavigationBar({this.onTapSelf, this.onTap, required this.currentPage});
 
   @override
   State<StatefulWidget> createState() => _NavigationBarState();
@@ -17,46 +20,6 @@ class BaseNavigationBar extends StatefulWidget {
 class _NavigationBarState extends State<BaseNavigationBar> {
   final iconSize = 24.sp;
   final fontSize = 10.sp;
-
-  void _setPage(int index) async {
-    await GlobalRoute.fadeRouteTo(pageToRoute(index));
-  }
-
-  int routeToPage(String route) {
-    switch (route) {
-      case "/FriendView":
-        return 0;
-      case "/CalendarView":
-        return 1;
-      case "/MoreView":
-        return 2;
-      default:
-        return 1;
-    }
-  }
-
-  String typeName(Type type) => type.toString();
-
-  String pageToRoute(int page) {
-    switch (page) {
-      case 0:
-        return "/friends";
-      case 1:
-        return "/calendar";
-      case 2:
-        return "/more";
-      default:
-        return "/calendar";
-    }
-  }
-
-  void onTapNavigation(int number) {
-    if (number != currentPage())
-      _setPage(number);
-    else {
-      if (widget.onTapSelf != null) widget.onTapSelf!();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +51,8 @@ class _NavigationBarState extends State<BaseNavigationBar> {
           label: message("navigation_more"),
         )
       ],
-      currentIndex: currentPage(),
-      onTap: onTapNavigation,
+      currentIndex: widget.currentPage,
+      onTap: widget.onTap,
     );
   }
-
-  int currentPage() => routeToPage(Get.currentRoute);
 }

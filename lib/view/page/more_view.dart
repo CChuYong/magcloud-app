@@ -15,15 +15,15 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   const MoreView({super.key});
 
   @override
+  bool isAutoRemove() => false;
+
+  @override
   MoreViewModel initViewModel() => MoreViewModel();
 
   @override
   Widget render(
       BuildContext context, MoreViewModel action, MoreViewState state) {
-    return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      bottomNavigationBar: BaseNavigationBar(),
-      body: SafeArea(
+    return SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,7 +35,6 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             Expanded(child: menuBox(action))
           ],
         ),
-      ),
     );
   }
 

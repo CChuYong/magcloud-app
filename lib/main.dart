@@ -12,9 +12,11 @@ import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
+import 'package:magcloud_app/view_model/navigator_view.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';
@@ -53,10 +55,7 @@ void main() async {
                   seedColor: BaseColor.defaultBackgroundColor),
               useMaterial3: true,
             ),
-            initialRoute: authService.isAuthenticated() ? '/calendar' : '/',
-            getPages: [
-              GetPage(name: '/', page: () => LoginView()),
-              GetPage(name: '/calendar', page: () => CalendarBaseView()),
-            ],
+            home: authService.isAuthenticated() ? NavigatorView() : LoginView(),
+        navigatorObservers: [GlobalRoute.observer],
           )));
 }

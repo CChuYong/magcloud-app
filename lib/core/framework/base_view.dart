@@ -9,11 +9,14 @@ abstract class BaseView<V extends BaseView<V, A, S>,
 
   A initViewModel();
 
+  bool isAutoRemove() => true;
+
   @override
   Widget build(BuildContext context) {
     A action = initViewModel();
     return GetBuilder<A>(
       init: action,
+      autoRemove: isAutoRemove(),
       dispose: (State state) => action.dispose(),
       didChangeDependencies: (State state) => action.didChangeDependencies(
         state.context,

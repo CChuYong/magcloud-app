@@ -20,6 +20,7 @@ class DiaryService {
   }
 
   Future<Diary> updateDiary(Diary currentDiary, Mood mood, String content) async {
+    if(content.isEmpty) return currentDiary;
     final hashedContent = HashUtil.hashContent(content);
     if (hashedContent == currentDiary.hash && mood == currentDiary.mood) return currentDiary;
 

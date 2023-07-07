@@ -10,6 +10,7 @@ import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/mood_change_dialog.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
@@ -66,9 +67,10 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void toggleOnline() {
-    setState(() {
-      OnlineService.invokeOnlineToggle();
-    });
+    GlobalRoute.splash();
+    // setState(() {
+    //   OnlineService.invokeOnlineToggle();
+    // });
   }
 
   bool isOnline() => onlineService.isOnlineMode();

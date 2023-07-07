@@ -10,6 +10,7 @@ import 'package:magcloud_app/view/page/settings_view/application_info_view.dart'
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
+import 'package:magcloud_app/view/page/splash_view.dart';
 
 class GlobalRoute {
   static final observer = CommonRouteObserver();
@@ -46,6 +47,10 @@ class GlobalRoute {
 
     //Get.global(null).currentState!.pop();
     // Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
+  }
+
+  static Future<void> splash() async {
+    Get.to(SplashView(), transition: Transition.fadeIn);
   }
 
   static void goMain() {

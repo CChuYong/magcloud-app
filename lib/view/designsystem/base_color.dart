@@ -30,4 +30,5 @@ final class BaseColor {
   static const blue300 = Color(0xff93C5FD);
 
   static const defaultBackgroundColor = Colors.white;
+  static const defaultSplashBackgroundColor = warmGray200;
 }

@@ -17,7 +17,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   Widget render(
       BuildContext context, LoginViewModel action, LoginViewState state) {
     return Scaffold(
-      backgroundColor: BaseColor.warmGray200,
+      backgroundColor: BaseColor.defaultSplashBackgroundColor,
       body: SafeArea(
           child: Fadeable(
         child: Padding(
@@ -134,7 +134,8 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                                   ])
                                 ],
                               ),
-                            )))
+                            ))),
+                    SizedBox(height: 4.sp),
                   ],
                 )
               ]),

@@ -29,6 +29,7 @@ dependencies:
   cached_network_image: ^3.2.3
   sprintf:
   package_info_plus: ^4.0.2
+  rainbow_color: ^2.0.1
 
 dev_dependencies:
   flutter_test:

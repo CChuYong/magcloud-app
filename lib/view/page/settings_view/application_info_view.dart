@@ -46,9 +46,11 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView, ApplicationInfoV
           SizedBox(height: 20.sp),
           Divider(color: BaseColor.warmGray200, height: 1),
           SizedBox(height: 20.sp),
-          row('캐시 데이터 초기화', button('초기화', (){})),
+          row(message('generic_reset_cache'), button(message('generic_reset'), (){})),
           SizedBox(height: gapBetweenElements),
-          row('오픈소스 라이선스', button('보기', (){})),
+          row(message('generic_reset_settings'), button(message('generic_reset'), (){})),
+          SizedBox(height: gapBetweenElements),
+          row(message('generic_open_source_license'), button(message('generic_watch'), (){})),
         ],
       )),
     );

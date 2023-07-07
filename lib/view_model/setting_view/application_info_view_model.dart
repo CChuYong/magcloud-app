@@ -16,7 +16,6 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView, Applic
 
   @override
   Future<bool> onWillPop() {
-    print("I'm popping");
     return super.onWillPop();
   }
 

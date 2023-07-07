@@ -17,8 +17,8 @@ class GlobalRoute {
     '/login': () => LoginView(),
     '/navigator': () => NavigatorView(),
     '/settings/language': () => LanguageSettingView(),
-    '/settings/font': () => const FontSettingView(),
-    '/settings/app-info': () => const ApplicationInfoView()
+    '/settings/font': () => FontSettingView(),
+    '/settings/app-info': () => ApplicationInfoView()
   };
 
   static Future<void> fadeRoute(String target) async {

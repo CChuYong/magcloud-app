@@ -29,6 +29,8 @@ class Mood {
     }
   }
 
+  static List<Mood> values() => [neutral, sad, angry, happy, amazed, nervous];
+
   final Color moodColor;
   final String name;
 

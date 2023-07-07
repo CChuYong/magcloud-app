@@ -31,6 +31,10 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
     if (state != null) renderDbn.runLastCall(() => update());
   }
 
+  void onReloaded() {
+
+  }
+
   void setLoading(bool loading) {
     isLoading = loading;
     render();

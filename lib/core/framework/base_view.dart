@@ -5,15 +5,26 @@ import 'base_action.dart';
 
 abstract class BaseView<V extends BaseView<V, A, S>,
     A extends BaseViewModel<V, A, S>, S> extends StatelessWidget {
-  const BaseView({super.key});
+  BaseView({super.key}) {
+    action = initViewModel();
+  }
+
+  bool isInitialLoad = false;
+
+  late A action;
 
   A initViewModel();
 
   bool isAutoRemove() => true;
 
+
   @override
   Widget build(BuildContext context) {
-    A action = initViewModel();
+    if(!isInitialLoad) {
+      isInitialLoad = true;
+    } else {
+      action.onReloaded();
+    }
     return GetBuilder<A>(
       init: action,
       autoRemove: isAutoRemove(),

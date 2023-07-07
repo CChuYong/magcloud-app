@@ -35,4 +35,8 @@ class FriendViewModel
   Future<void> reloadFriends() async {
     state.friends = await userService.getFriends();
   }
+
+  void onTapAddFriend() {
+
+  }
 }

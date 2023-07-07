@@ -12,7 +12,7 @@ import '../../designsystem/base_color.dart';
 
 class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
     FontSettingViewState> {
-  const FontSettingView({super.key});
+  FontSettingView({super.key});
 
   @override
   FontSettingViewModel initViewModel() => FontSettingViewModel();
@@ -48,7 +48,7 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
               SizedBox(width: 28.sp),
             ],
           ),
-          SizedBox(height: 24.sp),
+          SizedBox(height: 30.sp),
           Row(
             children: [
               SizedBox(width: 24.sp),
@@ -64,7 +64,7 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
               SizedBox(width: 10.sp),
             ],
           ),
-          SizedBox(height: 15.sp),
+          SizedBox(height: 30.sp),
           Divider(thickness: 10.sp, color: BaseColor.warmGray100),
           SizedBox(height: 10.sp),
           Expanded(

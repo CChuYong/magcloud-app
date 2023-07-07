@@ -11,7 +11,7 @@ import '../../designsystem/base_color.dart';
 
 class ApplicationInfoView extends BaseView<ApplicationInfoView, ApplicationInfoViewModel,
     ApplicationInfoViewState> {
-  const ApplicationInfoView({super.key});
+  ApplicationInfoView({super.key});
 
   @override
   ApplicationInfoViewModel initViewModel() => ApplicationInfoViewModel();

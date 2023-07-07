@@ -11,6 +11,7 @@ import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
+import 'package:magcloud_app/view/page/calendar_view/mood_change_dialog.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
@@ -44,6 +45,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     StateStore.setInt("currentYear", state.currentYear);
     StateStore.setInt("currentMonth", state.currentMonth);
     StateStore.setInt("currentDay", state.currentDay);
+  }
+
+  @override
+  void onReloaded() {
+    initState();
   }
 
   void refreshPage() async {
@@ -83,7 +89,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     if (state.scope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
       final lastDiary = scopeData.currentDiary;
-      diaryService.updateDiary(lastDiary, scopeData.diaryTextController.text);
+      diaryService.updateDiary(lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
     }
     state.scope = scope;
     switch (scope) {
@@ -334,6 +340,16 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     setStateAsync(() async {
       await setScope(CalendarViewScope.MONTH);
     });
+  }
+
+  void onTapChangeMood() async {
+    final data = state.scopeData as CalendarDailyViewScopeData;
+    final newMood = await moodChangeDialog(previousMood: data.currentMood);
+    if(newMood != null) {
+      setState(() {
+        data.currentMood = newMood;
+      });
+    }
   }
 
   void snackNoFuture() {

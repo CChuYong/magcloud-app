@@ -50,7 +50,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 child: Column(
                   key: Key(state.currentDay.toString()),
                   children: [
-                    dailyDiaryMoodBox(scopeData),
+                    dailyDiaryMoodBox(action, scopeData),
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -111,23 +111,22 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
     );
   }
 
-  Widget dailyDiaryMoodBox(CalendarDailyViewScopeData data) {
-    final Diary diary = data.currentDiary;
+  Widget dailyDiaryMoodBox(CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
     return TouchableOpacity(
-        onTap: () => {},
+        onTap: action.onTapChangeMood,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 5.sp),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: BaseColor.warmGray300),
               borderRadius: BorderRadius.circular(15),
-              color: diary.mood.moodColor,
+              color: data.currentMood.moodColor,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 13.sp),
               child: Center(
                 child: Text(
-                  diary.mood.getLocalizedName(),
+                  data.currentMood.getLocalizedName(),
                   style: TextStyle(
                     color: BaseColor.warmGray500,
                     fontSize: 14.sp,

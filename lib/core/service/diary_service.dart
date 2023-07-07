@@ -19,9 +19,9 @@ class DiaryService {
         Diary.mock(ymd: today);
   }
 
-  Future<Diary> updateDiary(Diary currentDiary, String content) async {
+  Future<Diary> updateDiary(Diary currentDiary, Mood mood, String content) async {
     final hashedContent = HashUtil.hashContent(content);
-    if (hashedContent == currentDiary.hash) return currentDiary;
+    if (hashedContent == currentDiary.hash && mood == currentDiary.mood) return currentDiary;
 
     final isOnline = onlineService.isOnlineMode();
     if (isOnline) {
@@ -32,10 +32,11 @@ class DiaryService {
           message: message('message_diary_saved_offline'));
     }
     final newDiary = Diary(
-        mood: currentDiary.mood,
+        mood: mood,
         content: content,
         ymd: currentDiary.ymd,
-        hash: hashedContent);
+        hash: hashedContent
+    );
     await diaryRepository.saveDiary(newDiary);
     return newDiary;
   }

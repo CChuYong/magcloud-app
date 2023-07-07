@@ -12,7 +12,7 @@ import '../component/navigation_bar.dart';
 import '../designsystem/base_color.dart';
 
 class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
-  const MoreView({super.key});
+  MoreView({super.key});
 
   @override
   bool isAutoRemove() => false;
@@ -47,7 +47,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             Text(
               message('navigation_more'),
               style: TextStyle(
-                  color: BaseColor.warmGray800,
+                  color: BaseColor.warmGray700,
                   fontSize: 22.sp,
                   fontFamily: 'GmarketSans'),
             ),

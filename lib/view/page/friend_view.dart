@@ -14,7 +14,7 @@ import '../designsystem/base_color.dart';
 
 class FriendView
     extends BaseView<FriendView, FriendViewModel, FriendViewState> {
-  const FriendView({super.key});
+  FriendView({super.key});
 
   @override
   bool isAutoRemove() => false;
@@ -30,7 +30,7 @@ class FriendView
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 5.sp),
-            titleBar(),
+            titleBar(action),
             SizedBox(height: 14.sp),
             searchBar(action),
             SizedBox(height: 5.sp),
@@ -41,7 +41,7 @@ class FriendView
     );
   }
 
-  Widget titleBar() {
+  Widget titleBar(FriendViewModel action) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Row(
@@ -50,12 +50,12 @@ class FriendView
             Text(
               message('navigation_friends'),
               style: TextStyle(
-                  color: BaseColor.warmGray800,
+                  color: BaseColor.warmGray700,
                   fontSize: 22.sp,
                   fontFamily: 'GmarketSans'),
             ),
             TouchableOpacity(
-                onTap: () => Get.offNamed('/'), child: Icon(Icons.people))
+                onTap: action.onTapAddFriend, child: Icon(Icons.people, color: BaseColor.warmGray700))
           ],
         ));
   }

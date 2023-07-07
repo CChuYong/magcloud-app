@@ -15,8 +15,8 @@ class NavigatorView extends StatefulWidget{
   final Map<int, Widget> widgetMap = HashMap();
   static final pageBuilder = {
     1: () => CalendarBaseView(),
-    2: () => const MoreView(),
-    0: () => const FriendView(),
+    2: () => MoreView(),
+    0: () => FriendView(),
   };
 
   Widget getOrCreateWidget(int index) {

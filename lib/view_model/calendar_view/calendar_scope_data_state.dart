@@ -25,9 +25,11 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
   final TextEditingController diaryTextController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   final Diary currentDiary;
+  late Mood currentMood;
 
   CalendarDailyViewScopeData(this.currentDiary) {
     diaryTextController.text = currentDiary.content;
+    currentMood = currentDiary.mood;
   }
   static CalendarDailyViewScopeData mock() => CalendarDailyViewScopeData(Diary.mock());
 }

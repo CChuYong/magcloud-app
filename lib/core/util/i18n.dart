@@ -32,6 +32,9 @@ final map = {
   "generic_app_version": "어플리케이션 버전",
   "generic_app_name": "어플리케이션 이름",
   "generic_app_build_no": "빌드 번호",
+  "generic_offline_mode": "오프라인 모드 여부",
+  "generic_activated": "활성화됨",
+  "generic_disactivated": "활성화 되지 않음",
   "generic_mood_sad": "슬픈",
   "generic_mood_angry": "화난",
   "generic_mood_happy": "행복한",
@@ -86,6 +89,7 @@ final map = {
   "message_language_settings_info": "앱 내부에서 표기되는 언어에요. 일기 내용, 친구 이름등은 변하지 않아요",
   "message_font_settings_info":
       "일기장에서 표기되는 글씨체에요. 나에게 보여지는 폰트여서 친구에게는 적용되지 않아요.",
+  "message_offline_cannot_use_that": "오프라인 모드에선 사용할 수 없어요"
 };
 
 final engMap = {
@@ -109,6 +113,9 @@ final engMap = {
   "generic_app_version": "Application Version",
   "generic_app_name": "Application Name",
   "generic_app_build_no": "Build Number",
+  "generic_offline_mode": "Offline Mode",
+  "generic_activated": "Activated",
+  "generic_disactivated": "Not Active",
   "generic_mood_sad": "sad",
   "generic_mood_angry": "angry",
   "generic_mood_happy": "happy",
@@ -164,6 +171,7 @@ final engMap = {
       "Only applied to MagCloud application. This settings cannot translate diaries.",
   "message_font_settings_info":
       "This is display font for diary. Only applied to me, not friends.",
+  "message_offline_cannot_use_that": "Offline mode cannot use that feature!"
 };
 
 String message(String key) {

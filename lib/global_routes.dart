@@ -3,6 +3,10 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/core/util/snack_bar_util.dart';
+import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
@@ -61,12 +65,22 @@ class GlobalRoute {
   }
 
   static Future<void> privacyPage() async {
+    if(!isOnline()) {
+      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+      return;
+    }
     await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/privacy'), transition: Transition.rightToLeft, popGesture: true);
   }
 
   static Future<void> noticePage() async {
+    if(!isOnline()) {
+      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+      return;
+    }
     await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/notice'), transition: Transition.rightToLeft, popGesture: true);
   }
+
+  static bool isOnline() => inject<OnlineService>().isOnlineMode();
 
 }
 

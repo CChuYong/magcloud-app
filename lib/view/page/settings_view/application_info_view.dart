@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 
 import '../../../view_model/setting_view/application_info_view_model.dart';
@@ -40,6 +42,11 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView, ApplicationInfoV
           )),
           SizedBox(height: gapBetweenElements),
           row(message('generic_app_build_no'),  Text(state.packageInfo?.buildNumber ?? '',
+              style:
+              TextStyle(color: BaseColor.warmGray400, fontSize: 14.sp)
+          )),
+          SizedBox(height: gapBetweenElements),
+          row(message('generic_offline_mode'),  Text(inject<OnlineService>().isOnlineMode() ? message('generic_disactivated') : message('generic_activated'),
               style:
               TextStyle(color: BaseColor.warmGray400, fontSize: 14.sp)
           )),

@@ -67,10 +67,10 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void toggleOnline() {
-    GlobalRoute.splash();
-    // setState(() {
-    //   OnlineService.invokeOnlineToggle();
-    // });
+//    GlobalRoute.splash();
+    setState(() {
+      OnlineService.invokeOnlineToggle();
+    });
   }
 
   bool isOnline() => onlineService.isOnlineMode();

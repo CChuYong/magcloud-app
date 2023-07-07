@@ -29,7 +29,9 @@ class MoreViewModel
   }
 
   Future<void> onTapLanguage() async {
-
+    setStateAsync(() async {
+      await GlobalRoute.routeTo('/settings/language');
+    });
   }
 
   Future<void> onTapNotice() async {

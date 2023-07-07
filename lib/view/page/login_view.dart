@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/view/component/fadeable_switcher.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_model.dart';
 
 import '../../view_model/login_view/login_view_state.dart';
@@ -18,8 +19,8 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
     return Scaffold(
       backgroundColor: BaseColor.warmGray200,
       body: SafeArea(
-          child: fadeable(
-        Padding(
+          child: Fadeable(
+        child: Padding(
           key: Key(isKorea.toString()),
           padding: EdgeInsets.symmetric(horizontal: 19.sp, vertical: 18.sp),
           child: Column(
@@ -139,19 +140,6 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
               ]),
         ),
       )),
-    );
-  }
-
-  Widget fadeable(Widget widget) {
-    return AnimatedSwitcher(
-      duration: Duration(milliseconds: 300),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      child: widget,
     );
   }
 }

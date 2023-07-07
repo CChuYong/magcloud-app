@@ -29,7 +29,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
           children: [
             SizedBox(height: 5.sp),
             titleBar(),
-            SizedBox(height: 15.sp),
+            SizedBox(height: 20.sp),
             meBox(action, state),
             SizedBox(height: 15.sp),
             Expanded(child:  menuBox(action))
@@ -66,7 +66,15 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: BaseColor.warmGray100,
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: BaseColor.warmGray400.withOpacity(0.3),
+            spreadRadius: 0.5,
+              blurRadius: 10,
+            offset: const Offset(3, 3), // changes position of shadow
+          ),
+        ],
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 14.sp, horizontal: 14.sp),
@@ -94,14 +102,14 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                   Text(
                     state.me?.name ?? '',
                     style: TextStyle(
-                        color: BaseColor.warmGray800,
+                        color: BaseColor.warmGray700,
                         fontSize: 16.sp,
                         fontFamily: 'GmarketSans'),
                   ),
                   Text(
                     state.me?.nameTag ?? '',
                     style: TextStyle(
-                        color: BaseColor.warmGray600,
+                        color: BaseColor.warmGray500,
                         fontSize: 12.sp,
                         fontFamily: 'GmarketSans'),
                   ),
@@ -141,7 +149,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
           menuBtn(Icons.font_download, message('menu_fonts'), action.onTapFonts),
           SizedBox(height: boxGap),
           menuBtn(Icons.language, message('menu_language'), action.onTapLanguage),
-          SizedBox(height: 16.sp),
+          SizedBox(height: 24.sp),
           Text(
             message('menu_info'),
             style: TextStyle(

@@ -3,8 +3,12 @@ import 'package:magcloud_app/core/framework/state_store.dart';
 bool isKorea = true;
 
 void toggleEng() {
-  isKorea = !isKorea;
-  StateStore.setBool('isKorea', isKorea);
+  setLanguage(!isKorea);
+}
+
+void setLanguage(bool korea) {
+  isKorea = korea;
+  StateStore.setBool('isKorea', korea);
 }
 
 final map = {
@@ -55,6 +59,7 @@ final map = {
   "generic_friend_delete": "삭제",
   "generic_login_with_apple": "Apple로 로그인",
   "generic_login_with_google": "Google로 로그인",
+  "generic_selected_language": "선택된 언어",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래로는 이동할 수 없어요",
   "message_offline_mode_activated": "오프라인 모드가 되었어요",
@@ -63,7 +68,9 @@ final map = {
       "서버와 연결할 수 없어 오프라인에 일기를 저장했어요. 서버와 연결되면 다시 저장할게요!",
   "message_login_failed": "로그인에 실패했어요",
   "message_offline_cannot_view_friends": "오프라인 모드는 친구의 일기를 볼 수 없어요",
-  "message_total_friend_count": "총 %s 명의 친구"
+  "message_total_friend_count": "총 %s 명의 친구",
+
+  "message_language_settings_info": "앱 내부에서 표기되는 언어에요. 일기 내용, 친구 이름등은 변하지 않아요",
 };
 
 final engMap = {
@@ -114,6 +121,7 @@ final engMap = {
   "generic_friend_delete": "Delete",
   "generic_login_with_apple": "Login with Apple",
   "generic_login_with_google": "Login with Google",
+  "generic_selected_language": "Selected Language",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
   "message_offline_mode_activated": "You've been away from server...",
@@ -122,7 +130,8 @@ final engMap = {
       "Diary saved locally due to internet connection",
   "message_login_failed": "Login failed..",
   "message_offline_cannot_view_friends": "Offline mode cannot see friends",
-  "message_total_friend_count": "Total %s friends"
+  "message_total_friend_count": "Total %s friends",
+  "message_language_settings_info": "Only applied to MagCloud application. This settings cannot translate diaries.",
 };
 
 String message(String key) {

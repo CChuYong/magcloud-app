@@ -25,7 +25,9 @@ class MoreViewModel
   }
 
   Future<void> onTapFonts() async {
-
+    setStateAsync(() async {
+      await GlobalRoute.routeTo('/settings/font');
+    });
   }
 
   Future<void> onTapLanguage() async {

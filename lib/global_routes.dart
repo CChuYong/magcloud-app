@@ -4,6 +4,7 @@ import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/more_view.dart';
+import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 
 class GlobalRoute {
@@ -12,7 +13,8 @@ class GlobalRoute {
     '/more': () => const MoreView(),
     '/friends': () => const FriendView(),
     '/login': () => LoginView(),
-    '/settings/language': () => LanguageSettingView()
+    '/settings/language': () => LanguageSettingView(),
+    '/settings/font': () => FontSettingView(),
   };
 
   static Future<void> horizontalRoute(String target, bool forward) async {

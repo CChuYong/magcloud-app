@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
+import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -57,8 +58,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                         readOnly: !action.isMeSelected(),
                         focusNode: scopeData.focusNode,
                         style: TextStyle(
-                          fontFamily: "KyoboHandWriting",
-                          fontSize: 16.sp,
+                          fontFamily: diaryFont,
+                          fontSize: diaryFontSize,
                         ),
                         controller: scopeData.diaryTextController,
                         keyboardType: TextInputType.multiline,

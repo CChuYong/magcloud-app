@@ -51,6 +51,9 @@ flutter:
     - family: KyoboHandWriting
       fonts:
         - asset: assets/fonts/KyoboHandwriting2021sjy.ttf
+    - family: KyoboHandWriting2019
+      fonts:
+        - asset: assets/fonts/KyoboHandwriting2019.ttf
     - family: GmarketSans
       fonts:
         - asset: assets/fonts/GmarketSansTTF/GmarketSansTTFMedium.ttf

@@ -57,9 +57,13 @@ final map = {
   "generic_friend_share_diary": "일기 공유",
   "generic_friend_unshare_diary": "일기 공유 취소",
   "generic_friend_delete": "삭제",
+  "generic_preview": "미리보기",
   "generic_login_with_apple": "Apple로 로그인",
   "generic_login_with_google": "Google로 로그인",
   "generic_selected_language": "선택된 언어",
+  "generic_selected_font": "선택된 글씨체",
+  "generic_font_size": "글씨체 크기",
+  "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래로는 이동할 수 없어요",
   "message_offline_mode_activated": "오프라인 모드가 되었어요",
@@ -69,8 +73,8 @@ final map = {
   "message_login_failed": "로그인에 실패했어요",
   "message_offline_cannot_view_friends": "오프라인 모드는 친구의 일기를 볼 수 없어요",
   "message_total_friend_count": "총 %s 명의 친구",
-
   "message_language_settings_info": "앱 내부에서 표기되는 언어에요. 일기 내용, 친구 이름등은 변하지 않아요",
+  "message_font_settings_info": "일기장에서 표기되는 글씨체에요. 나에게 보여지는 폰트여서 친구에게는 적용되지 않아요.",
 };
 
 final engMap = {
@@ -119,9 +123,13 @@ final engMap = {
   "generic_friend_share_diary": "Share Diary",
   "generic_friend_unshare_diary": "UnShare Diary",
   "generic_friend_delete": "Delete",
+  "generic_preview": "Preview",
   "generic_login_with_apple": "Login with Apple",
   "generic_login_with_google": "Login with Google",
   "generic_selected_language": "Selected Language",
+  "generic_selected_font": "Selected Font",
+  "generic_font_size": "Font Size",
+  "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
   "message_offline_mode_activated": "You've been away from server...",
@@ -132,6 +140,7 @@ final engMap = {
   "message_offline_cannot_view_friends": "Offline mode cannot see friends",
   "message_total_friend_count": "Total %s friends",
   "message_language_settings_info": "Only applied to MagCloud application. This settings cannot translate diaries.",
+  "message_font_settings_info": "This is display font for diary. Only applied to me, not friends.",
 };
 
 String message(String key) {

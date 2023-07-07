@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
 
-@singleton
 class OnlineService {
   final OpenAPI openAPI = inject<OpenAPI>();
   bool? _online;

@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
@@ -7,7 +6,6 @@ import 'package:magcloud_app/core/util/hash_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 
-@singleton
 class DiaryService {
   DiaryService(this.onlineService, this.diaryRepository);
 

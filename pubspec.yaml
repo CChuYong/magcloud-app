@@ -14,7 +14,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.8.3
   get: ^4.6.5
-  injectable: ^2.1.2
   get_it:
   json_annotation:
   shared_preferences:
@@ -34,7 +33,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  injectable_generator: ^2.1.6
   retrofit_generator: '>=5.0.0 <6.0.0'
   build_runner: ^2.4.6
   json_serializable:

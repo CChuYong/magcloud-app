@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/model/user.dart';
@@ -8,7 +7,6 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import '../../di.dart';
 import '../model/daily_user.dart';
 
-@singleton
 class UserService {
   final OnlineService onlineService = inject<OnlineService>();
 

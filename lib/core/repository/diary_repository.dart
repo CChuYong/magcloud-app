@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:injectable/injectable.dart';
 import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/repository/base_repository.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
@@ -9,11 +8,9 @@ import 'package:sqflite/sqflite.dart';
 
 import '../model/diary.dart';
 
-@singleton
 class DiaryRepository extends BaseRepository {
   DiaryRepository() : super('diaries.db', 'diaries');
 
-  @factoryMethod
   static Future<DiaryRepository> create() async {
     final DiaryRepository repository = DiaryRepository();
     await repository.initDatabase();

@@ -27,9 +27,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await StateStore.init();
-  final dio = Dio(); // Provide a dio instance
+  final dio = Dio();
   inject.registerSingleton(dio);
-  //dio.options.headers["Demo-Header"] = "demo header"; // config your dio headers globally
   final client = OpenAPI(dio, baseUrl: 'https://magcloud.chuyong.kr/api/v1');
 
   inject.registerSingleton(client);

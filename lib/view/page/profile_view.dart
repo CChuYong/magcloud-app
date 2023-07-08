@@ -67,7 +67,7 @@ class ProfileView
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     isMe
-                        ? button(message('generic_change_profile_image'), () {})
+                        ? button(message('generic_change_profile_image'), action.updateProfileImage)
                         : button(message('generic_request_friend'), () {}),
                     SizedBox(width: 10.sp),
                     button(message('generic_copy_tags'),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 import 'base_action.dart';
 
@@ -17,8 +19,12 @@ abstract class BaseView<V extends BaseView<V, A, S>,
 
   bool isAutoRemove() => true;
 
+  Color statusBarColor() => Colors.transparent;
+  Color navigationBarColor() => BaseColor.defaultBackgroundColor;
+
   @override
   Widget build(BuildContext context) {
+    action.setBottomColor(navigationBarColor());
     if (!isInitialLoad) {
       isInitialLoad = true;
     } else {

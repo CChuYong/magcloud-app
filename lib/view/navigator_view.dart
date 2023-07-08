@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
@@ -61,6 +62,9 @@ class _NavigatorViewState extends State<NavigatorView> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: BaseColor.warmGray100,
+    ));
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       bottomNavigationBar:

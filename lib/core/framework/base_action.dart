@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +33,12 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
   }
 
   void onReloaded() {}
+
+  void setBottomColor(Color color) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: color,
+    ));
+  }
 
   void setLoading(bool loading) {
     isLoading = loading;

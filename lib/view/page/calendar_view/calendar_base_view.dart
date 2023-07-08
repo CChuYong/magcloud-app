@@ -22,6 +22,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   @override
   bool isAutoRemove() => false;
 
+  @override
+  Color navigationBarColor() => BaseColor.warmGray100;
+
   final Duration aniamtionDuration = Duration(milliseconds: 200);
 
   double getAnimationOffset(CalendarBaseViewModel action) {

@@ -14,6 +14,9 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   LoginViewModel initViewModel() => LoginViewModel();
 
   @override
+  Color navigationBarColor() => BaseColor.defaultSplashBackgroundColor;
+
+  @override
   Widget render(
       BuildContext context, LoginViewModel action, LoginViewState state) {
     return Scaffold(

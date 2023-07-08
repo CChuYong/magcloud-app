@@ -20,6 +20,9 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   MoreViewModel initViewModel() => MoreViewModel();
 
   @override
+  Color navigationBarColor() => BaseColor.warmGray100;
+
+  @override
   Widget render(
       BuildContext context, MoreViewModel action, MoreViewState state) {
     return SafeArea(

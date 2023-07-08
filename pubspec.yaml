@@ -45,6 +45,8 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#E7E5E4"
+  android_12:
+    color: "#E7E5E4"
 
 flutter:
   uses-material-design: true

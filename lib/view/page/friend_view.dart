@@ -22,6 +22,11 @@ class FriendView
   FriendViewModel initViewModel() => FriendViewModel();
 
   @override
+  Color navigationBarColor() => BaseColor.warmGray100;
+
+
+
+  @override
   Widget render(
       BuildContext context, FriendViewModel action, FriendViewState state) {
     return SafeArea(

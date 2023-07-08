@@ -41,6 +41,10 @@ class GlobalRoute {
     await Get.to(routeBuilder, transition: Transition.rightToLeft, popGesture: true);
   }
 
+  static Future<void> rightToLeftRouteToDynamic(Widget Function() target) async {
+    await Get.to(target, transition: Transition.rightToLeft, popGesture: true);
+  }
+
   static Future<void> back() async {
     Get.back();
   }
@@ -65,22 +69,24 @@ class GlobalRoute {
   }
 
   static Future<void> privacyPage() async {
-    if(!isOnline()) {
-      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
-      return;
-    }
+    if(!assertOnline()) return;
     await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/privacy'), transition: Transition.rightToLeft, popGesture: true);
   }
 
   static Future<void> noticePage() async {
-    if(!isOnline()) {
-      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
-      return;
-    }
+    if(!assertOnline()) return;
     await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/notice'), transition: Transition.rightToLeft, popGesture: true);
   }
 
   static bool isOnline() => inject<OnlineService>().isOnlineMode();
+
+  static bool assertOnline() {
+    if(!isOnline()) {
+      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+      return false;
+    }
+    return true;
+  }
 
 }
 

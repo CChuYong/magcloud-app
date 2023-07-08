@@ -51,13 +51,13 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView, ApplicationInfoV
               TextStyle(color: BaseColor.warmGray400, fontSize: 14.sp)
           )),
           SizedBox(height: 20.sp),
-          Divider(color: BaseColor.warmGray200, height: 1),
+          const Divider(color: BaseColor.warmGray200, height: 1),
           SizedBox(height: 20.sp),
-          row(message('generic_reset_cache'), button(message('generic_reset'), (){})),
+          row(message('generic_reset_cache'), button(message('generic_reset'), action.resetCacheData)),
           SizedBox(height: gapBetweenElements),
-          row(message('generic_reset_settings'), button(message('generic_reset'), (){})),
+          row(message('generic_reset_settings'), button(message('generic_reset'), action.resetSettings)),
           SizedBox(height: gapBetweenElements),
-          row(message('generic_open_source_license'), button(message('generic_watch'), (){})),
+          row(message('generic_open_source_license'), button(message('generic_watch'), action.watchOpenSourceLicense)),
         ],
       )),
     );

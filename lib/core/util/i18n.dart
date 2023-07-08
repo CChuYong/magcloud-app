@@ -19,6 +19,8 @@ final map = {
   "navigation_calendar": "달력",
   "navigation_more": "더보기",
   "menu_settings": "설정",
+  "my_profile": "내 프로필",
+  "friend_profile": "%s님의 프로필",
   "menu_my_profiles": "내 프로필 설정",
   "menu_notification": "알림 설정",
   "menu_fonts": "글씨체 설정",
@@ -59,9 +61,14 @@ final map = {
   "generic_full_saturday": "토요일",
   "generic_full_sunday": "일요일",
   "generic_search": "검색",
+  "generic_cancel": "취소하기",
   "generic_add_friend": "친구 추가",
   "generic_friend_share_diary": "일기 공유",
   "generic_friend_unshare_diary": "일기 공유 취소",
+  "generic_change_profile_image": "프로필 사진 변경",
+  "generic_copy_tags": "태그 복사하기",
+  "generic_request_friend": "친구 추가하기",
+  "generic_break_friend": "친구 삭제하기",
   "generic_friend_delete": "삭제",
   "generic_preview": "미리보기",
   "generic_login_with_apple": "Apple로 로그인",
@@ -76,6 +83,9 @@ final map = {
   "generic_reset_cache": "캐시 데이터 초기화",
   "generic_open_source_license": "오픈소스 라이선스",
   "generic_reset_settings": "설정 초기화",
+  "generic_notification_list": "알림 목록",
+  "generic_notification_friend": "친구 관련 알림",
+  "generic_notification_app": "앱 관련 알림",
   "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래의 일기는 볼 수 없어요",
@@ -89,7 +99,14 @@ final map = {
   "message_language_settings_info": "앱 내부에서 표기되는 언어에요. 일기 내용, 친구 이름등은 변하지 않아요",
   "message_font_settings_info":
       "일기장에서 표기되는 글씨체에요. 나에게 보여지는 폰트여서 친구에게는 적용되지 않아요.",
-  "message_offline_cannot_use_that": "오프라인 모드에선 사용할 수 없어요"
+  "message_offline_cannot_use_that": "오프라인 모드에선 사용할 수 없어요",
+  "message_notification_config_info": "받고싶지 않은 알림을 켜고 끌 수 있어요",
+  "message_notification_config_friend_info": "친구와 관련된 알림을 켜고 끌 수 있어요",
+  "message_notification_config_app_info": "앱과 관련된 알림을 켜고 끌 수 있어요",
+  "message_logout_dialog_title": "로그아웃 할까요?",
+  "message_logout_dialog_subtitle": "로그아웃 후 다시 로그인하셔야 해요",
+  "message_cache_reset_subtitle": "캐시 데이터를 초기화할까요?",
+  "message_settings_reset_subtitle": "설정 데이터를 초기화할까요?"
 };
 
 final engMap = {
@@ -100,6 +117,8 @@ final engMap = {
   "navigation_calendar": "Calendar",
   "navigation_more": "More",
   "menu_settings": "Settings",
+  "my_profile": "My Profile",
+  "friend_profile": "%s's Profile",
   "menu_my_profiles": "Customize Profile",
   "menu_notification": "Notification Setting",
   "menu_fonts": "Font Setting",
@@ -140,9 +159,14 @@ final engMap = {
   "generic_full_saturday": "SAT",
   "generic_full_sunday": "SUN",
   "generic_search": "Search",
+  "generic_cancel": "Cancel",
   "generic_add_friend": "Add Friend",
   "generic_friend_share_diary": "Share Diary",
   "generic_friend_unshare_diary": "UnShare Diary",
+  "generic_change_profile_image": "Update Image",
+  "generic_copy_tags": "Copy Tags",
+  "generic_request_friend": "Add Friend",
+  "generic_break_friend": "Delete Friend",
   "generic_friend_delete": "Delete",
   "generic_preview": "Preview",
   "generic_login_with_apple": "Login with Apple",
@@ -157,6 +181,9 @@ final engMap = {
   "generic_reset_cache": "Reset Cached Data",
   "generic_open_source_license": "Open Source License",
   "generic_reset_settings": "Reset Settings",
+  "generic_notification_list": "Notification List",
+  "generic_notification_friend": "Friend Related Notification",
+  "generic_notification_app": "App Related Notification",
   "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
@@ -171,11 +198,18 @@ final engMap = {
       "Only applied to MagCloud application. This settings cannot translate diaries.",
   "message_font_settings_info":
       "This is display font for diary. Only applied to me, not friends.",
-  "message_offline_cannot_use_that": "Offline mode cannot use that feature!"
+  "message_offline_cannot_use_that": "Offline mode cannot use that feature!",
+  "message_notification_config_info": "You can turn on/off notifications",
+  "message_notification_config_friend_info": "You can turn on/off friend related notifications",
+  "message_notification_config_app_info": "You can turn on/off app related notifications",
+  "message_logout_dialog_title": "Logging Out?",
+  "message_logout_dialog_subtitle": "You should login again to use MagCloud",
+  "message_cache_reset_subtitle": "Reset Cached Data?",
+  "message_settings_reset_subtitle": "Reset Settings?"
 };
 
 String message(String key) {
-  return (isKorea ? map : engMap)[key] ?? "UNKNOWN KEYWORD";
+  return (isKorea ? map : engMap)[key] ?? key;
 }
 
 String dayOfWeek(int ordinal) {

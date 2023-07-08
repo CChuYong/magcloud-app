@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../../core/model/mood.dart';
-import '../../../core/util/i18n.dart';
-import '../../component/touchableopacity.dart';
-import '../../designsystem/base_color.dart';
+import '../../core/model/mood.dart';
+import '../../core/util/i18n.dart';
+import '../component/touchableopacity.dart';
+import '../designsystem/base_color.dart';
 
 Future<Mood?> moodChangeDialog({
   required Mood previousMood,

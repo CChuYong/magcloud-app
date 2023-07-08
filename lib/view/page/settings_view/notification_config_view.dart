@@ -18,122 +18,79 @@ class NotificationConfigView extends BaseView<
   NotificationConfigView({super.key});
 
 
-  PreferredSizeWidget buildAppBar() {
-    return AppBar(
-      backgroundColor: BaseColor.defaultBackgroundColor,
-      elevation: 0,
-      title: Text(
-        '알림 설정 변경하기',
-        style: TextStyle(
-          color: BaseColor.warmGray500,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      centerTitle: true,
-    );
-  }
-
   @override
   Widget render(BuildContext context, NotificationConfigViewModel action,
       NotificationConfigViewState state) {
+    final gapBetweenBadge = 11.sp;
     return BaseSettingLayout(
 title: message('menu_notification'),
           child: Padding(
-              padding: EdgeInsets.only(left: 10.sp, right: 10.sp, top: 10.sp),
+              padding: EdgeInsets.symmetric(horizontal: 20.sp),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ToggleableMenuElement(
-                      '친구 관련 알림',
-                      '친구 추가, 요청 등의 알림을 보내드려요!',
-                      Icons.people,
-                      (e) => action.changeSetting('socialAlert', e == 0),
-                      state.socialAlert),
-                  ToggleableMenuElement(
-                      '앱 관련 알림',
-                      '앱의 공지사항, 업데이트 등을 알려드려요!',
-                      Icons.phone_android,
-                      (e) => action.changeSetting('noticeAlert', e == 0),
-                      state.noticeAlert)
+                  SizedBox(height: 20.sp),
+                  Row(
+                    children: [
+                      SizedBox(width: 8.sp),
+                      Text(message('generic_notification_list'),
+                          style:
+                          TextStyle(color: BaseColor.warmGray600, fontSize: 16.sp))
+                    ],
+                  ),
+
+                  SizedBox(height: 10.sp),
+                  notificationBox(message('generic_notification_friend'), message('message_notification_config_friend_info'), state.socialAlert, () => action.changeSetting('social', !state.socialAlert)),
+                  SizedBox(height: gapBetweenBadge),
+                  notificationBox(message('generic_notification_app'), message('message_notification_config_app_info'), state.noticeAlert, () => action.changeSetting('notice', !state.noticeAlert)),
+                  Row(
+                    children: [
+                      SizedBox(width: 8.sp),
+                      Flexible(
+                          child:   Text(message('message_notification_config_info'),
+                              style:
+                              TextStyle(color: BaseColor.warmGray500, fontSize: 12.sp))),
+                      SizedBox(width: 8.sp),
+                    ],
+                  ),
                 ],
               ),
             ),
 
     );
   }
+  Widget notificationBox(
+      String title, String subtitle, bool isSelected, void Function() onTap) {
+    return TouchableOpacity(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+              color: BaseColor.warmGray50,
+              borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 20.sp),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(title,
+                      style: TextStyle(
+                          color: BaseColor.warmGray600, fontSize: 14.sp)),
+                  Text(subtitle,
+                      style: TextStyle(
+                          color: BaseColor.warmGray500, fontSize: 12.sp))
+                ]),
+                Icon(Icons.check,
+                    size: 20.sp,
+                    color: isSelected
+                        ? BaseColor.warmGray700
+                        : BaseColor.warmGray300),
+              ],
+            ),
+          ),
+        ));
+  }
 
   @override
   NotificationConfigViewModel initViewModel() => NotificationConfigViewModel();
-}
-
-typedef CancelToggle = Future<bool> Function(int? index);
-
-class ToggleableMenuElement extends StatelessWidget {
-  String text;
-  String description;
-  IconData icon;
-
-  //Function onTap;
-  bool initialState;
-  CancelToggle onTap;
-
-  ToggleableMenuElement(
-      this.text, this.description, this.icon, this.onTap, this.initialState,
-      {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TouchableOpacity(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: 0.sp, top: 13.sp, bottom: 13.sp, right: 0.sp),
-            child: Container(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(icon, size: 19.sp, color: BaseColor.warmGray500),
-                    SizedBox(width: 12.sp),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          text,
-                          style: TextStyle(
-                            color: BaseColor.warmGray500,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        Text(
-                          description,
-                          style: TextStyle(
-                            color: BaseColor.warmGray500,
-                            fontSize: 10.sp,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                ToggleSwitch(
-                  initialLabelIndex: initialState ? 0 : 1,
-                  totalSwitches: 2,
-                  labels: ['켜짐', '꺼짐'],
-                  cancelToggle: onTap,
-                  activeFgColor: BaseColor.warmGray200,
-                  activeBgColor: [BaseColor.warmGray600],
-                  inactiveFgColor: BaseColor.warmGray500,
-                  inactiveBgColor: BaseColor.warmGray300,
-                ),
-              ],
-            )),
-          ),
-        ],
-      ),
-    );
-  }
 }

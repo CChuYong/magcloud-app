@@ -4,11 +4,13 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
+import 'package:magcloud_app/view/dialog/confirm_dialog.dart';
 import 'package:magcloud_app/view_model/more_view/more_view_state.dart';
 
 import '../../core/util/i18n.dart';
 import '../../core/util/snack_bar_util.dart';
 import '../../view/page/more_view.dart';
+import '../../view/page/profile_view.dart';
 
 class MoreViewModel
     extends BaseViewModel<MoreView, MoreViewModel, MoreViewState> {
@@ -19,7 +21,11 @@ class MoreViewModel
     state.me = await inject<UserService>().getMe();
   }
 
-  Future<void> onTapMyProfiles() async {}
+  Future<void> onTapMyProfiles() async {
+    if(state.me == null) return;
+    route() => ProfileView(state.me!, true);
+    GlobalRoute.rightToLeftRouteToDynamic(route);
+  }
 
   Future<void> onTapNotification() async {
     if(!inject<OnlineService>().isOnlineMode()) {
@@ -54,6 +60,9 @@ class MoreViewModel
   }
 
   Future<void> logout() async {
+    final result = await confirmDialog(message('message_logout_dialog_title'), message('message_logout_dialog_subtitle'), confirmText: message('menu_logout'));
+    if(result != true) return;
+
     await inject<AuthService>().logout();
     await GlobalRoute.fadeRoute('/login');
   }

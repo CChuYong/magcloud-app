@@ -137,6 +137,7 @@ class FriendView
           alignment: Alignment.center,
           children: [
             TouchableOpacity(
+              onTap: () => action.onTapFriend(user),
                 child: SizedBox(
                     width: double.infinity,
                     child: Row(

@@ -12,7 +12,7 @@ import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
-import 'package:magcloud_app/view/page/calendar_view/mood_change_dialog.dart';
+import 'package:magcloud_app/view/dialog/mood_change_dialog.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 

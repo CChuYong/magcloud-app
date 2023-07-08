@@ -1,4 +1,5 @@
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -37,5 +38,7 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
     if (result != true) return;
   }
 
-  void watchOpenSourceLicense() async {}
+  void watchOpenSourceLicense() async {
+    await GlobalRoute.ossView();
+  }
 }

@@ -13,6 +13,7 @@ import 'package:magcloud_app/view/page/settings_view/application_info_view.dart'
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/notification_config_view.dart';
+import 'package:magcloud_app/view/page/settings_view/open_source_view.dart';
 import 'package:magcloud_app/view/page/splash_view.dart';
 import 'package:magcloud_app/view/page/webview_view.dart';
 
@@ -67,6 +68,10 @@ class GlobalRoute {
 
   static void goMain() {
     fadeRoute('/navigator');
+  }
+
+  static Future<void> ossView() async {
+    rightToLeftRouteToDynamic(() => OpenSourceLicenseView());
   }
 
   static Future<void> privacyPage() async {

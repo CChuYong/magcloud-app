@@ -8,7 +8,6 @@ import 'package:magcloud_app/view_model/more_view/more_view_model.dart';
 import 'package:magcloud_app/view_model/more_view/more_view_state.dart';
 
 import '../../core/util/i18n.dart';
-import '../component/navigation_bar.dart';
 import '../designsystem/base_color.dart';
 
 class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
@@ -24,17 +23,17 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   Widget render(
       BuildContext context, MoreViewModel action, MoreViewState state) {
     return SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5.sp),
-            titleBar(),
-            SizedBox(height: 20.sp),
-            meBox(action, state),
-            SizedBox(height: 15.sp),
-            Expanded(child: menuBox(action))
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 5.sp),
+          titleBar(),
+          SizedBox(height: 20.sp),
+          meBox(action, state),
+          SizedBox(height: 15.sp),
+          Expanded(child: menuBox(action))
+        ],
+      ),
     );
   }
 

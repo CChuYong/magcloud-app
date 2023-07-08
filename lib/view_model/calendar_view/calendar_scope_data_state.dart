@@ -31,6 +31,7 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
     diaryTextController.text = currentDiary.content;
     currentMood = currentDiary.mood;
   }
-  static CalendarDailyViewScopeData mock() => CalendarDailyViewScopeData(Diary.mock());
-}
 
+  static CalendarDailyViewScopeData mock() =>
+      CalendarDailyViewScopeData(Diary.mock());
+}

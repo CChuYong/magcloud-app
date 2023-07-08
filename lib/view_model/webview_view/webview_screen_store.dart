@@ -1,6 +1,6 @@
-
 import 'package:get/get.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/webview_view.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_javascript_bridge/webview_javascript_bridge.dart';
@@ -47,7 +47,7 @@ class WebViewScreenAction extends BaseViewModel<WebViewScreenView,
         onPageFinished: (String url) {},
         onWebResourceError: (WebResourceError error) {},
         onNavigationRequest: (NavigationRequest request) {
-          if (!request.url.startsWith('https://bsc-webview.chuyong.kr')) {
+          if (!request.url.startsWith(GlobalRoute.webViewUrl)) {
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;

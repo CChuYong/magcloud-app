@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
-import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
@@ -55,22 +54,22 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
                       child: Listener(
-                        onPointerMove: action.onTextFieldMove,
+                          onPointerMove: action.onTextFieldMove,
                           child: TextField(
                             onTapOutside: (e) => action.unFocusTextField(),
-                        readOnly: !action.isMeSelected(),
-                        focusNode: scopeData.focusNode,
-                        style: TextStyle(
-                          fontFamily: diaryFont,
-                          fontSize: diaryFontSize,
-                        ),
-                        controller: scopeData.diaryTextController,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                      )),
+                            readOnly: !action.isMeSelected(),
+                            focusNode: scopeData.focusNode,
+                            style: TextStyle(
+                              fontFamily: diaryFont,
+                              fontSize: diaryFontSize,
+                            ),
+                            controller: scopeData.diaryTextController,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          )),
                     ))
                   ],
                 )))
@@ -111,7 +110,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
     );
   }
 
-  Widget dailyDiaryMoodBox(CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
+  Widget dailyDiaryMoodBox(
+      CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
     return TouchableOpacity(
         onTap: action.onTapChangeMood,
         child: Padding(

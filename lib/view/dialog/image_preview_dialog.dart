@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../../core/model/mood.dart';
+
 import '../designsystem/base_color.dart';
 
 Future<void> imagePreviewDialog(String imageUrl) {
@@ -26,16 +24,15 @@ Future<void> imagePreviewDialog(String imageUrl) {
           final width = MediaQuery.of(context).size.width - 30.sp;
           return StatefulBuilder(
               builder: (ctx, setState) => Container(
-                width: width,
-                height: width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                        imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ));
+                    width: width,
+                    height: width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ));
         },
       ),
     ),

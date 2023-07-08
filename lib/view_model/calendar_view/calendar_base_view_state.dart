@@ -15,9 +15,9 @@ class CalendarBaseViewState {
   User? selectedUser;
   List<DailyUser> dailyFriends = List.empty();
 
-  CalendarBaseViewState(this.currentYear, this.currentMonth, this.currentDay,
-      this.scope) {
-    switch(scope) {
+  CalendarBaseViewState(
+      this.currentYear, this.currentMonth, this.currentDay, this.scope) {
+    switch (scope) {
       case CalendarViewScope.MONTH:
         scopeData = CalendarMonthViewScopeData.mock();
         break;

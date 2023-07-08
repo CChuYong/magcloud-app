@@ -200,8 +200,10 @@ final engMap = {
       "This is display font for diary. Only applied to me, not friends.",
   "message_offline_cannot_use_that": "Offline mode cannot use that feature!",
   "message_notification_config_info": "You can turn on/off notifications",
-  "message_notification_config_friend_info": "You can turn on/off friend related notifications",
-  "message_notification_config_app_info": "You can turn on/off app related notifications",
+  "message_notification_config_friend_info":
+      "You can turn on/off friend related notifications",
+  "message_notification_config_app_info":
+      "You can turn on/off app related notifications",
   "message_logout_dialog_title": "Logging Out?",
   "message_logout_dialog_subtitle": "You should login again to use MagCloud",
   "message_cache_reset_subtitle": "Reset Cached Data?",

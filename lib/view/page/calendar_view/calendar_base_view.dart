@@ -42,20 +42,20 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
       CalendarBaseViewState state) {
     const Curve curve = Curves.easeInOutSine;
     return Container(
-          color: BaseColor.defaultBackgroundColor,
-          child: Stack(
-            children: [
-              SafeArea(
-                  child: AnimatedPadding(
-                      padding: EdgeInsets.only(
-                          top: action.isFriendBarOpen ? 130.sp : 45.sp),
-                      curve: curve,
-                      duration: aniamtionDuration,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                          onVerticalDragEnd: action.onVerticalDrag,
-                          onHorizontalDragEnd: action.onHorizontalDrag,
-                          child: Column(
+      color: BaseColor.defaultBackgroundColor,
+      child: Stack(
+        children: [
+          SafeArea(
+              child: AnimatedPadding(
+                  padding: EdgeInsets.only(
+                      top: action.isFriendBarOpen ? 130.sp : 45.sp),
+                  curve: curve,
+                  duration: aniamtionDuration,
+                  child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onVerticalDragEnd: action.onVerticalDrag,
+                      onHorizontalDragEnd: action.onHorizontalDrag,
+                      child: Column(
                         children: [
                           Expanded(
                               child: AnimatedSwitcher(
@@ -78,53 +78,52 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                           ))
                         ],
                       )))),
-              Container(
-                width: double.infinity,
-                height: 50.sp,
-                color: BaseColor.defaultBackgroundColor,
-              ),
-              SafeArea(
-                  child: Column(
-                children: [
-                  titleBar(action),
-                  AnimatedSwitcher(
-                    switchInCurve: curve,
-                    switchOutCurve: curve,
-                    duration: const Duration(milliseconds: 220),
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
-                      return SizeTransition(
-                        sizeFactor: animation,
-                        axis: Axis.vertical,
-                        axisAlignment: -1,
-                        child: child,
-                      );
-                    },
-                    child: action.isFriendBarOpen
-                        ? Column(
-                            children: [
-                              Container(
-                                  color: BaseColor.defaultBackgroundColor,
-                                  height: 18.sp,
-                                  width: double.infinity),
-                              Container(
-                                color: BaseColor.defaultBackgroundColor,
-                                child: friendBar(action),
-                              ),
-                            ],
-                          )
-                        : Container(),
-                  ),
-                  Container(
-                    color: BaseColor.defaultBackgroundColor,
-                    child: Divider(color: BaseColor.warmGray200),
-                  ),
-                ],
-              )),
-            ],
+          Container(
+            width: double.infinity,
+            height: 50.sp,
+            color: BaseColor.defaultBackgroundColor,
           ),
-          //  ),
-        );
+          SafeArea(
+              child: Column(
+            children: [
+              titleBar(action),
+              AnimatedSwitcher(
+                switchInCurve: curve,
+                switchOutCurve: curve,
+                duration: const Duration(milliseconds: 220),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SizeTransition(
+                    sizeFactor: animation,
+                    axis: Axis.vertical,
+                    axisAlignment: -1,
+                    child: child,
+                  );
+                },
+                child: action.isFriendBarOpen
+                    ? Column(
+                        children: [
+                          Container(
+                              color: BaseColor.defaultBackgroundColor,
+                              height: 18.sp,
+                              width: double.infinity),
+                          Container(
+                            color: BaseColor.defaultBackgroundColor,
+                            child: friendBar(action),
+                          ),
+                        ],
+                      )
+                    : Container(),
+              ),
+              Container(
+                color: BaseColor.defaultBackgroundColor,
+                child: Divider(color: BaseColor.warmGray200),
+              ),
+            ],
+          )),
+        ],
+      ),
+      //  ),
+    );
   }
 
   Widget titleBar(CalendarBaseViewModel action) {

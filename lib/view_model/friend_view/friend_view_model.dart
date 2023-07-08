@@ -25,9 +25,7 @@ class FriendViewModel
   }
 
   @override
-  void dispose() {
-
-  }
+  void dispose() {}
 
   void applySearch() {
     setState(() {
@@ -39,9 +37,7 @@ class FriendViewModel
     state.friends = await userService.getFriends();
   }
 
-  void onTapAddFriend() {
-
-  }
+  void onTapAddFriend() {}
 
   void onTapFriend(User user) {
     route() => ProfileView(user, false);

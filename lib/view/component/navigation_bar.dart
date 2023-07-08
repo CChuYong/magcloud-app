@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
-import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class BaseNavigationBar extends StatefulWidget {
   void Function()? onTapSelf;
   void Function(int)? onTap;
   final int currentPage;
-
 
   BaseNavigationBar({this.onTapSelf, this.onTap, required this.currentPage});
 

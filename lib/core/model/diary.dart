@@ -14,5 +14,9 @@ class Diary {
       required this.ymd,
       required this.hash});
 
-  static Diary mock({DateTime? ymd}) => Diary(mood: Mood.neutral, content: '', ymd: ymd ?? DateTime.now(), hash: HashUtil.emptyHash());
+  static Diary mock({DateTime? ymd}) => Diary(
+      mood: Mood.neutral,
+      content: '',
+      ymd: ymd ?? DateTime.now(),
+      hash: HashUtil.emptyHash());
 }

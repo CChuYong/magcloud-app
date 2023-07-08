@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../core/model/mood.dart';
 import '../../core/util/i18n.dart';
@@ -68,24 +66,23 @@ Future<Mood?> moodChangeDialog({
                             ),
                             SizedBox(height: 30.sp),
                             TouchableOpacity(
-                              onTap: () => Get.back(result: selectedMood),
-                                child:
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: BaseColor.warmGray200,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 10.sp),
-                                  child: Center(
-                                    child: Text(message('generic_apply'),
-                                        style: TextStyle(
-                                          color: BaseColor.warmGray600,
-                                          fontSize: 13.sp,
-                                        )),
-                                  )),
-                            ))
+                                onTap: () => Get.back(result: selectedMood),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: BaseColor.warmGray200,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10.sp),
+                                      child: Center(
+                                        child: Text(message('generic_apply'),
+                                            style: TextStyle(
+                                              color: BaseColor.warmGray600,
+                                              fontSize: 13.sp,
+                                            )),
+                                      )),
+                                ))
                           ],
                         )),
                   )));
@@ -110,9 +107,9 @@ Widget moodBar(Mood mood, bool isSelected, void Function() onTap) {
                 shape: BoxShape.circle,
               ),
             ),
-            isSelected ? Icon(Icons.check,
-                size: 20.sp,
-                color: BaseColor.warmGray600) : Container(),
+            isSelected
+                ? Icon(Icons.check, size: 20.sp, color: BaseColor.warmGray600)
+                : Container(),
           ],
         )),
     SizedBox(height: 3.sp),

@@ -17,10 +17,9 @@ abstract class BaseView<V extends BaseView<V, A, S>,
 
   bool isAutoRemove() => true;
 
-
   @override
   Widget build(BuildContext context) {
-    if(!isInitialLoad) {
+    if (!isInitialLoad) {
       isInitialLoad = true;
     } else {
       action.onReloaded();
@@ -37,11 +36,11 @@ abstract class BaseView<V extends BaseView<V, A, S>,
           render(context, action, action.state),
           action.isLoading
               ? Positioned(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.black.withOpacity(0.1),
-              ))
+                  child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black.withOpacity(0.1),
+                ))
               : Container(),
         ],
       ),

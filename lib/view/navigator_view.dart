@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'component/navigation_bar.dart';
@@ -9,7 +8,7 @@ import 'page/calendar_view/calendar_base_view.dart';
 import 'page/friend_view.dart';
 import 'page/more_view.dart';
 
-class NavigatorView extends StatefulWidget{
+class NavigatorView extends StatefulWidget {
   NavigatorView({super.key});
 
   final Map<int, Widget> widgetMap = HashMap();
@@ -21,7 +20,7 @@ class NavigatorView extends StatefulWidget{
 
   Widget getOrCreateWidget(int index) {
     Widget? lastWidget = widgetMap[index];
-    if(lastWidget == null) {
+    if (lastWidget == null) {
       print("Create New Page");
       lastWidget = pageBuilder[index]!();
       widgetMap[index] = lastWidget;
@@ -31,7 +30,6 @@ class NavigatorView extends StatefulWidget{
 
   @override
   State createState() => _NavigatorViewState();
-
 }
 
 class _NavigatorViewState extends State<NavigatorView> {
@@ -51,15 +49,13 @@ class _NavigatorViewState extends State<NavigatorView> {
   }
 
   void onTap(int number) {
-    if(currentPage == number) return;
+    if (currentPage == number) return;
     animationStart = true;
     forwardAction = currentPage < number;
     setState(() {
       currentPage = number;
     });
   }
-
-
 
   Widget getCurrentPage() => widget.getOrCreateWidget(currentPage);
 

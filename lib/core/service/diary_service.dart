@@ -15,14 +15,15 @@ class DiaryService {
   Future<Diary> getDiary(int year, int month, int day) async {
     final localDiary = await diaryRepository.findDiary(year, month, day);
     final today = DateTime(year, month, day);
-    return localDiary ??
-        Diary.mock(ymd: today);
+    return localDiary ?? Diary.mock(ymd: today);
   }
 
-  Future<Diary> updateDiary(Diary currentDiary, Mood mood, String content) async {
-    if(content.isEmpty) return currentDiary;
+  Future<Diary> updateDiary(
+      Diary currentDiary, Mood mood, String content) async {
+    if (content.isEmpty) return currentDiary;
     final hashedContent = HashUtil.hashContent(content);
-    if (hashedContent == currentDiary.hash && mood == currentDiary.mood) return currentDiary;
+    if (hashedContent == currentDiary.hash && mood == currentDiary.mood)
+      return currentDiary;
 
     final isOnline = onlineService.isOnlineMode();
     if (isOnline) {
@@ -36,8 +37,7 @@ class DiaryService {
         mood: mood,
         content: content,
         ymd: currentDiary.ymd,
-        hash: hashedContent
-    );
+        hash: hashedContent);
     await diaryRepository.saveDiary(newDiary);
     return newDiary;
   }

@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:magcloud_app/core/api/api_interceptor.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
@@ -14,9 +13,8 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
-import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
-import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
+import 'package:magcloud_app/view/page/login_view.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';
@@ -56,6 +54,6 @@ void main() async {
               useMaterial3: true,
             ),
             home: authService.isAuthenticated() ? NavigatorView() : LoginView(),
-        navigatorObservers: [GlobalRoute.observer],
+            navigatorObservers: [GlobalRoute.observer],
           )));
 }

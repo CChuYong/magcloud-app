@@ -10,9 +10,8 @@ import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
-import 'package:magcloud_app/global_routes.dart';
-import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/dialog/mood_change_dialog.dart';
+import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
@@ -83,7 +82,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
             StateStore.getInt("currentYear") ?? DateParser.getCurrentYear(),
             StateStore.getInt("currentMonth") ?? DateParser.getCurrentMonth(),
             StateStore.getInt("currentDay") ?? DateParser.getCurrentDay(),
-            StateStore.getString("lastScope")?.let((scope) => CalendarViewScope.values.byName(scope)) ?? CalendarViewScope.MONTH,
+            StateStore.getString("lastScope")
+                    ?.let((scope) => CalendarViewScope.values.byName(scope)) ??
+                CalendarViewScope.MONTH,
           ),
         );
 
@@ -91,7 +92,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     if (state.scope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
       final lastDiary = scopeData.currentDiary;
-      diaryService.updateDiary(lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
+      diaryService.updateDiary(
+          lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
     }
     state.scope = scope;
     switch (scope) {
@@ -141,13 +143,13 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void unFocusTextField() {
-    if(state.scope != CalendarViewScope.DAILY) return;
+    if (state.scope != CalendarViewScope.DAILY) return;
     final dailyScope = state.scopeData as CalendarDailyViewScopeData;
     dailyScope.focusNode.unfocus();
   }
 
   void onTextFieldMove(PointerMoveEvent event) {
-    if(event.delta.dx.abs() < 15) return;
+    if (event.delta.dx.abs() < 15) return;
     dragDebouncer.runLastCall(() {
       final isPositive = event.delta.dx < 0;
       final moveAmount = isPositive ? 1 : -1;
@@ -158,33 +160,31 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   void onVerticalDrag(DragEndDetails details) {
     dragDebouncer.runLastCall(() {
       final isPositive = (details.primaryVelocity ?? 0) > 0;
-      if(state.scope == CalendarViewScope.DAILY) {
+      if (state.scope == CalendarViewScope.DAILY) {
         final dailyScope = state.scopeData as CalendarDailyViewScopeData;
-        if(isPositive) {
-          if(dailyScope.focusNode.hasFocus) {
+        if (isPositive) {
+          if (dailyScope.focusNode.hasFocus) {
             dailyScope.focusNode.unfocus();
-          }else{
+          } else {
             onTapDayTitle();
           }
-        }else {
+        } else {
           dailyScope.focusNode.requestFocus();
         }
-
       } else if (state.scope == CalendarViewScope.MONTH) {
-        if(isPositive) {
-          if(!isFriendBarOpen) {
+        if (isPositive) {
+          if (!isFriendBarOpen) {
             setState(() {
               isFriendBarOpen = true;
             });
-          }else {
+          } else {
             onTapMonthTitle();
           }
-
         } else {
           onTapDayBox(state.currentDay);
         }
       } else {
-        if(isPositive) {
+        if (isPositive) {
           onTapYearTitle();
         } else {
           onTapMonthBox(state.currentMonth);
@@ -197,7 +197,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     dragDebouncer.runLastCall(() {
       final isPositive = (details.primaryVelocity ?? 0) < 0;
       final moveAmount = isPositive ? 1 : -1;
-      if(state.scope == CalendarViewScope.DAILY) {
+      if (state.scope == CalendarViewScope.DAILY) {
         changeDay(moveAmount);
       } else if (state.scope == CalendarViewScope.MONTH) {
         changeMonth(moveAmount);
@@ -239,9 +239,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> navigateToNow() async {
     final now = DateTime.now();
-    final before = DateTime(
-        state.currentYear, state.currentMonth, state.currentDay);
-    if(state.currentYear == now.year && state.currentMonth == now.month && state.currentDay == now.day) return;
+    final before =
+        DateTime(state.currentYear, state.currentMonth, state.currentDay);
+    if (state.currentYear == now.year &&
+        state.currentMonth == now.month &&
+        state.currentDay == now.day) return;
     final after = before.isAfter(now);
     setupHorizontalAnimation(!after);
 
@@ -313,8 +315,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> onTapDayBox(int day) async {
     final now = DateTime.now();
-    final target = DateTime(state.currentYear, state.currentMonth, state.currentDay);
-    if(target.isAfter(now)) {
+    final target =
+        DateTime(state.currentYear, state.currentMonth, state.currentDay);
+    if (target.isAfter(now)) {
       snackNoFuture();
       return;
     }
@@ -347,7 +350,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   void onTapChangeMood() async {
     final data = state.scopeData as CalendarDailyViewScopeData;
     final newMood = await moodChangeDialog(previousMood: data.currentMood);
-    if(newMood != null) {
+    if (newMood != null) {
       setState(() {
         data.currentMood = newMood;
       });

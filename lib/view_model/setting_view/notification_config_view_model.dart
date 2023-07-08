@@ -9,10 +9,8 @@ class NotificationConfigViewState {
   NotificationConfigViewState(this.socialAlert, this.noticeAlert);
 }
 
-class NotificationConfigViewModel extends BaseViewModel<
-    NotificationConfigView,
-    NotificationConfigViewModel,
-    NotificationConfigViewState> {
+class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
+    NotificationConfigViewModel, NotificationConfigViewState> {
   NotificationConfigViewModel()
       : super(NotificationConfigViewState(
           true,
@@ -23,9 +21,9 @@ class NotificationConfigViewModel extends BaseViewModel<
   Future<void> initState() async => {};
 
   Future<bool> changeSetting(String type, bool enabled) async {
-   // await openAPI.updateNotification(UpdateNotificationRequest(type, enabled));
+    // await openAPI.updateNotification(UpdateNotificationRequest(type, enabled));
     setState(() {
-      switch(type) {
+      switch (type) {
         case 'social':
           state.socialAlert = enabled;
           break;

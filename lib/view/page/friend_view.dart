@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
@@ -26,18 +25,18 @@ class FriendView
   Widget render(
       BuildContext context, FriendViewModel action, FriendViewState state) {
     return SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5.sp),
-            titleBar(action),
-            SizedBox(height: 14.sp),
-            searchBar(action),
-            SizedBox(height: 5.sp),
-            Divider(color: BaseColor.warmGray200),
-            Expanded(child: friendContainer(action, state))
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 5.sp),
+          titleBar(action),
+          SizedBox(height: 14.sp),
+          searchBar(action),
+          SizedBox(height: 5.sp),
+          Divider(color: BaseColor.warmGray200),
+          Expanded(child: friendContainer(action, state))
+        ],
+      ),
     );
   }
 
@@ -55,7 +54,8 @@ class FriendView
                   fontFamily: 'GmarketSans'),
             ),
             TouchableOpacity(
-                onTap: action.onTapAddFriend, child: Icon(Icons.people, color: BaseColor.warmGray700))
+                onTap: action.onTapAddFriend,
+                child: Icon(Icons.people, color: BaseColor.warmGray700))
           ],
         ));
   }
@@ -137,7 +137,7 @@ class FriendView
           alignment: Alignment.center,
           children: [
             TouchableOpacity(
-              onTap: () => action.onTapFriend(user),
+                onTap: () => action.onTapFriend(user),
                 child: SizedBox(
                     width: double.infinity,
                     child: Row(

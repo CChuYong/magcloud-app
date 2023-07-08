@@ -5,8 +5,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../core/framework/base_view.dart';
 import '../../view_model/webview_view/webview_screen_store.dart';
 
-class WebViewScreenView extends BaseView<WebViewScreenView,
-    WebViewScreenAction, WebViewScreenState> {
+class WebViewScreenView extends BaseView<WebViewScreenView, WebViewScreenAction,
+    WebViewScreenState> {
   final String initialUrl;
 
   WebViewScreenView(this.initialUrl, {super.key});

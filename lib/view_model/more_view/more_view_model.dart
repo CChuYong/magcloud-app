@@ -22,14 +22,15 @@ class MoreViewModel
   }
 
   Future<void> onTapMyProfiles() async {
-    if(state.me == null) return;
+    if (state.me == null) return;
     route() => ProfileView(state.me!, true);
     GlobalRoute.rightToLeftRouteToDynamic(route);
   }
 
   Future<void> onTapNotification() async {
-    if(!inject<OnlineService>().isOnlineMode()) {
-      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+    if (!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(
+          message: message('message_offline_cannot_use_that'));
       return;
     }
     GlobalRoute.rightToLeftRouteTo('/settings/notification');
@@ -60,8 +61,10 @@ class MoreViewModel
   }
 
   Future<void> logout() async {
-    final result = await confirmDialog(message('message_logout_dialog_title'), message('message_logout_dialog_subtitle'), confirmText: message('menu_logout'));
-    if(result != true) return;
+    final result = await confirmDialog(message('message_logout_dialog_title'),
+        message('message_logout_dialog_subtitle'),
+        confirmText: message('menu_logout'));
+    if (result != true) return;
 
     await inject<AuthService>().logout();
     await GlobalRoute.fadeRoute('/login');

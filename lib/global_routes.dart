@@ -7,13 +7,11 @@ import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
-import 'package:magcloud_app/view/page/calendar_view/calendar_base_view.dart';
+import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
-import 'package:magcloud_app/view/page/more_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
-import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/settings_view/notification_config_view.dart';
 import 'package:magcloud_app/view/page/splash_view.dart';
 import 'package:magcloud_app/view/page/webview_view.dart';
@@ -28,6 +26,7 @@ class GlobalRoute {
     '/settings/notification': () => NotificationConfigView(),
     '/settings/app-info': () => ApplicationInfoView()
   };
+  static String webViewUrl = 'https://bsc-webview.chuyong.kr'; //
 
   static Future<void> fadeRoute(String target) async {
     final routeBuilder = routes[target];
@@ -38,10 +37,12 @@ class GlobalRoute {
 
   static Future<void> rightToLeftRouteTo(String target) async {
     final routeBuilder = routes[target];
-    await Get.to(routeBuilder, transition: Transition.rightToLeft, popGesture: true);
+    await Get.to(routeBuilder,
+        transition: Transition.rightToLeft, popGesture: true);
   }
 
-  static Future<void> rightToLeftRouteToDynamic(Widget Function() target) async {
+  static Future<void> rightToLeftRouteToDynamic(
+      Widget Function() target) async {
     await Get.to(target, transition: Transition.rightToLeft, popGesture: true);
   }
 
@@ -69,33 +70,36 @@ class GlobalRoute {
   }
 
   static Future<void> privacyPage() async {
-    if(!assertOnline()) return;
-    await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/privacy'), transition: Transition.rightToLeft, popGesture: true);
+    if (!assertOnline()) return;
+    await Get.to(WebViewScreenView('$webViewUrl/magcloud/privacy'),
+        transition: Transition.rightToLeft, popGesture: true);
   }
 
   static Future<void> noticePage() async {
-    if(!assertOnline()) return;
-    await Get.to(WebViewScreenView('https://bsc-webview.chuyong.kr/notice'), transition: Transition.rightToLeft, popGesture: true);
+    if (!assertOnline()) return;
+    await Get.to(WebViewScreenView('$webViewUrl/magcloud/notice'),
+        transition: Transition.rightToLeft, popGesture: true);
   }
 
   static bool isOnline() => inject<OnlineService>().isOnlineMode();
 
   static bool assertOnline() {
-    if(!isOnline()) {
-      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+    if (!isOnline()) {
+      SnackBarUtil.errorSnackBar(
+          message: message('message_offline_cannot_use_that'));
       return false;
     }
     return true;
   }
-
 }
 
 class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
   final Set<String> previousRoutes = HashSet();
+
   void _saveScreenView(
       {PageRoute<dynamic>? oldRoute,
-        PageRoute<dynamic>? newRoute,
-        String? routeType}) {
+      PageRoute<dynamic>? newRoute,
+      String? routeType}) {
     debugPrint(
         '[track] ${routeType} screen old : ${oldRoute?.settings.name}, new : ${newRoute?.settings.name}');
   }
@@ -111,7 +115,7 @@ class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
     super.didPush(route, previousRoute);
 
     final name = route.settings.name;
-    if(name != null) {
+    if (name != null) {
       previousRoutes.add(name);
     }
 
@@ -127,7 +131,7 @@ class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     previousRoutes.clear();
     final name = newRoute?.settings.name;
-    if(name != null) {
+    if (name != null) {
       previousRoutes.add(name);
     }
 
@@ -143,9 +147,9 @@ class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
     super.didPop(route, previousRoute);
 
     final name = route.settings.name;
-    if(name != null) {
+    if (name != null) {
       final res = previousRoutes.remove(name);
-      if(!res) print("Unexpected pop");
+      if (!res) print("Unexpected pop");
     }
 
     _saveScreenView(
@@ -160,9 +164,9 @@ class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
     super.didPop(route, previousRoute);
 
     final name = route.settings.name;
-    if(name != null) {
+    if (name != null) {
       final res = previousRoutes.remove(name);
-      if(!res) print("Unexpected remove");
+      if (!res) print("Unexpected remove");
     }
 
     _saveScreenView(
@@ -172,5 +176,3 @@ class CommonRouteObserver extends RouteObserver<PageRoute<dynamic>> {
     );
   }
 }
-
-

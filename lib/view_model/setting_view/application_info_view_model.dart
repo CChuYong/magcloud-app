@@ -9,7 +9,8 @@ class ApplicationInfoViewState {
   PackageInfo? packageInfo;
 }
 
-class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView, ApplicationInfoViewModel, ApplicationInfoViewState> {
+class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
+    ApplicationInfoViewModel, ApplicationInfoViewState> {
   ApplicationInfoViewModel() : super(ApplicationInfoViewState());
 
   @override
@@ -23,17 +24,18 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView, Applic
   }
 
   void resetCacheData() async {
-    final result = await confirmDialog(message('generic_reset_cache'), message('message_cache_reset_subtitle'), confirmText: message('generic_reset'));
-    if(result != true) return;
+    final result = await confirmDialog(
+        message('generic_reset_cache'), message('message_cache_reset_subtitle'),
+        confirmText: message('generic_reset'));
+    if (result != true) return;
   }
 
   void resetSettings() async {
-    final result = await confirmDialog(message('generic_reset_settings'), message('message_settings_reset_subtitle'), confirmText: message('generic_reset'));
-    if(result != true) return;
+    final result = await confirmDialog(message('generic_reset_settings'),
+        message('message_settings_reset_subtitle'),
+        confirmText: message('generic_reset'));
+    if (result != true) return;
   }
 
-  void watchOpenSourceLicense() async {
-
-  }
-
+  void watchOpenSourceLicense() async {}
 }

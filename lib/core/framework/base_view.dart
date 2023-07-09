@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:magcloud_app/view/component/splash_overlay.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 import 'base_action.dart';
@@ -38,6 +39,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
         state.context,
       ),
       builder: (A action) => Stack(
+        alignment: Alignment.center,
         children: [
           render(context, action, action.state),
           action.isLoading
@@ -45,8 +47,12 @@ abstract class BaseView<V extends BaseView<V, A, S>,
                   child: Container(
                   width: double.infinity,
                   height: double.infinity,
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withOpacity(0.3),
                 ))
+              : Container(),
+          action.isLoading
+              ? Positioned(
+              child: SplashOverlay())
               : Container(),
         ],
       ),

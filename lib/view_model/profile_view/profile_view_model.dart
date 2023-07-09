@@ -11,6 +11,7 @@ import 'package:magcloud_app/view_model/profile_view/profile_view_state.dart';
 import 'package:dio/dio.dart';
 
 import '../../core/model/user.dart';
+import '../../core/service/online_service.dart';
 
 class ProfileViewModel
     extends BaseViewModel<ProfileView, ProfileViewModel, ProfileViewState> {
@@ -25,19 +26,30 @@ class ProfileViewModel
   }
 
   Future<void> updateProfileImage() async {
+    if (!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(
+          message: message('message_offline_cannot_use_that'));
+      return;
+    }
     final image = await ImagePickerUtil.pickImage();
-    final openAPI = inject<OpenAPI>();
-    if(image == null) return;
-    final imageRequest = await openAPI.getImageRequest();
-    await inject<Dio>().request(imageRequest.uploadUrl,
-        data: image.bytes,
-        options: Options(method: 'PUT', headers: {'Content-Type': image.mimeType}));
+    try{
+      setLoading(true);
+      final openAPI = inject<OpenAPI>();
+      if(image == null) return;
+      final imageRequest = await openAPI.getImageRequest();
+      await inject<Dio>().request(imageRequest.uploadUrl,
+          data: image.bytes,
+          options: Options(method: 'PUT', headers: {'Content-Type': image.mimeType}));
 
-    await openAPI
-        .updateProfileImage(ProfileImageUpdateRequest(profileImageUrl: imageRequest.downloadUrl));
-    SnackBarUtil.infoSnackBar(message: message('message_upload_succeed'));
-    await setStateAsync(() async {
-      state.user = (await openAPI.getMyProfile()).toDomain();
-    });
+      await openAPI
+          .updateProfileImage(ProfileImageUpdateRequest(profileImageUrl: imageRequest.downloadUrl));
+      SnackBarUtil.infoSnackBar(message: message('message_upload_succeed'));
+      await setStateAsync(() async {
+        state.user = (await openAPI.getMyProfile()).toDomain();
+      });
+    }finally {
+      setLoading(false);
+    }
+
   }
 }

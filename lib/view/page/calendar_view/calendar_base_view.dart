@@ -87,7 +87,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             color: BaseColor.defaultBackgroundColor,
           ),
           SafeArea(
-              child: Column(
+              child: GestureDetector(
+                  onVerticalDragEnd: action.onVerticalDragTopBar,
+                  child: Column(
             children: [
               titleBar(action),
               AnimatedSwitcher(
@@ -122,7 +124,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                 child: Divider(color: BaseColor.warmGray200),
               ),
             ],
-          )),
+          ))),
         ],
       ),
       //  ),

@@ -84,6 +84,8 @@ class FriendView
                 Expanded(
                     child: TextField(
                   controller: action.searchController,
+                  focusNode: action.focusNode,
+                  onTapOutside: (e) { action.focusNode.unfocus(); },
                   style: TextStyle(
                     color: BaseColor.warmGray600,
                     fontSize: 15.sp,

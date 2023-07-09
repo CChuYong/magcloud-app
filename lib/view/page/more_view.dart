@@ -149,10 +149,8 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               SizedBox(height: boxGap),
               menuBtn(Icons.notifications, message('menu_notification'),
                   action.onTapNotification),
-              SizedBox(height: boxGap),
               menuBtn(Icons.font_download, message('menu_fonts'),
                   action.onTapFonts),
-              SizedBox(height: boxGap),
               menuBtn(Icons.language, message('menu_language'),
                   action.onTapLanguage),
               SizedBox(height: 24.sp),
@@ -163,28 +161,27 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                     fontSize: 18.sp,
                     fontFamily: 'GmarketSans'),
               ),
-              SizedBox(height: boxGap),
               menuBtn(Icons.newspaper_outlined, message('menu_notice'),
                   action.onTapNotice),
-              SizedBox(height: boxGap),
               menuBtn(Icons.file_copy_rounded, message('menu_privacy'),
                   action.onTapPrivacy),
-              SizedBox(height: boxGap),
               menuBtn(Icons.phone_android, message('menu_app_info'),
                   action.onTapAppInfo),
-              SizedBox(height: boxGap),
               menuBtn(Icons.logout, message('menu_logout'), action.logout),
             ],
           ),
         ));
   }
 
+  final boxPadding = 5.sp;
   Widget menuBtn(IconData icon, String name, void Function() onTap) {
     final iconSize = 20.sp;
     return TouchableOpacity(
         onTap: onTap,
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.sp),
+        child: Column(children: [
+          Container(
+            child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.sp),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,6 +210,6 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                 ),
                 Icon(BaseIcon.arrowRight, color: BaseColor.warmGray500)
               ],
-            )));
+            )))]));
   }
 }

@@ -200,6 +200,19 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     });
   }
 
+  void onVerticalDragTopBar(DragEndDetails details) {
+    dragDebouncer.runLastCall(() {
+      final isPositive = (details.primaryVelocity ?? 0) > 0;
+      if(!isPositive) {
+        if(isFriendBarOpen) {
+          setState(() {
+            isFriendBarOpen = false;
+          });
+        }
+      }
+    });
+  }
+
   void onHorizontalDrag(DragEndDetails details) {
     dragDebouncer.runLastCall(() {
       final isPositive = (details.primaryVelocity ?? 0) < 0;

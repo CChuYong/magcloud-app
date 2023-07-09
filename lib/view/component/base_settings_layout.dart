@@ -28,13 +28,17 @@ class BaseSettingLayout extends StatelessWidget {
 
   Widget titleBar() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 8.sp),
+      padding: EdgeInsets.only(right: 15.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TouchableOpacity(
-              onTap: GlobalRoute.back,
-              child: Icon(BaseIcon.arrowLeft, size: 16.sp)),
+            onTap: GlobalRoute.back,
+            child: SizedBox(
+                width: 47.sp,
+                height: 32.sp,
+                child: Align(alignment: Alignment.center, child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
+          ),
           Text(title,
               style: TextStyle(
                   color: BaseColor.warmGray600,

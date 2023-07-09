@@ -16,14 +16,26 @@ class LoginViewModel
   Future<void> initState() async {}
 
   Future<void> onAppleLogin() async {
-    final loginResult = await authService.signInWithApple();
+    AuthResult loginResult = AuthResult.FAILED;
+    try{
+      setLoading(true);
+      loginResult = await authService.signInWithApple();
+    } finally{
+      setLoading(false);
+    }
     if(loginResult == AuthResult.SUCCEED){
       GlobalRoute.goMain();
     }
   }
 
   Future<void> onGoogleLogin() async {
-    final loginResult = await authService.signInWithGoogle();
+    AuthResult loginResult = AuthResult.FAILED;
+    try{
+      setLoading(true);
+      loginResult = await authService.signInWithGoogle();
+    } finally{
+      setLoading(false);
+    }
     if(loginResult == AuthResult.SUCCEED){
       GlobalRoute.goMain();
     }

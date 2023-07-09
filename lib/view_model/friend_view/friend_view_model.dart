@@ -12,6 +12,7 @@ import 'friend_view_state.dart';
 class FriendViewModel
     extends BaseViewModel<FriendView, FriendViewModel, FriendViewState> {
   final TextEditingController searchController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
 
   FriendViewModel() : super(FriendViewState()) {
     searchController.addListener(applySearch);

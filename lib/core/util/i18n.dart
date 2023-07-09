@@ -86,6 +86,11 @@ final map = {
   "generic_notification_list": "알림 목록",
   "generic_notification_friend": "친구 관련 알림",
   "generic_notification_app": "앱 관련 알림",
+  "generic_integrity_alert": "무결성 알림",
+  "generic_server_saved_at": "서버에 저장된 시간",
+  "generic_local_saved_at": "로컬에 저장된 시간",
+  "generic_keep_local_version": "로컬 버전 유지하기",
+  "generic_use_server_version": "서버 버전 사용하기",
   "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래의 일기는 볼 수 없어요",
@@ -106,7 +111,8 @@ final map = {
   "message_logout_dialog_title": "로그아웃 할까요?",
   "message_logout_dialog_subtitle": "로그아웃 후 다시 로그인하셔야 해요",
   "message_cache_reset_subtitle": "캐시 데이터를 초기화할까요?",
-  "message_settings_reset_subtitle": "설정 데이터를 초기화할까요?"
+  "message_settings_reset_subtitle": "설정 데이터를 초기화할까요?",
+  "message_server_version_latest_than_local": "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다."
 };
 
 final engMap = {
@@ -184,6 +190,11 @@ final engMap = {
   "generic_notification_list": "Notification List",
   "generic_notification_friend": "Friend Related Notification",
   "generic_notification_app": "App Related Notification",
+  "generic_integrity_alert": "Integrity Alert",
+  "generic_server_saved_at": "Server Updated At",
+  "generic_local_saved_at": "Local Updated At",
+  "generic_keep_local_version": "Keep Local Version",
+  "generic_use_server_version": "Use Server Version",
   "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
@@ -207,7 +218,8 @@ final engMap = {
   "message_logout_dialog_title": "Logging Out?",
   "message_logout_dialog_subtitle": "You should login again to use MagCloud",
   "message_cache_reset_subtitle": "Reset Cached Data?",
-  "message_settings_reset_subtitle": "Reset Settings?"
+  "message_settings_reset_subtitle": "Reset Settings?",
+  "message_server_version_latest_than_local": "Server's diary is newer than local version."
 };
 
 String message(String key) {

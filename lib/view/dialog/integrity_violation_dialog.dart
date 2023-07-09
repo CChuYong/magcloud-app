@@ -46,13 +46,13 @@ Future<bool?> keepLocalDialog(int localTime, int serverTime) async {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 22.sp),
-                                Text('무결성 알림',
+                                Text(message('generic_integrity_alert'),
                                     style: TextStyle(
                                       color: BaseColor.warmGray700,
                                       fontSize: 16.sp,
                                     )),
                                 SizedBox(height: 5.sp),
-                                Text('서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다.',
+                                Text(message('message_server_version_latest_than_local'),
                                     style: TextStyle(
                                       color: BaseColor.warmGray500,
                                       fontSize: 14.sp,
@@ -72,7 +72,7 @@ Future<bool?> keepLocalDialog(int localTime, int serverTime) async {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '서버에 저장된 시간',
+                                                message('generic_server_saved_at'),
                                                   style: TextStyle(
                                                     color: BaseColor.warmGray700,
                                                     fontSize: 12.sp,
@@ -92,7 +92,7 @@ Future<bool?> keepLocalDialog(int localTime, int serverTime) async {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                  '로컬에 저장된 시간',
+                                                  message('generic_local_saved_at'),
                                                   style: TextStyle(
                                                     color: BaseColor.warmGray700,
                                                     fontSize: 12.sp,
@@ -129,7 +129,7 @@ Future<bool?> keepLocalDialog(int localTime, int serverTime) async {
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 10.sp),
                                                   child: Center(
-                                                    child: Text('로컬 일기 유지하기',
+                                                    child: Text(message('generic_keep_local_version'),
                                                         style: TextStyle(
                                                           color: BaseColor
                                                               .warmGray500,
@@ -153,7 +153,7 @@ Future<bool?> keepLocalDialog(int localTime, int serverTime) async {
                                                       vertical: 10.sp),
                                                   child: Center(
                                                     child: Text(
-                                                        '서버 버전 복구하기',
+                                                        message('generic_use_server_version'),
                                                         style: TextStyle(
                                                           color: BaseColor
                                                               .warmGray500,

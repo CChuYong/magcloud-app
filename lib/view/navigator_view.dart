@@ -12,7 +12,7 @@ import 'page/more_view.dart';
 class NavigatorView extends StatefulWidget {
   NavigatorView({super.key});
 
-  final Map<int, Widget> widgetMap = HashMap();
+  static Map<int, Widget> widgetMap = HashMap();
   static final pageBuilder = {
     1: () => CalendarBaseView(),
     2: () => MoreView(),

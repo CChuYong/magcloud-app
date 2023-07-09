@@ -93,6 +93,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,
+                    fontFamily: 'GmarketSans'
                 ),
               )),
           Row(

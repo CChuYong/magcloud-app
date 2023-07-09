@@ -91,13 +91,13 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView,
         child: Container(
             decoration: BoxDecoration(
               color: BaseColor.warmGray200,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(7),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
               child: Text(title,
                   style:
-                      TextStyle(color: BaseColor.warmGray600, fontSize: 12.sp)),
+                      TextStyle(color: BaseColor.warmGray500, fontSize: 12.sp)),
             )));
   }
 }

@@ -87,6 +87,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,
+                    fontFamily: 'GmarketSans'
                 ),
               )),
           Row(
@@ -145,6 +146,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
               style: TextStyle(
                 color: day > 0 ? BaseColor.warmGray500 : BaseColor.warmGray300,
                 fontSize: 18.sp,
+                fontFamily: 'GmarketSans'
               ),
             ),
           ),
@@ -160,6 +162,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.red400,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -167,6 +170,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -174,6 +178,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -181,6 +186,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -188,6 +194,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -195,6 +202,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.warmGray600,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
         Text(
@@ -202,6 +210,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           style: TextStyle(
             color: BaseColor.green400,
             fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'
           ),
         ),
       ],

@@ -43,7 +43,7 @@ class BaseSettingLayout extends StatelessWidget {
               style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,
-                  fontFamily: 'GmarketSans')),
+                  fontFamily: 'Pretendard')),
           SizedBox(width: 16.sp, height: 16.sp),
         ],
       ),

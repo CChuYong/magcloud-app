@@ -26,7 +26,7 @@ void main() async {
       builder: (context, widget) => GetMaterialApp(
             // home: const MyApp(),
             theme: ThemeData(
-              fontFamily: 'GmarketSans',
+              fontFamily: 'Pretendard',
               colorScheme: ColorScheme.fromSeed(
                   seedColor: BaseColor.defaultBackgroundColor),
               useMaterial3: true,

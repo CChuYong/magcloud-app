@@ -81,6 +81,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
             style: TextStyle(
               color: BaseColor.warmGray600,
               fontSize: 16.sp,
+                fontFamily: 'GmarketSans'
             ),
           )),
           Row(
@@ -122,6 +123,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
                 color:
                     isInvisible ? BaseColor.warmGray200 : BaseColor.warmGray500,
                 fontSize: 18.sp,
+                  fontFamily: 'GmarketSans'
               ),
             ),
           ),

@@ -109,14 +109,14 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                                 style: TextStyle(
                                     color: BaseColor.warmGray700,
                                     fontSize: 16.sp,
-                                    fontFamily: 'GmarketSans'),
+                                    fontFamily: 'Pretendard'),
                               ),
                               Text(
                                 state.me?.nameTag ?? '',
                                 style: TextStyle(
                                     color: BaseColor.warmGray500,
                                     fontSize: 12.sp,
-                                    fontFamily: 'GmarketSans'),
+                                    fontFamily: 'Pretendard'),
                               ),
                             ],
                           )
@@ -140,9 +140,9 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               Text(
                 message('menu_settings'),
                 style: TextStyle(
-                    color: BaseColor.warmGray500,
+                    color: BaseColor.warmGray800,
                     fontSize: 18.sp,
-                    fontFamily: 'GmarketSans'),
+                    fontFamily: 'Pretendard'),
               ),
               // SizedBox(height: boxGap),
               // menuBtn(Icons.person, message('menu_my_profiles'), action.onTapMyProfiles),
@@ -157,10 +157,11 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               Text(
                 message('menu_info'),
                 style: TextStyle(
-                    color: BaseColor.warmGray500,
+                    color: BaseColor.warmGray800,
                     fontSize: 18.sp,
-                    fontFamily: 'GmarketSans'),
+                    fontFamily: 'Pretendard'),
               ),
+              SizedBox(height: boxGap),
               menuBtn(Icons.newspaper_outlined, message('menu_notice'),
                   action.onTapNotice),
               menuBtn(Icons.file_copy_rounded, message('menu_privacy'),
@@ -175,13 +176,14 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
 
   final boxPadding = 5.sp;
   Widget menuBtn(IconData icon, String name, void Function() onTap) {
-    final iconSize = 20.sp;
+    final iconSize = 19.sp;
     return TouchableOpacity(
         onTap: onTap,
         child: Column(children: [
           Container(
+            //color: BaseColor.orange300,
             child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.sp),
+            padding: EdgeInsets.symmetric(vertical: 11.sp),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,20 +197,20 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                       width: iconSize,
                       child: Center(
                           child: Icon(icon,
-                              size: iconSize, color: BaseColor.warmGray500)),
+                              size: iconSize, color: BaseColor.warmGray700)),
                     ),
-                    SizedBox(width: 10.sp),
+                    SizedBox(width: 12.sp),
                     Text(
                       name,
                       style: TextStyle(
-                          color: BaseColor.warmGray500,
+                          color: BaseColor.warmGray600,
                           fontSize: 14.sp,
                           height: 1.2,
-                          fontFamily: 'GmarketSans'),
+                          fontFamily: 'Pretendard'),
                     ),
                   ],
                 ),
-                Icon(BaseIcon.arrowRight, color: BaseColor.warmGray500)
+                Icon(BaseIcon.arrowRight, color: BaseColor.warmGray700, size: 14.sp)
               ],
             )))]));
   }

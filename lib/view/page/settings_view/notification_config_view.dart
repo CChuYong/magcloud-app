@@ -44,6 +44,7 @@ class NotificationConfigView extends BaseView<NotificationConfigView,
                 message('message_notification_config_app_info'),
                 state.noticeAlert,
                 () => action.changeSetting('notice', !state.noticeAlert)),
+            SizedBox(height: 11.sp),
             Row(
               children: [
                 SizedBox(width: 8.sp),

@@ -28,7 +28,7 @@ class BaseSettingLayout extends StatelessWidget {
 
   Widget titleBar() {
     return Padding(
-      padding: EdgeInsets.only(right: 15.sp),
+      padding: EdgeInsets.only(right: 31.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

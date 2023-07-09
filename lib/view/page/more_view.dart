@@ -204,7 +204,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                       name,
                       style: TextStyle(
                           color: BaseColor.warmGray600,
-                          fontSize: 14.sp,
+                          fontSize: 15.sp,
                           height: 1.2,
                           fontFamily: 'Pretendard'),
                     ),

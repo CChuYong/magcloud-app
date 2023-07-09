@@ -62,7 +62,6 @@ class ApiInterceptor extends Interceptor {
       log("403!!!!");
     } else if(statusCode == 404) {
       //Ignore
-      log("404!!!");
     } else {
       log(err.response?.data?.toString() ?? 'unknown dio error');
       if (err.response != null) {

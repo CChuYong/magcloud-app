@@ -1,5 +1,7 @@
 import 'dart:io';
 
-String getDeviceInfo() {
-  return "${Platform.operatingSystem} ${Platform.operatingSystemVersion}";
+class DeviceInfoUtil {
+  static String getOsAndVersion() {
+    return "${Platform.operatingSystem} ${Platform.operatingSystemVersion}";
+  }
 }

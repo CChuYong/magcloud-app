@@ -1,14 +1,14 @@
 import 'package:magcloud_app/core/model/user.dart';
 
-import 'diary.dart';
+import 'mood.dart';
 
 class DailyUser extends User {
-  final Diary diary;
+  final Mood mood;
 
-  DailyUser(
-      {required super.userId,
+  DailyUser({required super.userId,
       required super.name,
       required super.nameTag,
-      required super.isDiaryShared,
-      required this.diary});
+      required this.mood,
+    required super.profileImageUrl,
+      });
 }

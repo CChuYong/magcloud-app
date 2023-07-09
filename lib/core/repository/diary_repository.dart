@@ -19,14 +19,16 @@ class DiaryRepository extends BaseRepository {
 
   @override
   Future<void> prepareTable() async {
-    //await database.execute('DROP TABLE $tableName');
+    await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
         ymd TEXT NOT NULL PRIMARY KEY,
+        diary_id TEXT NULL,
         content TEXT NOT NULL,
         mood TEXT NOT NULL,
-        hash TEXT NOT NULL
+        hash TEXT NOT NULL,
+        updated_at LONG NOT NULL
       )
     ''');
 
@@ -81,12 +83,16 @@ class DiaryRepository extends BaseRepository {
         mood: Mood.parseMood(row["mood"] as String),
         ymd: DateParser.parseYmd(row["ymd"] as String),
         hash: row["hash"] as String,
+        diaryId: row["diary_id"]?.let((p0) => p0 as String?),
+        updatedAt: row["updated_at"] as int,
       );
 
-  Map<String, Object> writeDiary(Diary diary) => {
+  Map<String, Object?> writeDiary(Diary diary) => {
         "content": diary.content,
         "mood": diary.mood.name,
         "ymd": DateParser.ymdSimpleFormat.format(diary.ymd),
         "hash": diary.hash,
+        "diary_id": diary.diaryId,
+    "updated_at": diary.updatedAt,
       };
 }

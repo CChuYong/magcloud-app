@@ -304,7 +304,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
         onTap: () => action.onTapFriendIcon(user),
         child: Column(
           children: [
-            friendProfileIcon(user.diary.mood.moodColor, user.profileImageUrl),
+            friendProfileIcon(user.mood.moodColor, user.profileImageUrl),
             Text(
               user.name,
               style: TextStyle(
@@ -320,7 +320,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
   }
 
   Widget meIcon(CalendarBaseViewModel action, DailyUser? me) {
-    final mood = me?.diary.mood ?? Mood.neutral;
+    final mood = me?.mood ?? Mood.neutral;
     return TouchableOpacity(
         onTap: () => me?.let(action.onTapFriendIcon),
         child: Column(

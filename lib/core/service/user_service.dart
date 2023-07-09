@@ -1,45 +1,53 @@
 import 'package:magcloud_app/core/model/diary.dart';
+import 'package:magcloud_app/core/model/friend.dart';
 import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 
 import '../../di.dart';
+import '../api/open_api.dart';
 import '../model/daily_user.dart';
 
 class UserService {
   final OnlineService onlineService = inject<OnlineService>();
+  final OpenAPI openAPI = inject<OpenAPI>();
 
-  Future<List<User>> getFriends() async {
-    final temp = List<User>.empty(growable: true);
-    temp.add(User(
-        userId: 'ujs', name: '엄준식', nameTag: '엄준식#1234', isDiaryShared: false));
-    temp.add(User(
-        userId: 'gjh', name: '공지훈', nameTag: '공지훈#1234', isDiaryShared: true));
+  Future<List<Friend>> getFriends() async {
+    final temp = List<Friend>.empty(growable: true);
+    temp.add(Friend(
+        userId: 'ujs', name: '엄준식', nameTag: '엄준식#1234', isDiaryShared: false, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
+    temp.add(Friend(
+        userId: 'gjh', name: '공지훈', nameTag: '공지훈#1234', isDiaryShared: true, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
 
     if (onlineService.isOnlineMode()) {
       //TRY REFRESH ONLINE
+      return (await openAPI.getFriends()).map((e) => e.toDomain()).toList();
     }
 
     return temp;
   }
 
   Future<User> getMe() async {
-    return User(
-        userId: 'sym', name: '송영민', nameTag: '송영민#1234', isDiaryShared: true);
+    final onlineMe = await openAPI.getMyProfile();
+    //print(onlineMe.name);
+    // final testMe = User(
+    //     userId: 'sym', name: '송영민', nameTag: '송영민#1234');
+    return onlineMe.toDomain();
   }
 
   Future<DailyUser> getDailyMe() async {
     final justMe = await getMe();
     final today = DateTime.now();
     final todayDiary = await inject<DiaryService>()
-        .getDiary(today.year, today.month, today.day);
+        .getDiary(today.year, today.month, today.day, false);
     return DailyUser(
         userId: justMe.userId,
         name: justMe.name,
         nameTag: justMe.nameTag,
-        isDiaryShared: true,
-        diary: todayDiary);
+        profileImageUrl: justMe.profileImageUrl,
+        mood: todayDiary.mood
+    );
   }
 
   Future<List<DailyUser>> getDailyFriends() async {
@@ -47,18 +55,16 @@ class UserService {
     final temp = List<DailyUser>.empty(growable: true);
     temp.add(DailyUser(
         userId: 'ujs',
+        profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
         name: '엄준식',
         nameTag: '엄준식#1234',
-        isDiaryShared: false,
-        diary: Diary(
-            mood: Mood.sad, content: '', ymd: DateTime.now(), hash: 'asdf')));
+        mood: Mood.sad));
     temp.add(DailyUser(
         userId: 'gjh',
+        profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
         name: '공지훈',
         nameTag: '공지훈#1234',
-        isDiaryShared: true,
-        diary: Diary(
-            mood: Mood.angry, content: '', ymd: DateTime.now(), hash: 'asdf')));
+        mood: Mood.sad));
 
     return temp;
   }

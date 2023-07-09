@@ -33,5 +33,5 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
   }
 
   static CalendarDailyViewScopeData mock() =>
-      CalendarDailyViewScopeData(Diary.mock());
+      CalendarDailyViewScopeData(Diary.create());
 }

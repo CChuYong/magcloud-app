@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
+import 'package:magcloud_app/core/model/friend.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -135,14 +136,14 @@ class FriendView
         ));
   }
 
-  Widget friendBox(User user) {
+  Widget friendBox(Friend friend) {
     return Column(
       children: [
         Stack(
           alignment: Alignment.center,
           children: [
             TouchableOpacity(
-                onTap: () => action.onTapFriend(user),
+                onTap: () => action.onTapFriend(friend),
                 child: SizedBox(
                     width: double.infinity,
                     child: Row(
@@ -153,7 +154,7 @@ class FriendView
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: CachedNetworkImageProvider(
-                                    user.profileImageUrl),
+                                    friend.profileImageUrl),
                                 fit: BoxFit.cover,
                               ),
                               color: BaseColor.warmGray700,
@@ -166,14 +167,14 @@ class FriendView
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              user.name,
+                              friend.name,
                               style: TextStyle(
                                 color: BaseColor.warmGray700,
                                 fontSize: 14.sp,
                               ),
                             ),
                             Text(
-                              user.nameTag,
+                              friend.nameTag,
                               style: TextStyle(
                                 color: BaseColor.warmGray500,
                                 fontSize: 12.sp,
@@ -187,7 +188,7 @@ class FriendView
                 right: 0,
                 child: Row(
                   children: [
-                    user.isDiaryShared
+                    friend.isDiaryShared
                         ? TouchableOpacity(
                             child: Container(
                             decoration: BoxDecoration(

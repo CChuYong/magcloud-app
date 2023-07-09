@@ -1,9 +1,9 @@
-import '../../core/model/user.dart';
+import '../../core/model/friend.dart';
 
 class FriendViewState {
   String filterWord = "";
-  List<User> friends = List.empty(growable: false);
+  List<Friend> friends = List.empty(growable: false);
 
-  Iterable<User> getFilteredFriends() =>
+  Iterable<Friend> getFilteredFriends() =>
       friends.where((element) => element.name.contains(filterWord));
 }

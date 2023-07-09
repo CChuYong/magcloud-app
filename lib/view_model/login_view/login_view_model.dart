@@ -16,12 +16,17 @@ class LoginViewModel
   Future<void> initState() async {}
 
   Future<void> onAppleLogin() async {
-    await authService.signInWithApple();
+    final loginResult = await authService.signInWithApple();
+    if(loginResult == AuthResult.SUCCEED){
+      GlobalRoute.goMain();
+    }
   }
 
   Future<void> onGoogleLogin() async {
-    await authService.signInWithGoogle();
-    GlobalRoute.goMain();
+    final loginResult = await authService.signInWithGoogle();
+    if(loginResult == AuthResult.SUCCEED){
+      GlobalRoute.goMain();
+    }
   }
 
   void toggleLanguage() {

@@ -36,5 +36,7 @@ class Mood {
 
   String getLocalizedName() => message("generic_mood_$name");
 
+  String toServerType() => name.toUpperCase();
+
   Mood(this.moodColor, this.name);
 }

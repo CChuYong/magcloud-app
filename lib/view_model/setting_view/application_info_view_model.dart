@@ -4,19 +4,21 @@ import 'package:magcloud_app/view/page/settings_view/application_info_view.dart'
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/util/i18n.dart';
+import '../../di.dart';
 import '../../view/dialog/confirm_dialog.dart';
 
 class ApplicationInfoViewState {
-  PackageInfo? packageInfo;
+  final PackageInfo packageInfo;
+  ApplicationInfoViewState(this.packageInfo);
 }
 
 class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
     ApplicationInfoViewModel, ApplicationInfoViewState> {
-  ApplicationInfoViewModel() : super(ApplicationInfoViewState());
+  ApplicationInfoViewModel() : super(ApplicationInfoViewState(inject<PackageInfo>()));
 
   @override
   Future<void> initState() async {
-    state.packageInfo = await PackageInfo.fromPlatform();
+
   }
 
   @override

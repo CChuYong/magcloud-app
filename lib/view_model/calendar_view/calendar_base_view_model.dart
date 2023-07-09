@@ -89,34 +89,39 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
         );
 
   Future<void> setScope(CalendarViewScope scope) async {
-    if (state.scope == CalendarViewScope.DAILY) {
+    final previousScope = state.scope;
+    if (previousScope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
       final lastDiary = scopeData.currentDiary;
-      diaryService.updateDiary(
+      await diaryService.updateDiary(
           lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
     }
     state.scope = scope;
-    switch (scope) {
-      case CalendarViewScope.YEAR:
-        final mood = await diaryService.getMonthlyMood(state.currentYear);
-        setScopeData(CalendarYearViewScopeData(mood));
-        break;
-      case CalendarViewScope.MONTH:
-        final mood = await diaryService.getDailyMood(
-            state.currentYear, state.currentMonth);
-        setScopeData(CalendarMonthViewScopeData(mood));
-        break;
-      case CalendarViewScope.DAILY:
-        final diary = await diaryService.getDiary(
-            state.currentYear, state.currentMonth, state.currentDay);
-        final dailyScopeData = CalendarDailyViewScopeData(diary);
-        setScopeData(dailyScopeData);
-        dailyScopeData.focusNode.addListener(() {
-          if (isFriendBarOpen) {
-            toggleFriendBar();
-          }
-        });
-        break;
+    try{
+      switch (scope) {
+        case CalendarViewScope.YEAR:
+          final mood = await diaryService.getMonthlyMood(state.currentYear);
+          setScopeData(CalendarYearViewScopeData(mood));
+          break;
+        case CalendarViewScope.MONTH:
+          final mood = await diaryService.getDailyMood(
+              state.currentYear, state.currentMonth);
+          setScopeData(CalendarMonthViewScopeData(mood));
+          break;
+        case CalendarViewScope.DAILY:
+          final diary = await diaryService.getDiary(
+              state.currentYear, state.currentMonth, state.currentDay, true);
+          final dailyScopeData = CalendarDailyViewScopeData(diary);
+          setScopeData(dailyScopeData);
+          dailyScopeData.focusNode.addListener(() {
+            if (isFriendBarOpen) {
+              toggleFriendBar();
+            }
+          });
+          break;
+      }
+    }catch(e){
+      state.scope = previousScope;
     }
   }
 

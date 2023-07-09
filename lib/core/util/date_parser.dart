@@ -8,12 +8,22 @@ class DateParser {
   static DateFormat krMMdd = DateFormat('MM월 dd일');
   static DateFormat lastMessageTimeFormat = DateFormat("hh:mm");
 
+  static int nowAtMillis() => DateTime.now().millisecondsSinceEpoch;
+
   static DateTime fromTimeStamp(int timestamp) {
     return DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: false);
   }
 
+  static String parseAwayFrom(int millis) {
+    return dateTimeFormat.format(fromTimeStamp(millis));
+  }
+
   static String formatYmd(int year, int month, int day) {
     final dateTime = DateTime(year, month, day);
+    return ymdSimpleFormat.format(dateTime);
+  }
+
+  static String formatDateTime(DateTime dateTime) {
     return ymdSimpleFormat.format(dateTime);
   }
 

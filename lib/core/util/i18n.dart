@@ -112,7 +112,9 @@ final map = {
   "message_logout_dialog_subtitle": "로그아웃 후 다시 로그인하셔야 해요",
   "message_cache_reset_subtitle": "캐시 데이터를 초기화할까요?",
   "message_settings_reset_subtitle": "설정 데이터를 초기화할까요?",
-  "message_server_version_latest_than_local": "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다."
+  "message_server_version_latest_than_local": "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다.",
+  "message_upload_succeed": "업로드에 성공했어요!",
+  "message_tag_copied_to_clipboard": "태그가 클립보드에 복사되었어요!",
 };
 
 final engMap = {
@@ -219,7 +221,9 @@ final engMap = {
   "message_logout_dialog_subtitle": "You should login again to use MagCloud",
   "message_cache_reset_subtitle": "Reset Cached Data?",
   "message_settings_reset_subtitle": "Reset Settings?",
-  "message_server_version_latest_than_local": "Server's diary is newer than local version."
+  "message_server_version_latest_than_local": "Server's diary is newer than local version.",
+  "message_upload_succeed": "Upload Succeed!",
+  "message_tag_copied_to_clipboard": "Tag copied to Clipboard!",
 };
 
 String message(String key) {

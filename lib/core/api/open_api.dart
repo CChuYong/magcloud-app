@@ -6,6 +6,8 @@ import 'package:magcloud_app/core/api/dto/diary/diary_update_request.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_accept_request.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_request.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_response.dart';
+import 'package:magcloud_app/core/api/dto/image_upload_response.dart';
+import 'package:magcloud_app/core/api/dto/profile_image_update_request.dart';
 import 'package:magcloud_app/core/api/dto/user_response.dart';
 import 'package:retrofit/http.dart';
 
@@ -31,6 +33,12 @@ abstract class OpenAPI {
 
   @GET('/v1/users/me')
   Future<UserResponse> getMyProfile();
+
+  @GET('/v1/users/me/image-request')
+  Future<ImageUploadResponse> getImageRequest();
+
+  @POST('/v1/users/me/profile-image')
+  Future<dynamic> updateProfileImage(@Body() ProfileImageUpdateRequest request);
 
   @GET('/v1/users/friends')
   Future<List<FriendResponse>> getFriends();

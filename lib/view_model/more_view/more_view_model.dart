@@ -21,10 +21,18 @@ class MoreViewModel
     state.me = await inject<UserService>().getMe();
   }
 
+  @override
+  void onReloaded() {
+    setStateAsync(() async {
+      await initState();
+    });
+  }
+
   Future<void> onTapMyProfiles() async {
     if (state.me == null) return;
     route() => ProfileView(state.me!, true);
-    GlobalRoute.rightToLeftRouteToDynamic(route);
+    await GlobalRoute.rightToLeftRouteToDynamic(route);
+    onReloaded();
   }
 
   Future<void> onTapNotification() async {

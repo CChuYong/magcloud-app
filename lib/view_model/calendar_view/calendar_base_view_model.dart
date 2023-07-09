@@ -49,7 +49,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   @override
   void onReloaded() {
-    initState();
+    setStateAsync(() async {
+      await initState();
+    });
   }
 
   void refreshPage() async {
@@ -214,15 +216,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   @override
   Future<void> initState() async {
-    setStateAsync(() async {
-      await setScope(state.scope);
-      state.dailyMe = await userService.getDailyMe();
-      state.selectedUser = state.dailyMe; //기본값은 나 선택 ㅇㅅㅇ
-    });
-    if (isOnline()) {
-      setStateAsync(() async {
-        state.dailyFriends = await userService.getDailyFriends();
-      });
+    await setScope(state.scope);
+    state.dailyMe = await userService.getDailyMe();
+    state.selectedUser = state.dailyMe; //기본값은 나 선택 ㅇㅅㅇ
+    if(isOnline()) {
+      state.dailyFriends = await userService.getDailyFriends();
     }
   }
 

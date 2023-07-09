@@ -18,10 +18,10 @@ class ProfileView
   final User user;
   final bool isMe;
 
-  ProfileView(this.user, this.isMe);
+  ProfileView(this.user, this.isMe, {super.key});
 
   @override
-  ProfileViewModel initViewModel() => ProfileViewModel();
+  ProfileViewModel initViewModel() => ProfileViewModel(user: user);
 
   @override
   Widget render(
@@ -29,7 +29,7 @@ class ProfileView
     return BaseSettingLayout(
         title: isMe
             ? message('my_profile')
-            : message('friend_profile').format([user.name]),
+            : message('friend_profile').format([state.user.name]),
         child: SizedBox(
             width: double.infinity,
             child: Column(
@@ -38,7 +38,7 @@ class ProfileView
                 SizedBox(height: 15.sp),
                 GestureDetector(
                   onTap: () {
-                    imagePreviewDialog(user.profileImageUrl);
+                    imagePreviewDialog(state.user.profileImageUrl);
                   },
                   child: Container(
                     width: 84.sp,
@@ -46,7 +46,7 @@ class ProfileView
                     decoration: BoxDecoration(
                         image: DecorationImage(
                           image:
-                              CachedNetworkImageProvider(user.profileImageUrl),
+                              CachedNetworkImageProvider(state.user.profileImageUrl),
                           fit: BoxFit.cover,
                         ),
                         color: BaseColor.defaultBackgroundColor,
@@ -56,10 +56,10 @@ class ProfileView
                   ),
                 ),
                 SizedBox(height: 10.sp),
-                Text(user.name,
+                Text(state.user.name,
                     style: TextStyle(
                         color: BaseColor.warmGray700, fontSize: 24.sp)),
-                Text(user.nameTag,
+                Text(state.user.nameTag,
                     style: TextStyle(
                         color: BaseColor.warmGray500, fontSize: 18.sp)),
                 SizedBox(height: 10.sp),
@@ -71,7 +71,7 @@ class ProfileView
                         : button(message('generic_request_friend'), () {}),
                     SizedBox(width: 10.sp),
                     button(message('generic_copy_tags'),
-                        () => action.copyTags(user.nameTag)),
+                        () => action.copyTags(state.user.nameTag)),
                   ],
                 )
               ],

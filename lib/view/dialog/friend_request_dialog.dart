@@ -6,9 +6,10 @@ import '../../core/util/i18n.dart';
 import '../component/touchableopacity.dart';
 import '../designsystem/base_color.dart';
 
-Future<bool> confirmDialog(String title, String subtitle,
-    {required String confirmText, Color? confirmColor}) async {
-  return await showGeneralDialog<bool?>(
+Future<String> friendRequestDialog() async {
+  final textController = TextEditingController();
+  final focusNode = FocusNode();
+  return await showGeneralDialog<String?>(
         context: Get.context!,
         barrierLabel: '',
         barrierDismissible: true,
@@ -46,16 +47,44 @@ Future<bool> confirmDialog(String title, String subtitle,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 22.sp),
-                                Text(title,
+                                Text(message('generic_request_friend'),
                                     style: TextStyle(
                                       color: BaseColor.warmGray700,
                                       fontSize: 16.sp,
                                     )),
-                                Text(subtitle,
+                                SizedBox(height: 6.sp),
+                                Text(message('message_request_friend_info'),
                                     style: TextStyle(
                                       color: BaseColor.warmGray500,
                                       fontSize: 14.sp,
                                     )),
+                                SizedBox(height: 15.sp),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: BaseColor.warmGray100,
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          10)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 15.sp),
+                                      child:TextField(
+                                    controller: textController,
+                                    focusNode: focusNode,
+                                    onTapOutside: (e) { focusNode.unfocus(); },
+                                    style: TextStyle(
+                                      color: BaseColor.warmGray400,
+                                      fontSize: 15.sp,
+                                      height: 1.2,
+                                    ),
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: message('message_enter_friend_tag'),
+                                        hintStyle: TextStyle(
+                                          color: BaseColor.warmGray400,
+                                          fontSize: 15.sp,
+                                        )),
+                                  )),
+                                ),
                                 SizedBox(height: 15.sp),
                                 Row(
                                   mainAxisAlignment:
@@ -64,10 +93,10 @@ Future<bool> confirmDialog(String title, String subtitle,
                                     Expanded(
                                         child: TouchableOpacity(
                                             onTap: () =>
-                                                {Get.back(result: true)},
+                                                {Get.back(result: textController.text)},
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: confirmColor ?? BaseColor.green200,
+                                                  color: BaseColor.green200,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -75,7 +104,7 @@ Future<bool> confirmDialog(String title, String subtitle,
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 10.sp),
                                                   child: Center(
-                                                    child: Text(confirmText,
+                                                    child: Text(message('generic_send_friend_request'),
                                                         style: TextStyle(
                                                           color: BaseColor
                                                               .warmGray500,
@@ -87,7 +116,7 @@ Future<bool> confirmDialog(String title, String subtitle,
                                     Expanded(
                                         child: TouchableOpacity(
                                             onTap: () =>
-                                                {Get.back(result: false)},
+                                                {Get.back(result: '')},
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: BaseColor.warmGray200,
@@ -116,6 +145,5 @@ Future<bool> confirmDialog(String title, String subtitle,
             },
           ),
         ),
-      ) ??
-      false;
+      ) ?? "";
 }

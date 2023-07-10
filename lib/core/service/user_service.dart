@@ -28,6 +28,22 @@ class UserService {
     return temp;
   }
 
+  Future<List<User>> getFriendRequests() async {
+    final requests = await openAPI.getFriendRequests();
+    return requests.map((e) => e.toDomain()).toList();
+  }
+
+  Future<List<User>> getSentFriendRequests() async {
+    // final temp = List<Friend>.empty(growable: true);
+    // temp.add(Friend(
+    //   userId: 'ujs', name: '엄준식', nameTag: '엄준식#1234', isDiaryShared: false, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
+    // temp.add(Friend(
+    //   userId: 'gjh', name: '공지훈', nameTag: '공지훈#1234', isDiaryShared: true, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
+    // return temp;
+    final sentRequests = await openAPI.getSentFriendRequests();
+    return sentRequests.map((e) => e.toDomain()).toList();
+  }
+
   Future<User> getMe() async {
     final onlineMe = await openAPI.getMyProfile();
     //print(onlineMe.name);
@@ -52,20 +68,7 @@ class UserService {
 
   Future<List<DailyUser>> getDailyFriends() async {
     if (!onlineService.isOnlineMode()) return List.empty();
-    final temp = List<DailyUser>.empty(growable: true);
-    temp.add(DailyUser(
-        userId: 'ujs',
-        profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
-        name: '엄준식',
-        nameTag: '엄준식#1234',
-        mood: Mood.sad));
-    temp.add(DailyUser(
-        userId: 'gjh',
-        profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
-        name: '공지훈',
-        nameTag: '공지훈#1234',
-        mood: Mood.sad));
-
-    return temp;
+    final dailyUsers = await openAPI.getDailyFriends();
+    return dailyUsers.map((e) => e.toDomain()).toList();
   }
 }

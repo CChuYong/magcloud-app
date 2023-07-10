@@ -15,6 +15,7 @@ import 'dto/api_response.dart';
 import 'dto/auth_refresh_request.dart';
 import 'dto/diary/diary_request.dart';
 import 'dto/diary/diary_response.dart';
+import 'dto/friend/daily_user_response.dart';
 
 part 'open_api.g.dart';
 
@@ -43,6 +44,21 @@ abstract class OpenAPI {
   @GET('/v1/users/friends')
   Future<List<FriendResponse>> getFriends();
 
+  @GET('/v1/users/friends/daily')
+  Future<List<DailyUserResponse>> getDailyFriends();
+
+  @PATCH('/v1/users/friends/shareable')
+  Future<APIResponse> shareDiary(@Body() FriendAcceptRequest request);
+
+  @PATCH('/v1/users/friends/unshareable')
+  Future<APIResponse> unShareDiary(@Body() FriendAcceptRequest request);
+
+  @GET('/v1/users/friends/requests')
+  Future<List<UserResponse>> getFriendRequests();
+
+  @GET('/v1/users/friends/requests/sent')
+  Future<List<UserResponse>> getSentFriendRequests();
+
   @POST('/v1/users/friends/requests')
   Future<APIResponse> requestFriend(@Body() FriendRequest request);
 
@@ -51,6 +67,9 @@ abstract class OpenAPI {
 
   @POST('/v1/users/friends/requests/deny')
   Future<APIResponse> denyFriendRequest(@Body() FriendAcceptRequest request);
+
+  @POST('/v1/users/friends/requests/cancel')
+  Future<APIResponse> cancelFriendRequest(@Body() FriendAcceptRequest request);
 
   @POST('/v1/users/friends/break')
   Future<APIResponse> breakFriend(@Body() FriendAcceptRequest request);

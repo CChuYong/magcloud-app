@@ -192,6 +192,7 @@ class FriendView
                   children: [
                     friend.isDiaryShared
                         ? TouchableOpacity(
+                      onTap: () => action.onTapUnShareDiary(friend),
                             child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -209,6 +210,7 @@ class FriendView
                             ),
                           ))
                         : TouchableOpacity(
+                        onTap: () => action.onTapShareDiary(friend),
                             child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -227,6 +229,7 @@ class FriendView
                           )),
                     SizedBox(width: 5.sp),
                     TouchableOpacity(
+                      onTap: () => action.onTapDeleteFriend(friend),
                         child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),

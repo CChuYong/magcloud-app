@@ -63,6 +63,15 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
     render();
   }
 
+  Future<T> asyncLoading<T>(Future<T> Function() lambda) async {
+    try{
+      setLoading(true);
+      return await lambda();
+    }finally {
+      setLoading(false);
+    }
+  }
+
   void dispose() {
     //super.dispose();
   }

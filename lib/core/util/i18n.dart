@@ -70,6 +70,7 @@ final map = {
   "generic_request_friend": "친구 추가하기",
   "generic_break_friend": "친구 삭제하기",
   "generic_friend_delete": "삭제",
+  "generic_delete": "삭제하기",
   "generic_preview": "미리보기",
   "generic_login_with_apple": "Apple로 로그인",
   "generic_login_with_google": "Google로 로그인",
@@ -91,6 +92,11 @@ final map = {
   "generic_local_saved_at": "로컬에 저장된 시간",
   "generic_keep_local_version": "로컬 버전 유지하기",
   "generic_use_server_version": "서버 버전 사용하기",
+  "generic_friend_requests": "친구 요청",
+  "generic_friend_accept": "수락",
+  "generic_friend_deny": "거절",
+  "generic_friend_cancel": "취소",
+  "generic_send_friend_request": "친구 요청 보내기",
   "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래의 일기는 볼 수 없어요",
@@ -115,6 +121,11 @@ final map = {
   "message_server_version_latest_than_local": "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다.",
   "message_upload_succeed": "업로드에 성공했어요!",
   "message_tag_copied_to_clipboard": "태그가 클립보드에 복사되었어요!",
+  "message_received_friend_requests_size": "받은 친구 요청 - %s명",
+  "message_sent_friend_requests_size": "보낸 친구 요청 - %s명",
+  "message_enter_friend_tag": "닉네임#태그 를 입력하세요",
+  "message_request_friend_info": "친구를 추가하고 서로의 일기를 공유해보세요!",
+  "message_friend_delete_confirm": "정말 %s님을 친구에서 삭제할까요?"
 };
 
 final engMap = {
@@ -176,6 +187,7 @@ final engMap = {
   "generic_request_friend": "Add Friend",
   "generic_break_friend": "Delete Friend",
   "generic_friend_delete": "Delete",
+  "generic_delete": "Delete",
   "generic_preview": "Preview",
   "generic_login_with_apple": "Login with Apple",
   "generic_login_with_google": "Login with Google",
@@ -197,6 +209,11 @@ final engMap = {
   "generic_local_saved_at": "Local Updated At",
   "generic_keep_local_version": "Keep Local Version",
   "generic_use_server_version": "Use Server Version",
+  "generic_friend_requests": "Friend Requests",
+  "generic_friend_accept": "Accept",
+  "generic_friend_deny": "Deny",
+  "generic_friend_cancel": "Cancel",
+  "generic_send_friend_request": "Send Request",
   "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
@@ -224,6 +241,11 @@ final engMap = {
   "message_server_version_latest_than_local": "Server's diary is newer than local version.",
   "message_upload_succeed": "Upload Succeed!",
   "message_tag_copied_to_clipboard": "Tag copied to Clipboard!",
+  "message_received_friend_requests_size": "%s Requests",
+  "message_sent_friend_requests_size": "%s Sent Requests",
+  "message_enter_friend_tag": "Enter NickName#Tag",
+  "message_request_friend_info": "Add your friends to MagCloud and share your diaries!",
+  "message_friend_delete_confirm": "Are you sure to delete %s from your friends list?"
 };
 
 String message(String key) {

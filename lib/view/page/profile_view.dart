@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/user.dart';
@@ -58,11 +59,11 @@ class ProfileView
                 SizedBox(height: 10.sp),
                 Text(state.user.name,
                     style: TextStyle(
-                        color: BaseColor.warmGray700, fontSize: 24.sp)),
+                        color: BaseColor.warmGray700, fontSize: 20.sp)),
                 Text(state.user.nameTag,
                     style: TextStyle(
-                        color: BaseColor.warmGray500, fontSize: 18.sp)),
-                SizedBox(height: 10.sp),
+                        color: BaseColor.warmGray500, fontSize: 14.sp)),
+                SizedBox(height: 16.sp),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -73,7 +74,9 @@ class ProfileView
                     button(message('generic_copy_tags'),
                         () => action.copyTags(state.user.nameTag)),
                   ],
-                )
+                ),
+                SizedBox(height: 10.sp),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 25.sp),child: Divider(color: BaseColor.warmGray200))
               ],
             )));
   }

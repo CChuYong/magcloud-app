@@ -8,6 +8,7 @@ import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
+import 'package:magcloud_app/view/page/friend_request_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
@@ -25,7 +26,8 @@ class GlobalRoute {
     '/settings/language': () => LanguageSettingView(),
     '/settings/font': () => FontSettingView(),
     '/settings/notification': () => NotificationConfigView(),
-    '/settings/app-info': () => ApplicationInfoView()
+    '/settings/app-info': () => ApplicationInfoView(),
+    '/friends/requests': () => FriendRequestView(),
   };
   static String webViewUrl = 'https://bsc-webview.chuyong.kr'; //
 

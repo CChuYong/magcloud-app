@@ -15,9 +15,15 @@ import '../api/open_api.dart';
 
 class AuthService {
   AuthToken? token;
-  final OpenAPI openApi = inject<OpenAPI>();
+  final OpenAPI openApi;
 
-  AuthService() {
+  AuthService(this.openApi);
+
+  bool isAuthenticated() => token != null;
+
+  String? getAccessToken() => token?.accessToken;
+
+  void initialize() {
     final accessToken = StateStore.getString('accessToken');
     final refreshToken = StateStore.getString('refreshToken');
     if (accessToken != null && refreshToken != null) {
@@ -25,10 +31,6 @@ class AuthService {
           AuthToken(accessToken: accessToken, refreshToken: refreshToken));
     }
   }
-
-  bool isAuthenticated() => token != null;
-
-  String? getAccessToken() => token?.accessToken;
 
   Future<AuthorizationCredentialAppleID> _signInWithApple() async {
     final appleCredential = await SignInWithApple.getAppleIDCredential(

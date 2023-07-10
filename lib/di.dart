@@ -26,14 +26,15 @@ Future<void> initializeDependencies() async {
   final dio = Dio(BaseOptions(baseUrl: 'http://100.116.87.112:9999/api'));
   //final dio = Dio(BaseOptions(baseUrl: 'https://magcloud.chuyong.kr/api'));
   inject.registerSingleton(dio);
-  //final client = OpenAPI(dio, baseUrl: 'https://magcloud.chuyong.kr/api/v1');
   final client = OpenAPI(dio);
-
   inject.registerSingleton(client);
-  final authService = AuthService();
+
+  final authService = AuthService(client);
   inject.registerSingleton(authService);
 
-  dio.interceptors.add(ApiInterceptor());
+  dio.interceptors.add(ApiInterceptor(authService, dio, packageInfo));
+
+  authService.initialize();
 
   final diary = await DiaryRepository.create();
   inject.registerSingleton(diary);

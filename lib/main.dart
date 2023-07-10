@@ -14,6 +14,7 @@ import 'core/framework/state_store.dart';
 import 'di.dart';
 import 'firebase_options.dart';
 
+const magCloudAppKey = "26d05985-803c-41ad-96ed-65d0f9c84922";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ko_KR', null);

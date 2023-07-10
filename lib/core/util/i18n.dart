@@ -125,7 +125,8 @@ final map = {
   "message_sent_friend_requests_size": "보낸 친구 요청 - %s명",
   "message_enter_friend_tag": "닉네임#태그 를 입력하세요",
   "message_request_friend_info": "친구를 추가하고 서로의 일기를 공유해보세요!",
-  "message_friend_delete_confirm": "정말 %s님을 친구에서 삭제할까요?"
+  "message_friend_delete_confirm": "정말 %s님을 친구에서 삭제할까요?",
+  "message_update_needed": "매지구름 업데이트가 존재합니다",
 };
 
 final engMap = {
@@ -245,7 +246,8 @@ final engMap = {
   "message_sent_friend_requests_size": "%s Sent Requests",
   "message_enter_friend_tag": "Enter NickName#Tag",
   "message_request_friend_info": "Add your friends to MagCloud and share your diaries!",
-  "message_friend_delete_confirm": "Are you sure to delete %s from your friends list?"
+  "message_friend_delete_confirm": "Are you sure to delete %s from your friends list?",
+  "message_update_needed": "Application update required",
 };
 
 String message(String key) {

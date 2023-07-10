@@ -33,6 +33,8 @@ dependencies:
   webview_javascript_bridge:
   webview_flutter:
   toggle_switch: ^2.1.0
+  native_dialog: ^0.1.1
+  launch_review: ^3.0.1
 
 dev_dependencies:
   flutter_test:

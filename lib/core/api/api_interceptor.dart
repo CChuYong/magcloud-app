@@ -1,20 +1,27 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:magcloud_app/core/api/dto/common/generic_error.dart';
+import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/util/device_info_util.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:native_dialog/native_dialog.dart';
 
 import '../../di.dart';
 import '../../global_routes.dart';
+import '../../main.dart';
 import '../service/auth_service.dart';
 import '../util/i18n.dart';
 
 class ApiInterceptor extends Interceptor {
-  final AuthService authService = inject<AuthService>();
-  final Dio dio = inject<Dio>();
-  final PackageInfo packageInfo = inject<PackageInfo>();
+  final AuthService authService;
+  final Dio dio;
+  final PackageInfo packageInfo;
+
+  ApiInterceptor(this.authService, this.dio, this.packageInfo);
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -24,6 +31,7 @@ class ApiInterceptor extends Interceptor {
       options.headers["X-AUTH-TOKEN"] = authService.getAccessToken();
     }
     options.headers["X-APP-VERSION"] = packageInfo.version;
+    options.headers["X-APP-KEY"] = magCloudAppKey;
     options.headers["X-APP-LANGUAGE"] = isKorea ? 'KOR' : 'ENG';
     options.headers["X-OS-VERSION"] = DeviceInfoUtil.getOsAndVersion();
     return super.onRequest(options, handler);
@@ -60,6 +68,17 @@ class ApiInterceptor extends Interceptor {
       }
     } else if(statusCode == 403) {
       log("403!!!!");
+      try {
+        final errorBody = GenericError.fromJson(err.response!.data);
+        if(errorBody.code == "CM0010") {
+          StateStore.setString("updateBaseline", inject<PackageInfo>().version);
+          await NativeDialog.alert(message('message_update_needed'));
+          await LaunchReview.launch(writeReview: false);
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        }
+      }catch(e){
+
+      }
     } else if(statusCode == 404) {
       //Ignore
     } else {

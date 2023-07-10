@@ -712,6 +712,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.1"
+  launch_review:
+    dependency: "direct main"
+    description:
+      name: launch_review
+      sha256: "04cdaf752033cefd53bc0fa9c22105801ef53791a93d8b6cdd00fcb3c1c1604b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   lints:
     dependency: transitive
     description:
@@ -760,6 +768,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  native_dialog:
+    dependency: "direct main"
+    description:
+      name: native_dialog
+      sha256: "1874888ef5ac30ee9816d987b66a7461df61080719b6eca190d6c050a35b2c6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   octo_image:
     dependency: transitive
     description:

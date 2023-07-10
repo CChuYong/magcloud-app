@@ -1,8 +1,11 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:magcloud_app/core/api/dto/auth_refresh_request.dart';
 import 'package:magcloud_app/core/api/dto/auth_request.dart';
+import 'package:magcloud_app/core/api/dto/device_request.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/model/auth_token.dart';
+import 'package:magcloud_app/core/service/notification_service.dart';
+import 'package:magcloud_app/core/util/device_info_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -109,6 +112,12 @@ class AuthService {
     this.token = token;
     StateStore.setString('accessToken', token.accessToken);
     StateStore.setString('refreshToken', token.refreshToken);
+    final notificationService = inject<NotificationService>();
+    await openApi.registerDevice(
+        DeviceRequest(
+            deviceToken: notificationService.token!,
+            deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+
   }
 
   Future<void> logout() async {

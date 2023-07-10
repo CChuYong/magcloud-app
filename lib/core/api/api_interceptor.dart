@@ -18,7 +18,7 @@ class ApiInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('[REQ] [${options.method}] ${options.uri}');
+    print('[REQ] [${options.method}] ${options.uri} ${authService.getAccessToken()}');
 
     if (authService.isAuthenticated()) {
       options.headers["X-AUTH-TOKEN"] = authService.getAccessToken();

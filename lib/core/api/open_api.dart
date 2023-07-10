@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:magcloud_app/core/api/dto/auth_request.dart';
 import 'package:magcloud_app/core/api/dto/auth_response.dart';
+import 'package:magcloud_app/core/api/dto/device_request.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_integrity_response.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_update_request.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_accept_request.dart';
@@ -16,6 +17,7 @@ import 'dto/auth_refresh_request.dart';
 import 'dto/diary/diary_request.dart';
 import 'dto/diary/diary_response.dart';
 import 'dto/friend/daily_user_response.dart';
+import 'dto/notification_request.dart';
 
 part 'open_api.g.dart';
 
@@ -35,11 +37,20 @@ abstract class OpenAPI {
   @GET('/v1/users/me')
   Future<UserResponse> getMyProfile();
 
+  @POST('/v1/users/device')
+  Future<APIResponse> registerDevice(@Body() DeviceRequest request);
+
   @GET('/v1/users/me/image-request')
   Future<ImageUploadResponse> getImageRequest();
 
   @POST('/v1/users/me/profile-image')
   Future<dynamic> updateProfileImage(@Body() ProfileImageUpdateRequest request);
+
+  @GET('/v1/users/notification')
+  Future<NotificationRequest> getNotificationConfig();
+
+  @PATCH('/v1/users/notification')
+  Future<NotificationRequest> updateNotificationConfig(@Body() NotificationRequest request);
 
   @GET('/v1/users/friends')
   Future<List<FriendResponse>> getFriends();

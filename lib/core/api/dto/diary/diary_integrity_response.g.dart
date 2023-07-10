@@ -14,6 +14,7 @@ DiaryIntegrityResponse _$DiaryIntegrityResponseFromJson(
       emotion: json['emotion'] as String,
       updatedAtTs: json['updatedAtTs'] as int,
       createdAtTs: json['createdAtTs'] as int,
+      date: json['date'] as String,
     );
 
 Map<String, dynamic> _$DiaryIntegrityResponseToJson(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$DiaryIntegrityResponseToJson(
       'diaryId': instance.diaryId,
       'contentHash': instance.contentHash,
       'emotion': instance.emotion,
+      'date': instance.date,
       'createdAtTs': instance.createdAtTs,
       'updatedAtTs': instance.updatedAtTs,
     };

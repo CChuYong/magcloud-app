@@ -102,6 +102,9 @@ abstract class OpenAPI {
   @GET('/v1/diaries/{diaryId}/integrity')
   Future<DiaryIntegrityResponse> getDiaryIntegrity(@Path('diaryId') String diaryId);
 
+  @GET('/v1/diaries/integrity')
+  Future<List<DiaryIntegrityResponse>> getDiaryIntegrityByMonth(@Query("year") int year, @Query("month") int month);
+
   @GET('/v1/diaries/{diaryId}')
   Future<DiaryResponse> getDiary(@Path("diaryId") String diaryId);
 

@@ -135,8 +135,22 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
         setScopeData(CalendarYearViewScopeData(mood, true));
         break;
       case CalendarViewScope.MONTH:
+        if(onlineService.isOnlineMode()) {
+          diaryService
+              .autoSync(state.currentDate.year, state.currentDate.month)
+              .then((value) {
+                if(value) {
+                  print("Sync result returned non-zero code");
+                  if(scope != CalendarViewScope.DAILY) {
+                    setScope(scope);
+                  }
+                }
+              })
+          ;
+        }
         final mood = await diaryService.getDailyMood(
-            state.currentDate.year, state.currentDate.month);
+            state.currentDate.year, state.currentDate.month
+        );
         setScopeData(CalendarMonthViewScopeData(mood, true));
         break;
       case CalendarViewScope.DAILY:

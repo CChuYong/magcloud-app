@@ -18,6 +18,9 @@ class DiaryIntegrityResponse {
   @JsonKey(name: 'emotion')
   String emotion;
 
+  @JsonKey(name: 'date')
+  String date;
+
   @JsonKey(name: 'createdAtTs')
   int createdAtTs;
 
@@ -30,6 +33,7 @@ class DiaryIntegrityResponse {
     required this.emotion,
     required this.updatedAtTs,
     required this.createdAtTs,
+    required this.date,
   });
 
   factory DiaryIntegrityResponse.fromJson(Map<String, dynamic> json) =>

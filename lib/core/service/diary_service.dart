@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:magcloud_app/core/api/dto/diary/diary_integrity_response.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_request.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_update_request.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
@@ -17,19 +20,91 @@ class DiaryService {
 
   final OnlineService onlineService;
   final DiaryRepository diaryRepository;
+  final HashSet<String> syncedSet = HashSet();
 
   final OpenAPI openAPI = inject<OpenAPI>();
+
+  Future<bool> autoSync(int year, int month) async {
+    print("AutoSync Diaries..");
+    if(!onlineService.isOnlineMode()) {
+      print("Rejected; not online.");
+      return false;
+    }
+
+    final key = "$year-$month";
+    if(syncedSet.contains(key)) {
+      print("Rejected; already synced..");
+      return false;
+    }
+    syncedSet.add(key);
+
+    Map<DateTime, DiaryIntegrityResponse> serverIntegrityMap = {};
+    final integrity = await openAPI.getDiaryIntegrityByMonth(year, month);
+    for (var element in integrity) {
+      serverIntegrityMap[DateParser.parseYmd(element.date)] = element;
+    }
+    Map<DateTime, Diary> localIntegrityMap = {};
+    final local = await diaryRepository.getDiaries(year, month);
+    for (var element in local) {
+      localIntegrityMap[element.ymd] = element;
+    }
+    int serverLoad = 0;
+    int serverPatch = 0;
+    int serverCreate = 0;
+
+    await Future.forEach(serverIntegrityMap.entries, (element) async {
+      final date = element.key;
+      final serverDiary = element.value;
+      if(!localIntegrityMap.containsKey(date)) {
+        //서버엔 있고 로컬엔 없음 => 불러와야함
+        final serverDiary = await openAPI.getDiaryByDate(DateParser.formatDateTime(date));
+        await diaryRepository.saveDiary(serverDiary.toDomain());
+        serverLoad++;
+      } else {
+        final localVersion = localIntegrityMap[date]!;
+        if(localVersion.hash != serverDiary.contentHash ||
+            localVersion.mood.toServerType() != serverDiary.emotion) {
+          if(localVersion.updatedAt > serverDiary.updatedAtTs) {
+            //그냥 알아서 덮어씌우면댐 ㅎ
+            final newDiary = await openAPI.updateDiary(serverDiary.diaryId, DiaryUpdateRequest(
+              content: localVersion.content,
+              emotion: localVersion.mood.toServerType(),
+            ));
+            await diaryRepository.saveDiary(newDiary.toDomain());
+            serverPatch++;
+          } else {
+            //나중에 GET 할떄 터질거임 ㅇㅇ
+            print("UnSyncable Diary Mismatch Found");
+          }
+        }
+      }
+    });
+
+    await Future.forEach(localIntegrityMap.entries, (element) async {
+      final date = element.key;
+      final localDiary = element.value;
+      if(!serverIntegrityMap.containsKey(date)) {
+        //로컬엔 있고 서버엔 없다 -> 저장!!
+        final diaryRequest = DiaryRequest(
+          content: localDiary.content,
+          emotion: localDiary.mood.toServerType(),
+          date: DateParser.formatDateTime(date),
+        );
+        final newDiary = await openAPI.createDiary(diaryRequest);
+        await diaryRepository.saveDiary(newDiary.toDomain());
+        serverCreate++;
+      }
+    });
+
+    print("AutoSync Diaries Completed. $serverLoad Loaded, $serverPatch Patched, $serverCreate Created");
+    return serverLoad > 0 || serverPatch > 0 || serverCreate > 0;
+  }
 
   Future<Diary> getDiary(int year, int month, int day, bool integrityCheck) async {
     final localDiary = await diaryRepository.findDiary(year, month, day);
     final today = DateTime(year, month, day);
     if(localDiary != null && onlineService.isOnlineMode()) {
-      if(localDiary.diaryId == null){ //저장되지 않은 일기
-        final savedDiary = await createDiaryOnServer(today, localDiary.mood, localDiary.content);
-        if(savedDiary != null) {
-          return await diaryRepository.saveDiary(savedDiary);
-        }
-      } else { //저장된 일기 유효성 검증
+      if(localDiary.diaryId != null){ //서버가 갖고있는 경우에
         final integrity = await openAPI.getDiaryIntegrity(localDiary.diaryId!);
         if(integrity.contentHash != localDiary.hash || integrity.emotion != localDiary.mood.toServerType()) {
           if(integrity.updatedAtTs > localDiary.updatedAt) {
@@ -44,18 +119,7 @@ class DiaryService {
               return serverDiary;
             }
           }
-          //로컬 버전 서버와 동기화
-          await openAPI.updateDiary(localDiary.diaryId!, DiaryUpdateRequest(emotion: localDiary.mood.toServerType(), content: localDiary.content));
         }
-      }
-    } else if(onlineService.isOnlineMode()) {
-      try{
-        final serverDiaryDto = await openAPI.getDiaryByDate(DateParser.formatDateTime(today));
-        final serverDiary = serverDiaryDto.toDomain();
-        await diaryRepository.saveDiary(serverDiary);
-        return serverDiary;
-      }catch(e){
-        return Diary.create(ymd: today);
       }
     }
     return localDiary ?? Diary.create(ymd: today);

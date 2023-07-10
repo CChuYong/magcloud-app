@@ -5,6 +5,7 @@ import 'package:magcloud_app/core/api/dto/device_request.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/model/auth_token.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
+import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/notification_service.dart';
 import 'package:magcloud_app/core/util/device_info_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -136,12 +137,12 @@ class AuthService {
 
   Future<void> logout(bool intend) async {
     print("Logged Out!!");
-    token = null;
     final notificationService = inject<NotificationService>();
-    openApi.unRegisterDevice(
+    await openApi.unRegisterDevice(
         DeviceRequest(
             deviceToken: notificationService.token!,
             deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    token = null;
     StateStore.clear('accessToken');
     StateStore.clear('refreshToken');
     if(initialUser != null) {
@@ -155,6 +156,7 @@ class AuthService {
   Future<void> flushStorage() async {
     StateStore.clearAll();
     await inject<DiaryRepository>().truncateTable();
+    inject<DiaryService>().syncedSet.clear();
   }
 }
 

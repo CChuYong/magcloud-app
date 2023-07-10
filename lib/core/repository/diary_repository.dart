@@ -45,6 +45,13 @@ class DiaryRepository extends BaseRepository {
     return result.first.let(readDiary);
   }
 
+  Future<List<Diary>> getDiaries(int year, int month) async {
+    final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
+    final result = await database
+        .rawQuery('SELECT * FROM $tableName WHERE ymd LIKE ? ORDER BY ymd DESC', ['$ym%']);
+    return result.map(readDiary).toList();
+  }
+
   Future<Map<int, Mood>> findDailyMood(int year, int month) async {
     final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
     final result = await database

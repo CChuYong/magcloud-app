@@ -10,6 +10,7 @@ class Mood {
   static Mood amazed = Mood(BaseColor.yellow300, 'amazed');
   static Mood nervous = Mood(BaseColor.orange300, 'nervous');
   static Mood neutral = Mood(BaseColor.warmGray300, 'neutral');
+  static Mood unselected = Mood(BaseColor.warmGray200, 'unselected');
 
   static Mood parseMood(String value) {
     switch (value.toLowerCase()) {
@@ -23,6 +24,8 @@ class Mood {
         return amazed;
       case "nervous":
         return nervous;
+      case "unselected":
+        return unselected;
       case "neutral":
       default:
         return neutral;

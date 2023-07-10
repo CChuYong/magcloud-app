@@ -23,8 +23,8 @@ Future<void> initializeDependencies() async {
   inject.registerSingleton(notificationService);
   await notificationService.initializeNotification();
 
-  final dio = Dio(BaseOptions(baseUrl: 'http://100.116.87.112:9999/api'));
-  //final dio = Dio(BaseOptions(baseUrl: 'https://magcloud.chuyong.kr/api'));
+  //final dio = Dio(BaseOptions(baseUrl: 'http://100.116.87.112:9999/api'));
+  final dio = Dio(BaseOptions(baseUrl: 'https://magcloud.chuyong.kr/api'));
   inject.registerSingleton(dio);
   final client = OpenAPI(dio);
   inject.registerSingleton(client);

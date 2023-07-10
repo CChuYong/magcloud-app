@@ -32,8 +32,10 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
 
   @override
   Future<void> initState() async {
-    state.sentRequests = await userService.getSentFriendRequests();
-    state.requests = await userService.getFriendRequests();
+    await asyncLoading(() async {
+      state.sentRequests = await userService.getSentFriendRequests();
+      state.requests = await userService.getFriendRequests();
+    });
   }
 
   Future<void> reloadRequests() async {
@@ -50,15 +52,19 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
   void onTapFriendAddButton() async {
     final tag = await friendRequestDialog();
     if(tag.isNotEmpty) {
-      final result = await openApi.requestFriend(FriendRequest(tag: tag));
-      SnackBarUtil.infoSnackBar(message: result.message);
-      await reloadRequests();
+      await asyncLoading(() async {
+        final result = await openApi.requestFriend(FriendRequest(tag: tag));
+        SnackBarUtil.infoSnackBar(message: result.message);
+        await reloadRequests();
+      });
     }
   }
 
   void onTapAcceptFriendRequest(User user) async {
-    final result = await openApi.acceptFriendRequest(FriendAcceptRequest(userId: user.userId));
-    SnackBarUtil.infoSnackBar(message: result.message);
+    await asyncLoading(() async {
+      final result = await openApi.acceptFriendRequest(FriendAcceptRequest(userId: user.userId));
+      SnackBarUtil.infoSnackBar(message: result.message);
+    });
 
     setStateAsync(() async {
       state.requests = await userService.getFriendRequests();
@@ -66,16 +72,22 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
   }
 
   void onTapDenyFriendRequest(User user) async {
-    final result = await openApi.denyFriendRequest(FriendAcceptRequest(userId: user.userId));
-    SnackBarUtil.infoSnackBar(message: result.message);
+    await asyncLoading(() async {
+      final result = await openApi.denyFriendRequest(FriendAcceptRequest(userId: user.userId));
+      SnackBarUtil.infoSnackBar(message: result.message);
+    });
+
     setStateAsync(() async {
       state.requests = await userService.getFriendRequests();
     });
   }
 
   void onTapCancelFriendRequest(User user) async {
-    final result = await openApi.cancelFriendRequest(FriendAcceptRequest(userId: user.userId));
-    SnackBarUtil.infoSnackBar(message: result.message);
+    await asyncLoading(() async {
+      final result = await openApi.cancelFriendRequest(FriendAcceptRequest(userId: user.userId));
+      SnackBarUtil.infoSnackBar(message: result.message);
+    });
+
     setStateAsync(() async {
       state.sentRequests = await userService.getSentFriendRequests();
     });

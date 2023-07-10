@@ -112,6 +112,29 @@ class _OpenAPI implements OpenAPI {
   }
 
   @override
+  Future<UserResponse> getUserProfile(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<UserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v1/users/${userId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<APIResponse> registerDevice(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -121,6 +144,30 @@ class _OpenAPI implements OpenAPI {
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<APIResponse>(Options(
       method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v1/users/device',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = APIResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<APIResponse> unRegisterDevice(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<APIResponse>(Options(
+      method: 'DELETE',
       headers: _headers,
       extra: _extra,
     )
@@ -349,6 +396,29 @@ class _OpenAPI implements OpenAPI {
     var value = _result.data!
         .map((dynamic i) => UserResponse.fromJson(i as Map<String, dynamic>))
         .toList();
+    return value;
+  }
+
+  @override
+  Future<CountResponse> getFriendRequestsCount() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CountResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v1/users/friends/requests/count',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CountResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -640,6 +710,62 @@ class _OpenAPI implements OpenAPI {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DiaryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Map<String, String>> getFriendMonthlyStatistics(
+    friendId,
+    year,
+    month,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'year': year,
+      r'month': month,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, String>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v1/users/${friendId}/diaries/statistics',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<String, String>();
+    return value;
+  }
+
+  @override
+  Future<Map<String, String>> getFriendYearlyStatistics(
+    friendId,
+    year,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'year': year};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, String>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v1/users/${friendId}/diaries/statistics',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<String, String>();
     return value;
   }
 

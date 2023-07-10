@@ -3,22 +3,25 @@ import 'package:magcloud_app/core/model/diary.dart';
 
 import '../../core/model/mood.dart';
 
-abstract class CalendarScopeData {}
+abstract class CalendarScopeData {
+  final bool isMyScope;
+  CalendarScopeData({required this.isMyScope});
+}
 
 class CalendarYearViewScopeData extends CalendarScopeData {
   final Map<int, Mood> monthlyMood;
 
-  CalendarYearViewScopeData(this.monthlyMood);
+  CalendarYearViewScopeData(this.monthlyMood, bool isMyScope): super(isMyScope: isMyScope);
 
-  static CalendarYearViewScopeData mock() => CalendarYearViewScopeData({});
+  static CalendarYearViewScopeData mock() => CalendarYearViewScopeData({}, true);
 }
 
 class CalendarMonthViewScopeData extends CalendarScopeData {
   final Map<int, Mood> dailyMood;
 
-  CalendarMonthViewScopeData(this.dailyMood);
+  CalendarMonthViewScopeData(this.dailyMood, bool isMyScope): super(isMyScope: isMyScope);
 
-  static CalendarMonthViewScopeData mock() => CalendarMonthViewScopeData({});
+  static CalendarMonthViewScopeData mock() => CalendarMonthViewScopeData({}, true);
 }
 
 class CalendarDailyViewScopeData extends CalendarScopeData {
@@ -27,11 +30,11 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
   final Diary currentDiary;
   late Mood currentMood;
 
-  CalendarDailyViewScopeData(this.currentDiary) {
+  CalendarDailyViewScopeData(this.currentDiary, bool isMyScope): super(isMyScope: isMyScope) {
     diaryTextController.text = currentDiary.content;
     currentMood = currentDiary.mood;
   }
 
   static CalendarDailyViewScopeData mock() =>
-      CalendarDailyViewScopeData(Diary.create());
+      CalendarDailyViewScopeData(Diary.create(), true);
 }

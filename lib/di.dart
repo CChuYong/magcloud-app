@@ -34,7 +34,7 @@ Future<void> initializeDependencies() async {
 
   dio.interceptors.add(ApiInterceptor(authService, dio, packageInfo));
 
-  authService.initialize();
+  await authService.initialize();
 
   final diary = await DiaryRepository.create();
   inject.registerSingleton(diary);

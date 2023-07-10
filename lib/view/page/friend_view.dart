@@ -25,8 +25,6 @@ class FriendView
   @override
   Color navigationBarColor() => BaseColor.warmGray100;
 
-
-
   @override
   Widget render(
       BuildContext context, FriendViewModel action, FriendViewState state) {
@@ -51,6 +49,7 @@ class FriendView
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               message('navigation_friends'),
@@ -61,7 +60,33 @@ class FriendView
             ),
             TouchableOpacity(
                 onTap: action.onTapAddFriend,
-                child: Icon(Icons.people, color: BaseColor.warmGray700))
+                child: Container(
+                  width: 31.sp,
+                  height: 33.sp,
+                //  color: BaseColor.blue300,
+                    child: Stack(
+                  alignment: Alignment.centerLeft,
+                    children: [
+                  Icon(Icons.people, color: BaseColor.warmGray700, size: 24.sp),
+                      action.state.requestCount != 0?
+                      Positioned(
+                        top: 0,
+                          right:0,
+                          child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: BaseColor.red400,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2.sp, horizontal: 3.sp),
+                            child: Text(action.state.requestCount.toString(), style: TextStyle(
+                          color: BaseColor.warmGray50,
+                          fontSize: 12.sp,
+                              height: 1.0,
+                        ))),
+                      )) : Container()
+
+                ])))
           ],
         ));
   }
@@ -85,7 +110,9 @@ class FriendView
                     child: TextField(
                   controller: action.searchController,
                   focusNode: action.focusNode,
-                  onTapOutside: (e) { action.focusNode.unfocus(); },
+                  onTapOutside: (e) {
+                    action.focusNode.unfocus();
+                  },
                   style: TextStyle(
                     color: BaseColor.warmGray600,
                     fontSize: 15.sp,
@@ -192,60 +219,60 @@ class FriendView
                   children: [
                     friend.isDiaryShared
                         ? TouchableOpacity(
-                      onTap: () => action.onTapUnShareDiary(friend),
+                            onTap: () => action.onTapUnShareDiary(friend),
                             child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: BaseColor.warmGray300),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 6.sp, horizontal: 7.sp),
-                              child: Text(
-                                message('generic_friend_unshare_diary'),
-                                style: TextStyle(
-                                  color: BaseColor.warmGray700,
-                                  fontSize: 12.sp,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: BaseColor.warmGray300),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.sp, horizontal: 7.sp),
+                                child: Text(
+                                  message('generic_friend_unshare_diary'),
+                                  style: TextStyle(
+                                    color: BaseColor.warmGray700,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ))
+                            ))
                         : TouchableOpacity(
-                        onTap: () => action.onTapShareDiary(friend),
+                            onTap: () => action.onTapShareDiary(friend),
                             child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: BaseColor.green200),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 6.sp, horizontal: 7.sp),
-                              child: Text(
-                                message('generic_friend_share_diary'),
-                                style: TextStyle(
-                                  color: BaseColor.warmGray700,
-                                  fontSize: 12.sp,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: BaseColor.green200),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.sp, horizontal: 7.sp),
+                                child: Text(
+                                  message('generic_friend_share_diary'),
+                                  style: TextStyle(
+                                    color: BaseColor.warmGray700,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )),
+                            )),
                     SizedBox(width: 5.sp),
                     TouchableOpacity(
-                      onTap: () => action.onTapDeleteFriend(friend),
+                        onTap: () => action.onTapDeleteFriend(friend),
                         child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: BaseColor.red300),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 6.sp, horizontal: 7.sp),
-                        child: Text(
-                          message('generic_friend_delete'),
-                          style: TextStyle(
-                            color: BaseColor.warmGray700,
-                            fontSize: 12.sp,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: BaseColor.red300),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 6.sp, horizontal: 7.sp),
+                            child: Text(
+                              message('generic_friend_delete'),
+                              style: TextStyle(
+                                color: BaseColor.warmGray700,
+                                fontSize: 12.sp,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ))
+                        ))
                   ],
                 ))
           ],

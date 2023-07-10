@@ -62,7 +62,7 @@ class ApiInterceptor extends Interceptor {
           );
           return handler.resolve(response);
         } else {
-          await authService.logout();
+          await authService.logout(false);
           await GlobalRoute.fadeRoute('/login');
         }
       }

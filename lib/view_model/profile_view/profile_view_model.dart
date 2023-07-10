@@ -18,7 +18,9 @@ class ProfileViewModel
   ProfileViewModel({required User user}) : super(ProfileViewState(user: user));
 
   @override
-  Future<void> initState() async {}
+  Future<void> initState() async {
+    state.user = (await inject<OpenAPI>().getUserProfile(state.user.userId)).toDomain();
+  }
 
   void copyTags(String tag) async {
     await Clipboard.setData(ClipboardData(text: tag));
@@ -32,8 +34,7 @@ class ProfileViewModel
       return;
     }
     final image = await ImagePickerUtil.pickImage();
-    try{
-      setLoading(true);
+    await asyncLoading(() async {
       final openAPI = inject<OpenAPI>();
       if(image == null) return;
       final imageRequest = await openAPI.getImageRequest();
@@ -47,9 +48,6 @@ class ProfileViewModel
       await setStateAsync(() async {
         state.user = (await openAPI.getMyProfile()).toDomain();
       });
-    }finally {
-      setLoading(false);
-    }
-
+    });
   }
 }

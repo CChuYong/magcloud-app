@@ -6,9 +6,10 @@ import '../../core/model/user.dart';
 import 'calendar_scope_data_state.dart';
 
 class CalendarBaseViewState {
-  int currentYear;
-  int currentMonth;
-  int currentDay;
+  // int currentYear;
+  // int currentMonth;
+  // int currentDay;
+  DateTime currentDate;
   CalendarViewScope scope;
   late CalendarScopeData scopeData;
   DailyUser? dailyMe;
@@ -16,7 +17,7 @@ class CalendarBaseViewState {
   List<DailyUser> dailyFriends = List.empty();
 
   CalendarBaseViewState(
-      this.currentYear, this.currentMonth, this.currentDay, this.scope) {
+      this.currentDate, this.scope) {
     switch (scope) {
       case CalendarViewScope.MONTH:
         scopeData = CalendarMonthViewScopeData.mock();
@@ -35,17 +36,17 @@ class CalendarBaseViewState {
     //안쪽 리스트 -> 일
     final weekList =
         List.generate(6, (index) => List.generate(7, (index) => -1));
-    final lastDay = DateParser.getLastDayOfMonth(currentYear, currentMonth);
+    final lastDay = DateParser.getLastDayOfMonth(currentDate.year, currentDate.month);
     final now = DateTime.now();
     var currentWeekPointer = 0;
 
     final monthlyFirstDayOfWeek =
-        DateParser.getFirstDayOfWeekOfMonth(currentYear, currentMonth);
+        DateParser.getFirstDayOfWeekOfMonth(currentDate.year, currentDate.month);
     var currentDayOfWeek =
         monthlyFirstDayOfWeek == 7 ? 1 : monthlyFirstDayOfWeek + 1;
     for (int day = 1; day <= lastDay; day++) {
       weekList[currentWeekPointer][currentDayOfWeek - 1] =
-          DateTime(currentYear, currentMonth, day).isAfter(now)
+          DateTime(currentDate.year, currentDate.month, day).isAfter(now)
               ? -1 * day
               : day;
       if (currentDayOfWeek == 7) {

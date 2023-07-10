@@ -74,7 +74,7 @@ class MoreViewModel
         confirmText: message('menu_logout'));
     if (result != true) return;
 
-    await inject<AuthService>().logout();
+    await inject<AuthService>().logout(true);
     await GlobalRoute.fadeRoute('/login');
   }
 }

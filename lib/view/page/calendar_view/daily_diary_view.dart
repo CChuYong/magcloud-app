@@ -47,7 +47,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                       child: child);
                 },
                 child: Column(
-                  key: Key(state.currentDay.toString()),
+                  key: Key(state.currentDate.day.toString()),
                   children: [
                     dailyDiaryMoodBox(action, scopeData),
                     Expanded(
@@ -57,7 +57,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                           onPointerMove: action.onTextFieldMove,
                           child: TextField(
                             onTapOutside: (e) => action.unFocusTextField(),
-                            readOnly: !action.isMeSelected(),
+                            readOnly: !scopeData.isMyScope,
                             focusNode: scopeData.focusNode,
                             style: TextStyle(
                               fontFamily: diaryFont,
@@ -87,9 +87,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
           TouchableOpacity(
               onTap: action.onTapDayTitle,
               child: Text(
-                DateParser.formatLocaleYmd(
-                    state.currentYear, state.currentMonth, state.currentDay),
-                //'${state.currentYear}${message("generic_year")} ${state.currentMonth}${message("generic_month")} ${state.currentDay}${message("generic_day")} ${dayOfWeek(DateParser.getWeekday(state.currentYear, state.currentMonth, state.currentDay))}',
+                DateParser.formatLocaleYmd(state.currentDate),
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,

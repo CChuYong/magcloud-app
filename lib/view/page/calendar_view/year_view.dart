@@ -48,7 +48,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
                   child: child);
             },
             child: Column(
-              key: Key(state.currentYear.toString()),
+              key: Key(state.currentDate.year.toString()),
               children: [
                 for (int j = 0; j < 3; j++) ...[
                   Row(
@@ -77,7 +77,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
         children: [
           TouchableOpacity(
               child: Text(
-            '${state.currentYear}${message("generic_year")}',
+            '${state.currentDate.year}${message("generic_year")}',
             style: TextStyle(
               color: BaseColor.warmGray600,
               fontSize: 16.sp,
@@ -102,8 +102,8 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
   Widget createMonthBox(CalendarBaseViewModel action,
       {required int month, required double boxWidth}) {
     final currentYear = DateParser.getCurrentYear();
-    final isInvisible = currentYear < action.state.currentYear ||
-        (currentYear == action.state.currentYear &&
+    final isInvisible = currentYear < action.state.currentDate.year ||
+        (currentYear == action.state.currentDate.year &&
             DateParser.getCurrentMonth() < month);
     final scopeData = action.state.scopeData as CalendarYearViewScopeData;
     return TouchableOpacity(

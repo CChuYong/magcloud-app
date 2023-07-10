@@ -4,6 +4,7 @@ import 'package:magcloud_app/core/api/dto/auth_request.dart';
 import 'package:magcloud_app/core/api/dto/device_request.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/model/auth_token.dart';
+import 'package:magcloud_app/core/repository/diary_repository.dart';
 import 'package:magcloud_app/core/service/notification_service.dart';
 import 'package:magcloud_app/core/util/device_info_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -12,10 +13,12 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../di.dart';
 import '../api/open_api.dart';
+import '../model/user.dart';
 
 class AuthService {
   AuthToken? token;
   final OpenAPI openApi;
+  User? initialUser;
 
   AuthService(this.openApi);
 
@@ -23,12 +26,21 @@ class AuthService {
 
   String? getAccessToken() => token?.accessToken;
 
-  void initialize() {
+  Future<void> initialize() async {
     final accessToken = StateStore.getString('accessToken');
     final refreshToken = StateStore.getString('refreshToken');
     if (accessToken != null && refreshToken != null) {
-      authenticate(
-          AuthToken(accessToken: accessToken, refreshToken: refreshToken));
+      try{
+        authenticate(
+            AuthToken(accessToken: accessToken, refreshToken: refreshToken));
+        initialUser = (await openApi.getMyProfile()).toDomain();
+        final previousUser = StateStore.getString("lastUserId");
+        if(initialUser != null && previousUser != null && previousUser != initialUser!.userId) {
+          await flushStorage();
+        }
+      }catch(e) {
+        //Maybe offline?
+      }
     }
   }
 
@@ -122,11 +134,27 @@ class AuthService {
 
   }
 
-  Future<void> logout() async {
+  Future<void> logout(bool intend) async {
     print("Logged Out!!");
     token = null;
+    final notificationService = inject<NotificationService>();
+    openApi.unRegisterDevice(
+        DeviceRequest(
+            deviceToken: notificationService.token!,
+            deviceInfo: DeviceInfoUtil.getOsAndVersion()));
     StateStore.clear('accessToken');
     StateStore.clear('refreshToken');
+    if(initialUser != null) {
+      StateStore.setString('lastUserId', initialUser!.userId);
+    }
+    if(intend) {
+      await flushStorage();
+    }
+  }
+
+  Future<void> flushStorage() async {
+    StateStore.clearAll();
+    await inject<DiaryRepository>().truncateTable();
   }
 }
 

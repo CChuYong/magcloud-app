@@ -73,16 +73,14 @@ class DateParser {
 
   static int getCurrentDay() => DateTime.now().day;
 
-  static String formatLocaleYmd(int year, int month, int day) {
-    final date = DateTime(year, month, day);
+  static String formatLocaleYmd(DateTime date) {
     if (isKorea) {
       return DateFormat('y년 MMM d일 E요일', 'ko_KR').format(date);
     }
     return DateFormat('EEE, MMM d, y', 'en_US').format(date);
   }
 
-  static String formatLocaleYm(int year, int month) {
-    final date = DateTime(year, month);
+  static String formatLocaleYm(DateTime date) {
     if (isKorea) {
       return DateFormat('y년 MMM', 'ko_KR').format(date);
     }

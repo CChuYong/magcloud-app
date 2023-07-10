@@ -62,7 +62,7 @@ class DiaryRepository extends BaseRepository {
     for (int month = 1; month <= 12; month++) {
       final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
       final result = await database.rawQuery(
-          "SELECT mood, COUNT(*) cnt FROM $tableName WHERE ymd LIKE '$ym%' GROUP BY mood ORDER BY COUNT(*) LIMIT 1");
+          "SELECT mood, COUNT(mood) cnt FROM $tableName WHERE ymd LIKE '$ym%' GROUP BY mood ORDER BY COUNT(mood) LIMIT 1");
       if (result.isNotEmpty)
         resultMap[month] = Mood.parseMood(result.first["mood"] as String);
     }

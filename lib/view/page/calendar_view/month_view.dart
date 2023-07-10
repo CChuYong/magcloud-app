@@ -53,7 +53,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
                 child: child);
           },
           child: Padding(
-            key: Key(state.currentMonth.toString()),
+            key: Key(state.currentDate.month.toString()),
             padding: EdgeInsets.symmetric(horizontal: horizontalPaddingSize),
             child: Column(
               children: [
@@ -82,8 +82,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           TouchableOpacity(
               onTap: action.onTapMonthTitle,
               child: Text(
-                DateParser.formatLocaleYm(
-                    state.currentYear, state.currentMonth),
+                DateParser.formatLocaleYm(state.currentDate),
                 style: TextStyle(
                   color: BaseColor.warmGray600,
                   fontSize: 16.sp,

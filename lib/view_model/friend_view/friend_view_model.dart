@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_accept_request.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/model/user.dart';
+import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -27,10 +29,22 @@ class FriendViewModel
 
   final userService = inject<UserService>();
   final openAPI = inject<OpenAPI>();
+  final onlineService = inject<OnlineService>();
 
   @override
   Future<void> initState() async {
-    await reloadFriends();
+    if(onlineService.isOnlineMode()) {
+      await reloadFriends();
+      state.requestCount = (await openAPI.getFriendRequestsCount()).count;
+      StateStore.setInt("friendRequestCount", state.requestCount);
+    }
+  }
+
+  @override
+  void onReloaded() {
+    setStateAsync(() async {
+      await initState();
+    });
   }
 
   @override
@@ -49,15 +63,19 @@ class FriendViewModel
   }
 
   void onTapAddFriend() async {
+    if(!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+      return;
+    }
     await GlobalRoute.rightToLeftRouteTo('/friends/requests');
-    await reloadFriends();
+    onReloaded();
   }
 
   void onTapShareDiary(User user) async {
     asyncLoading(() async {
-    final deleteResult = await openAPI.shareDiary(FriendAcceptRequest(userId: user.userId));
-    SnackBarUtil.infoSnackBar(message: deleteResult.message);
-    await reloadFriends();
+      final deleteResult = await openAPI.shareDiary(FriendAcceptRequest(userId: user.userId));
+      SnackBarUtil.infoSnackBar(message: deleteResult.message);
+      await reloadFriends();
     });
   }
 

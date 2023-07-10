@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:magcloud_app/core/api/dto/auth_request.dart';
 import 'package:magcloud_app/core/api/dto/auth_response.dart';
+import 'package:magcloud_app/core/api/dto/count_response.dart';
 import 'package:magcloud_app/core/api/dto/device_request.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_integrity_response.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_update_request.dart';
@@ -37,8 +38,14 @@ abstract class OpenAPI {
   @GET('/v1/users/me')
   Future<UserResponse> getMyProfile();
 
+  @GET('/v1/users/{userId}')
+  Future<UserResponse> getUserProfile(@Path() String userId);
+
   @POST('/v1/users/device')
   Future<APIResponse> registerDevice(@Body() DeviceRequest request);
+
+  @DELETE('/v1/users/device')
+  Future<APIResponse> unRegisterDevice(@Body() DeviceRequest request);
 
   @GET('/v1/users/me/image-request')
   Future<ImageUploadResponse> getImageRequest();
@@ -66,6 +73,10 @@ abstract class OpenAPI {
 
   @GET('/v1/users/friends/requests')
   Future<List<UserResponse>> getFriendRequests();
+
+  @GET('/v1/users/friends/requests/count')
+  Future<CountResponse> getFriendRequestsCount();
+
 
   @GET('/v1/users/friends/requests/sent')
   Future<List<UserResponse>> getSentFriendRequests();
@@ -102,4 +113,10 @@ abstract class OpenAPI {
 
   @GET('/v1/users/{friendId}/diaries')
   Future<DiaryResponse> getFriendDiaryByDate(@Path("friendId") String friendId, @Query("date") String date);
+
+  @GET('/v1/users/{friendId}/diaries/statistics')
+  Future<Map<String, String>> getFriendMonthlyStatistics(@Path("friendId") String friendId, @Query("year") int year, @Query("month") int month);
+
+  @GET('/v1/users/{friendId}/diaries/statistics')
+  Future<Map<String, String>> getFriendYearlyStatistics(@Path("friendId") String friendId, @Query("year") int year);
 }

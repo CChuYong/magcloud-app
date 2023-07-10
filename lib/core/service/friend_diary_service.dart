@@ -11,8 +11,8 @@ class FriendDiaryService {
   final OnlineService onlineService;
   final OpenAPI openAPI = inject<OpenAPI>();
 
-  Future<Diary?> getDiary(String userId, int year, int month, int day) async {
-    final ymd = DateParser.formatYmd(year, month, day);
+  Future<Diary?> getDiary(String userId, DateTime date) async {
+    final ymd = DateParser.formatDateTime(date);
     try{
       final diary = await openAPI.getFriendDiaryByDate(userId, ymd);
       return diary.toDomain();
@@ -22,11 +22,11 @@ class FriendDiaryService {
     }
   }
 
-  Future<Map<int, Mood>> getMonthlyMood(int year) async {
-    throw Exception();
+  Future<Map<int, Mood>> getMonthlyMood(String userId, DateTime date) async {
+    return (await openAPI.getFriendYearlyStatistics(userId, date.year)).map((key, value) => MapEntry(int.parse(key), Mood.parseMood(value)));
   }
 
-  Future<Map<int, Mood>> getDailyMood(int year, int month) async {
-    throw Exception();
+  Future<Map<int, Mood>> getDailyMood(String userId, DateTime date) async {
+    return (await openAPI.getFriendMonthlyStatistics(userId, date.year, date.month)).map((key, value) => MapEntry(int.parse(key), Mood.parseMood(value)));
   }
 }

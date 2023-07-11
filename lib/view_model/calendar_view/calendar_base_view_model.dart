@@ -45,6 +45,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   bool isFriendBarOpen = StateStore.getBool("isFriendBarOpen", true);
 
   final Debouncer dragDebouncer = Debouncer(const Duration(milliseconds: 25));
+  final Debouncer saveDebouncer = Debouncer(const Duration(milliseconds: 2500));
 
   @override
   void dispose() {
@@ -228,6 +229,18 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
         return () => CalendarMonthView();
       case CalendarViewScope.DAILY:
         return () => CalendarDailyDiaryView();
+    }
+  }
+
+  void onEditingCompleted() {
+    if (state.scope == CalendarViewScope.DAILY && onlineService.isOnlineMode()) {
+      final scopeData = state.scopeData as CalendarDailyViewScopeData;
+      if(!scopeData.isMyScope) return;
+      saveDebouncer.runLastCall(() async {
+        final lastDiary = scopeData.currentDiary;
+        await diaryService.updateDiary(
+            lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
+      });
     }
   }
 

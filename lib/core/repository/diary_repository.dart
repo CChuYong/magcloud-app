@@ -19,7 +19,7 @@ class DiaryRepository extends BaseRepository {
 
   @override
   Future<void> prepareTable() async {
-    await database.execute('DROP TABLE $tableName');
+   // await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (

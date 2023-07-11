@@ -1,7 +1,7 @@
 name: magcloud_app
 description: Your daily heart-listener, MagCloud
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.0.1+20230712001
+version: 0.0.1+20230712002
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -38,6 +38,7 @@ dependencies:
   sentry_flutter: ^7.8.0
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
@@ -54,6 +55,12 @@ flutter_native_splash:
     color: "#E7E5E4"
   android_gravity: center
   ios_content_mode: center
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter:
   uses-material-design: true

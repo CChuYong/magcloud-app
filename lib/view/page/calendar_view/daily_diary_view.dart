@@ -56,6 +56,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                       child: Listener(
                           onPointerMove: action.onTextFieldMove,
                           child: TextField(
+                            onChanged: (e) => action.onEditingCompleted(),
                             onTapOutside: (e) => action.unFocusTextField(),
                             readOnly: !scopeData.isMyScope,
                             focusNode: scopeData.focusNode,

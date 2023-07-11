@@ -10,6 +10,7 @@ import 'package:magcloud_app/view/page/profile_view.dart';
 import 'package:magcloud_app/view_model/profile_view/profile_view_state.dart';
 import 'package:dio/dio.dart';
 
+import '../../core/api/dto/friend/friend_request.dart';
 import '../../core/model/user.dart';
 import '../../core/service/online_service.dart';
 
@@ -20,6 +21,18 @@ class ProfileViewModel
   @override
   Future<void> initState() async {
     state.user = (await inject<OpenAPI>().getUserProfile(state.user.userId)).toDomain();
+    await loadForward();
+  }
+
+  Future<void> loadForward() async {
+    if(state.feeds.isEmpty) {
+      final feeds = await inject<OpenAPI>().getFriendFeed(10, state.user.userId);
+      state.feeds.addAll(feeds.map((e) => e.toDomain()));
+    } else {
+      final oldestEntry = state.feeds.last;
+      final feeds = await inject<OpenAPI>().getFriendFeedWithId(10, state.user.userId, oldestEntry.diaryId);
+      state.feeds.addAll(feeds.map((e) => e.toDomain()));
+    }
   }
 
   void copyTags(String tag) async {
@@ -48,6 +61,13 @@ class ProfileViewModel
       await setStateAsync(() async {
         state.user = (await openAPI.getMyProfile()).toDomain();
       });
+    });
+  }
+
+  Future<void> requestFriend(User user) async {
+    await asyncLoading(() async {
+      final result = await inject<OpenAPI>().requestFriend(FriendRequest(tag: user.nameTag));
+      SnackBarUtil.infoSnackBar(message: result.message);
     });
   }
 }

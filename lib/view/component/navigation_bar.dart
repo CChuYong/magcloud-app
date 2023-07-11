@@ -36,17 +36,21 @@ class _NavigationBarState extends State<BaseNavigationBar> {
       ),
       items: [
         BottomNavigationBarItem(
+          icon: Icon(Icons.cloud, size: iconSize),
+          label: message("generic_feed"),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_month, size: iconSize),
+          label: message("navigation_calendar"),
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.people_alt, size: iconSize),
           label: message("navigation_friends"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home, size: iconSize),
-          label: message("navigation_calendar"),
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.menu, size: iconSize),
           label: message("navigation_more"),
-        )
+        ),
       ],
       currentIndex: widget.currentPage,
       onTap: widget.onTap,

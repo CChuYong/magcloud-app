@@ -11,6 +11,7 @@ import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/dialog/mood_change_dialog.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
@@ -436,5 +437,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   void snackNoFuture() {
     SnackBarUtil.errorSnackBar(
         message: message("message_cannot_move_to_future"));
+  }
+
+  void onTapAddFriend() {
+    GlobalRoute.rightToLeftRouteTo('/friends/requests');
   }
 }

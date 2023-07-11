@@ -138,10 +138,13 @@ class AuthService {
   Future<void> logout(bool intend) async {
     print("Logged Out!!");
     final notificationService = inject<NotificationService>();
-    await openApi.unRegisterDevice(
-        DeviceRequest(
-            deviceToken: notificationService.token!,
-            deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    try{
+      await openApi.unRegisterDevice(
+          DeviceRequest(
+              deviceToken: notificationService.token!,
+              deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    }catch(e) {}
+
     token = null;
     StateStore.clear('accessToken');
     StateStore.clear('refreshToken');

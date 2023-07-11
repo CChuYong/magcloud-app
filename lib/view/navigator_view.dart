@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:magcloud_app/view/page/feed_view.dart';
 
 import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
@@ -14,9 +15,10 @@ class NavigatorView extends StatefulWidget {
 
   static Map<int, Widget> widgetMap = HashMap();
   static final pageBuilder = {
+    0: () => FeedView(),
     1: () => CalendarBaseView(),
-    2: () => MoreView(),
-    0: () => FriendView(),
+    3: () => MoreView(),
+    2: () => FriendView(),
   };
 
   Widget getOrCreateWidget(int index) {
@@ -34,7 +36,7 @@ class NavigatorView extends StatefulWidget {
 }
 
 class _NavigatorViewState extends State<NavigatorView> {
-  int currentPage = 1;
+  int currentPage = 0;
   bool forwardAction = false;
   bool animationStart = false;
   final Duration navigateDuration = const Duration(milliseconds: 80);

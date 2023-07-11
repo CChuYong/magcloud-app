@@ -9,12 +9,14 @@ import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';
 import 'firebase_options.dart';
 
 const magCloudAppKey = "26d05985-803c-41ad-96ed-65d0f9c84922";
+const apiBaseUrl = "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ko_KR', null);
@@ -23,8 +25,11 @@ void main() async {
   );
   await StateStore.init();
   await initializeDependencies();
-  runApp(ScreenUtilInit(
-      builder: (context, widget) => GetMaterialApp(
+  await SentryFlutter.init((options) {
+    options.dsn = 'https://724c12ade3184f1b8b893601aca9c9f0@o4505511010893824.ingest.sentry.io/4505511011680256';
+  },
+      appRunner: () => runApp(ScreenUtilInit(
+          builder: (context, widget) => GetMaterialApp(
             // home: const MyApp(),
             theme: ThemeData(
               fontFamily: 'Pretendard',
@@ -34,5 +39,5 @@ void main() async {
             ),
             home: inject<AuthService>().isAuthenticated() ? NavigatorView() : LoginView(),
             navigatorObservers: [GlobalRoute.observer],
-          )));
+          ))));
 }

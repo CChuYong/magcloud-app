@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:magcloud_app/core/api/dto/friend/friend_accept_request.dart';
 import 'package:magcloud_app/core/api/dto/profile_image_update_request.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
@@ -6,6 +7,7 @@ import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/image_picker.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/profile_view.dart';
 import 'package:magcloud_app/view_model/profile_view/profile_view_state.dart';
 import 'package:dio/dio.dart';
@@ -22,6 +24,12 @@ class ProfileViewModel
   Future<void> initState() async {
     state.user = (await inject<OpenAPI>().getUserProfile(state.user.userId)).toDomain();
     await loadForward();
+  }
+
+  Future<void> reloadPage() async {
+    await setStateAsync(() async {
+      await initState();
+    });
   }
 
   Future<void> loadForward() async {
@@ -67,6 +75,14 @@ class ProfileViewModel
   Future<void> requestFriend(User user) async {
     await asyncLoading(() async {
       final result = await inject<OpenAPI>().requestFriend(FriendRequest(tag: user.nameTag));
+      await GlobalRoute.back();
+      SnackBarUtil.infoSnackBar(message: result.message);
+    });
+  }
+
+  Future<void> deleteFriend(User user) async {
+    await asyncLoading(() async {
+      final result = await inject<OpenAPI>().breakFriend(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: result.message);
     });
   }

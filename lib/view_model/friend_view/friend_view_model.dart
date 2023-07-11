@@ -88,7 +88,7 @@ class FriendViewModel
   }
 
   void onTapFriend(User user) {
-    route() => ProfileView(user, false);
+    route() => ProfileView(user, false, true);
     GlobalRoute.rightToLeftRouteToDynamic(route);
   }
 

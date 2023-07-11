@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
@@ -103,7 +105,12 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     }
   }
 
+  bool isRunning = false;
   Future<void> setScope(CalendarViewScope scope) async {
+    await _setScope(scope);
+  }
+
+  Future<void> _setScope(CalendarViewScope scope) async {
     final previousScope = state.scope;
     if (previousScope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;

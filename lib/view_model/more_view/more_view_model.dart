@@ -30,7 +30,7 @@ class MoreViewModel
 
   Future<void> onTapMyProfiles() async {
     if (state.me == null) return;
-    route() => ProfileView(state.me!, true);
+    route() => ProfileView(state.me!, true, false);
     await GlobalRoute.rightToLeftRouteToDynamic(route);
     onReloaded();
   }

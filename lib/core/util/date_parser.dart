@@ -98,11 +98,11 @@ class DateParser {
   static String gapBetweenNow(int timestamp) {
     final gap = (nowAtMillis() - timestamp) / 1000;
     if(gap < 3600) {
-      return "${(gap / 60).toInt()}분 전";
+      return "${(gap / 60).toInt()}${message('generic_minute')}";
     } else if(gap < 86400) {
-      return "${(gap / 3600).toInt()}시간 전";
+      return "${(gap / 3600).toInt()}${message('generic_hour')}";
     } else {
-      return "${(gap / 86400).toInt()}일 전";
+      return "${(gap / 86400).toInt()}${message('generic_days')}";
     }
   }
 }

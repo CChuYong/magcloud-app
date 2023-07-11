@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:magcloud_app/core/service/friend_diary_service.dart';
 import 'package:magcloud_app/core/service/notification_service.dart';
+import 'package:magcloud_app/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'core/api/api_interceptor.dart';
@@ -23,7 +24,7 @@ Future<void> initializeDependencies() async {
   inject.registerSingleton(notificationService);
   await notificationService.initializeNotification();
 
-  final dio = Dio(BaseOptions(baseUrl: 'http://100.116.87.112:9999/api'));
+  final dio = Dio(BaseOptions(baseUrl: apiBaseUrl));
   //final dio = Dio(BaseOptions(baseUrl: 'https://magcloud.chuyong.kr/api'));
   inject.registerSingleton(dio);
   final client = OpenAPI(dio);

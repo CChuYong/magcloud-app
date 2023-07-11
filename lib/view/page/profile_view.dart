@@ -22,8 +22,9 @@ class ProfileView
     extends BaseView<ProfileView, ProfileViewModel, ProfileViewState> {
   final User user;
   final bool isMe;
+  final bool isFriend;
 
-  ProfileView(this.user, this.isMe, {super.key});
+  ProfileView(this.user, this.isMe, this.isFriend, {super.key});
 
   @override
   ProfileViewModel initViewModel() => ProfileViewModel(user: user);
@@ -35,7 +36,10 @@ class ProfileView
         title: isMe
             ? message('my_profile')
             : message('friend_profile').format([state.user.name]),
-        child: CustomScrollView(
+        child: RefreshIndicator(
+    triggerMode: RefreshIndicatorTriggerMode.onEdge,
+    onRefresh: action.reloadPage,
+    child: CustomScrollView(
           //  controller: action.scrollController,
             //physics: const AlwaysScrollableScrollPhysics(),
             reverse: false,
@@ -78,7 +82,8 @@ class ProfileView
                         children: [
                           isMe
                               ? button(message('generic_change_profile_image'), action.updateProfileImage)
-                              : button(message('generic_request_friend'), () => action.requestFriend(state.user)),
+                              : (!isFriend ? button(message('generic_request_friend'), () => action.requestFriend(state.user)) :
+                          button(message('generic_break_friend'), () => action.deleteFriend(state.user))),
                           SizedBox(width: 10.sp),
                           button(message('generic_copy_tags'),
                                   () => action.copyTags(state.user.nameTag)),
@@ -91,7 +96,7 @@ class ProfileView
               SliverList(
                   delegate: SliverChildListDelegate(action.state.feeds.map((e) => feed(action, e)).toList())),
 
-            ]));
+            ])));
   }
 
   Widget button(String title, void Function() onTap) {
@@ -144,7 +149,7 @@ class ProfileView
                               fontFamily: 'Pretendard'),
                         ),
                         Text(
-                          "${DateParser.gapBetweenNow(element.createdAt)} 생성됨",
+                          message('generic_created_before').format([DateParser.gapBetweenNow(element.createdAt)]),
                           style: TextStyle(
                               color: BaseColor.warmGray600,
                               fontSize: 12.sp,

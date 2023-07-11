@@ -20,6 +20,7 @@ class AuthService {
   AuthToken? token;
   final OpenAPI openApi;
   User? initialUser;
+  bool isNewUser = false;
 
   AuthService(this.openApi);
 
@@ -70,6 +71,7 @@ class AuthService {
           AuthRequest(
             provider: 'APPLE', token: authResult.identityToken ?? ""
           ));
+      isNewUser = authenticateResult.isNewUser;
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
         refreshToken: authenticateResult.refreshToken,
@@ -94,6 +96,7 @@ class AuthService {
           AuthRequest(
               provider: 'GOOGLE', token: authResult.accessToken ?? ""
           ));
+      isNewUser = authenticateResult.isNewUser;
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
         refreshToken: authenticateResult.refreshToken,

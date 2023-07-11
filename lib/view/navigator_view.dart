@@ -2,6 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
+import 'package:magcloud_app/di.dart';
+import 'package:magcloud_app/view/dialog/new_user_dialog.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
 import 'component/navigation_bar.dart';
@@ -14,32 +17,42 @@ class NavigatorView extends StatefulWidget {
   NavigatorView({super.key});
 
   static Map<int, Widget> widgetMap = HashMap();
-  static final pageBuilder = {
-    0: () => FeedView(),
-    1: () => CalendarBaseView(),
-    3: () => MoreView(),
-    2: () => FriendView(),
+  static Map<int, StatelessWidget Function(NavigatorViewState)> pageBuilder = {
+    0: (e) => FeedView(e),
+    1: (e) => CalendarBaseView(),
+    3: (e) => MoreView(),
+    2: (e) => FriendView(),
   };
 
-  Widget getOrCreateWidget(int index) {
+  Widget getOrCreateWidget(NavigatorViewState state, int index) {
     Widget? lastWidget = widgetMap[index];
     if (lastWidget == null) {
       print("Create New Page");
-      lastWidget = pageBuilder[index]!();
+      lastWidget = pageBuilder[index]!(state);
       widgetMap[index] = lastWidget;
     }
     return lastWidget;
   }
 
   @override
-  State createState() => _NavigatorViewState();
+  State createState() => NavigatorViewState();
 }
 
-class _NavigatorViewState extends State<NavigatorView> {
+class NavigatorViewState extends State<NavigatorView> {
   int currentPage = 0;
   bool forwardAction = false;
   bool animationStart = false;
   final Duration navigateDuration = const Duration(milliseconds: 80);
+
+  @override
+  void initState() {
+    super.initState();
+    final authService = inject<AuthService>();
+    if(authService.isNewUser) {
+      authService.isNewUser = false;
+      Future.delayed(Duration(seconds: 1), () => openNewUserDialog());
+    }
+  }
 
   double getAnimationOffset() {
     const ratio = 0.1;
@@ -60,7 +73,9 @@ class _NavigatorViewState extends State<NavigatorView> {
     });
   }
 
-  Widget getCurrentPage() => widget.getOrCreateWidget(currentPage);
+  bool isPageInitialized(int number) => NavigatorView.widgetMap.containsKey(number);
+
+  Widget getCurrentPage() => widget.getOrCreateWidget(this, currentPage);
 
   @override
   Widget build(BuildContext context) {

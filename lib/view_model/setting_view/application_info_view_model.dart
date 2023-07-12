@@ -1,7 +1,13 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/repository/diary_repository.dart';
+import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/font.dart';
+import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
+import 'package:magcloud_app/view_model/calendar_view/calendar_base_view_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/util/i18n.dart';
@@ -32,6 +38,11 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
         message('generic_reset_cache'), message('message_cache_reset_subtitle'),
         confirmText: message('generic_reset'));
     if (result != true) return;
+    await asyncLoading(() async {
+      await inject<DiaryRepository>().truncateTable();
+      inject<DiaryService>().syncedSet.clear();
+      SnackBarUtil.infoSnackBar(message: message('message_reset_completed'));
+    });
   }
 
   void resetSettings() async {
@@ -42,6 +53,7 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
 
     setDiaryFontSize(defaultFontSize);
     setDiaryFont('KyoboHandWriting2019');
+    SnackBarUtil.infoSnackBar(message: message('message_reset_completed'));
   }
 
   void watchOpenSourceLicense() async {

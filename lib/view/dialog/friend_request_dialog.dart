@@ -101,7 +101,7 @@ Future<String> friendRequestDialog() async {
                                                 },
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: BaseColor.green200,
+                                                  color: BaseColor.green300,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),

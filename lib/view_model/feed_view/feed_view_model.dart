@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/model/feed_element.dart';
+import 'package:magcloud_app/core/model/navigate_detail.dart';
 import 'package:magcloud_app/core/util/debouncer.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
@@ -47,20 +49,14 @@ class FeedViewModel
   }
 
   void navigateToWritePage() {
+    CalendarBaseViewModel.navigateToMyPage = true;
     navigator.onTap(1);
   }
 
-  Future<void> navigateToWritePageLazy() async {
-    if (Get.isRegistered<CalendarBaseViewModel>()) {
-      final viewModel = Get.find<CalendarBaseViewModel>();
-      viewModel.state.selectedUser = viewModel.state.dailyMe;
-      await viewModel.setScope(CalendarViewScope.DAILY);
-      await viewModel.navigateToNow();
-      await viewModel.reloadScreen();
-    } else {
-      Future.delayed(
-          const Duration(milliseconds: 300), navigateToWritePageLazy);
-    }
+  void onTapNavigateToDetail(FeedElement details) async {
+    final user = await inject<OpenAPI>().getUserProfile(details.userId);
+    CalendarBaseViewModel.nextNavigateDiary = NavigateDetail(user.toDomain(), details.ymd);
+    navigator.onTap(1);
   }
 
   Future<void> loadForward() async {

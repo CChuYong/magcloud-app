@@ -68,7 +68,7 @@ Future<bool> confirmDialog(String title, String subtitle,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: confirmColor ??
-                                                      BaseColor.green200,
+                                                      BaseColor.green400.withOpacity(0.8),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -78,8 +78,7 @@ Future<bool> confirmDialog(String title, String subtitle,
                                                   child: Center(
                                                     child: Text(confirmText,
                                                         style: TextStyle(
-                                                          color: BaseColor
-                                                              .warmGray500,
+                                                          color: BaseColor.warmGray500,
                                                           fontSize: 13.sp,
                                                         )),
                                                   )),

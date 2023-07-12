@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/model/user.dart';
@@ -17,6 +18,7 @@ import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
 
 import '../../core/model/diary.dart';
+import '../../core/model/navigate_detail.dart';
 import '../../core/util/debouncer.dart';
 import '../../view/page/calendar_view/calendar_base_view.dart';
 import '../../view/page/calendar_view/daily_diary_view.dart';
@@ -30,6 +32,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   final UserService userService = inject<UserService>();
   final OnlineService onlineService = inject<OnlineService>();
   final FriendDiaryService friendDiaryService = inject<FriendDiaryService>();
+
+  static bool navigateToMyPage = false;
+  static NavigateDetail? nextNavigateDiary;
 
   bool isMeSelected() => state.selectedUser?.userId == state.dailyMe?.userId;
 
@@ -94,13 +99,27 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   @override
   Future<void> initState() async {
-    await setScope(state.scope);
-    state.dailyMe = await userService.getDailyMe();
-    state.selectedUser = state.dailyMe; //기본값// 은 나 선택 ㅇㅅㅇ
-
     if (isOnline()) {
       state.dailyFriends = await userService.getDailyFriends();
     }
+    state.dailyMe = await userService.getDailyMe();
+    state.selectedUser = state.dailyMe;
+    if(nextNavigateDiary != null) {
+      state.selectedUser = nextNavigateDiary!.user;
+      state.currentDate = nextNavigateDiary!.ymd;
+      await setScope(CalendarViewScope.DAILY);
+      nextNavigateDiary = null;
+      return;
+    }
+    CalendarViewScope newScope = state.scope;
+    if(navigateToMyPage) {
+      navigateToMyPage = false;
+      await navigateToNow();
+      newScope = CalendarViewScope.DAILY;
+      print("Navigate to daily");
+    }
+    await setScope(newScope);
+    print("NAvigate complete");
   }
 
   bool isRunning = false;
@@ -149,7 +168,9 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
             if (value) {
               print("Sync result returned non-zero code");
               if (scope != CalendarViewScope.DAILY) {
-                setScope(scope);
+                setStateAsync(() async {
+                  await setScope(scope);
+                });
               }
             }
           });

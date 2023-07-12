@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/font.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -49,7 +50,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 child: Column(
                   key: Key(state.currentDate.day.toString()),
                   children: [
-                    dailyDiaryMoodBox(action, scopeData),
+                   // dailyDiaryMoodBox(action, scopeData),
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -96,14 +97,27 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               )),
           Row(
             children: [
-              TouchableOpacity(
-                  onTap: () => action.changeDay(-1),
-                  child: const Icon(BaseIcon.arrowLeft)),
-              TouchableOpacity(
-                  onTap: () => action.changeDay(1),
-                  child: const Icon(BaseIcon.arrowRight)),
+              Text(
+                '${message('generic_mood')}: ',
+                style: TextStyle(
+                    color: BaseColor.warmGray600,
+                    fontSize: 16.sp,
+                    fontFamily: 'GmarketSans'),
+              ),
+              dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
             ],
           )
+
+          // Row(
+          //   children: [
+          //     TouchableOpacity(
+          //         onTap: () => action.changeDay(-1),
+          //         child: const Icon(BaseIcon.arrowLeft)),
+          //     TouchableOpacity(
+          //         onTap: () => action.changeDay(1),
+          //         child: const Icon(BaseIcon.arrowRight)),
+          //   ],
+          // )
         ],
       ),
     );
@@ -114,20 +128,20 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
     return TouchableOpacity(
         onTap: action.onTapChangeMood,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 5.sp),
+          padding: EdgeInsets.symmetric(horizontal: 0.sp, vertical: 0.sp),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: BaseColor.warmGray300),
-              borderRadius: BorderRadius.circular(15),
+             // border: Border.all(color: BaseColor.warmGray300),
+              borderRadius: BorderRadius.circular(10),
               color: data.currentMood.moodColor,
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 13.sp),
+              padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 7.sp),
               child: Center(
                 child: Text(
                   data.currentMood.getLocalizedName(),
                   style: TextStyle(
-                    color: BaseColor.warmGray500,
+                    color: BaseColor.warmGray600,
                     fontSize: 14.sp,
                   ),
                 ),

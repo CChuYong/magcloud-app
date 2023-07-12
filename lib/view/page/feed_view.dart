@@ -209,7 +209,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                   ],
                 ),
                 TouchableOpacity(
-                    onTap: () => action.onTapProfileImage(element.userId),
+                    onTap: () => action.onTapNavigateToDetail(element),
                     child: Container(
                       width: 24.sp,
                       height: 33.sp,

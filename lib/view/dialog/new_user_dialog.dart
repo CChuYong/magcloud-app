@@ -70,7 +70,7 @@ Future<void> openNewUserDialog() {
                                             },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: BaseColor.green200,
+                                              color: BaseColor.green300,
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: Padding(

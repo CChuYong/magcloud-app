@@ -133,6 +133,17 @@ class DiaryService {
     return localDiary ?? Diary.create(ymd: today);
   }
 
+  Future<Diary?> getDiaryOnServer(
+      DateTime ymd,
+      ) async {
+    try {
+      final result = await openAPI.getDiaryByDate(DateParser.formatDateTime(ymd));
+      return result.toDomain();
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Diary?> createDiaryOnServer(
       DateTime ymd, Mood mood, String content) async {
     try {
@@ -156,35 +167,36 @@ class DiaryService {
     final isOnline = onlineService.isOnlineMode();
     String? diaryId = currentDiary.diaryId;
 
-    if (isOnline) {
-      //SAVE TO SERVER;
-      if (diaryId == null) {
-        //FIRST SAVE
-        final newSavedDiary =
-            await createDiaryOnServer(currentDiary.ymd, newMood, content);
-        print(newSavedDiary?.diaryId);
-        diaryId = newSavedDiary?.diaryId;
+    Diary newDiary = currentDiary;
+    try {
+      if (isOnline) {
+        //SAVE TO SERVER;
+        final previousDiary = await getDiaryOnServer(currentDiary.ymd);
+        if (previousDiary == null) {
+          //FIRST SAVE
+          final newSavedDiary = await createDiaryOnServer(currentDiary.ymd, newMood, content);
+          diaryId = newSavedDiary?.diaryId;
+        } else {
+          //PATCH
+          await openAPI.updateDiary(previousDiary.diaryId!, DiaryUpdateRequest(emotion: newMood.toServerType(), content: content));
+        }
       } else {
-        //PATCH
-        await openAPI.updateDiary(
-            diaryId,
-            DiaryUpdateRequest(
-                emotion: newMood.toServerType(), content: content));
+        //SAVE TO UNSAVED LOCAL REPO
+        SnackBarUtil.infoSnackBar(
+            message: message('message_diary_saved_offline'));
       }
-    } else {
-      //SAVE TO UNSAVED LOCAL REPO
-      SnackBarUtil.infoSnackBar(
-          message: message('message_diary_saved_offline'));
+    } finally {
+      newDiary = Diary(
+        mood: newMood,
+        content: content,
+        ymd: currentDiary.ymd,
+        hash: hashedContent,
+        diaryId: diaryId,
+        updatedAt: DateParser.nowAtMillis(),
+      );
+      await diaryRepository.saveDiary(newDiary);
+
     }
-    final newDiary = Diary(
-      mood: newMood,
-      content: content,
-      ymd: currentDiary.ymd,
-      hash: hashedContent,
-      diaryId: diaryId,
-      updatedAt: DateParser.nowAtMillis(),
-    );
-    await diaryRepository.saveDiary(newDiary);
     return newDiary;
   }
 

@@ -59,14 +59,13 @@ class OnlineService {
   void _onModeSwitch(bool newMode) {
     GlobalRoute.refresh();
   }
-
-  //bool isOnlineMode() => _online ?? true;
-  static bool tempOnline = true;
+  bool isOnlineMode() => _online ?? true;
+ // static bool tempOnline = true;
 
   static void invokeOnlineToggle() {
-    tempOnline = !tempOnline;
-    inject<OnlineService>()._onModeSwitch(tempOnline);
+  //  tempOnline = !tempOnline;
+  //  inject<OnlineService>()._onModeSwitch(tempOnline);
   }
 
-  bool isOnlineMode() => tempOnline;
+ // bool isOnlineMode() => tempOnline;
 }

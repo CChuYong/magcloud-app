@@ -1,4 +1,5 @@
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -38,6 +39,9 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
         message('message_settings_reset_subtitle'),
         confirmText: message('generic_reset'));
     if (result != true) return;
+
+    setDiaryFontSize(defaultFontSize);
+    setDiaryFont('KyoboHandWriting2019');
   }
 
   void watchOpenSourceLicense() async {

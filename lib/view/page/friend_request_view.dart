@@ -46,7 +46,7 @@ class FriendRequestView
 
   Widget titleBar() {
     return Padding(
-      padding: EdgeInsets.only(right: 31.sp),
+      padding: EdgeInsets.only(right: 10.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -64,7 +64,7 @@ class FriendRequestView
                   fontFamily: 'Pretendard')),
           TouchableOpacity(
             onTap: action.onTapFriendAddButton,
-            child: Icon(Icons.people, color: BaseColor.warmGray700, size: 20.sp))
+            child: SizedBox(width: 32.sp, height: 32.sp, child: Icon(Icons.add, color: BaseColor.warmGray700, size: 22.sp)))
         ],
       ),
     );

@@ -20,40 +20,61 @@ class _NavigationBarState extends State<BaseNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: BaseColor.warmGray100,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: BaseColor.warmGray200,
+            width: 1,
+          ),
+        ),
+      ),
+        child:Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+            child:BottomNavigationBar(
+      backgroundColor: BaseColor.defaultBackgroundColor,
       selectedItemColor: BaseColor.warmGray700,
-      unselectedItemColor: BaseColor.warmGray300,
+      unselectedItemColor: BaseColor.warmGray400,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedFontSize: 0,
+      unselectedFontSize: 0,
       unselectedIconTheme:
-          IconThemeData(color: BaseColor.warmGray300, size: 24.sp),
+          IconThemeData(color: BaseColor.warmGray400, size: 24.sp),
       selectedIconTheme:
-          IconThemeData(color: BaseColor.warmGray700, size: 24.sp),
+          IconThemeData(color: BaseColor.warmGray800, size: 24.sp),
       selectedLabelStyle: TextStyle(
-        fontSize: fontSize,
+        fontSize: 0,
       ),
       unselectedLabelStyle: TextStyle(
-        fontSize: fontSize,
+        fontSize: 0,
       ),
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.cloud, size: iconSize),
-          label: message("generic_feed"),
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_month, size: iconSize),
-          label: message("navigation_calendar"),
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.people_alt, size: iconSize),
-          label: message("navigation_friends"),
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.menu, size: iconSize),
-          label: message("navigation_more"),
+          label: '',
+
         ),
       ],
+      type: BottomNavigationBarType.fixed,
       currentIndex: widget.currentPage,
       onTap: widget.onTap,
-    );
+          enableFeedback: false,
+    )));
   }
 }

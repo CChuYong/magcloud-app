@@ -179,8 +179,7 @@ class ProfileView
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateParser.formatLocaleYmd(
-                    DateParser.fromTimeStamp(element.createdAt)),
+                DateParser.formatLocaleYmd(element.ymd),
                 style: TextStyle(
                     color: BaseColor.warmGray700,
                     fontSize: diaryFontSize * 1.2,

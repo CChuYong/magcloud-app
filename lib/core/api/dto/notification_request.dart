@@ -10,9 +10,13 @@ class NotificationRequest {
   @JsonKey(name: 'social')
   bool social;
 
+  @JsonKey(name: 'feed')
+  bool feed;
+
   NotificationRequest({
     required this.app,
     required this.social,
+    required this.feed,
   });
 
   factory NotificationRequest.fromJson(Map<String, dynamic> json) =>

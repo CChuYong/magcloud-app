@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -10,6 +11,7 @@ import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/friend_request_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
+import 'package:magcloud_app/view/page/profile_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
@@ -80,6 +82,11 @@ class GlobalRoute {
     if (!assertOnline()) return;
     await Get.to(WebViewScreenView('$webViewUrl/magcloud/privacy'),
         transition: Transition.rightToLeft, popGesture: true);
+  }
+
+  static Future<void> friendProfileView(String userId) async {
+    final user = await inject<OpenAPI>().getUserProfile(userId);
+    await rightToLeftRouteToDynamic(() => ProfileView(user.toDomain(), false, true));
   }
 
   static Future<void> noticePage() async {

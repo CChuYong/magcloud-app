@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotificationService {
   String? token;
   Function? chatMessageConsumer;
+  RemoteMessage? initialMessage;
 
   bool isPushAuthorized() => token != null;
 
@@ -42,6 +43,7 @@ class NotificationService {
 
     token = await FirebaseMessaging.instance.getToken();
     FirebaseMessaging.instance.subscribeToTopic("all");
+    initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     print("firebase fcm token: ${token}");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

@@ -8,8 +8,9 @@ import '../../view/page/settings_view/notification_config_view.dart';
 class NotificationConfigViewState {
   bool socialAlert;
   bool noticeAlert;
+  bool feedAlert;
 
-  NotificationConfigViewState(this.socialAlert, this.noticeAlert);
+  NotificationConfigViewState(this.socialAlert, this.noticeAlert, this.feedAlert);
 }
 
 class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
@@ -18,6 +19,7 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
       : super(NotificationConfigViewState(
           true,
           true,
+    true,
         ));
 
   final OpenAPI openAPI = inject<OpenAPI>();
@@ -27,6 +29,7 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
     final result = await openAPI.getNotificationConfig();
     state.socialAlert = result.social;
     state.noticeAlert = result.app;
+    state.feedAlert = result.feed;
   }
 
   Future<bool> changeSetting(String type, bool enabled) async {
@@ -39,13 +42,17 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
         case 'notice':
           state.noticeAlert = enabled;
           break;
+        case 'feed':
+          state.feedAlert = enabled;
+          break;
       }
 
-      final result = await openAPI.updateNotificationConfig(NotificationRequest(app: state.noticeAlert, social: state.socialAlert));
+      final result = await openAPI.updateNotificationConfig(NotificationRequest(app: state.noticeAlert, social: state.socialAlert, feed: state.feedAlert));
 
       setState(() {
         state.socialAlert = result.social;
         state.noticeAlert = result.app;
+        state.feedAlert = result.feed;
       });
     });
     return false;

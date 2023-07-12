@@ -40,6 +40,12 @@ class NotificationConfigView extends BaseView<NotificationConfigView,
                 () => action.changeSetting('social', !state.socialAlert)),
             SizedBox(height: gapBetweenBadge),
             notificationBox(
+                message('generic_notification_feed'),
+                message('message_notification_feed'),
+                state.feedAlert,
+                    () => action.changeSetting('feed', !state.feedAlert)),
+            SizedBox(height: 11.sp),
+            notificationBox(
                 message('generic_notification_app'),
                 message('message_notification_config_app_info'),
                 state.noticeAlert,

@@ -10,6 +10,7 @@ NotificationRequest _$NotificationRequestFromJson(Map<String, dynamic> json) =>
     NotificationRequest(
       app: json['app'] as bool,
       social: json['social'] as bool,
+      feed: json['feed'] as bool,
     );
 
 Map<String, dynamic> _$NotificationRequestToJson(
@@ -17,4 +18,5 @@ Map<String, dynamic> _$NotificationRequestToJson(
     <String, dynamic>{
       'app': instance.app,
       'social': instance.social,
+      'feed': instance.feed,
     };

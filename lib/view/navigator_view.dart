@@ -1,12 +1,15 @@
 import 'dart:collection';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/di.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/dialog/new_user_dialog.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
+import '../core/service/notification_service.dart';
 import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
 import 'page/calendar_view/calendar_base_view.dart';
@@ -51,6 +54,28 @@ class NavigatorViewState extends State<NavigatorView> {
     if(authService.isNewUser) {
       authService.isNewUser = false;
       Future.delayed(Duration(seconds: 1), () => openNewUserDialog());
+    }
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleNotification);
+    final notificationService = inject<NotificationService>();
+    if(notificationService.initialMessage != null) {
+      _handleNotification(notificationService.initialMessage!);
+      notificationService.initialMessage = null;
+    }
+  }
+
+  void _handleNotification(RemoteMessage message) {
+    if(message.data.containsKey("routePath")) {
+      final routePath = message.data["routePath"] as String;
+      print("Handle $routePath");
+      if(GlobalRoute.routes.containsKey(routePath)) {
+        GlobalRoute.rightToLeftRouteTo(routePath);
+      } else if(routePath.startsWith("/friend")) {
+        final subPath = routePath.split("/").last;
+        GlobalRoute.friendProfileView(subPath);
+        //onTap(2);
+      } else if(routePath.startsWith("/feed")) {
+        onTap(0);
+      }
     }
   }
 

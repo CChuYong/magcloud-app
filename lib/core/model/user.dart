@@ -4,12 +4,12 @@ class User {
   final String name;
   final String profileImageUrl;
 
-  User(
-      {required this.userId,
-      required this.name,
-      required this.nameTag,
-        required this.profileImageUrl,
-      });
+  User({
+    required this.userId,
+    required this.name,
+    required this.nameTag,
+    required this.profileImageUrl,
+  });
 
   @override
   int get hashCode => userId.hashCode;

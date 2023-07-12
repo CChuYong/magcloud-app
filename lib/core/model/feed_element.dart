@@ -1,5 +1,6 @@
 import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/model/user.dart';
+
 import 'mood.dart';
 
 class FeedElement {
@@ -23,8 +24,7 @@ class FeedElement {
     required this.createdAt,
   });
 
-  static FeedElement create(Diary diary, User user) =>
-      FeedElement(
+  static FeedElement create(Diary diary, User user) => FeedElement(
         userId: user.userId,
         userName: user.name,
         profileImageUrl: user.profileImageUrl,

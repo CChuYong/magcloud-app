@@ -1,6 +1,4 @@
-import 'package:magcloud_app/core/model/diary.dart';
 import 'package:magcloud_app/core/model/friend.dart';
-import 'package:magcloud_app/core/model/mood.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
@@ -16,9 +14,21 @@ class UserService {
   Future<List<Friend>> getFriends() async {
     final temp = List<Friend>.empty(growable: true);
     temp.add(Friend(
-        userId: 'ujs', name: '엄준식', nameTag: '엄준식#1234', isDiaryShared: false, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
+      userId: 'ujs',
+      name: '엄준식',
+      nameTag: '엄준식#1234',
+      isDiaryShared: false,
+      profileImageUrl:
+          "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
+    ));
     temp.add(Friend(
-        userId: 'gjh', name: '공지훈', nameTag: '공지훈#1234', isDiaryShared: true, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
+      userId: 'gjh',
+      name: '공지훈',
+      nameTag: '공지훈#1234',
+      isDiaryShared: true,
+      profileImageUrl:
+          "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
+    ));
 
     if (onlineService.isOnlineMode()) {
       //TRY REFRESH ONLINE
@@ -62,8 +72,7 @@ class UserService {
         name: justMe.name,
         nameTag: justMe.nameTag,
         profileImageUrl: justMe.profileImageUrl,
-        mood: todayDiary.mood
-    );
+        mood: todayDiary.mood);
   }
 
   Future<List<DailyUser>> getDailyFriends() async {

@@ -11,17 +11,17 @@ class Diary {
   final String hash;
   final int updatedAt;
 
-  Diary(
-      {required this.mood,
-      required this.content,
-      required this.ymd,
-      required this.hash,
-      required this.diaryId,
-        required this.updatedAt,
-      });
+  Diary({
+    required this.mood,
+    required this.content,
+    required this.ymd,
+    required this.hash,
+    required this.diaryId,
+    required this.updatedAt,
+  });
 
   static Diary create({DateTime? ymd}) => Diary(
-    diaryId: null,
+      diaryId: null,
       mood: Mood.neutral,
       content: '',
       ymd: ymd ?? DateTime.now(),

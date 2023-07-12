@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 class NotificationService {
   String? token;
   Function? chatMessageConsumer;
@@ -20,19 +19,19 @@ class NotificationService {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(const AndroidNotificationChannel(
-        'high_importance_channel', 'high_importance_notification',
-        importance: Importance.max));
+            'high_importance_channel', 'high_importance_notification',
+            importance: Importance.max));
 
     await flutterLocalNotificationsPlugin
         .initialize(const InitializationSettings(
-        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-        iOS: DarwinInitializationSettings(
-          requestSoundPermission: true,
-          requestBadgePermission: true,
-          requestAlertPermission: true,
-        )));
+            android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+            iOS: DarwinInitializationSettings(
+              requestSoundPermission: true,
+              requestBadgePermission: true,
+              requestAlertPermission: true,
+            )));
 
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
@@ -49,7 +48,7 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
-     // processMessage(message.data);
+      // processMessage(message.data);
 
       if (message.notification != null) {
         print(
@@ -57,5 +56,4 @@ class NotificationService {
       }
     });
   }
-
 }

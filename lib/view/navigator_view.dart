@@ -51,29 +51,29 @@ class NavigatorViewState extends State<NavigatorView> {
   void initState() {
     super.initState();
     final authService = inject<AuthService>();
-    if(authService.isNewUser) {
+    if (authService.isNewUser) {
       authService.isNewUser = false;
       Future.delayed(Duration(seconds: 1), () => openNewUserDialog());
     }
     FirebaseMessaging.onMessageOpenedApp.listen(_handleNotification);
     final notificationService = inject<NotificationService>();
-    if(notificationService.initialMessage != null) {
+    if (notificationService.initialMessage != null) {
       _handleNotification(notificationService.initialMessage!);
       notificationService.initialMessage = null;
     }
   }
 
   void _handleNotification(RemoteMessage message) {
-    if(message.data.containsKey("routePath")) {
+    if (message.data.containsKey("routePath")) {
       final routePath = message.data["routePath"] as String;
       print("Handle $routePath");
-      if(GlobalRoute.routes.containsKey(routePath)) {
+      if (GlobalRoute.routes.containsKey(routePath)) {
         GlobalRoute.rightToLeftRouteTo(routePath);
-      } else if(routePath.startsWith("/friend")) {
+      } else if (routePath.startsWith("/friend")) {
         final subPath = routePath.split("/").last;
         GlobalRoute.friendProfileView(subPath);
         //onTap(2);
-      } else if(routePath.startsWith("/feed")) {
+      } else if (routePath.startsWith("/feed")) {
         onTap(0);
       }
     }
@@ -98,7 +98,8 @@ class NavigatorViewState extends State<NavigatorView> {
     });
   }
 
-  bool isPageInitialized(int number) => NavigatorView.widgetMap.containsKey(number);
+  bool isPageInitialized(int number) =>
+      NavigatorView.widgetMap.containsKey(number);
 
   Widget getCurrentPage() => widget.getOrCreateWidget(this, currentPage);
 

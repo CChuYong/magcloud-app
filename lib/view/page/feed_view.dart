@@ -3,26 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
-import 'package:magcloud_app/core/model/friend.dart';
-import 'package:magcloud_app/core/model/user.dart';
-import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
-import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
-import 'package:magcloud_app/view/designsystem/base_icon.dart';
 
 import '../../core/util/font.dart';
 import '../../view_model/feed_view/feed_view_model.dart';
 import '../../view_model/feed_view/feed_view_state.dart';
-import '../../view_model/friend_view/friend_view_model.dart';
-import '../../view_model/friend_view/friend_view_state.dart';
 import '../designsystem/base_color.dart';
 import '../navigator_view.dart';
 
 class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
   final NavigatorViewState navigator;
+
   FeedView(this.navigator, {super.key});
 
   @override
@@ -69,14 +63,14 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                   fontFamily: 'GmarketSans'),
             ),
             TouchableOpacity(
-                 onTap: action.navigateToWritePage,
+                onTap: action.navigateToWritePage,
                 child: Container(
-              width: 31.sp,
-              height: 33.sp,
-              child: Icon(Icons.edit_calendar,
-                  size: 22.sp, color: BaseColor.warmGray600),
-              //  color: BaseColor.blue300,
-            ))
+                  width: 31.sp,
+                  height: 33.sp,
+                  child: Icon(Icons.edit_calendar,
+                      size: 22.sp, color: BaseColor.warmGray600),
+                  //  color: BaseColor.blue300,
+                ))
           ],
         ));
   }
@@ -116,26 +110,26 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
           slivers: [
             SliverToBoxAdapter(
                 child: Container(
-                     height: height,
+                    height: height,
                     // width: double.infinity,
                     child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.cloud_outlined,
-                    size: 40.sp, color: BaseColor.warmGray600),
-                Text(
-                  message('message_feed_is_empty'),
-                  style:
-                      TextStyle(color: BaseColor.warmGray600, fontSize: 16.sp),
-                ),
-                Text(
-                  message('message_add_your_friend_to_feed'),
-                  style:
-                      TextStyle(color: BaseColor.warmGray600, fontSize: 14.sp),
-                ),
-              ],
-            )))
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.cloud_outlined,
+                            size: 40.sp, color: BaseColor.warmGray600),
+                        Text(
+                          message('message_feed_is_empty'),
+                          style: TextStyle(
+                              color: BaseColor.warmGray600, fontSize: 16.sp),
+                        ),
+                        Text(
+                          message('message_add_your_friend_to_feed'),
+                          style: TextStyle(
+                              color: BaseColor.warmGray600, fontSize: 14.sp),
+                        ),
+                      ],
+                    )))
           ]),
     );
   }
@@ -202,7 +196,8 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                               fontFamily: 'Pretendard'),
                         ),
                         Text(
-                          message('generic_created_before').format([DateParser.gapBetweenNow(element.createdAt)]),
+                          message('generic_created_before').format(
+                              [DateParser.gapBetweenNow(element.createdAt)]),
                           style: TextStyle(
                               color: BaseColor.warmGray600,
                               fontSize: 12.sp,
@@ -216,19 +211,19 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                 TouchableOpacity(
                     onTap: () => action.onTapProfileImage(element.userId),
                     child: Container(
-                  width: 24.sp,
-                  height: 33.sp,
-                  //color: Colors.blueAccent,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //Icon(Icons.calendar_today_outlined, size: 18.sp, color: BaseColor.warmGray400),
-                        Icon(Icons.arrow_forward_outlined,
-                            size: 24.sp, color: BaseColor.warmGray400),
-                      ]),
-                  //  color: BaseColor.blue300,
-                ))
+                      width: 24.sp,
+                      height: 33.sp,
+                      //color: Colors.blueAccent,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            //Icon(Icons.calendar_today_outlined, size: 18.sp, color: BaseColor.warmGray400),
+                            Icon(Icons.arrow_forward_outlined,
+                                size: 24.sp, color: BaseColor.warmGray400),
+                          ]),
+                      //  color: BaseColor.blue300,
+                    ))
               ],
             )),
         // divider,

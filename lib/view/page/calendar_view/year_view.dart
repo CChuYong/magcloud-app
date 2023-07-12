@@ -79,10 +79,9 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
               child: Text(
             '${state.currentDate.year}${message("generic_year")}',
             style: TextStyle(
-              color: BaseColor.warmGray600,
-              fontSize: 16.sp,
-                fontFamily: 'GmarketSans'
-            ),
+                color: BaseColor.warmGray600,
+                fontSize: 16.sp,
+                fontFamily: 'GmarketSans'),
           )),
           Row(
             children: [
@@ -120,11 +119,11 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
             child: Text(
               DateParser.formatLocaleMonth(month),
               style: TextStyle(
-                color:
-                    isInvisible ? BaseColor.warmGray200 : BaseColor.warmGray500,
-                fontSize: 18.sp,
-                  fontFamily: 'GmarketSans'
-              ),
+                  color: isInvisible
+                      ? BaseColor.warmGray200
+                      : BaseColor.warmGray500,
+                  fontSize: 18.sp,
+                  fontFamily: 'GmarketSans'),
             ),
           ),
         ));

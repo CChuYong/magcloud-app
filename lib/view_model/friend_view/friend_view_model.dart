@@ -33,7 +33,7 @@ class FriendViewModel
 
   @override
   Future<void> initState() async {
-    if(onlineService.isOnlineMode()) {
+    if (onlineService.isOnlineMode()) {
       await reloadFriends();
       state.requestCount = (await openAPI.getFriendRequestsCount()).count;
       StateStore.setInt("friendRequestCount", state.requestCount);
@@ -63,8 +63,9 @@ class FriendViewModel
   }
 
   void onTapAddFriend() async {
-    if(!inject<OnlineService>().isOnlineMode()) {
-      SnackBarUtil.errorSnackBar(message: message('message_offline_cannot_use_that'));
+    if (!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(
+          message: message('message_offline_cannot_use_that'));
       return;
     }
     await GlobalRoute.rightToLeftRouteTo('/friends/requests');
@@ -73,7 +74,8 @@ class FriendViewModel
 
   void onTapShareDiary(User user) async {
     asyncLoading(() async {
-      final deleteResult = await openAPI.shareDiary(FriendAcceptRequest(userId: user.userId));
+      final deleteResult =
+          await openAPI.shareDiary(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: deleteResult.message);
       await reloadFriends();
     });
@@ -81,7 +83,8 @@ class FriendViewModel
 
   void onTapUnShareDiary(User user) async {
     asyncLoading(() async {
-      final deleteResult = await openAPI.unShareDiary(FriendAcceptRequest(userId: user.userId));
+      final deleteResult =
+          await openAPI.unShareDiary(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: deleteResult.message);
       await reloadFriends();
     });
@@ -93,10 +96,13 @@ class FriendViewModel
   }
 
   void onTapDeleteFriend(User user) async {
-    final result = await confirmDialog(message('generic_break_friend'), message('message_friend_delete_confirm').format([user.name]), confirmText: message('generic_delete'), confirmColor: BaseColor.red300);
-    if(result) {
+    final result = await confirmDialog(message('generic_break_friend'),
+        message('message_friend_delete_confirm').format([user.name]),
+        confirmText: message('generic_delete'), confirmColor: BaseColor.red300);
+    if (result) {
       asyncLoading(() async {
-        final deleteResult = await openAPI.breakFriend(FriendAcceptRequest(userId: user.userId));
+        final deleteResult =
+            await openAPI.breakFriend(FriendAcceptRequest(userId: user.userId));
         SnackBarUtil.infoSnackBar(message: deleteResult.message);
         await reloadFriends();
       });

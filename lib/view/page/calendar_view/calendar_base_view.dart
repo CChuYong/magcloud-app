@@ -180,20 +180,21 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
               color: BaseColor.defaultBackgroundColor,
               width: double.infinity,
               height: 69.sp,
-              child:
-                  CustomScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal, slivers: [
-                SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
-                SliverToBoxAdapter(child: meIcon(action, action.state.dailyMe)),
-                SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
-                for (DailyUser user in action.state.dailyFriends) ...[
-                  SliverToBoxAdapter(child: friendIcon(action, user)),
-                  SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
-                ],
-                SliverToBoxAdapter(child: addFriend(action)),
-                SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
-              ]),
+              child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  slivers: [
+                    SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+                    SliverToBoxAdapter(
+                        child: meIcon(action, action.state.dailyMe)),
+                    SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
+                    for (DailyUser user in action.state.dailyFriends) ...[
+                      SliverToBoxAdapter(child: friendIcon(action, user)),
+                      SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
+                    ],
+                    SliverToBoxAdapter(child: addFriend(action)),
+                    SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
+                  ]),
             ),
             isOnline
                 ? Container()
@@ -297,13 +298,16 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             width: 54.sp,
             child: Column(
               children: [
-                friendProfileIcon(user.mood.moodColor, user.profileImageUrl, isSelected),
+                friendProfileIcon(
+                    user.mood.moodColor, user.profileImageUrl, isSelected),
                 Text(
                   user.name,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      color: isSelected ? BaseColor.warmGray700 : BaseColor.warmGray500,
-                      fontSize: isSelected ? 13.sp : 11.sp,
+                    color: isSelected
+                        ? BaseColor.warmGray700
+                        : BaseColor.warmGray500,
+                    fontSize: isSelected ? 13.sp : 11.sp,
                   ),
                 ),
               ],
@@ -315,19 +319,20 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     final isSelected = action.state.selectedUser == me;
     return TouchableOpacity(
         onTap: () => me?.let(action.onTapFriendIcon),
-        child:  Container(
+        child: Container(
             width: 54.sp,
-    child:Column(
-          children: [
-            friendProfileIcon(mood.moodColor, me?.profileImageUrl, action.state.selectedUser == me),
-            Text(
-              message('generic_me'),
-              style: TextStyle(
-                color: isSelected ? BaseColor.warmGray700 : BaseColor.warmGray500,
-                fontSize: isSelected ? 13.sp : 11.sp,
-              )
-            ),
-          ],
-        )));
+            child: Column(
+              children: [
+                friendProfileIcon(mood.moodColor, me?.profileImageUrl,
+                    action.state.selectedUser == me),
+                Text(message('generic_me'),
+                    style: TextStyle(
+                      color: isSelected
+                          ? BaseColor.warmGray700
+                          : BaseColor.warmGray500,
+                      fontSize: isSelected ? 13.sp : 11.sp,
+                    )),
+              ],
+            )));
   }
 }

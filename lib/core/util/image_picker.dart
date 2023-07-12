@@ -5,7 +5,7 @@ import 'package:mime/mime.dart';
 
 class ImagePickerUtil {
   static Future<Image?> pickImage() async {
-    try{
+    try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image == null) return null;
@@ -13,7 +13,7 @@ class ImagePickerUtil {
       final bytes = await image.readAsBytes();
 
       return Image(mimeType: mimeType ?? '', bytes: bytes);
-    }catch(e) {
+    } catch (e) {
       return null;
     }
   }
@@ -22,5 +22,6 @@ class ImagePickerUtil {
 class Image {
   final String mimeType;
   final Uint8List bytes;
+
   Image({required this.mimeType, required this.bytes});
 }

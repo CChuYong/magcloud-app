@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
 
@@ -36,18 +35,19 @@ class FeedResponse {
     required this.createdAtTs,
   });
 
-  factory FeedResponse.fromJson(Map<String, dynamic> json) => _$FeedResponseFromJson(json);
+  factory FeedResponse.fromJson(Map<String, dynamic> json) =>
+      _$FeedResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedResponseToJson(this);
 
   FeedElement toDomain() => FeedElement(
-    userId: userId,
-    userName: userName,
-    profileImageUrl: profileImageUrl,
-    diaryId: diaryId,
-    mood: Mood.parseMood(mood),
-    ymd: DateTime.parse(ymd),
-    content: content,
-    createdAt: createdAtTs,
-  );
+        userId: userId,
+        userName: userName,
+        profileImageUrl: profileImageUrl,
+        diaryId: diaryId,
+        mood: Mood.parseMood(mood),
+        ymd: DateTime.parse(ymd),
+        content: content,
+        createdAt: createdAtTs,
+      );
 }

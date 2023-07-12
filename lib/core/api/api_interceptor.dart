@@ -7,8 +7,8 @@ import 'package:magcloud_app/core/api/dto/common/generic_error.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/util/device_info_util.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:native_dialog/native_dialog.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../di.dart';
 import '../../global_routes.dart';
@@ -25,7 +25,8 @@ class ApiInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('[REQ] [${options.method}] ${options.uri} ${authService.getAccessToken()}');
+    print(
+        '[REQ] [${options.method}] ${options.uri} ${authService.getAccessToken()}');
 
     if (authService.isAuthenticated()) {
       options.headers["X-AUTH-TOKEN"] = authService.getAccessToken();
@@ -66,28 +67,24 @@ class ApiInterceptor extends Interceptor {
           await GlobalRoute.fadeRoute('/login');
         }
       }
-    } else if(statusCode == 403) {
+    } else if (statusCode == 403) {
       log("403!!!!");
       try {
         final errorBody = GenericError.fromJson(err.response!.data);
-        if(errorBody.code == "CM0010") {
+        if (errorBody.code == "CM0010") {
           StateStore.setString("updateBaseline", inject<PackageInfo>().version);
           await NativeDialog.alert(message('message_update_needed'));
           await LaunchReview.launch(writeReview: false);
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         }
-      }catch(e){
-
-      }
-    } else if(statusCode == 404) {
+      } catch (e) {}
+    } else if (statusCode == 404) {
       //Ignore
     } else {
       log(err.response?.data?.toString() ?? 'unknown dio error');
       if (err.response != null) {
         final errorBody = GenericError.fromJson(err.response!.data);
-        SnackBarUtil.errorSnackBar(
-            message: errorBody.message
-        );
+        SnackBarUtil.errorSnackBar(message: errorBody.message);
       }
     }
     return handler.next(err);

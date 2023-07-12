@@ -14,10 +14,12 @@ import '../../view/dialog/friend_request_dialog.dart';
 import '../../view/page/profile_view.dart';
 import 'friend_request_view_state.dart';
 
-class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequestViewModel, FriendRequestViewState> {
+class FriendRequestViewModel extends BaseViewModel<FriendRequestView,
+    FriendRequestViewModel, FriendRequestViewState> {
   final TextEditingController searchController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   final OpenAPI openApi = inject<OpenAPI>();
+
   FriendRequestViewModel() : super(FriendRequestViewState()) {
     searchController.addListener(applySearch);
   }
@@ -51,7 +53,7 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
 
   void onTapFriendAddButton() async {
     final tag = await friendRequestDialog();
-    if(tag.isNotEmpty) {
+    if (tag.isNotEmpty) {
       await asyncLoading(() async {
         final result = await openApi.requestFriend(FriendRequest(tag: tag));
         SnackBarUtil.infoSnackBar(message: result.message);
@@ -62,7 +64,8 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
 
   void onTapAcceptFriendRequest(User user) async {
     await asyncLoading(() async {
-      final result = await openApi.acceptFriendRequest(FriendAcceptRequest(userId: user.userId));
+      final result = await openApi
+          .acceptFriendRequest(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: result.message);
     });
 
@@ -73,7 +76,8 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
 
   void onTapDenyFriendRequest(User user) async {
     await asyncLoading(() async {
-      final result = await openApi.denyFriendRequest(FriendAcceptRequest(userId: user.userId));
+      final result = await openApi
+          .denyFriendRequest(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: result.message);
     });
 
@@ -84,7 +88,8 @@ class FriendRequestViewModel extends BaseViewModel<FriendRequestView, FriendRequ
 
   void onTapCancelFriendRequest(User user) async {
     await asyncLoading(() async {
-      final result = await openApi.cancelFriendRequest(FriendAcceptRequest(userId: user.userId));
+      final result = await openApi
+          .cancelFriendRequest(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: result.message);
     });
 

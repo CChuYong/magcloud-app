@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/friend.dart';
-import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
@@ -61,32 +60,34 @@ class FriendView
             TouchableOpacity(
                 onTap: action.onTapAddFriend,
                 child: Container(
-                  width: 31.sp,
-                  height: 33.sp,
-                //  color: BaseColor.blue300,
-                    child: Stack(
-                  alignment: Alignment.centerLeft,
-                    children: [
-                  Icon(Icons.people, color: BaseColor.warmGray700, size: 24.sp),
-                      action.state.requestCount != 0?
-                      Positioned(
-                        top: 0,
-                          right:0,
-                          child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: BaseColor.red400,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.sp, horizontal: 3.sp),
-                            child: Text(action.state.requestCount.toString(), style: TextStyle(
-                          color: BaseColor.warmGray50,
-                          fontSize: 12.sp,
-                              height: 1.0,
-                        ))),
-                      )) : Container()
-
-                ])))
+                    width: 31.sp,
+                    height: 33.sp,
+                    //  color: BaseColor.blue300,
+                    child: Stack(alignment: Alignment.centerLeft, children: [
+                      Icon(Icons.people,
+                          color: BaseColor.warmGray700, size: 24.sp),
+                      action.state.requestCount != 0
+                          ? Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: BaseColor.red400,
+                                ),
+                                child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 2.sp, horizontal: 3.sp),
+                                    child: Text(
+                                        action.state.requestCount.toString(),
+                                        style: TextStyle(
+                                          color: BaseColor.warmGray50,
+                                          fontSize: 12.sp,
+                                          height: 1.0,
+                                        ))),
+                              ))
+                          : Container()
+                    ])))
           ],
         ));
   }

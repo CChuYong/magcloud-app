@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:magcloud_app/core/service/friend_diary_service.dart';
 import 'package:magcloud_app/core/service/notification_service.dart';
@@ -10,8 +11,6 @@ import 'core/repository/diary_repository.dart';
 import 'core/service/auth_service.dart';
 import 'core/service/diary_service.dart';
 import 'core/service/online_service.dart';
-import 'package:dio/dio.dart';
-
 import 'core/service/user_service.dart';
 
 final inject = GetIt.instance;

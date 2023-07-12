@@ -10,17 +10,17 @@ import '../../view/dialog/confirm_dialog.dart';
 
 class ApplicationInfoViewState {
   final PackageInfo packageInfo;
+
   ApplicationInfoViewState(this.packageInfo);
 }
 
 class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
     ApplicationInfoViewModel, ApplicationInfoViewState> {
-  ApplicationInfoViewModel() : super(ApplicationInfoViewState(inject<PackageInfo>()));
+  ApplicationInfoViewModel()
+      : super(ApplicationInfoViewState(inject<PackageInfo>()));
 
   @override
-  Future<void> initState() async {
-
-  }
+  Future<void> initState() async {}
 
   @override
   Future<bool> onWillPop() {

@@ -1,9 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:magcloud_app/core/model/mood.dart';
-import 'package:magcloud_app/core/model/user.dart';
-import 'package:magcloud_app/core/util/date_parser.dart';
-
-import '../../../model/diary.dart';
 
 part 'diary_update_request.g.dart';
 

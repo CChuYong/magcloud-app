@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:magcloud_app/core/model/friend.dart';
-import 'package:magcloud_app/core/model/user.dart';
 
 part 'friend_response.g.dart';
 
@@ -34,5 +33,10 @@ class FriendResponse {
 
   Map<String, dynamic> toJson() => _$FriendResponseToJson(this);
 
-  Friend toDomain() => Friend(userId: userId, name: name, nameTag: nameTag, profileImageUrl: profileImageUrl, isDiaryShared: isDiaryShared);
+  Friend toDomain() => Friend(
+      userId: userId,
+      name: name,
+      nameTag: nameTag,
+      profileImageUrl: profileImageUrl,
+      isDiaryShared: isDiaryShared);
 }

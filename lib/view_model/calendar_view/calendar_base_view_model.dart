@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
@@ -8,7 +6,6 @@ import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/friend_diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
-import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -101,12 +98,13 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     state.dailyMe = await userService.getDailyMe();
     state.selectedUser = state.dailyMe; //기본값// 은 나 선택 ㅇㅅㅇ
 
-    if(isOnline()) {
+    if (isOnline()) {
       state.dailyFriends = await userService.getDailyFriends();
     }
   }
 
   bool isRunning = false;
+
   Future<void> setScope(CalendarViewScope scope) async {
     await _setScope(scope);
   }
@@ -115,24 +113,24 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     final previousScope = state.scope;
     if (previousScope == CalendarViewScope.DAILY) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
-      if(scopeData.isMyScope) {
+      if (scopeData.isMyScope) {
         final lastDiary = scopeData.currentDiary;
-        await diaryService.updateDiary(
-            lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
+        await diaryService.updateDiary(lastDiary, scopeData.currentMood,
+            scopeData.diaryTextController.text);
       }
     }
-    try{
-      if(onlineService.isOnlineMode() && !isMeSelected()) {
+    try {
+      if (onlineService.isOnlineMode() && !isMeSelected()) {
         await asyncLoading(() async {
           await applyWithFriendScope(scope);
           state.scope = scope;
         });
-      } else{
+      } else {
         state.selectedUser = state.dailyMe;
         state.scope = scope;
         await applyWithMyScope(scope);
       }
-    }catch(e){
+    } catch (e) {
       state.scope = previousScope;
     }
   }
@@ -144,27 +142,25 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
         setScopeData(CalendarYearViewScopeData(mood, true));
         break;
       case CalendarViewScope.MONTH:
-        if(onlineService.isOnlineMode()) {
+        if (onlineService.isOnlineMode()) {
           diaryService
               .autoSync(state.currentDate.year, state.currentDate.month)
               .then((value) {
-                if(value) {
-                  print("Sync result returned non-zero code");
-                  if(scope != CalendarViewScope.DAILY) {
-                    setScope(scope);
-                  }
-                }
-              })
-          ;
+            if (value) {
+              print("Sync result returned non-zero code");
+              if (scope != CalendarViewScope.DAILY) {
+                setScope(scope);
+              }
+            }
+          });
         }
         final mood = await diaryService.getDailyMood(
-            state.currentDate.year, state.currentDate.month
-        );
+            state.currentDate.year, state.currentDate.month);
         setScopeData(CalendarMonthViewScopeData(mood, true));
         break;
       case CalendarViewScope.DAILY:
-        final diary = await diaryService.getDiary(
-            state.currentDate.year, state.currentDate.month, state.currentDate.day, true);
+        final diary = await diaryService.getDiary(state.currentDate.year,
+            state.currentDate.month, state.currentDate.day, true);
         final dailyScopeData = CalendarDailyViewScopeData(diary, true);
         setScopeData(dailyScopeData);
         dailyScopeData.focusNode.addListener(() {
@@ -177,36 +173,34 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   Future<void> applyWithFriendScope(CalendarViewScope scope) async {
-      final friend = state.selectedUser;
-      if(friend == null) throw Exception();
-      switch (scope) {
-        case CalendarViewScope.YEAR:
-          final mood = await friendDiaryService.getMonthlyMood(friend.userId, state.currentDate);
-          setScopeData(CalendarYearViewScopeData(mood, false));
-          break;
-        case CalendarViewScope.MONTH:
-          final mood = await friendDiaryService.getDailyMood(
-              friend.userId,
-              state.currentDate);
-          setScopeData(CalendarMonthViewScopeData(mood, false));
-          break;
-        case CalendarViewScope.DAILY:
-          final diary = await friendDiaryService.getDiary(
-              friend.userId,
-              state.currentDate
-          );
-          final dailyScopeData = CalendarDailyViewScopeData(diary ?? Diary.create(ymd: state.currentDate), false);
-          setScopeData(dailyScopeData);
-          if(dailyScopeData.isMyScope) {
-            dailyScopeData.focusNode.addListener(() {
-              if (isFriendBarOpen) {
-                toggleFriendBar();
-              }
-            });
-          }
-          break;
-      }
-
+    final friend = state.selectedUser;
+    if (friend == null) throw Exception();
+    switch (scope) {
+      case CalendarViewScope.YEAR:
+        final mood = await friendDiaryService.getMonthlyMood(
+            friend.userId, state.currentDate);
+        setScopeData(CalendarYearViewScopeData(mood, false));
+        break;
+      case CalendarViewScope.MONTH:
+        final mood = await friendDiaryService.getDailyMood(
+            friend.userId, state.currentDate);
+        setScopeData(CalendarMonthViewScopeData(mood, false));
+        break;
+      case CalendarViewScope.DAILY:
+        final diary =
+            await friendDiaryService.getDiary(friend.userId, state.currentDate);
+        final dailyScopeData = CalendarDailyViewScopeData(
+            diary ?? Diary.create(ymd: state.currentDate), false);
+        setScopeData(dailyScopeData);
+        if (dailyScopeData.isMyScope) {
+          dailyScopeData.focusNode.addListener(() {
+            if (isFriendBarOpen) {
+              toggleFriendBar();
+            }
+          });
+        }
+        break;
+    }
   }
 
   Future<void> setScopeData(CalendarScopeData data) async {
@@ -233,13 +227,14 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   }
 
   void onEditingCompleted() {
-    if (state.scope == CalendarViewScope.DAILY && onlineService.isOnlineMode()) {
+    if (state.scope == CalendarViewScope.DAILY &&
+        onlineService.isOnlineMode()) {
       final scopeData = state.scopeData as CalendarDailyViewScopeData;
-      if(!scopeData.isMyScope) return;
+      if (!scopeData.isMyScope) return;
       saveDebouncer.runLastCall(() async {
         final lastDiary = scopeData.currentDiary;
-        await diaryService.updateDiary(
-            lastDiary, scopeData.currentMood, scopeData.diaryTextController.text);
+        await diaryService.updateDiary(lastDiary, scopeData.currentMood,
+            scopeData.diaryTextController.text);
       });
     }
   }
@@ -298,8 +293,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   void onVerticalDragTopBar(DragEndDetails details) {
     dragDebouncer.runLastCall(() {
       final isPositive = (details.primaryVelocity ?? 0) > 0;
-      if(!isPositive) {
-        if(isFriendBarOpen) {
+      if (!isPositive) {
+        if (isFriendBarOpen) {
           setState(() {
             isFriendBarOpen = false;
           });
@@ -341,8 +336,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> navigateToNow() async {
     final now = DateTime.now();
-    final before =
-        DateTime(state.currentDate.year, state.currentDate.month, state.currentDate.day);
+    final before = DateTime(
+        state.currentDate.year, state.currentDate.month, state.currentDate.day);
     if (state.currentDate.year == now.year &&
         state.currentDate.month == now.month &&
         state.currentDate.day == now.day) return;
@@ -357,15 +352,16 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
 
   Future<void> changeDay(int delta) async {
     final now = DateTime.now();
-    final afterDelta = DateTime(
-        state.currentDate.year, state.currentDate.month, state.currentDate.day + delta);
+    final afterDelta = DateTime(state.currentDate.year, state.currentDate.month,
+        state.currentDate.day + delta);
     if (afterDelta.isAfter(now)) {
       snackNoFuture();
       return;
     }
     setupHorizontalAnimation(delta > 0);
     setStateAsync(() async {
-      state.currentDate = DateTime(afterDelta.year, afterDelta.month, afterDelta.day);
+      state.currentDate =
+          DateTime(afterDelta.year, afterDelta.month, afterDelta.day);
       await setScope(CalendarViewScope.DAILY);
     });
   }
@@ -388,7 +384,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     setupHorizontalAnimation(delta > 0);
 
     setStateAsync(() async {
-      state.currentDate = DateTime(targetYear, targetMonth, state.currentDate.day);
+      state.currentDate =
+          DateTime(targetYear, targetMonth, state.currentDate.day);
       await setScope(CalendarViewScope.MONTH);
     });
   }
@@ -397,7 +394,8 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     final targetYear = state.currentDate.year + delta;
     setupHorizontalAnimation(delta > 0);
     setStateAsync(() async {
-      state.currentDate = DateTime(targetYear, state.currentDate.month, state.currentDate.day);
+      state.currentDate =
+          DateTime(targetYear, state.currentDate.month, state.currentDate.day);
       await setScope(CalendarViewScope.YEAR);
     });
   }
@@ -405,22 +403,24 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   Future<void> onTapMonthBox(int month) async {
     setupVerticalAnimation(true);
     setStateAsync(() async {
-      state.currentDate = DateTime(state.currentDate.year, month, state.currentDate.day);
+      state.currentDate =
+          DateTime(state.currentDate.year, month, state.currentDate.day);
       await setScope(CalendarViewScope.MONTH);
     });
   }
 
   Future<void> onTapDayBox(int day) async {
     final now = DateTime.now();
-    final target =
-        DateTime(state.currentDate.year, state.currentDate.month, state.currentDate.day);
+    final target = DateTime(
+        state.currentDate.year, state.currentDate.month, state.currentDate.day);
     if (target.isAfter(now)) {
       snackNoFuture();
       return;
     }
     setupVerticalAnimation(true);
     setStateAsync(() async {
-      state.currentDate = DateTime(state.currentDate.year, state.currentDate.month, day);
+      state.currentDate =
+          DateTime(state.currentDate.year, state.currentDate.month, day);
       await setScope(CalendarViewScope.DAILY);
     });
   }

@@ -64,10 +64,10 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
   }
 
   Future<T> asyncLoading<T>(Future<T> Function() lambda) async {
-    try{
+    try {
       setLoading(true);
       return await lambda();
-    }finally {
+    } finally {
       setLoading(false);
     }
   }

@@ -10,7 +10,8 @@ class NotificationConfigViewState {
   bool noticeAlert;
   bool feedAlert;
 
-  NotificationConfigViewState(this.socialAlert, this.noticeAlert, this.feedAlert);
+  NotificationConfigViewState(
+      this.socialAlert, this.noticeAlert, this.feedAlert);
 }
 
 class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
@@ -19,7 +20,7 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
       : super(NotificationConfigViewState(
           true,
           true,
-    true,
+          true,
         ));
 
   final OpenAPI openAPI = inject<OpenAPI>();
@@ -47,7 +48,10 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
           break;
       }
 
-      final result = await openAPI.updateNotificationConfig(NotificationRequest(app: state.noticeAlert, social: state.socialAlert, feed: state.feedAlert));
+      final result = await openAPI.updateNotificationConfig(NotificationRequest(
+          app: state.noticeAlert,
+          social: state.socialAlert,
+          feed: state.feedAlert));
 
       setState(() {
         state.socialAlert = result.social;

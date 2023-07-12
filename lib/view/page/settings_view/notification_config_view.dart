@@ -43,7 +43,7 @@ class NotificationConfigView extends BaseView<NotificationConfigView,
                 message('generic_notification_feed'),
                 message('message_notification_feed'),
                 state.feedAlert,
-                    () => action.changeSetting('feed', !state.feedAlert)),
+                () => action.changeSetting('feed', !state.feedAlert)),
             SizedBox(height: 11.sp),
             notificationBox(
                 message('generic_notification_app'),

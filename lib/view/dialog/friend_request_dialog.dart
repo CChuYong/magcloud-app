@@ -62,28 +62,30 @@ Future<String> friendRequestDialog() async {
                                 Container(
                                   decoration: BoxDecoration(
                                       color: BaseColor.warmGray100,
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          10)),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 15.sp),
-                                      child:TextField(
-                                    controller: textController,
-                                    focusNode: focusNode,
-                                    onTapOutside: (e) { focusNode.unfocus(); },
-                                    style: TextStyle(
-                                      color: BaseColor.warmGray400,
-                                      fontSize: 15.sp,
-                                      height: 1.2,
-                                    ),
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: message('message_enter_friend_tag'),
-                                        hintStyle: TextStyle(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.sp, horizontal: 15.sp),
+                                      child: TextField(
+                                        controller: textController,
+                                        focusNode: focusNode,
+                                        onTapOutside: (e) {
+                                          focusNode.unfocus();
+                                        },
+                                        style: TextStyle(
                                           color: BaseColor.warmGray400,
                                           fontSize: 15.sp,
-                                        )),
-                                  )),
+                                          height: 1.2,
+                                        ),
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: message(
+                                                'message_enter_friend_tag'),
+                                            hintStyle: TextStyle(
+                                              color: BaseColor.warmGray400,
+                                              fontSize: 15.sp,
+                                            )),
+                                      )),
                                 ),
                                 SizedBox(height: 15.sp),
                                 Row(
@@ -92,8 +94,11 @@ Future<String> friendRequestDialog() async {
                                   children: [
                                     Expanded(
                                         child: TouchableOpacity(
-                                            onTap: () =>
-                                                {Get.back(result: textController.text)},
+                                            onTap: () => {
+                                                  Get.back(
+                                                      result:
+                                                          textController.text)
+                                                },
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: BaseColor.green200,
@@ -104,7 +109,9 @@ Future<String> friendRequestDialog() async {
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 10.sp),
                                                   child: Center(
-                                                    child: Text(message('generic_send_friend_request'),
+                                                    child: Text(
+                                                        message(
+                                                            'generic_send_friend_request'),
                                                         style: TextStyle(
                                                           color: BaseColor
                                                               .warmGray500,
@@ -115,8 +122,7 @@ Future<String> friendRequestDialog() async {
                                     SizedBox(width: 10.sp),
                                     Expanded(
                                         child: TouchableOpacity(
-                                            onTap: () =>
-                                                {Get.back(result: '')},
+                                            onTap: () => {Get.back(result: '')},
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: BaseColor.warmGray200,
@@ -145,5 +151,6 @@ Future<String> friendRequestDialog() async {
             },
           ),
         ),
-      ) ?? "";
+      ) ??
+      "";
 }

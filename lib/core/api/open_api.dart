@@ -58,7 +58,8 @@ abstract class OpenAPI {
   Future<NotificationRequest> getNotificationConfig();
 
   @PATCH('/v1/users/notification')
-  Future<NotificationRequest> updateNotificationConfig(@Body() NotificationRequest request);
+  Future<NotificationRequest> updateNotificationConfig(
+      @Body() NotificationRequest request);
 
   @GET('/v1/users/friends')
   Future<List<FriendResponse>> getFriends();
@@ -77,7 +78,6 @@ abstract class OpenAPI {
 
   @GET('/v1/users/friends/requests/count')
   Future<CountResponse> getFriendRequestsCount();
-
 
   @GET('/v1/users/friends/requests/sent')
   Future<List<UserResponse>> getSentFriendRequests();
@@ -101,10 +101,12 @@ abstract class OpenAPI {
   Future<DiaryResponse> getDiaryByDate(@Query("date") String date);
 
   @GET('/v1/diaries/{diaryId}/integrity')
-  Future<DiaryIntegrityResponse> getDiaryIntegrity(@Path('diaryId') String diaryId);
+  Future<DiaryIntegrityResponse> getDiaryIntegrity(
+      @Path('diaryId') String diaryId);
 
   @GET('/v1/diaries/integrity')
-  Future<List<DiaryIntegrityResponse>> getDiaryIntegrityByMonth(@Query("year") int year, @Query("month") int month);
+  Future<List<DiaryIntegrityResponse>> getDiaryIntegrityByMonth(
+      @Query("year") int year, @Query("month") int month);
 
   @GET('/v1/diaries/{diaryId}')
   Future<DiaryResponse> getDiary(@Path("diaryId") String diaryId);
@@ -113,26 +115,35 @@ abstract class OpenAPI {
   Future<DiaryResponse> createDiary(@Body() DiaryRequest request);
 
   @PATCH('/v1/diaries/{diaryId}')
-  Future<DiaryResponse> updateDiary(@Path('diaryId') String diaryId, @Body() DiaryUpdateRequest request);
+  Future<DiaryResponse> updateDiary(
+      @Path('diaryId') String diaryId, @Body() DiaryUpdateRequest request);
 
   @GET('/v1/users/{friendId}/diaries')
-  Future<DiaryResponse> getFriendDiaryByDate(@Path("friendId") String friendId, @Query("date") String date);
+  Future<DiaryResponse> getFriendDiaryByDate(
+      @Path("friendId") String friendId, @Query("date") String date);
 
   @GET('/v1/users/{friendId}/diaries/statistics')
-  Future<Map<String, String>> getFriendMonthlyStatistics(@Path("friendId") String friendId, @Query("year") int year, @Query("month") int month);
+  Future<Map<String, String>> getFriendMonthlyStatistics(
+      @Path("friendId") String friendId,
+      @Query("year") int year,
+      @Query("month") int month);
 
   @GET('/v1/users/{friendId}/diaries/statistics')
-  Future<Map<String, String>> getFriendYearlyStatistics(@Path("friendId") String friendId, @Query("year") int year);
+  Future<Map<String, String>> getFriendYearlyStatistics(
+      @Path("friendId") String friendId, @Query("year") int year);
 
   @GET('/v1/feeds')
   Future<List<FeedResponse>> getFeeds(@Query("size") int size);
 
   @GET('/v1/feeds')
-  Future<List<FeedResponse>> getFeedsWithId(@Query("size") int size, @Query("baseId") String baseId);
+  Future<List<FeedResponse>> getFeedsWithId(
+      @Query("size") int size, @Query("baseId") String baseId);
 
   @GET('/v1/feeds')
-  Future<List<FeedResponse>> getFriendFeed(@Query("size") int size, @Query("userId") String userId);
+  Future<List<FeedResponse>> getFriendFeed(
+      @Query("size") int size, @Query("userId") String userId);
 
   @GET('/v1/feeds')
-  Future<List<FeedResponse>> getFriendFeedWithId(@Query("size") int size, @Query("userId") String userId, @Query("baseId") String baseId);
+  Future<List<FeedResponse>> getFriendFeedWithId(@Query("size") int size,
+      @Query("userId") String userId, @Query("baseId") String baseId);
 }

@@ -37,7 +37,9 @@ class BaseSettingLayout extends StatelessWidget {
             child: SizedBox(
                 width: 47.sp,
                 height: 32.sp,
-                child: Align(alignment: Alignment.center, child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
           ),
           Text(title,
               style: TextStyle(

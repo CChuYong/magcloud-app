@@ -32,15 +32,17 @@ class AuthService {
     final accessToken = StateStore.getString('accessToken');
     final refreshToken = StateStore.getString('refreshToken');
     if (accessToken != null && refreshToken != null) {
-      try{
+      try {
         authenticate(
             AuthToken(accessToken: accessToken, refreshToken: refreshToken));
         initialUser = (await openApi.getMyProfile()).toDomain();
         final previousUser = StateStore.getString("lastUserId");
-        if(initialUser != null && previousUser != null && previousUser != initialUser!.userId) {
+        if (initialUser != null &&
+            previousUser != null &&
+            previousUser != initialUser!.userId) {
           await flushStorage();
         }
-      }catch(e) {
+      } catch (e) {
         //Maybe offline?
       }
     }
@@ -66,11 +68,9 @@ class AuthService {
   Future<AuthResult> signInWithApple() async {
     try {
       final authResult = await _signInWithApple();
-      if(authResult.identityToken == null) return AuthResult.FAILED;
-      final authenticateResult = await openApi.authenticate(
-          AuthRequest(
-            provider: 'APPLE', token: authResult.identityToken ?? ""
-          ));
+      if (authResult.identityToken == null) return AuthResult.FAILED;
+      final authenticateResult = await openApi.authenticate(AuthRequest(
+          provider: 'APPLE', token: authResult.identityToken ?? ""));
       isNewUser = authenticateResult.isNewUser;
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
@@ -78,8 +78,8 @@ class AuthService {
       ));
       return AuthResult.SUCCEED;
     } catch (e) {
-      if(e is SignInWithAppleAuthorizationException) {
-        if(e.code == AuthorizationErrorCode.canceled) {
+      if (e is SignInWithAppleAuthorizationException) {
+        if (e.code == AuthorizationErrorCode.canceled) {
           return AuthResult.FAILED;
         }
       }
@@ -91,11 +91,10 @@ class AuthService {
   Future<AuthResult> signInWithGoogle() async {
     try {
       final authResult = await _signInWithGoogle();
-      if(authResult == null || authResult.accessToken == null) return AuthResult.FAILED;
+      if (authResult == null || authResult.accessToken == null)
+        return AuthResult.FAILED;
       final authenticateResult = await openApi.authenticate(
-          AuthRequest(
-              provider: 'GOOGLE', token: authResult.accessToken ?? ""
-          ));
+          AuthRequest(provider: 'GOOGLE', token: authResult.accessToken ?? ""));
       isNewUser = authenticateResult.isNewUser;
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
@@ -109,10 +108,10 @@ class AuthService {
   }
 
   Future<AuthResult> refreshWithToken() async {
-    if(token == null) return AuthResult.FAILED;
+    if (token == null) return AuthResult.FAILED;
     try {
       final authenticateResult = await openApi.refresh(AuthRefreshRequest(
-          refreshToken: token!.refreshToken,
+        refreshToken: token!.refreshToken,
       ));
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
@@ -131,30 +130,27 @@ class AuthService {
     StateStore.setString('accessToken', token.accessToken);
     StateStore.setString('refreshToken', token.refreshToken);
     final notificationService = inject<NotificationService>();
-    await openApi.registerDevice(
-        DeviceRequest(
-            deviceToken: notificationService.token!,
-            deviceInfo: DeviceInfoUtil.getOsAndVersion()));
-
+    await openApi.registerDevice(DeviceRequest(
+        deviceToken: notificationService.token!,
+        deviceInfo: DeviceInfoUtil.getOsAndVersion()));
   }
 
   Future<void> logout(bool intend) async {
     print("Logged Out!!");
     final notificationService = inject<NotificationService>();
-    try{
-      await openApi.unRegisterDevice(
-          DeviceRequest(
-              deviceToken: notificationService.token!,
-              deviceInfo: DeviceInfoUtil.getOsAndVersion()));
-    }catch(e) {}
+    try {
+      await openApi.unRegisterDevice(DeviceRequest(
+          deviceToken: notificationService.token!,
+          deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    } catch (e) {}
 
     token = null;
     StateStore.clear('accessToken');
     StateStore.clear('refreshToken');
-    if(initialUser != null) {
+    if (initialUser != null) {
       StateStore.setString('lastUserId', initialUser!.userId);
     }
-    if(intend) {
+    if (intend) {
       await flushStorage();
     }
   }

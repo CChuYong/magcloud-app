@@ -175,43 +175,47 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   }
 
   final boxPadding = 5.sp;
+
   Widget menuBtn(IconData icon, String name, void Function() onTap) {
     final iconSize = 19.sp;
     return TouchableOpacity(
         onTap: onTap,
         child: Column(children: [
           Container(
-            //color: BaseColor.orange300,
-            child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 11.sp),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: iconSize,
-                      width: iconSize,
-                      child: Center(
-                          child: Icon(icon,
-                              size: iconSize, color: BaseColor.warmGray700)),
-                    ),
-                    SizedBox(width: 12.sp),
-                    Text(
-                      name,
-                      style: TextStyle(
-                          color: BaseColor.warmGray600,
-                          fontSize: 15.sp,
-                          height: 1.2,
-                          fontFamily: 'Pretendard'),
-                    ),
-                  ],
-                ),
-                Icon(BaseIcon.arrowRight, color: BaseColor.warmGray700, size: 14.sp)
-              ],
-            )))]));
+              //color: BaseColor.orange300,
+              child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 11.sp),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: iconSize,
+                            width: iconSize,
+                            child: Center(
+                                child: Icon(icon,
+                                    size: iconSize,
+                                    color: BaseColor.warmGray700)),
+                          ),
+                          SizedBox(width: 12.sp),
+                          Text(
+                            name,
+                            style: TextStyle(
+                                color: BaseColor.warmGray600,
+                                fontSize: 15.sp,
+                                height: 1.2,
+                                fontFamily: 'Pretendard'),
+                          ),
+                        ],
+                      ),
+                      Icon(BaseIcon.arrowRight,
+                          color: BaseColor.warmGray700, size: 14.sp)
+                    ],
+                  )))
+        ]));
   }
 }

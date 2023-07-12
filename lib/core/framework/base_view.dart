@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:magcloud_app/view/component/splash_overlay.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
@@ -21,6 +20,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
   bool isAutoRemove() => true;
 
   Color statusBarColor() => Colors.transparent;
+
   Color navigationBarColor() => BaseColor.defaultBackgroundColor;
 
   @override
@@ -50,10 +50,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
                   color: Colors.black.withOpacity(0.3),
                 ))
               : Container(),
-          action.isLoading
-              ? Positioned(
-              child: SplashOverlay())
-              : Container(),
+          action.isLoading ? Positioned(child: SplashOverlay()) : Container(),
         ],
       ),
     );

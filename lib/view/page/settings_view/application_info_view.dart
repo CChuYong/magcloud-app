@@ -94,7 +94,8 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView,
               borderRadius: BorderRadius.circular(7),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
               child: Text(title,
                   style:
                       TextStyle(color: BaseColor.warmGray500, fontSize: 12.sp)),

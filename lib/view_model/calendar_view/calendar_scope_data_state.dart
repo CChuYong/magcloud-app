@@ -5,23 +5,28 @@ import '../../core/model/mood.dart';
 
 abstract class CalendarScopeData {
   final bool isMyScope;
+
   CalendarScopeData({required this.isMyScope});
 }
 
 class CalendarYearViewScopeData extends CalendarScopeData {
   final Map<int, Mood> monthlyMood;
 
-  CalendarYearViewScopeData(this.monthlyMood, bool isMyScope): super(isMyScope: isMyScope);
+  CalendarYearViewScopeData(this.monthlyMood, bool isMyScope)
+      : super(isMyScope: isMyScope);
 
-  static CalendarYearViewScopeData mock() => CalendarYearViewScopeData({}, true);
+  static CalendarYearViewScopeData mock() =>
+      CalendarYearViewScopeData({}, true);
 }
 
 class CalendarMonthViewScopeData extends CalendarScopeData {
   final Map<int, Mood> dailyMood;
 
-  CalendarMonthViewScopeData(this.dailyMood, bool isMyScope): super(isMyScope: isMyScope);
+  CalendarMonthViewScopeData(this.dailyMood, bool isMyScope)
+      : super(isMyScope: isMyScope);
 
-  static CalendarMonthViewScopeData mock() => CalendarMonthViewScopeData({}, true);
+  static CalendarMonthViewScopeData mock() =>
+      CalendarMonthViewScopeData({}, true);
 }
 
 class CalendarDailyViewScopeData extends CalendarScopeData {
@@ -30,7 +35,8 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
   final Diary currentDiary;
   late Mood currentMood;
 
-  CalendarDailyViewScopeData(this.currentDiary, bool isMyScope): super(isMyScope: isMyScope) {
+  CalendarDailyViewScopeData(this.currentDiary, bool isMyScope)
+      : super(isMyScope: isMyScope) {
     diaryTextController.text = currentDiary.content;
     currentMood = currentDiary.mood;
   }

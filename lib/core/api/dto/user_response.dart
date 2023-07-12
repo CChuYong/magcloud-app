@@ -29,5 +29,9 @@ class UserResponse {
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 
-  User toDomain() => User(userId: userId, name: name, nameTag: nameTag, profileImageUrl: profileImageUrl);
+  User toDomain() => User(
+      userId: userId,
+      name: name,
+      nameTag: nameTag,
+      profileImageUrl: profileImageUrl);
 }

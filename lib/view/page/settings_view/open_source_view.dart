@@ -13,15 +13,16 @@ class OpenSourceLicenseView extends StatelessWidget {
     return BaseSettingLayout(
       title: message('generic_open_source_license'),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.sp),
+          padding: EdgeInsets.symmetric(horizontal: 15.sp),
           child: Column(children: [
-        Expanded(
-        child: CustomScrollView(reverse: false, slivers: [
-          SliverList(
-              delegate: SliverChildListDelegate(
-                  ossLicenses.map(element).toList())),
-        ]),
-      )])),
+            Expanded(
+              child: CustomScrollView(reverse: false, slivers: [
+                SliverList(
+                    delegate: SliverChildListDelegate(
+                        ossLicenses.map(element).toList())),
+              ]),
+            )
+          ])),
     );
   }
 
@@ -43,7 +44,7 @@ class OpenSourceLicenseView extends StatelessWidget {
             fontSize: 12.sp,
           ),
         ),
-        SizedBox(height:24.sp),
+        SizedBox(height: 24.sp),
       ],
     );
   }

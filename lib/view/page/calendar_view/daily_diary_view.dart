@@ -90,10 +90,9 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               child: Text(
                 DateParser.formatLocaleYmd(state.currentDate),
                 style: TextStyle(
-                  color: BaseColor.warmGray600,
-                  fontSize: 16.sp,
-                    fontFamily: 'GmarketSans'
-                ),
+                    color: BaseColor.warmGray600,
+                    fontSize: 16.sp,
+                    fontFamily: 'GmarketSans'),
               )),
           Row(
             children: [

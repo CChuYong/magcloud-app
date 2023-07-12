@@ -127,7 +127,8 @@ final map = {
   "message_logout_dialog_subtitle": "로그아웃 후 다시 로그인하셔야 해요",
   "message_cache_reset_subtitle": "캐시 데이터를 초기화할까요?",
   "message_settings_reset_subtitle": "설정 데이터를 초기화할까요?",
-  "message_server_version_latest_than_local": "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다.",
+  "message_server_version_latest_than_local":
+      "서버에 저장된 데이터가 로컬에 저장된 데이터보다 최신입니다.",
   "message_upload_succeed": "업로드에 성공했어요!",
   "message_tag_copied_to_clipboard": "태그가 클립보드에 복사되었어요!",
   "message_received_friend_requests_size": "받은 친구 요청 - %s명",
@@ -136,7 +137,8 @@ final map = {
   "message_request_friend_info": "친구를 추가하고 서로의 일기를 공유해보세요!",
   "message_friend_delete_confirm": "정말 %s님을 친구에서 삭제할까요?",
   "message_update_needed": "매지구름 업데이트가 존재합니다",
-  "message_welcome_description": "매지구름과 여러분의 일상을 기록하고,\n친구와 공유해보세요!\n\n매지구름이 여러분의 일상을 기록하고 여러분 스스로를 이해하는데 도움을 줄거에요.",
+  "message_welcome_description":
+      "매지구름과 여러분의 일상을 기록하고,\n친구와 공유해보세요!\n\n매지구름이 여러분의 일상을 기록하고 여러분 스스로를 이해하는데 도움을 줄거에요.",
   "message_feed_is_empty": "피드가 비어있어요",
   "message_add_your_friend_to_feed": "친구를 추가하거나 오늘의 일기를 작성해보세요!",
 };
@@ -260,16 +262,20 @@ final engMap = {
   "message_logout_dialog_subtitle": "You should login again to use MagCloud",
   "message_cache_reset_subtitle": "Reset Cached Data?",
   "message_settings_reset_subtitle": "Reset Settings?",
-  "message_server_version_latest_than_local": "Server's diary is newer than local version.",
+  "message_server_version_latest_than_local":
+      "Server's diary is newer than local version.",
   "message_upload_succeed": "Upload Succeed!",
   "message_tag_copied_to_clipboard": "Tag copied to Clipboard!",
   "message_received_friend_requests_size": "%s Requests",
   "message_sent_friend_requests_size": "%s Sent Requests",
   "message_enter_friend_tag": "Enter NickName#Tag",
-  "message_request_friend_info": "Add your friends to MagCloud and share your diaries!",
-  "message_friend_delete_confirm": "Are you sure to delete %s from your friends list?",
+  "message_request_friend_info":
+      "Add your friends to MagCloud and share your diaries!",
+  "message_friend_delete_confirm":
+      "Are you sure to delete %s from your friends list?",
   "message_update_needed": "Application update required",
-  "message_welcome_description": "Share your daily routiens with your friends!\n\nMagCloud will record your daily routines, help you to understand yourself better.",
+  "message_welcome_description":
+      "Share your daily routiens with your friends!\n\nMagCloud will record your daily routines, help you to understand yourself better.",
   "message_feed_is_empty": "Feed is Empty",
   "message_add_your_friend_to_feed": "Add friends or write your daily diary!",
 };

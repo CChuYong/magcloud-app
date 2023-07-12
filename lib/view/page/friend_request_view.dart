@@ -13,17 +13,16 @@ import '../../view_model/friend_request_view/friend_request_view_state.dart';
 import '../designsystem/base_color.dart';
 import '../designsystem/base_icon.dart';
 
-class FriendRequestView
-    extends BaseView<FriendRequestView, FriendRequestViewModel, FriendRequestViewState> {
+class FriendRequestView extends BaseView<FriendRequestView,
+    FriendRequestViewModel, FriendRequestViewState> {
   FriendRequestView({super.key});
+
   @override
   FriendRequestViewModel initViewModel() => FriendRequestViewModel();
 
-
-
   @override
-  Widget render(
-      BuildContext context, FriendRequestViewModel action, FriendRequestViewState state) {
+  Widget render(BuildContext context, FriendRequestViewModel action,
+      FriendRequestViewState state) {
     return Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       body: SafeArea(
@@ -40,8 +39,7 @@ class FriendRequestView
           ],
         ),
       ),
-    )
-      ;
+    );
   }
 
   Widget titleBar() {
@@ -55,7 +53,9 @@ class FriendRequestView
             child: SizedBox(
                 width: 47.sp,
                 height: 32.sp,
-                child: Align(alignment: Alignment.center, child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
           ),
           Text(message('generic_friend_requests'),
               style: TextStyle(
@@ -63,8 +63,12 @@ class FriendRequestView
                   fontSize: 16.sp,
                   fontFamily: 'Pretendard')),
           TouchableOpacity(
-            onTap: action.onTapFriendAddButton,
-            child: SizedBox(width: 32.sp, height: 32.sp, child: Icon(Icons.add, color: BaseColor.warmGray700, size: 22.sp)))
+              onTap: action.onTapFriendAddButton,
+              child: SizedBox(
+                  width: 32.sp,
+                  height: 32.sp,
+                  child: Icon(Icons.add,
+                      color: BaseColor.warmGray700, size: 22.sp)))
         ],
       ),
     );
@@ -89,7 +93,9 @@ class FriendRequestView
                     child: TextField(
                   controller: action.searchController,
                   focusNode: action.focusNode,
-                  onTapOutside: (e) { action.focusNode.unfocus(); },
+                  onTapOutside: (e) {
+                    action.focusNode.unfocus();
+                  },
                   style: TextStyle(
                     color: BaseColor.warmGray600,
                     fontSize: 15.sp,
@@ -109,7 +115,8 @@ class FriendRequestView
         ));
   }
 
-  Widget friendContainer(FriendRequestViewModel action, FriendRequestViewState state) {
+  Widget friendContainer(
+      FriendRequestViewModel action, FriendRequestViewState state) {
     final requests = state.getFilteredRequests();
     final sentRequests = state.getFilteredSentRequests();
     return Padding(
@@ -123,20 +130,8 @@ class FriendRequestView
                 child: CustomScrollView(reverse: false, slivers: [
                   SliverToBoxAdapter(
                       child: Text(
-                        message('message_received_friend_requests_size').format([state.requests.length]),
-                        style: TextStyle(
-                          color: BaseColor.warmGray500,
-                          fontSize: 12.sp,
-                        ),
-                      )),
-                  SliverToBoxAdapter(child: SizedBox(height: 14.sp)),
-                  SliverList(
-                      delegate: SliverChildListDelegate(
-                          requests.map((e) => receivedRequest(action, e)).toList())),
-                  SliverToBoxAdapter(child: SizedBox(height: 18.sp)),
-                  SliverToBoxAdapter(
-                      child: Text(
-                        message('message_sent_friend_requests_size').format([state.sentRequests.length]),
+                    message('message_received_friend_requests_size')
+                        .format([state.requests.length]),
                     style: TextStyle(
                       color: BaseColor.warmGray500,
                       fontSize: 12.sp,
@@ -144,8 +139,24 @@ class FriendRequestView
                   )),
                   SliverToBoxAdapter(child: SizedBox(height: 14.sp)),
                   SliverList(
-                      delegate: SliverChildListDelegate(
-                          sentRequests.map((e) => sentRequest(action, e)).toList())),
+                      delegate: SliverChildListDelegate(requests
+                          .map((e) => receivedRequest(action, e))
+                          .toList())),
+                  SliverToBoxAdapter(child: SizedBox(height: 18.sp)),
+                  SliverToBoxAdapter(
+                      child: Text(
+                    message('message_sent_friend_requests_size')
+                        .format([state.sentRequests.length]),
+                    style: TextStyle(
+                      color: BaseColor.warmGray500,
+                      fontSize: 12.sp,
+                    ),
+                  )),
+                  SliverToBoxAdapter(child: SizedBox(height: 14.sp)),
+                  SliverList(
+                      delegate: SliverChildListDelegate(sentRequests
+                          .map((e) => sentRequest(action, e))
+                          .toList())),
                 ]),
               ),
             ),
@@ -208,41 +219,41 @@ class FriendRequestView
                   children: [
                     TouchableOpacity(
                         onTap: () => action.onTapAcceptFriendRequest(friend),
-                            child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: BaseColor.green200),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 6.sp, horizontal: 7.sp),
-                              child: Text(
-                                message('generic_friend_accept'),
-                                style: TextStyle(
-                                  color: BaseColor.warmGray500,
-                                  fontSize: 12.sp,
-                                ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: BaseColor.green200),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 6.sp, horizontal: 7.sp),
+                            child: Text(
+                              message('generic_friend_accept'),
+                              style: TextStyle(
+                                color: BaseColor.warmGray500,
+                                fontSize: 12.sp,
                               ),
                             ),
-                          )),
+                          ),
+                        )),
                     SizedBox(width: 5.sp),
                     TouchableOpacity(
                         onTap: () => action.onTapDenyFriendRequest(friend),
                         child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: BaseColor.red300),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 6.sp, horizontal: 7.sp),
-                        child: Text(
-                          message('generic_friend_deny'),
-                          style: TextStyle(
-                            color: BaseColor.warmGray500,
-                            fontSize: 12.sp,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: BaseColor.red300),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 6.sp, horizontal: 7.sp),
+                            child: Text(
+                              message('generic_friend_deny'),
+                              style: TextStyle(
+                                color: BaseColor.warmGray500,
+                                fontSize: 12.sp,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ))
+                        ))
                   ],
                 ))
           ],
@@ -305,7 +316,7 @@ class FriendRequestView
                 child: Row(
                   children: [
                     TouchableOpacity(
-                      onTap: () => action.onTapCancelFriendRequest(friend),
+                        onTap: () => action.onTapCancelFriendRequest(friend),
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),

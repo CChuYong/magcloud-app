@@ -19,7 +19,7 @@ class DiaryRepository extends BaseRepository {
 
   @override
   Future<void> prepareTable() async {
-   // await database.execute('DROP TABLE $tableName');
+    // await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
@@ -47,8 +47,9 @@ class DiaryRepository extends BaseRepository {
 
   Future<List<Diary>> getDiaries(int year, int month) async {
     final ym = DateParser.formatYmd(year, month, 1).substring(0, 6);
-    final result = await database
-        .rawQuery('SELECT * FROM $tableName WHERE ymd LIKE ? ORDER BY ymd DESC', ['$ym%']);
+    final result = await database.rawQuery(
+        'SELECT * FROM $tableName WHERE ymd LIKE ? ORDER BY ymd DESC',
+        ['$ym%']);
     return result.map(readDiary).toList();
   }
 
@@ -100,6 +101,6 @@ class DiaryRepository extends BaseRepository {
         "ymd": DateParser.ymdSimpleFormat.format(diary.ymd),
         "hash": diary.hash,
         "diary_id": diary.diaryId,
-    "updated_at": diary.updatedAt,
+        "updated_at": diary.updatedAt,
       };
 }

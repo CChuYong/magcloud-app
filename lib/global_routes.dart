@@ -60,7 +60,7 @@ class GlobalRoute {
   }
 
   static Future<void> refresh() async {
-   // final currentRoute = Get.routing.route! as GetPageRoute;
+    // final currentRoute = Get.routing.route! as GetPageRoute;
 
     //Get.global(null).currentState!.pop();
     // Get.off(currentRoute.page!, preventDuplicates: false, transition: Transition.noTransition);
@@ -86,7 +86,8 @@ class GlobalRoute {
 
   static Future<void> friendProfileView(String userId) async {
     final user = await inject<OpenAPI>().getUserProfile(userId);
-    await rightToLeftRouteToDynamic(() => ProfileView(user.toDomain(), false, true));
+    await rightToLeftRouteToDynamic(
+        () => ProfileView(user.toDomain(), false, true));
   }
 
   static Future<void> noticePage() async {

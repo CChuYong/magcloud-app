@@ -26,13 +26,13 @@ class DiaryService {
 
   Future<bool> autoSync(int year, int month) async {
     print("AutoSync Diaries..");
-    if(!onlineService.isOnlineMode()) {
+    if (!onlineService.isOnlineMode()) {
       print("Rejected; not online.");
       return false;
     }
 
     final key = "$year-$month";
-    if(syncedSet.contains(key)) {
+    if (syncedSet.contains(key)) {
       print("Rejected; already synced..");
       return false;
     }
@@ -55,21 +55,24 @@ class DiaryService {
     await Future.forEach(serverIntegrityMap.entries, (element) async {
       final date = element.key;
       final serverDiary = element.value;
-      if(!localIntegrityMap.containsKey(date)) {
+      if (!localIntegrityMap.containsKey(date)) {
         //서버엔 있고 로컬엔 없음 => 불러와야함
-        final serverDiary = await openAPI.getDiaryByDate(DateParser.formatDateTime(date));
+        final serverDiary =
+            await openAPI.getDiaryByDate(DateParser.formatDateTime(date));
         await diaryRepository.saveDiary(serverDiary.toDomain());
         serverLoad++;
       } else {
         final localVersion = localIntegrityMap[date]!;
-        if(localVersion.hash != serverDiary.contentHash ||
+        if (localVersion.hash != serverDiary.contentHash ||
             localVersion.mood.toServerType() != serverDiary.emotion) {
-          if(localVersion.updatedAt > serverDiary.updatedAtTs) {
+          if (localVersion.updatedAt > serverDiary.updatedAtTs) {
             //그냥 알아서 덮어씌우면댐 ㅎ
-            final newDiary = await openAPI.updateDiary(serverDiary.diaryId, DiaryUpdateRequest(
-              content: localVersion.content,
-              emotion: localVersion.mood.toServerType(),
-            ));
+            final newDiary = await openAPI.updateDiary(
+                serverDiary.diaryId,
+                DiaryUpdateRequest(
+                  content: localVersion.content,
+                  emotion: localVersion.mood.toServerType(),
+                ));
             await diaryRepository.saveDiary(newDiary.toDomain());
             serverPatch++;
           } else {
@@ -83,7 +86,7 @@ class DiaryService {
     await Future.forEach(localIntegrityMap.entries, (element) async {
       final date = element.key;
       final localDiary = element.value;
-      if(!serverIntegrityMap.containsKey(date)) {
+      if (!serverIntegrityMap.containsKey(date)) {
         //로컬엔 있고 서버엔 없다 -> 저장!!
         final diaryRequest = DiaryRequest(
           content: localDiary.content,
@@ -96,23 +99,28 @@ class DiaryService {
       }
     });
 
-    print("AutoSync Diaries Completed. $serverLoad Loaded, $serverPatch Patched, $serverCreate Created");
+    print(
+        "AutoSync Diaries Completed. $serverLoad Loaded, $serverPatch Patched, $serverCreate Created");
     return serverLoad > 0 || serverPatch > 0 || serverCreate > 0;
   }
 
-  Future<Diary> getDiary(int year, int month, int day, bool integrityCheck) async {
+  Future<Diary> getDiary(
+      int year, int month, int day, bool integrityCheck) async {
     final localDiary = await diaryRepository.findDiary(year, month, day);
     final today = DateTime(year, month, day);
-    if(localDiary != null && onlineService.isOnlineMode()) {
-      if(localDiary.diaryId != null){ //서버가 갖고있는 경우에
+    if (localDiary != null && onlineService.isOnlineMode()) {
+      if (localDiary.diaryId != null) {
+        //서버가 갖고있는 경우에
         final integrity = await openAPI.getDiaryIntegrity(localDiary.diaryId!);
-        if(integrity.contentHash != localDiary.hash || integrity.emotion != localDiary.mood.toServerType()) {
-          if(integrity.updatedAtTs > localDiary.updatedAt) {
+        if (integrity.contentHash != localDiary.hash ||
+            integrity.emotion != localDiary.mood.toServerType()) {
+          if (integrity.updatedAtTs > localDiary.updatedAt) {
             //머야 왜 서버가 더 최신임? ㄷㄷ
-            if(!integrityCheck) return localDiary;
-            final keepLocal = await keepLocalDialog(localDiary.updatedAt, integrity.updatedAtTs);
-            if(keepLocal == null) throw Exception();
-            if(!keepLocal) {
+            if (!integrityCheck) return localDiary;
+            final keepLocal = await keepLocalDialog(
+                localDiary.updatedAt, integrity.updatedAtTs);
+            if (keepLocal == null) throw Exception();
+            if (!keepLocal) {
               final serverDiaryDto = await openAPI.getDiary(integrity.diaryId);
               final serverDiary = serverDiaryDto.toDomain();
               await diaryRepository.saveDiary(serverDiary);
@@ -125,19 +133,21 @@ class DiaryService {
     return localDiary ?? Diary.create(ymd: today);
   }
 
-  Future<Diary?> createDiaryOnServer(DateTime ymd, Mood mood, String content) async {
-    try{
-      final result = await openAPI.createDiary(DiaryRequest(date: DateParser.formatDateTime(ymd), emotion: mood.toServerType(), content: content));
+  Future<Diary?> createDiaryOnServer(
+      DateTime ymd, Mood mood, String content) async {
+    try {
+      final result = await openAPI.createDiary(DiaryRequest(
+          date: DateParser.formatDateTime(ymd),
+          emotion: mood.toServerType(),
+          content: content));
       return result.toDomain();
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
   Future<Diary> updateDiary(
-      Diary currentDiary,
-      Mood newMood,
-      String content) async {
+      Diary currentDiary, Mood newMood, String content) async {
     if (content.isEmpty) return currentDiary;
     final hashedContent = HashUtil.hashContent(content);
     if (hashedContent == currentDiary.hash && newMood == currentDiary.mood) {
@@ -148,18 +158,23 @@ class DiaryService {
 
     if (isOnline) {
       //SAVE TO SERVER;
-      if(diaryId == null) {
+      if (diaryId == null) {
         //FIRST SAVE
-        final newSavedDiary = await createDiaryOnServer(currentDiary.ymd, newMood, content);
+        final newSavedDiary =
+            await createDiaryOnServer(currentDiary.ymd, newMood, content);
         print(newSavedDiary?.diaryId);
         diaryId = newSavedDiary?.diaryId;
       } else {
         //PATCH
-        await openAPI.updateDiary(diaryId, DiaryUpdateRequest(emotion: newMood.toServerType(), content: content));
+        await openAPI.updateDiary(
+            diaryId,
+            DiaryUpdateRequest(
+                emotion: newMood.toServerType(), content: content));
       }
     } else {
       //SAVE TO UNSAVED LOCAL REPO
-      SnackBarUtil.infoSnackBar(message: message('message_diary_saved_offline'));
+      SnackBarUtil.infoSnackBar(
+          message: message('message_diary_saved_offline'));
     }
     final newDiary = Diary(
       mood: newMood,

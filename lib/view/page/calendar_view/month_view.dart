@@ -84,10 +84,9 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
               child: Text(
                 DateParser.formatLocaleYm(state.currentDate),
                 style: TextStyle(
-                  color: BaseColor.warmGray600,
-                  fontSize: 16.sp,
-                    fontFamily: 'GmarketSans'
-                ),
+                    color: BaseColor.warmGray600,
+                    fontSize: 16.sp,
+                    fontFamily: 'GmarketSans'),
               )),
           Row(
             children: [
@@ -143,10 +142,10 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
             child: Text(
               day.abs().toString(),
               style: TextStyle(
-                color: day > 0 ? BaseColor.warmGray500 : BaseColor.warmGray300,
-                fontSize: 18.sp,
-                fontFamily: 'GmarketSans'
-              ),
+                  color:
+                      day > 0 ? BaseColor.warmGray500 : BaseColor.warmGray300,
+                  fontSize: 18.sp,
+                  fontFamily: 'GmarketSans'),
             ),
           ),
         ));
@@ -159,58 +158,51 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
         Text(
           message("generic_simple_sunday"),
           style: TextStyle(
-            color: BaseColor.red400,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.red400,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_monday"),
           style: TextStyle(
-            color: BaseColor.warmGray600,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.warmGray600,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_tuesday"),
           style: TextStyle(
-            color: BaseColor.warmGray600,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.warmGray600,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_wednesday"),
           style: TextStyle(
-            color: BaseColor.warmGray600,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.warmGray600,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_thursday"),
           style: TextStyle(
-            color: BaseColor.warmGray600,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.warmGray600,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_friday"),
           style: TextStyle(
-            color: BaseColor.warmGray600,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.warmGray600,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_saturday"),
           style: TextStyle(
-            color: BaseColor.green400,
-            fontSize: dayOfWeekFontSize,
-              fontFamily: 'GmarketSans'
-          ),
+              color: BaseColor.green400,
+              fontSize: dayOfWeekFontSize,
+              fontFamily: 'GmarketSans'),
         ),
       ],
     );

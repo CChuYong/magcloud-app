@@ -16,8 +16,7 @@ class CalendarBaseViewState {
   User? selectedUser;
   List<DailyUser> dailyFriends = List.empty();
 
-  CalendarBaseViewState(
-      this.currentDate, this.scope) {
+  CalendarBaseViewState(this.currentDate, this.scope) {
     switch (scope) {
       case CalendarViewScope.MONTH:
         scopeData = CalendarMonthViewScopeData.mock();
@@ -36,12 +35,13 @@ class CalendarBaseViewState {
     //안쪽 리스트 -> 일
     final weekList =
         List.generate(6, (index) => List.generate(7, (index) => -1));
-    final lastDay = DateParser.getLastDayOfMonth(currentDate.year, currentDate.month);
+    final lastDay =
+        DateParser.getLastDayOfMonth(currentDate.year, currentDate.month);
     final now = DateTime.now();
     var currentWeekPointer = 0;
 
-    final monthlyFirstDayOfWeek =
-        DateParser.getFirstDayOfWeekOfMonth(currentDate.year, currentDate.month);
+    final monthlyFirstDayOfWeek = DateParser.getFirstDayOfWeekOfMonth(
+        currentDate.year, currentDate.month);
     var currentDayOfWeek =
         monthlyFirstDayOfWeek == 7 ? 1 : monthlyFirstDayOfWeek + 1;
     for (int day = 1; day <= lastDay; day++) {

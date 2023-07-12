@@ -34,5 +34,10 @@ class DailyUserResponse {
 
   Map<String, dynamic> toJson() => _$DailyUserResponseToJson(this);
 
-  DailyUser toDomain() => DailyUser(userId: userId, name: name, nameTag: nameTag, profileImageUrl: profileImageUrl, mood: Mood.parseMood(emotion));
+  DailyUser toDomain() => DailyUser(
+      userId: userId,
+      name: name,
+      nameTag: nameTag,
+      profileImageUrl: profileImageUrl,
+      mood: Mood.parseMood(emotion));
 }

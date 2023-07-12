@@ -20,7 +20,7 @@ class LoginViewModel
     await asyncLoading(() async {
       loginResult = await authService.signInWithApple();
     });
-    if(loginResult == AuthResult.SUCCEED){
+    if (loginResult == AuthResult.SUCCEED) {
       GlobalRoute.goMain();
     }
   }
@@ -30,7 +30,7 @@ class LoginViewModel
     await asyncLoading(() async {
       loginResult = await authService.signInWithGoogle();
     });
-    if(loginResult == AuthResult.SUCCEED){
+    if (loginResult == AuthResult.SUCCEED) {
       GlobalRoute.goMain();
     }
   }

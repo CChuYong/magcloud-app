@@ -22,6 +22,7 @@ class FeedViewModel
   final AuthService authService = inject<AuthService>();
 
   FeedViewModel(this.navigator) : super(FeedViewState()) {
+    navigator.onTapSelf = onTapNavigatorSelf;
     scrollController.addListener(() {
       final current = scrollController.position.pixels;
       final max = scrollController.position.maxScrollExtent;
@@ -31,7 +32,9 @@ class FeedViewModel
               ScrollDirection.reverse) {
         if (current / max * 100 > 50) {
           scrollDebouncer.runLastCall(() {
-            loadForward();
+            setStateAsync(() async {
+              await loadForward();
+            });
           });
         }
       }
@@ -41,7 +44,7 @@ class FeedViewModel
   bool isMe(String userId) => authService.initialUser?.userId == userId;
 
   final ScrollController scrollController = ScrollController();
-  final Debouncer scrollDebouncer = Debouncer(Duration(milliseconds: 500));
+  final Debouncer scrollDebouncer = Debouncer(Duration(milliseconds: 450));
 
   @override
   Future<void> initState() async {
@@ -57,6 +60,11 @@ class FeedViewModel
     final user = await inject<OpenAPI>().getUserProfile(details.userId);
     CalendarBaseViewModel.nextNavigateDiary = NavigateDetail(user.toDomain(), details.ymd);
     navigator.onTap(1);
+  }
+
+  void onTapNavigatorSelf() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   Future<void> loadForward() async {

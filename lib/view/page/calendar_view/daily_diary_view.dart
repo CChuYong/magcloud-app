@@ -70,6 +70,10 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                             maxLines: null,
                             decoration: InputDecoration(
                               border: InputBorder.none,
+                              hintText: scopeData.isMyScope ? message('message_tap_here_to_diary') : message('message_diary_is_empty'),
+                              hintStyle: TextStyle(
+                                color: BaseColor.warmGray400
+                              )
                             ),
                           )),
                     ))
@@ -107,17 +111,6 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
             ],
           )
-
-          // Row(
-          //   children: [
-          //     TouchableOpacity(
-          //         onTap: () => action.changeDay(-1),
-          //         child: const Icon(BaseIcon.arrowLeft)),
-          //     TouchableOpacity(
-          //         onTap: () => action.changeDay(1),
-          //         child: const Icon(BaseIcon.arrowRight)),
-          //   ],
-          // )
         ],
       ),
     );
@@ -126,7 +119,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
   Widget dailyDiaryMoodBox(
       CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
     return TouchableOpacity(
-        onTap: action.onTapChangeMood,
+        onTap: data.isMyScope ? action.onTapChangeMood : null,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.sp, vertical: 0.sp),
           child: Container(

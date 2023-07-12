@@ -433,7 +433,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   Future<void> onTapDayBox(int day) async {
     final now = DateTime.now();
     final target = DateTime(
-        state.currentDate.year, state.currentDate.month, state.currentDate.day);
+        state.currentDate.year, state.currentDate.month, day);
     if (target.isAfter(now)) {
       snackNoFuture();
       return;

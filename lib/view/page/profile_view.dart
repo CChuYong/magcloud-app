@@ -75,10 +75,18 @@ class ProfileView
                                   style: TextStyle(
                                       color: BaseColor.warmGray700,
                                       fontSize: 20.sp)),
-                              Text(state.user.nameTag,
-                                  style: TextStyle(
-                                      color: BaseColor.warmGray500,
-                                      fontSize: 14.sp)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(state.user.nameTag,
+                                      style: TextStyle(
+                                          color: BaseColor.warmGray500,
+                                          fontSize: 14.sp)),
+                                  SizedBox(width: 3.sp),
+                                  TouchableOpacity(onTap: () =>
+                                      action.copyTags(state.user.nameTag), child:   Icon(Icons.copy, size: 14.sp,  color: BaseColor.warmGray500)),
+                                ],
+                              ),
                               SizedBox(height: 16.sp),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,9 +106,13 @@ class ProfileView
                                               () => action
                                                   .deleteFriend(state.user))),
                                   SizedBox(width: 10.sp),
+                                  isMe ? button(
+                                      message('generic_change_nickname'),
+                                      () =>
+                                          action.changeNickname()):
                                   button(
                                       message('generic_copy_tags'),
-                                      () =>
+                                          () =>
                                           action.copyTags(state.user.nameTag)),
                                 ],
                               ),

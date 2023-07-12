@@ -104,8 +104,10 @@ final map = {
   "generic_friend_accept": "수락",
   "generic_friend_deny": "거절",
   "generic_friend_cancel": "취소",
+  "generic_change_nickname": "닉네임 변경하기",
   "generic_send_friend_request": "친구 요청 보내기",
   "generic_created_before": "%s 전 생성됨",
+  "message_tap_here_to_diary": "여기를 눌러서 일기를 작성해보세요!",
   "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
   "message_cannot_move_to_future": "미래의 일기는 볼 수 없어요",
@@ -141,7 +143,13 @@ final map = {
   "message_welcome_description":
       "매지구름과 여러분의 일상을 기록하고,\n친구와 공유해보세요!\n\n매지구름이 여러분의 일상을 기록하고 여러분 스스로를 이해하는데 도움을 줄거에요.",
   "message_feed_is_empty": "피드가 비어있어요",
+  "message_diary_is_empty": "일기가 비어있어요",
   "message_add_your_friend_to_feed": "친구를 추가하거나 오늘의 일기를 작성해보세요!",
+  "message_enter_new_nickname": "새 닉네임을 입력해주세요",
+  "message_nickname_change_info": "매지구름 내에서 보여질 닉네임을 변경하실 수 있어요",
+  "message_nickname_should_not_empty": "닉네임은 비어있을 수 없어요",
+  "message_nickname_cannot_be_same": "닉네임은 이전과 같을 수 없어요",
+  "message_nickname_changed": "닉네임이 변경되었어요!",
 };
 
 final engMap = {
@@ -237,8 +245,10 @@ final engMap = {
   "generic_friend_accept": "Accept",
   "generic_friend_deny": "Deny",
   "generic_friend_cancel": "Cancel",
+  "generic_change_nickname": "Change Nickname",
   "generic_send_friend_request": "Send Request",
   "generic_created_before": "Created %s ago...",
+  "message_tap_here_to_diary": "Tab here to write a diary!",
   "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
   "message_cannot_move_to_future": "You cannot travel to future!",
@@ -280,7 +290,13 @@ final engMap = {
   "message_welcome_description":
       "Share your daily routiens with your friends!\n\nMagCloud will record your daily routines, help you to understand yourself better.",
   "message_feed_is_empty": "Feed is Empty",
+  "message_diary_is_empty": "Diary is Empty",
   "message_add_your_friend_to_feed": "Add friends or write your daily diary!",
+  "message_enter_new_nickname": "Enter new nickname",
+  "message_nickname_change_info": "You can change your nickname to use in MagCloud",
+  "message_nickname_should_not_empty": "Nickname should not be empty",
+  "message_nickname_cannot_be_same": "Nickname cannot be same",
+  "message_nickname_changed": "Nickname changed!",
 };
 
 String message(String key) {

@@ -42,7 +42,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
           // Divider(),
           state.feeds.isEmpty
               ? Expanded(child: emptyFeedBox(height - 160.sp))
-              : Expanded(child: feedBox(action))
+              : Expanded(child: feedBox(action, context))
         ],
       ),
     );
@@ -75,7 +75,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
         ));
   }
 
-  Widget feedBox(FeedViewModel action) {
+  Widget feedBox(FeedViewModel action, BuildContext context) {
     return Column(
       children: [
         Expanded(

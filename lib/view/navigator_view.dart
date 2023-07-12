@@ -14,6 +14,7 @@ import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
 import 'page/calendar_view/calendar_base_view.dart';
 import 'page/friend_view.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
 import 'page/more_view.dart';
 
 class NavigatorView extends StatefulWidget {
@@ -46,6 +47,7 @@ class NavigatorViewState extends State<NavigatorView> {
   bool forwardAction = false;
   bool animationStart = false;
   final Duration navigateDuration = const Duration(milliseconds: 80);
+  void Function()? onTapSelf;
 
   @override
   void initState() {
@@ -90,7 +92,10 @@ class NavigatorViewState extends State<NavigatorView> {
   }
 
   void onTap(int number) {
-    if (currentPage == number) return;
+    if (currentPage == number) {
+      onTapSelf?.call();
+      return;
+    }
     animationStart = true;
     forwardAction = currentPage < number;
     setState(() {
@@ -108,7 +113,9 @@ class NavigatorViewState extends State<NavigatorView> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: BaseColor.warmGray100,
     ));
-    return Scaffold(
+    return ScrollsToTop(
+      onScrollsToTop: (e) async => onTapSelf?.call(),
+      child: Scaffold(
       backgroundColor: BaseColor.defaultBackgroundColor,
       bottomNavigationBar:
           BaseNavigationBar(onTap: onTap, currentPage: currentPage),
@@ -128,6 +135,6 @@ class NavigatorViewState extends State<NavigatorView> {
         },
         child: getCurrentPage(),
       ),
-    );
+    ));
   }
 }

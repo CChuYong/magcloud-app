@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:magcloud_app/core/api/dto/friend/friend_accept_request.dart';
 import 'package:magcloud_app/core/api/dto/profile_image_update_request.dart';
+import 'package:magcloud_app/core/api/dto/user_nickname_request.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/image_picker.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -15,6 +17,7 @@ import 'package:magcloud_app/view_model/profile_view/profile_view_state.dart';
 import '../../core/api/dto/friend/friend_request.dart';
 import '../../core/model/user.dart';
 import '../../core/service/online_service.dart';
+import '../../view/dialog/user_nickname_dialog.dart';
 
 class ProfileViewModel
     extends BaseViewModel<ProfileView, ProfileViewModel, ProfileViewState> {
@@ -50,6 +53,25 @@ class ProfileViewModel
     await Clipboard.setData(ClipboardData(text: tag));
     SnackBarUtil.infoSnackBar(
         message: message('message_tag_copied_to_clipboard'));
+  }
+
+  void changeNickname() async {
+    final newName = await userNicknameDialog();
+    if(newName.isEmpty) {
+      SnackBarUtil.infoSnackBar(message: message('message_nickname_should_not_empty'));
+      return;
+    }
+    final authService = inject<AuthService>();
+    if(newName == authService.initialUser?.name){
+      SnackBarUtil.infoSnackBar(message: message('message_nickname_should_not_same'));
+      return;
+    }
+    final newUser = await inject<OpenAPI>().updateNickname(UserNickNameRequest(name: newName));
+    authService.initialUser = newUser.toDomain();
+    setState(() {
+      state.user = newUser.toDomain();
+      SnackBarUtil.infoSnackBar(message: message('message_nickname_changed'));
+    });
   }
 
   Future<void> updateProfileImage() async {

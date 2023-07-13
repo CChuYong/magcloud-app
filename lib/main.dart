@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -18,29 +21,29 @@ const magCloudAppKey = "26d05985-803c-41ad-96ed-65d0f9c84922";
 const apiBaseUrl =
     "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting('ko_KR', null);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await StateStore.init();
-  await initializeDependencies();
-  await SentryFlutter.init((options) {
-    options.dsn =
-        'https://724c12ade3184f1b8b893601aca9c9f0@o4505511010893824.ingest.sentry.io/4505511011680256';
-  },
-      appRunner: () => runApp(ScreenUtilInit(
-          builder: (context, widget) => GetMaterialApp(
-                // home: const MyApp(),
-                theme: ThemeData(
-                  fontFamily: 'Pretendard',
-                  colorScheme: ColorScheme.fromSeed(
-                      seedColor: BaseColor.defaultBackgroundColor),
-                  useMaterial3: true,
-                ),
-                home: inject<AuthService>().isAuthenticated()
-                    ? NavigatorView()
-                    : LoginView(),
-                navigatorObservers: [GlobalRoute.observer],
-              ))));
+  await runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await initializeDateFormatting('ko_KR', null);
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    await StateStore.init();
+    await initializeDependencies();
+
+    runApp(ScreenUtilInit(
+        builder: (context, widget) => GetMaterialApp(
+          // home: const MyApp(),
+          theme: ThemeData(
+            fontFamily: 'Pretendard',
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: BaseColor.defaultBackgroundColor),
+            useMaterial3: true,
+          ),
+          home: inject<AuthService>().isAuthenticated()
+              ? NavigatorView()
+              : LoginView(),
+          navigatorObservers: [GlobalRoute.observer],
+        )));
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }

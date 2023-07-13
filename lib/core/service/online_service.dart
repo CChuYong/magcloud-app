@@ -7,13 +7,13 @@ import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
 
 class OnlineService {
-  final OpenAPI openAPI = inject<OpenAPI>();
+  final OpenAPI openAPI;
   bool? _online;
   late Timer timer;
 
   int offlineCount = 0;
 
-  OnlineService() {
+  OnlineService({required this.openAPI}) {
     timer = Timer.periodic(const Duration(seconds: 15), healthCheck);
   }
 

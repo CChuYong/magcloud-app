@@ -19,10 +19,12 @@ import '../model/user.dart';
 class AuthService {
   AuthToken? token;
   final OpenAPI openApi;
+  final NotificationService notificationService;
+
   User? initialUser;
   bool isNewUser = false;
 
-  AuthService(this.openApi);
+  AuthService({required this.openApi, required this.notificationService});
 
   bool isAuthenticated() => token != null;
 

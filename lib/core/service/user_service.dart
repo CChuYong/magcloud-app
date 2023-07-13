@@ -8,34 +8,18 @@ import '../api/open_api.dart';
 import '../model/daily_user.dart';
 
 class UserService {
-  final OnlineService onlineService = inject<OnlineService>();
-  final OpenAPI openAPI = inject<OpenAPI>();
+  final OnlineService onlineService ;
+  final OpenAPI openAPI;
+
+  UserService({required this.onlineService, required this.openAPI});
 
   Future<List<Friend>> getFriends() async {
-    final temp = List<Friend>.empty(growable: true);
-    temp.add(Friend(
-      userId: 'ujs',
-      name: '엄준식',
-      nameTag: '엄준식#1234',
-      isDiaryShared: false,
-      profileImageUrl:
-          "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
-    ));
-    temp.add(Friend(
-      userId: 'gjh',
-      name: '공지훈',
-      nameTag: '공지훈#1234',
-      isDiaryShared: true,
-      profileImageUrl:
-          "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
-    ));
-
     if (onlineService.isOnlineMode()) {
       //TRY REFRESH ONLINE
       return (await openAPI.getFriends()).map((e) => e.toDomain()).toList();
     }
 
-    return temp;
+    return List.empty();
   }
 
   Future<List<User>> getFriendRequests() async {
@@ -44,12 +28,6 @@ class UserService {
   }
 
   Future<List<User>> getSentFriendRequests() async {
-    // final temp = List<Friend>.empty(growable: true);
-    // temp.add(Friend(
-    //   userId: 'ujs', name: '엄준식', nameTag: '엄준식#1234', isDiaryShared: false, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
-    // temp.add(Friend(
-    //   userId: 'gjh', name: '공지훈', nameTag: '공지훈#1234', isDiaryShared: true, profileImageUrl: "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",));
-    // return temp;
     final sentRequests = await openAPI.getSentFriendRequests();
     return sentRequests.map((e) => e.toDomain()).toList();
   }

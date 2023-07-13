@@ -16,7 +16,7 @@ import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/dialog/integrity_violation_dialog.dart';
 
 class DiaryService {
-  DiaryService(this.onlineService, this.diaryRepository);
+  DiaryService({required this.onlineService, required this.diaryRepository});
 
   final OnlineService onlineService;
   final DiaryRepository diaryRepository;
@@ -72,6 +72,7 @@ class DiaryService {
                 DiaryUpdateRequest(
                   content: localVersion.content,
                   emotion: localVersion.mood.toServerType(),
+                  imageUrl: localVersion.imageUrl,
                 ));
             await diaryRepository.saveDiary(newDiary.toDomain());
             serverPatch++;
@@ -91,6 +92,7 @@ class DiaryService {
         final diaryRequest = DiaryRequest(
           content: localDiary.content,
           emotion: localDiary.mood.toServerType(),
+          imageUrl: localDiary.imageUrl,
           date: DateParser.formatDateTime(date),
         );
         final newDiary = await openAPI.createDiary(diaryRequest);
@@ -145,12 +147,14 @@ class DiaryService {
   }
 
   Future<Diary?> createDiaryOnServer(
-      DateTime ymd, Mood mood, String content) async {
+      DateTime ymd, Mood mood, String content, String? imageUrl) async {
     try {
       final result = await openAPI.createDiary(DiaryRequest(
           date: DateParser.formatDateTime(ymd),
           emotion: mood.toServerType(),
-          content: content));
+          content: content,
+        imageUrl: imageUrl,
+      ));
       return result.toDomain();
     } catch (e) {
       return null;
@@ -158,10 +162,14 @@ class DiaryService {
   }
 
   Future<Diary> updateDiary(
-      Diary currentDiary, Mood newMood, String content) async {
+      Diary currentDiary,
+      Mood newMood,
+      String content,
+      String? imageUrl,
+      ) async {
     if (content.isEmpty) return currentDiary;
     final hashedContent = HashUtil.hashContent(content);
-    if (hashedContent == currentDiary.hash && newMood == currentDiary.mood) {
+    if (hashedContent == currentDiary.hash && newMood == currentDiary.mood && currentDiary.imageUrl == imageUrl) {
       return currentDiary;
     }
     final isOnline = onlineService.isOnlineMode();
@@ -174,11 +182,11 @@ class DiaryService {
         final previousDiary = await getDiaryOnServer(currentDiary.ymd);
         if (previousDiary == null) {
           //FIRST SAVE
-          final newSavedDiary = await createDiaryOnServer(currentDiary.ymd, newMood, content);
+          final newSavedDiary = await createDiaryOnServer(currentDiary.ymd, newMood, content, imageUrl);
           diaryId = newSavedDiary?.diaryId;
         } else {
           //PATCH
-          await openAPI.updateDiary(previousDiary.diaryId!, DiaryUpdateRequest(emotion: newMood.toServerType(), content: content));
+          await openAPI.updateDiary(previousDiary.diaryId!, DiaryUpdateRequest(emotion: newMood.toServerType(), content: content, imageUrl: imageUrl));
         }
       } else {
         //SAVE TO UNSAVED LOCAL REPO
@@ -192,6 +200,7 @@ class DiaryService {
         ymd: currentDiary.ymd,
         hash: hashedContent,
         diaryId: diaryId,
+        imageUrl: imageUrl,
         updatedAt: DateParser.nowAtMillis(),
       );
       await diaryRepository.saveDiary(newDiary);

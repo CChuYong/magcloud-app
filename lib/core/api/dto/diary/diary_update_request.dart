@@ -10,9 +10,13 @@ class DiaryUpdateRequest {
   @JsonKey(name: 'content')
   String content;
 
+  @JsonKey(name: 'imageUrl')
+  String? imageUrl;
+
   DiaryUpdateRequest({
     required this.emotion,
     required this.content,
+    required this.imageUrl,
   });
 
   factory DiaryUpdateRequest.fromJson(Map<String, dynamic> json) =>

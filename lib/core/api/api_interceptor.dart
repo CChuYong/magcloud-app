@@ -21,7 +21,7 @@ class ApiInterceptor extends Interceptor {
   final Dio dio;
   final PackageInfo packageInfo;
 
-  ApiInterceptor(this.authService, this.dio, this.packageInfo);
+  ApiInterceptor({required this.authService, required this.dio, required this.packageInfo});
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

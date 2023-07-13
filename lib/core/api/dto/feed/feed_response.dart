@@ -21,6 +21,12 @@ class FeedResponse {
   final String ymd;
   @JsonKey(name: 'content')
   final String content;
+  @JsonKey(name: "isLiked")
+  final bool isLiked;
+  @JsonKey(name: "likeCount")
+  final int likeCount;
+  @JsonKey(name: "imageUrl")
+  final String? imageUrl;
   @JsonKey(name: 'createdAtTs')
   final int createdAtTs;
 
@@ -32,7 +38,10 @@ class FeedResponse {
     required this.mood,
     required this.ymd,
     required this.content,
+    required this.isLiked,
+    required this.likeCount,
     required this.createdAtTs,
+    required this.imageUrl,
   });
 
   factory FeedResponse.fromJson(Map<String, dynamic> json) =>
@@ -48,6 +57,9 @@ class FeedResponse {
         mood: Mood.parseMood(mood),
         ymd: DateTime.parse(ymd),
         content: content,
+        imageUrl: imageUrl,
+        likeCount: likeCount,
+        isLiked: isLiked,
         createdAt: createdAtTs,
       );
 }

@@ -1,7 +1,7 @@
 name: magcloud_app
 description: Your daily heart-listener, MagCloud
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.0.1+20230713001
+version: 0.0.1+20230713002
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -37,6 +37,7 @@ dependencies:
   launch_review: ^3.0.1
   sentry_flutter: ^7.8.0
   scrolls_to_top: ^2.1.0
+  firebase_crashlytics: ^3.3.3
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"

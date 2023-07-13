@@ -16,31 +16,41 @@ import 'core/service/user_service.dart';
 final inject = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  // 내 영역 밖의 디펜던시
   final packageInfo = await PackageInfo.fromPlatform();
   inject.registerSingleton(packageInfo);
 
-  final notificationService = NotificationService();
-  inject.registerSingleton(notificationService);
-  await notificationService.initializeNotification();
-
   final dio = Dio(BaseOptions(baseUrl: apiBaseUrl));
-  //final dio = Dio(BaseOptions(baseUrl: 'https://magcloud.chuyong.kr/api'));
   inject.registerSingleton(dio);
+
   final client = OpenAPI(dio);
   inject.registerSingleton(client);
 
-  final authService = AuthService(client);
+  // 여기부터 내꺼
+  final notificationService = NotificationService();
+  inject.registerSingleton(notificationService);
+
+  final authService = AuthService(openApi: client, notificationService: notificationService);
   inject.registerSingleton(authService);
 
-  dio.interceptors.add(ApiInterceptor(authService, dio, packageInfo));
-
-  await authService.initialize();
+  dio.interceptors.add(ApiInterceptor(authService: authService, dio: dio, packageInfo: packageInfo));
 
   final diary = await DiaryRepository.create();
   inject.registerSingleton(diary);
-  final onlineService = OnlineService();
+
+  final onlineService = OnlineService(openAPI: client);
   inject.registerSingleton(onlineService);
-  inject.registerSingleton(DiaryService(onlineService, diary));
-  inject.registerSingleton(FriendDiaryService(onlineService));
-  inject.registerSingleton(UserService());
+
+  final diaryService = DiaryService(onlineService: onlineService, diaryRepository: diary);
+  inject.registerSingleton(diaryService);
+
+  final friendDiaryService = FriendDiaryService(onlineService: onlineService, openAPI: client);
+  inject.registerSingleton(friendDiaryService);
+
+  final userService = UserService(onlineService: onlineService, openAPI: client);
+  inject.registerSingleton(userService);
+
+
+  await notificationService.initializeNotification();
+  await authService.initialize();
 }

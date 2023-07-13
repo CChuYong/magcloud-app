@@ -16,10 +16,11 @@ import 'package:magcloud_app/view/dialog/mood_change_dialog.dart';
 import 'package:magcloud_app/view/page/calendar_view/month_view.dart';
 import 'package:magcloud_app/view/page/calendar_view/year_view.dart';
 import 'package:magcloud_app/view_model/calendar_view/calendar_scope_data_state.dart';
-
+import 'package:dio/dio.dart';
 import '../../core/model/diary.dart';
 import '../../core/model/navigate_detail.dart';
 import '../../core/util/debouncer.dart';
+import '../../core/util/image_picker.dart';
 import '../../view/page/calendar_view/calendar_base_view.dart';
 import '../../view/page/calendar_view/daily_diary_view.dart';
 import 'calendar_base_view_state.dart';
@@ -135,7 +136,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       if (scopeData.isMyScope) {
         final lastDiary = scopeData.currentDiary;
         await diaryService.updateDiary(lastDiary, scopeData.currentMood,
-            scopeData.diaryTextController.text);
+            scopeData.diaryTextController.text, scopeData.imageUrl);
       }
     }
     try {
@@ -152,6 +153,30 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     } catch (e) {
       state.scope = previousScope;
     }
+  }
+
+  Future<void> uploadImage() async {
+    final scopeData = state.scopeData as CalendarDailyViewScopeData;
+    if (!inject<OnlineService>().isOnlineMode()) {
+      SnackBarUtil.errorSnackBar(
+          message: message('message_offline_cannot_use_that'));
+      return;
+    }
+    final image = await ImagePickerUtil.pickImage();
+    await asyncLoading(() async {
+      final openAPI = inject<OpenAPI>();
+      if (image == null) return;
+      final imageRequest = await openAPI.getImageRequest();
+      await inject<Dio>().request(imageRequest.uploadUrl,
+          data: image.bytes,
+          options: Options(
+              method: 'PUT', headers: {'Content-Type': image.mimeType}));
+
+      SnackBarUtil.infoSnackBar(message: message('message_upload_succeed'));
+      await setStateAsync(() async {
+        scopeData.imageUrl = imageRequest.downloadUrl;
+      });
+    });
   }
 
   Future<void> applyWithMyScope(CalendarViewScope scope) async {
@@ -255,7 +280,7 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       saveDebouncer.runLastCall(() async {
         final lastDiary = scopeData.currentDiary;
         await diaryService.updateDiary(lastDiary, scopeData.currentMood,
-            scopeData.diaryTextController.text);
+            scopeData.diaryTextController.text, scopeData.imageUrl);
       });
     }
   }

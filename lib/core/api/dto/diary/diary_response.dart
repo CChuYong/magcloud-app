@@ -20,6 +20,9 @@ class DiaryResponse {
   @JsonKey(name: 'emotion')
   String emotion;
 
+  @JsonKey(name: 'imageUrl')
+  String? imageUrl;
+
   @JsonKey(name: 'content')
   String content;
 
@@ -37,6 +40,7 @@ class DiaryResponse {
     required this.userId,
     required this.date,
     required this.emotion,
+    required this.imageUrl,
     required this.content,
     required this.contentHash,
     required this.updatedAtTs,
@@ -54,5 +58,6 @@ class DiaryResponse {
       content: content,
       ymd: DateParser.parseYmd(date),
       hash: contentHash,
+      imageUrl: imageUrl,
       updatedAt: updatedAtTs);
 }

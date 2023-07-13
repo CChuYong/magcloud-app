@@ -10,10 +10,12 @@ DiaryUpdateRequest _$DiaryUpdateRequestFromJson(Map<String, dynamic> json) =>
     DiaryUpdateRequest(
       emotion: json['emotion'] as String,
       content: json['content'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$DiaryUpdateRequestToJson(DiaryUpdateRequest instance) =>
     <String, dynamic>{
       'emotion': instance.emotion,
       'content': instance.content,
+      'imageUrl': instance.imageUrl,
     };

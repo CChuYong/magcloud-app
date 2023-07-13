@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
@@ -76,6 +77,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
   }
 
   Widget feedBox(FeedViewModel action, BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Expanded(
@@ -89,7 +91,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                 slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => feed(action, e))
+                          .map((e) => feed(action, e, width))
                           .toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                 ]),
@@ -164,7 +166,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
     );
   }
 
-  Widget feed(FeedViewModel action, FeedElement element) {
+  Widget feed(FeedViewModel action, FeedElement element, double width) {
     final divider = Divider(color: BaseColor.warmGray200, thickness: 1.sp);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,9 +211,9 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                   ],
                 ),
                 TouchableOpacity(
-                    onTap: () => action.onTapNavigateToDetail(element),
+                    onTap: element.isLiked ? () => action.onTapUnlike(element) : () => action.onTapLike(element),
                     child: Container(
-                      width: 24.sp,
+                    //  width: 33.sp,
                       height: 33.sp,
                       //color: Colors.blueAccent,
                       child: Row(
@@ -219,8 +221,15 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             //Icon(Icons.calendar_today_outlined, size: 18.sp, color: BaseColor.warmGray400),
-                            Icon(Icons.arrow_forward_outlined,
-                                size: 24.sp, color: BaseColor.warmGray400),
+                            element.isLiked ? Icon(CupertinoIcons.suit_heart_fill,
+                                size: 18.sp, color: BaseColor.red400) : Icon(CupertinoIcons.suit_heart,
+                                size: 18.sp, color: BaseColor.red400),
+                            SizedBox(width: 3.sp),
+                            Text(element.likeCount.toString(), style: TextStyle(
+                              fontSize: 17.sp,
+                              height: 1.0,
+                              color: BaseColor.warmGray600
+                            ))
                           ]),
                       //  color: BaseColor.blue300,
                     ))
@@ -240,6 +249,19 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
+              element.imageUrl != null ? Padding(padding: EdgeInsets.symmetric(),
+                  child: Center(child: Container(
+                    width:  width * 0.9,
+                    height: width * 0.5,
+                    decoration: BoxDecoration(
+                      color: BaseColor.defaultBackgroundColor,
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(element.imageUrl!),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ))
+              ) : Container(),
               Text(
                 element.content,
                 style: TextStyle(

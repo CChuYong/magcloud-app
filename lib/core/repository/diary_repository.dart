@@ -19,6 +19,7 @@ class DiaryRepository extends BaseRepository {
 
   @override
   Future<void> prepareTable() async {
+    //
     // await database.execute('DROP TABLE $tableName');
 
     await database.execute('''
@@ -28,6 +29,7 @@ class DiaryRepository extends BaseRepository {
         content TEXT NOT NULL,
         mood TEXT NOT NULL,
         hash TEXT NOT NULL,
+        image_url TEXT NULL,
         updated_at LONG NOT NULL
       )
     ''');
@@ -91,6 +93,7 @@ class DiaryRepository extends BaseRepository {
         mood: Mood.parseMood(row["mood"] as String),
         ymd: DateParser.parseYmd(row["ymd"] as String),
         hash: row["hash"] as String,
+        imageUrl: row["image_url"]?.let((p0) => p0 as String?),
         diaryId: row["diary_id"]?.let((p0) => p0 as String?),
         updatedAt: row["updated_at"] as int,
       );
@@ -101,6 +104,7 @@ class DiaryRepository extends BaseRepository {
         "ymd": DateParser.ymdSimpleFormat.format(diary.ymd),
         "hash": diary.hash,
         "diary_id": diary.diaryId,
+    "image_url": diary.imageUrl,
         "updated_at": diary.updatedAt,
       };
 }

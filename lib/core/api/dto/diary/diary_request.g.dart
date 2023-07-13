@@ -10,6 +10,7 @@ DiaryRequest _$DiaryRequestFromJson(Map<String, dynamic> json) => DiaryRequest(
       date: json['date'] as String,
       emotion: json['emotion'] as String,
       content: json['content'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$DiaryRequestToJson(DiaryRequest instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$DiaryRequestToJson(DiaryRequest instance) =>
       'date': instance.date,
       'emotion': instance.emotion,
       'content': instance.content,
+      'imageUrl': instance.imageUrl,
     };

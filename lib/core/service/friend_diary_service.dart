@@ -7,10 +7,10 @@ import '../api/open_api.dart';
 import '../util/date_parser.dart';
 
 class FriendDiaryService {
-  FriendDiaryService(this.onlineService);
+  FriendDiaryService({required this.onlineService, required this.openAPI});
 
   final OnlineService onlineService;
-  final OpenAPI openAPI = inject<OpenAPI>();
+  final OpenAPI openAPI;
 
   Future<Diary?> getDiary(String userId, DateTime date) async {
     final ymd = DateParser.formatDateTime(date);

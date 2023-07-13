@@ -226,8 +226,8 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
       alignment: Alignment.center,
       children: [
         Container(
-          width: isSelected ? 42.sp : 40.sp,
-          height: isSelected ? 42.sp : 40.sp,
+          width:  40.sp,
+          height:  40.sp,
           decoration: BoxDecoration(
             color: BaseColor.defaultBackgroundColor,
             shape: BoxShape.circle,
@@ -240,8 +240,8 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           ),
         ),
         Container(
-          width: isSelected ? 50.sp : 48.sp,
-          height: isSelected ? 50.sp : 48.sp,
+          width:  48.sp,
+          height: 48.sp,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: color, width: 3.0),
@@ -294,7 +294,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     final isSelected = action.state.selectedUser == user;
     return TouchableOpacity(
         onTap: () => action.onTapFriendIcon(user),
-        child: Container(
+        child: Opacity(
+          opacity: isSelected ? 1.0 : 0.25,
+            child:Container(
             width: 54.sp,
             child: Column(
               children: [
@@ -304,14 +306,12 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                   user.name,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: isSelected
-                        ? BaseColor.warmGray700
-                        : BaseColor.warmGray500,
-                    fontSize: isSelected ? 13.sp : 11.sp,
+                    color: BaseColor.warmGray500,
+                    fontSize: 11.sp,
                   ),
-                ),
+                )
               ],
-            )));
+            ))));
   }
 
   Widget meIcon(CalendarBaseViewModel action, DailyUser? me) {
@@ -319,7 +319,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     final isSelected = action.state.selectedUser == me;
     return TouchableOpacity(
         onTap: () => me?.let(action.onTapFriendIcon),
-        child: Container(
+        child: Opacity(
+            opacity: isSelected ? 1.0 : 0.25,
+        child:Container(
             width: 54.sp,
             child: Column(
               children: [
@@ -327,12 +329,10 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                     action.state.selectedUser == me),
                 Text(message('generic_me'),
                     style: TextStyle(
-                      color: isSelected
-                          ? BaseColor.warmGray700
-                          : BaseColor.warmGray500,
-                      fontSize: isSelected ? 13.sp : 11.sp,
+                      color: BaseColor.warmGray500,
+                      fontSize: 11.sp,
                     )),
               ],
-            )));
+            ))));
   }
 }

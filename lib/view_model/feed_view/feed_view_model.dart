@@ -20,6 +20,7 @@ class FeedViewModel
     extends BaseViewModel<FeedView, FeedViewModel, FeedViewState> {
   final NavigatorViewState navigator;
   final AuthService authService = inject<AuthService>();
+  final OpenAPI openAPI = inject<OpenAPI>();
 
   FeedViewModel(this.navigator) : super(FeedViewState()) {
     navigator.onTapSelf = onTapNavigatorSelf;
@@ -65,6 +66,22 @@ class FeedViewModel
   void onTapNavigatorSelf() {
     scrollController.animateTo(0,
         duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+  }
+
+  void onTapLike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.likeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+    });
+  }
+
+  void onTapUnlike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.unlikeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+    });
   }
 
   Future<void> loadForward() async {

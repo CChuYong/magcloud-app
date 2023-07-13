@@ -9,6 +9,7 @@ class Diary {
   final DateTime ymd;
   final String content;
   final String hash;
+  final String? imageUrl;
   final int updatedAt;
 
   Diary({
@@ -17,6 +18,7 @@ class Diary {
     required this.ymd,
     required this.hash,
     required this.diaryId,
+    required this.imageUrl,
     required this.updatedAt,
   });
 
@@ -25,6 +27,7 @@ class Diary {
       mood: Mood.neutral,
       content: '',
       ymd: ymd ?? DateTime.now(),
+      imageUrl: null,
       updatedAt: DateParser.nowAtMillis(),
       hash: HashUtil.emptyHash());
 }

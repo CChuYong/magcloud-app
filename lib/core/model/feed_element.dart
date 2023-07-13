@@ -11,6 +11,9 @@ class FeedElement {
   final Mood mood;
   final DateTime ymd;
   final String content;
+  final String? imageUrl;
+  final bool isLiked;
+  final int likeCount;
   final int createdAt;
 
   FeedElement({
@@ -21,17 +24,20 @@ class FeedElement {
     required this.mood,
     required this.ymd,
     required this.content,
+    required this.imageUrl,
+    required this.isLiked,
+    required this.likeCount,
     required this.createdAt,
   });
 
-  static FeedElement create(Diary diary, User user) => FeedElement(
-        userId: user.userId,
-        userName: user.name,
-        profileImageUrl: user.profileImageUrl,
-        diaryId: diary.diaryId ?? '',
-        mood: diary.mood,
-        ymd: diary.ymd,
-        content: diary.content,
-        createdAt: diary.updatedAt,
-      );
+  @override
+  int get hashCode => diaryId.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is FeedElement) {
+      return diaryId == other.diaryId;
+    }
+    return false;
+  }
 }

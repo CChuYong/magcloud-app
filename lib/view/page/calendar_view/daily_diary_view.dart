@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
@@ -21,6 +23,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
   Widget render(BuildContext context, CalendarBaseViewModel action,
       CalendarBaseViewState state) {
     //final diary = state.currentDiary!;
+    final width = MediaQuery.of(context).size.width;
     double getAnimationOffset() {
       if (action.animationStart) {
         action.animationStart = false;
@@ -35,6 +38,19 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         dailyViewTopBar(action, state),
+        scopeData.imageUrl != null ? Padding(padding: EdgeInsets.symmetric(),
+            child: Center(child: Container(
+              width:  width * 0.9,
+              height: width * 0.5,
+              decoration: BoxDecoration(
+                color: BaseColor.defaultBackgroundColor,
+                image: DecorationImage(
+                  image: CachedNetworkImageProvider(scopeData.imageUrl!),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ))
+        ) : Container(),
         Expanded(
             child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
@@ -76,7 +92,27 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                               )
                             ),
                           )),
-                    ))
+                    )),
+                    Divider(color: BaseColor.warmGray200),
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.sp, bottom: 6.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          imageAddBox(action, state.scopeData as CalendarDailyViewScopeData),
+                          SizedBox(width: 10.sp),
+                          Text(
+                            '${message('generic_mood')}: ',
+                            style: TextStyle(
+                                color: BaseColor.warmGray600,
+                                fontSize: 16.sp,
+                                fontFamily: 'GmarketSans'),
+                          ),
+                          dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
+                        ],
+                      ),
+                    )
+
                   ],
                 )))
       ],
@@ -101,14 +137,12 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               )),
           Row(
             children: [
-              Text(
-                '${message('generic_mood')}: ',
-                style: TextStyle(
-                    color: BaseColor.warmGray600,
-                    fontSize: 16.sp,
-                    fontFamily: 'GmarketSans'),
-              ),
-              dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
+              TouchableOpacity(
+                  onTap: () => action.changeDay(-1),
+                  child: const Icon(BaseIcon.arrowLeft)),
+              TouchableOpacity(
+                  onTap: () => action.changeDay(1),
+                  child: const Icon(BaseIcon.arrowRight)),
             ],
           )
         ],
@@ -138,6 +172,28 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                     fontSize: 14.sp,
                   ),
                 ),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Widget imageAddBox(
+      CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
+    return TouchableOpacity(
+        onTap: data.isMyScope ? action.uploadImage : null,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 0.sp, vertical: 0.sp),
+          child: Container(
+            decoration: BoxDecoration(
+              // border: Border.all(color: BaseColor.warmGray300),
+              borderRadius: BorderRadius.circular(10),
+              color: BaseColor.green300,
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 3.sp, bottom: 3.sp, left: 8.sp, right: 9.sp),
+              child: Center(
+                child: Icon(Icons.add_a_photo, color: BaseColor.warmGray500, size: 20.sp),
               ),
             ),
           ),

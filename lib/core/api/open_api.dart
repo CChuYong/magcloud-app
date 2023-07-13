@@ -122,6 +122,12 @@ abstract class OpenAPI {
   Future<DiaryResponse> updateDiary(
       @Path('diaryId') String diaryId, @Body() DiaryUpdateRequest request);
 
+  @POST('/v1/diaries/{diaryId}/like')
+  Future<FeedResponse> likeDiary(@Path('diaryId') String diaryId);
+
+  @POST('/v1/diaries/{diaryId}/unlike')
+  Future<FeedResponse> unlikeDiary(@Path('diaryId') String diaryId);
+
   @GET('/v1/users/{friendId}/diaries')
   Future<DiaryResponse> getFriendDiaryByDate(
       @Path("friendId") String friendId, @Query("date") String date);

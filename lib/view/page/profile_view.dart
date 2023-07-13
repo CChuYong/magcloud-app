@@ -30,6 +30,7 @@ class ProfileView
   @override
   Widget render(
       BuildContext context, ProfileViewModel action, ProfileViewState state) {
+    final width = MediaQuery.of(context).size.width - 30.sp;
     return BaseSettingLayout(
         title: isMe
             ? message('my_profile')
@@ -122,7 +123,7 @@ class ProfileView
                           ))),
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => feed(action, e))
+                          .map((e) => feed(action, e, width))
                           .toList())),
                 ])));
   }
@@ -147,7 +148,7 @@ class ProfileView
         ));
   }
 
-  Widget feed(ProfileViewModel action, FeedElement element) {
+  Widget feed(ProfileViewModel action, FeedElement element, double width) {
     final divider = Divider(color: BaseColor.warmGray200, thickness: 1.sp);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,6 +214,21 @@ class ProfileView
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
+              element.imageUrl != null ? GestureDetector(
+                  onTap: () => imagePreviewDialog(element.imageUrl!),
+                  child:Padding(padding: EdgeInsets.symmetric(),
+                      child: Center(child: Container(
+                        width:  width * 0.9,
+                        height: width * 0.5,
+                        decoration: BoxDecoration(
+                          color: BaseColor.defaultBackgroundColor,
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(element.imageUrl!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ))
+                  )) : Container(),
               Text(
                 element.content,
                 style: TextStyle(

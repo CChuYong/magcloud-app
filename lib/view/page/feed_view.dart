@@ -13,6 +13,7 @@ import '../../core/util/font.dart';
 import '../../view_model/feed_view/feed_view_model.dart';
 import '../../view_model/feed_view/feed_view_state.dart';
 import '../designsystem/base_color.dart';
+import '../dialog/image_preview_dialog.dart';
 import '../navigator_view.dart';
 
 class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
@@ -249,7 +250,9 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
-              element.imageUrl != null ? Padding(padding: EdgeInsets.symmetric(),
+              element.imageUrl != null ? GestureDetector(
+                onTap: () => imagePreviewDialog(element.imageUrl!),
+                  child:Padding(padding: EdgeInsets.symmetric(),
                   child: Center(child: Container(
                     width:  width * 0.9,
                     height: width * 0.5,
@@ -261,7 +264,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                       ),
                     ),
                   ))
-              ) : Container(),
+              )) : Container(),
               Text(
                 element.content,
                 style: TextStyle(

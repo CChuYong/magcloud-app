@@ -100,14 +100,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           imageAddBox(action, state.scopeData as CalendarDailyViewScopeData),
-                          SizedBox(width: 10.sp),
-                          Text(
-                            '${message('generic_mood')}: ',
-                            style: TextStyle(
-                                color: BaseColor.warmGray600,
-                                fontSize: 16.sp,
-                                fontFamily: 'GmarketSans'),
-                          ),
+                          SizedBox(width: 5.sp),
+
                           dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
                         ],
                       ),

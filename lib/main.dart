@@ -17,7 +17,7 @@ import 'core/framework/state_store.dart';
 import 'di.dart';
 import 'firebase_options.dart';
 
-const magCloudAppKey = "26d05985-803c-41ad-96ed-65d0f9c84922";
+const magCloudAppKey = "b93b5462-264c-44c4-a3ec-c8fe5bf0a8e7";
 const apiBaseUrl =
     "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
 void main() async {

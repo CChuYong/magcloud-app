@@ -36,7 +36,7 @@ class AuthService {
     if (accessToken != null && refreshToken != null) {
       try {
         authenticate(
-            AuthToken(accessToken: accessToken, refreshToken: refreshToken));
+            AuthToken(accessToken: accessToken, refreshToken: refreshToken), true);
         initialUser = (await openApi.getMyProfile()).toDomain();
         final previousUser = StateStore.getString("lastUserId");
         if (initialUser != null &&
@@ -77,7 +77,7 @@ class AuthService {
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
         refreshToken: authenticateResult.refreshToken,
-      ));
+      ), true);
       return AuthResult.SUCCEED;
     } catch (e) {
       if (e is SignInWithAppleAuthorizationException) {
@@ -101,7 +101,7 @@ class AuthService {
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
         refreshToken: authenticateResult.refreshToken,
-      ));
+      ), true);
       return AuthResult.SUCCEED;
     } catch (e) {
       SnackBarUtil.errorSnackBar(message: message('message_login_failed'));
@@ -118,7 +118,7 @@ class AuthService {
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,
         refreshToken: authenticateResult.refreshToken,
-      ));
+      ), false);
       return AuthResult.SUCCEED;
     } catch (e) {
       SnackBarUtil.errorSnackBar(message: message('message_login_failed'));
@@ -126,25 +126,30 @@ class AuthService {
     }
   }
 
-  Future<void> authenticate(AuthToken token) async {
+  Future<void> authenticate(AuthToken token, bool registerDevice) async {
     print("Logged in!!");
     this.token = token;
     StateStore.setString('accessToken', token.accessToken);
     StateStore.setString('refreshToken', token.refreshToken);
-    final notificationService = inject<NotificationService>();
-    await openApi.registerDevice(DeviceRequest(
-        deviceToken: notificationService.token!,
-        deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    if(registerDevice){
+      final notificationService = inject<NotificationService>();
+      await openApi.registerDevice(DeviceRequest(
+          deviceToken: notificationService.token!,
+          deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+    }
+
   }
 
   Future<void> logout(bool intend) async {
     print("Logged Out!!");
     final notificationService = inject<NotificationService>();
-    try {
-      await openApi.unRegisterDevice(DeviceRequest(
-          deviceToken: notificationService.token!,
-          deviceInfo: DeviceInfoUtil.getOsAndVersion()));
-    } catch (e) {}
+    if(intend) {
+      try {
+        await openApi.unRegisterDevice(DeviceRequest(
+            deviceToken: notificationService.token!,
+            deviceInfo: DeviceInfoUtil.getOsAndVersion()));
+      } catch (e) {}
+    }
 
     token = null;
     StateStore.clear('accessToken');

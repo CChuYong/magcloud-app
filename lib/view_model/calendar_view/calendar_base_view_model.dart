@@ -508,4 +508,11 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
   void onTapAddFriend() {
     GlobalRoute.rightToLeftRouteTo('/friends/requests');
   }
+
+  void onTapRemoveImage() {
+    final scopeData = state.scopeData as CalendarDailyViewScopeData;
+    setState(() {
+      scopeData.imageUrl = null;
+    });
+  }
 }

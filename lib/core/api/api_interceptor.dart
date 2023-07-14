@@ -46,6 +46,12 @@ class ApiInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     final statusCode = err.response?.statusCode ?? 500;
+    print("$statusCode ${err.requestOptions.path}");
+    if(err.requestOptions.path == "/v1/auth/refresh") {
+      await authService.logout(false);
+      GlobalRoute.fadeRoute('/login');
+      return handler.next(err);
+    }
     if (statusCode == 401) {
       if (authService.isAuthenticated()) {
         // try refresh it
@@ -64,7 +70,7 @@ class ApiInterceptor extends Interceptor {
           return handler.resolve(response);
         } else {
           await authService.logout(false);
-          await GlobalRoute.fadeRoute('/login');
+          GlobalRoute.fadeRoute('/login');
         }
       }
     } else if (statusCode == 403) {

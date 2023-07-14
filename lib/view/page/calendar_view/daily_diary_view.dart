@@ -38,19 +38,53 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         dailyViewTopBar(action, state),
-        scopeData.imageUrl != null ? Padding(padding: EdgeInsets.symmetric(),
-            child: Center(child: Container(
-              width:  width * 0.9,
-              height: width * 0.5,
-              decoration: BoxDecoration(
-                color: BaseColor.defaultBackgroundColor,
-                image: DecorationImage(
-                  image: CachedNetworkImageProvider(scopeData.imageUrl!),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ))
-        ) : Container(),
+        scopeData.imageUrl != null
+            ? Padding(
+                padding: EdgeInsets.symmetric(),
+                child: Center(
+                    child: Stack(
+                  children: [
+                    Container(
+                      width: width * 0.9,
+                      height: width * 0.5,
+                      decoration: BoxDecoration(
+                        color: BaseColor.defaultBackgroundColor,
+                        image: DecorationImage(
+                          image:
+                              CachedNetworkImageProvider(scopeData.imageUrl!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    scopeData.isMyScope
+                        ? Positioned(
+                        top: 10.sp,
+                        right: 10.sp,
+                        child:TouchableOpacity(
+                            onTap: action.onTapRemoveImage,
+                            child:  Opacity(
+                                    opacity: 0.8,
+                                    child: Container(
+                                        width: 30.sp,
+                                        height: 30.sp,
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text('X',
+                                                style: TextStyle(
+                                                    color: BaseColor
+                                                        .defaultBackgroundColor,
+                                                    fontSize: 18.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'GmarketSans'))),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: BaseColor.warmGray800,
+                                        )))))
+                        : Container()
+                  ],
+                )))
+            : Container(),
         Expanded(
             child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
@@ -66,7 +100,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 child: Column(
                   key: Key(state.currentDate.day.toString()),
                   children: [
-                   // dailyDiaryMoodBox(action, scopeData),
+                    // dailyDiaryMoodBox(action, scopeData),
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -85,12 +119,12 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: scopeData.isMyScope ? message('message_tap_here_to_diary') : message('message_diary_is_empty'),
-                              hintStyle: TextStyle(
-                                color: BaseColor.warmGray400
-                              )
-                            ),
+                                border: InputBorder.none,
+                                hintText: scopeData.isMyScope
+                                    ? message('message_tap_here_to_diary')
+                                    : message('message_diary_is_empty'),
+                                hintStyle:
+                                    TextStyle(color: BaseColor.warmGray400)),
                           )),
                     )),
                     Divider(color: BaseColor.warmGray200),
@@ -99,14 +133,14 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          imageAddBox(action, state.scopeData as CalendarDailyViewScopeData),
+                          imageAddBox(action,
+                              state.scopeData as CalendarDailyViewScopeData),
                           SizedBox(width: 5.sp),
-
-                          dailyDiaryMoodBox(action, state.scopeData as CalendarDailyViewScopeData)
+                          dailyDiaryMoodBox(action,
+                              state.scopeData as CalendarDailyViewScopeData)
                         ],
                       ),
                     )
-
                   ],
                 )))
       ],
@@ -152,7 +186,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
           padding: EdgeInsets.symmetric(horizontal: 0.sp, vertical: 0.sp),
           child: Container(
             decoration: BoxDecoration(
-             // border: Border.all(color: BaseColor.warmGray300),
+              // border: Border.all(color: BaseColor.warmGray300),
               borderRadius: BorderRadius.circular(10),
               color: data.currentMood.moodColor,
             ),
@@ -185,9 +219,11 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               color: BaseColor.green300,
             ),
             child: Padding(
-              padding: EdgeInsets.only(top: 3.sp, bottom: 3.sp, left: 8.sp, right: 9.sp),
+              padding: EdgeInsets.only(
+                  top: 3.sp, bottom: 3.sp, left: 8.sp, right: 9.sp),
               child: Center(
-                child: Icon(Icons.add_a_photo, color: BaseColor.warmGray500, size: 20.sp),
+                child: Icon(Icons.add_a_photo,
+                    color: BaseColor.warmGray500, size: 20.sp),
               ),
             ),
           ),

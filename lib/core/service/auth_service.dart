@@ -104,6 +104,7 @@ class AuthService {
       ), true);
       return AuthResult.SUCCEED;
     } catch (e) {
+      print(e);
       SnackBarUtil.errorSnackBar(message: message('message_login_failed'));
       return AuthResult.FAILED;
     }

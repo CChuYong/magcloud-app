@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
@@ -80,6 +82,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                 ),
                 Column(
                   children: [
+                    Platform.isIOS ?
                     TouchableOpacity(
                         onTap: action.onAppleLogin,
                         child: Container(
@@ -108,7 +111,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                                   ])
                                 ],
                               ),
-                            ))),
+                            ))): Container(),
                     SizedBox(height: 8.sp),
                     TouchableOpacity(
                         onTap: action.onGoogleLogin,

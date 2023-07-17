@@ -46,6 +46,9 @@ abstract class OpenAPI {
   @POST('/v1/users/device')
   Future<APIResponse> registerDevice(@Body() DeviceRequest request);
 
+  @POST('/v1/users/leave')
+  Future<APIResponse> leaveMagCloud();
+
   @DELETE('/v1/users/device')
   Future<APIResponse> unRegisterDevice(@Body() DeviceRequest request);
 

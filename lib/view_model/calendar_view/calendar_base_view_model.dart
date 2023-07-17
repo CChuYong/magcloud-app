@@ -515,4 +515,15 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
       scopeData.imageUrl = null;
     });
   }
+
+  bool isDiaryWriteable() {
+    final today = DateTime.now();
+    final targetDate = state.currentDate;
+    final dateDiff = today.difference(targetDate).inDays;
+    if(dateDiff < 0 || dateDiff > 2) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
@@ -74,6 +75,17 @@ class MoreViewModel
         confirmText: message('menu_logout'));
     if (result != true) return;
 
+    await inject<AuthService>().logout(true);
+    await GlobalRoute.fadeRoute('/login');
+  }
+
+  Future<void> leave() async {
+    final result = await confirmDialog(message('message_leave_dialog_title'),
+        message('message_leave_dialog_description'),
+        confirmText: message('generic_leave'));
+    if (result != true) return;
+
+    await inject<OpenAPI>().leaveMagCloud();
     await inject<AuthService>().logout(true);
     await GlobalRoute.fadeRoute('/login');
   }

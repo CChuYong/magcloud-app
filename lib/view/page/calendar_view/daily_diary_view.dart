@@ -109,7 +109,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                           child: TextField(
                             onChanged: (e) => action.onEditingCompleted(),
                             onTapOutside: (e) => action.unFocusTextField(),
-                            readOnly: !scopeData.isMyScope,
+                            readOnly: !scopeData.isMyScope || !action.isDiaryWriteable(),
                             focusNode: scopeData.focusNode,
                             style: TextStyle(
                               fontFamily: diaryFont,
@@ -133,8 +133,8 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          imageAddBox(action,
-                              state.scopeData as CalendarDailyViewScopeData),
+                          state.scopeData.isMyScope ? imageAddBox(action,
+                              state.scopeData as CalendarDailyViewScopeData) : Container(),
                           SizedBox(width: 5.sp),
                           dailyDiaryMoodBox(action,
                               state.scopeData as CalendarDailyViewScopeData)
@@ -209,7 +209,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
   Widget imageAddBox(
       CalendarBaseViewModel action, CalendarDailyViewScopeData data) {
     return TouchableOpacity(
-        onTap: data.isMyScope ? action.uploadImage : null,
+        onTap: action.isDiaryWriteable() ? action.uploadImage : null,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.sp, vertical: 0.sp),
           child: Container(

@@ -29,6 +29,7 @@ final map = {
   "menu_notice": "공지사항",
   "menu_privacy": "개인정보 처리방침",
   "menu_app_info": "어플리케이션 정보",
+  "menu_user_quit": "회원탈퇴",
   "menu_logout": "로그아웃",
   "generic_add_image": "이미지 추가",
   "generic_me": "나",
@@ -67,6 +68,7 @@ final map = {
   "generic_welcome": "환영합니다!",
   "generic_search": "검색",
   "generic_cancel": "취소하기",
+  "generic_leave": "탈퇴하기",
   "generic_lets_start": "시작할게요!",
   "generic_add_friend": "친구 추가",
   "generic_friend_share_diary": "일기 공유",
@@ -151,6 +153,8 @@ final map = {
   "message_nickname_should_not_empty": "닉네임은 비어있을 수 없어요",
   "message_nickname_cannot_be_same": "닉네임은 이전과 같을 수 없어요",
   "message_nickname_changed": "닉네임이 변경되었어요!",
+  "message_leave_dialog_title": "회원 탈퇴를 진행할까요?",
+  "message_leave_dialog_description": "회원 탈퇴 이후 일기, 친구 내역등은 복구할 수 없어요"
 };
 
 final engMap = {
@@ -171,6 +175,7 @@ final engMap = {
   "menu_notice": "App Notice",
   "menu_privacy": "Privacy Policy",
   "menu_app_info": "Application Info",
+  "menu_user_quit": "User Leave",
   "menu_logout": "Logout",
   "generic_add_image": "Add Image",
   "generic_me": "Me",
@@ -209,6 +214,7 @@ final engMap = {
   "generic_welcome": "Welcome!",
   "generic_search": "Search",
   "generic_cancel": "Cancel",
+  "generic_leave": "Leave MagCloud",
   "generic_lets_start": "Let's Start!",
   "generic_add_friend": "Add Friend",
   "generic_friend_share_diary": "Share Diary",
@@ -299,6 +305,8 @@ final engMap = {
   "message_nickname_should_not_empty": "Nickname should not be empty",
   "message_nickname_cannot_be_same": "Nickname cannot be same",
   "message_nickname_changed": "Nickname changed!",
+  "message_leave_dialog_title": "Leave MagCloud?",
+  "message_leave_dialog_description": "You cannot recover your diaries and friend list after leave",
 };
 
 String message(String key) {

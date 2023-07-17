@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+  import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
@@ -168,6 +168,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                   action.onTapPrivacy),
               menuBtn(Icons.phone_android, message('menu_app_info'),
                   action.onTapAppInfo),
+              menuBtn(Icons.person_off, message('menu_user_quit'), action.leave),
               menuBtn(Icons.logout, message('menu_logout'), action.logout),
             ],
           ),

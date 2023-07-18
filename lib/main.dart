@@ -11,7 +11,6 @@ import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/navigator_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'core/framework/state_store.dart';
 import 'di.dart';

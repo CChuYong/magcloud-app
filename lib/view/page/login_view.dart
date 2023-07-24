@@ -82,6 +82,36 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                 ),
                 Column(
                   children: [
+                    TouchableOpacity(
+                        onTap: action.onKakaoLogin,
+                        child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: const Color(0xffFEE500),
+                            ),
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14.sp),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(children: [
+                                    Image.asset('assets/images/kakao.png',
+                                        height: 21.sp, width: 21.sp),
+                                    SizedBox(width: 12.sp),
+                                    Text(
+                                      message('generic_login_with_kakao'),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Pretendard',
+                                        fontSize: 18.sp,
+                                      ),
+                                    )
+                                  ])
+                                ],
+                              ),
+                            ))),
+                    SizedBox(height: 8.sp),
                     Platform.isIOS ?
                     TouchableOpacity(
                         onTap: action.onAppleLogin,

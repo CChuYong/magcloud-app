@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:magcloud_app/core/api/dto/auth_refresh_request.dart';
 import 'package:magcloud_app/core/api/dto/auth_request.dart';
 import 'package:magcloud_app/core/api/dto/device_request.dart';
@@ -50,6 +52,21 @@ class AuthService {
     }
   }
 
+  Future<kakao.OAuthToken> _signInWithKakao() async {
+    if (await kakao.isKakaoTalkInstalled()) {
+      try {
+        return await kakao.UserApi.instance.loginWithKakaoTalk();
+      } catch (error) {
+        if (error is PlatformException && error.code == 'CANCELED') {
+          throw Exception();
+        }
+        return await kakao.UserApi.instance.loginWithKakaoAccount();
+      }
+    } else {
+      return await kakao.UserApi.instance.loginWithKakaoAccount();
+    }
+  }
+
   Future<AuthorizationCredentialAppleID> _signInWithApple() async {
     final appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
@@ -97,6 +114,24 @@ class AuthService {
         return AuthResult.FAILED;
       final authenticateResult = await openApi.authenticate(
           AuthRequest(provider: 'GOOGLE', token: authResult.accessToken ?? ""));
+      isNewUser = authenticateResult.isNewUser;
+      await authenticate(AuthToken(
+        accessToken: authenticateResult.accessToken,
+        refreshToken: authenticateResult.refreshToken,
+      ), true);
+      return AuthResult.SUCCEED;
+    } catch (e) {
+      print(e);
+      SnackBarUtil.errorSnackBar(message: message('message_login_failed'));
+      return AuthResult.FAILED;
+    }
+  }
+
+  Future<AuthResult> signInWithKakao() async {
+    try {
+      final authResult = await _signInWithKakao();
+      final authenticateResult = await openApi.authenticate(
+          AuthRequest(provider: 'KAKAO', token: authResult.accessToken ?? ""));
       isNewUser = authenticateResult.isNewUser;
       await authenticate(AuthToken(
         accessToken: authenticateResult.accessToken,

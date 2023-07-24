@@ -35,6 +35,16 @@ class LoginViewModel
     }
   }
 
+  Future<void> onKakaoLogin() async {
+    AuthResult loginResult = AuthResult.FAILED;
+    await asyncLoading(() async {
+      loginResult = await authService.signInWithKakao();
+    });
+    if (loginResult == AuthResult.SUCCEED) {
+      GlobalRoute.goMain();
+    }
+  }
+
   void toggleLanguage() {
     setState(() {
       toggleEng();

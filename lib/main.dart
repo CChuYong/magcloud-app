@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
@@ -16,7 +17,7 @@ import 'core/framework/state_store.dart';
 import 'di.dart';
 import 'firebase_options.dart';
 
-const magCloudAppKey = "b93b5462-264c-44c4-a3ec-c8fe5bf0a8e7";
+const magCloudAppKey = "8ec820bf-9081-400c-ac6d-61dcb37fd1ea";
 const apiBaseUrl =
     "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
 void main() async {
@@ -26,6 +27,7 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    KakaoSdk.init(nativeAppKey: '4dd02056d64991edbf652f5be8b3d378');
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     await StateStore.init();
     await initializeDependencies();

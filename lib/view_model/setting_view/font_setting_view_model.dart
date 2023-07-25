@@ -20,7 +20,7 @@ class FontSettingViewModel extends BaseViewModel<FontSettingView,
 
   @override
   void dispose() {
-    diaryFontSize = state.fontSize;
+    setDiaryFontSize(state.fontSize);
     controller.dispose();
   }
 

@@ -169,6 +169,8 @@ final map = {
   "message_leave_dialog_title": "회원 탈퇴를 진행할까요?",
   "message_leave_dialog_description": "회원 탈퇴 이후 일기, 친구 내역등은 복구할 수 없어요",
 "message_dark_mode_settings_info": "다크 모드 설정을 변경할 수 있어요",
+  "message_liked_diary": "일기에 좋아요를 눌렀어요!",
+  "message_unliked_diary": "일기에 좋아요를 해제했어요!",
 };
 
 final engMap = {
@@ -335,6 +337,8 @@ final engMap = {
   "message_leave_dialog_title": "Leave MagCloud?",
   "message_leave_dialog_description": "You cannot recover your diaries and friend list after leave",
   "message_dark_mode_settings_info": "You can change dark mode settings",
+  "message_liked_diary": "Liked Diary!",
+  "message_unliked_diary": "UnLiked Diary!",
 };
 
 String message(String key) {

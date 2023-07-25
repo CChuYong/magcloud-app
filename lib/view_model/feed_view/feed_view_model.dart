@@ -6,6 +6,8 @@ import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
 import 'package:magcloud_app/core/model/navigate_detail.dart';
 import 'package:magcloud_app/core/util/debouncer.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
@@ -74,6 +76,7 @@ class FeedViewModel
       final result = await openAPI.likeDiary(element.diaryId);
       state.feeds.remove(element);
       state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_liked_diary'));
     });
   }
 
@@ -82,6 +85,7 @@ class FeedViewModel
       final result = await openAPI.unlikeDiary(element.diaryId);
       state.feeds.remove(element);
       state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_unliked_diary'));
     });
   }
 

@@ -29,6 +29,8 @@ class FeedResponse {
   final String? imageUrl;
   @JsonKey(name: 'createdAtTs')
   final int createdAtTs;
+  @JsonKey(name: 'commentCount')
+  final int commentCount;
 
   FeedResponse({
     required this.userId,
@@ -42,6 +44,7 @@ class FeedResponse {
     required this.likeCount,
     required this.createdAtTs,
     required this.imageUrl,
+    required this.commentCount,
   });
 
   factory FeedResponse.fromJson(Map<String, dynamic> json) =>
@@ -59,6 +62,7 @@ class FeedResponse {
         content: content,
         imageUrl: imageUrl,
         likeCount: likeCount,
+        commentCount: commentCount,
         isLiked: isLiked,
         createdAt: createdAtTs,
       );

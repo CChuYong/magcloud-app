@@ -17,6 +17,8 @@ import 'package:retrofit/http.dart';
 
 import 'dto/api_response.dart';
 import 'dto/auth_refresh_request.dart';
+import 'dto/diary/diary_comment_request.dart';
+import 'dto/diary/diary_comment_response.dart';
 import 'dto/diary/diary_request.dart';
 import 'dto/diary/diary_response.dart';
 import 'dto/friend/daily_user_response.dart';
@@ -124,6 +126,12 @@ abstract class OpenAPI {
   @PATCH('/v1/diaries/{diaryId}')
   Future<DiaryResponse> updateDiary(
       @Path('diaryId') String diaryId, @Body() DiaryUpdateRequest request);
+
+  @POST('/v1/diaries/{diaryId}/comments')
+  Future<DiaryCommentResponse> createDiaryComments(@Path('diaryId') String diaryId, @Body() DiaryCommentRequest request);
+
+  @GET('/v1/diaries/{diaryId}/comments')
+  Future<List<DiaryCommentResponse>> getDiaryComments(@Path('diaryId') String diaryId);
 
   @POST('/v1/diaries/{diaryId}/like')
   Future<FeedResponse> likeDiary(@Path('diaryId') String diaryId);

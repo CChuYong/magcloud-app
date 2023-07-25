@@ -14,6 +14,7 @@ class FeedElement {
   final String? imageUrl;
   final bool isLiked;
   final int likeCount;
+  final int commentCount;
   final int createdAt;
 
   FeedElement({
@@ -27,6 +28,7 @@ class FeedElement {
     required this.imageUrl,
     required this.isLiked,
     required this.likeCount,
+    required this.commentCount,
     required this.createdAt,
   });
 

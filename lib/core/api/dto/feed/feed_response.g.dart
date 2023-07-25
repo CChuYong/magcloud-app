@@ -18,6 +18,7 @@ FeedResponse _$FeedResponseFromJson(Map<String, dynamic> json) => FeedResponse(
       likeCount: json['likeCount'] as int,
       createdAtTs: json['createdAtTs'] as int,
       imageUrl: json['imageUrl'] as String?,
+      commentCount: json['commentCount'] as int,
     );
 
 Map<String, dynamic> _$FeedResponseToJson(FeedResponse instance) =>
@@ -33,4 +34,5 @@ Map<String, dynamic> _$FeedResponseToJson(FeedResponse instance) =>
       'likeCount': instance.likeCount,
       'imageUrl': instance.imageUrl,
       'createdAtTs': instance.createdAtTs,
+      'commentCount': instance.commentCount,
     };

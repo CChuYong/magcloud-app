@@ -11,6 +11,7 @@ import 'package:magcloud_app/view/page/feed_view.dart';
 
 import '../../core/service/auth_service.dart';
 import '../../global_routes.dart';
+import '../../view/dialog/comment_list_dialog.dart';
 import '../../view/navigator_view.dart';
 import '../../view/page/profile_view.dart';
 import '../calendar_view/calendar_base_view_model.dart';
@@ -108,6 +109,14 @@ class FeedViewModel
     setStateAsync(() async {
       await initState();
     });
+  }
+
+  Future<void> onTapCommentBox(String diaryId) async {
+    await asyncLoading(() async {
+      final comments = await openAPI.getDiaryComments(diaryId);
+      await openCommentListDialog(diaryId, comments);
+    });
+
   }
 
   void onTapProfileImage(String userId) async {

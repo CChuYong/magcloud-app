@@ -211,29 +211,57 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                     )
                   ],
                 ),
-                TouchableOpacity(
-                    onTap: element.isLiked ? () => action.onTapUnlike(element) : () => action.onTapLike(element),
-                    child: Container(
-                    //  width: 33.sp,
-                      height: 33.sp,
-                      //color: Colors.blueAccent,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //Icon(Icons.calendar_today_outlined, size: 18.sp, color: BaseColor.warmGray400),
-                            element.isLiked ? Icon(CupertinoIcons.suit_heart_fill,
-                                size: 18.sp, color: BaseColor.red400) : Icon(CupertinoIcons.suit_heart,
-                                size: 18.sp, color: BaseColor.red400),
-                            SizedBox(width: 3.sp),
-                            Text(element.likeCount.toString(), style: TextStyle(
-                              fontSize: 17.sp,
-                              height: 1.0,
-                              color: BaseColor.warmGray600
-                            ))
-                          ]),
-                      //  color: BaseColor.blue300,
-                    ))
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TouchableOpacity(
+                        onTap: element.isLiked ? () => action.onTapUnlike(element) : () => action.onTapLike(element),
+                        child: Container(
+                          //  width: 33.sp,
+                          height: 33.sp,
+                          //color: Colors.blueAccent,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                //Icon(Icons.calendar_today_outlined, size: 18.sp, color: BaseColor.warmGray400),
+                                element.isLiked ? Icon(CupertinoIcons.suit_heart_fill,
+                                    size: 18.sp, color: BaseColor.red400) : Icon(CupertinoIcons.suit_heart,
+                                    size: 18.sp, color: BaseColor.red400),
+                                SizedBox(width: 3.sp),
+                                Text(element.likeCount.toString(), style: TextStyle(
+                                    fontSize: 17.sp,
+                                    height: 1.0,
+                                    color: BaseColor.warmGray600
+                                ))
+                              ]),
+                          //  color: BaseColor.blue300,
+                        )),
+                    SizedBox(width: 10.sp),
+                    TouchableOpacity(
+                        onTap: () => action.onTapCommentBox(element.diaryId),
+                        child: Container(
+                          //  width: 33.sp,
+                          height: 33.sp,
+                          //color: Colors.blueAccent,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(Icons.chat_bubble_outline_rounded,
+                                    size: 20.sp, color: BaseColor.warmGray300),
+                                SizedBox(width: 3.sp),
+                                Text(element.commentCount.toString(), style: TextStyle(
+                                    fontSize: 17.sp,
+                                    height: 1.0,
+                                    color: BaseColor.warmGray600
+                                ))
+                              ]),
+                          //  color: BaseColor.blue300,
+                        )),
+                  ],
+                )
+
               ],
             )),
         // divider,
@@ -272,11 +300,23 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                     fontSize: diaryFontSize,
                     fontFamily: diaryFont),
               ),
+              element.commentCount != 0 ? Column(
+                children: [
+                  SizedBox(height: 16.sp),
+                  TouchableOpacity(
+                    onTap: () => action.onTapCommentBox(element.diaryId),
+                      child: Text(
+                    message('generic_tap_to_see_comment').format([element.commentCount]),
+                  ))
+
+                ],
+              ): Container()
+
             ],
           ),
         ),
         SizedBox(
-          height: 15.sp,
+          height: 5.sp,
         ),
       ],
     );

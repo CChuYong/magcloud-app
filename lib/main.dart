@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import 'firebase_options.dart';
 
 const magCloudAppKey = "d7fd915c-4185-42a9-bb38-1d300cc3fc51";
 const apiBaseUrl = "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 void main() async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +43,7 @@ void main() async {
           home: inject<AuthService>().isAuthenticated()
               ? NavigatorView()
               : LoginView(),
-          navigatorObservers: [GlobalRoute.observer],
+          navigatorObservers: [GlobalRoute.observer, FirebaseAnalyticsObserver(analytics: analytics)],
         )));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }

@@ -142,7 +142,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                   SliverToBoxAdapter(child: SizedBox(height: 14.sp)),
                   SliverList(
                       delegate: SliverChildListDelegate(requests
-                          .map((e) => receivedRequest(action, e))
+                          .map((e) => receivedRequest(context, action, e))
                           .toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 18.sp)),
                   SliverToBoxAdapter(
@@ -157,7 +157,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                   SliverToBoxAdapter(child: SizedBox(height: 14.sp)),
                   SliverList(
                       delegate: SliverChildListDelegate(sentRequests
-                          .map((e) => sentRequest(action, e))
+                          .map((e) => sentRequest(context, action, e))
                           .toList())),
                 ]),
               ),
@@ -167,7 +167,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
         ));
   }
 
-  Widget receivedRequest(FriendRequestViewModel action, User friend) {
+  Widget receivedRequest(BuildContext context, FriendRequestViewModel action, User friend) {
     return Column(
       children: [
         Stack(
@@ -200,14 +200,14 @@ class FriendRequestView extends BaseView<FriendRequestView,
                             Text(
                               friend.name,
                               style: TextStyle(
-                                color: BaseColor.warmGray700,
+                                color: context.theme.colorScheme.primary,
                                 fontSize: 14.sp,
                               ),
                             ),
                             Text(
                               friend.nameTag,
                               style: TextStyle(
-                                color: BaseColor.warmGray500,
+                                color: context.theme.colorScheme.secondary,
                                 fontSize: 12.sp,
                               ),
                             ),
@@ -265,7 +265,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
     );
   }
 
-  Widget sentRequest(FriendRequestViewModel action, User friend) {
+  Widget sentRequest(BuildContext context, FriendRequestViewModel action, User friend) {
     return Column(
       children: [
         Stack(
@@ -298,14 +298,14 @@ class FriendRequestView extends BaseView<FriendRequestView,
                             Text(
                               friend.name,
                               style: TextStyle(
-                                color: BaseColor.warmGray700,
+                                color: context.theme.colorScheme.primary,
                                 fontSize: 14.sp,
                               ),
                             ),
                             Text(
                               friend.nameTag,
                               style: TextStyle(
-                                color: BaseColor.warmGray500,
+                                color: context.theme.colorScheme.secondary,
                                 fontSize: 12.sp,
                               ),
                             ),

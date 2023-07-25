@@ -44,7 +44,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
           SizedBox(height: 3.sp),
           // Divider(),
           state.feeds.isEmpty
-              ? Expanded(child: emptyFeedBox(height - 160.sp))
+              ? Expanded(child: emptyFeedBox(context, height - 160.sp))
               : Expanded(child: feedBox(action, context))
         ],
       ),
@@ -104,7 +104,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
     );
   }
 
-  Widget emptyFeedBox(double height) {
+  Widget emptyFeedBox(BuildContext context, double height) {
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: action.refreshFullPage,
@@ -121,16 +121,16 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(Icons.cloud_outlined,
-                            size: 40.sp, color: BaseColor.warmGray600),
+                            size: 40.sp, color: context.theme.colorScheme.secondary),
                         Text(
                           message('message_feed_is_empty'),
                           style: TextStyle(
-                              color: BaseColor.warmGray600, fontSize: 16.sp),
+                              color: context.theme.colorScheme.primary, fontSize: 16.sp),
                         ),
                         Text(
                           message('message_add_your_friend_to_feed'),
                           style: TextStyle(
-                              color: BaseColor.warmGray600, fontSize: 14.sp),
+                              color: context.theme.colorScheme.secondary, fontSize: 14.sp),
                         ),
                       ],
                     )))

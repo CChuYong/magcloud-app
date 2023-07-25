@@ -18,9 +18,8 @@ import 'core/framework/state_store.dart';
 import 'di.dart';
 import 'firebase_options.dart';
 
-const magCloudAppKey = "8ec820bf-9081-400c-ac6d-61dcb37fd1ea";
-const apiBaseUrl = "http://100.116.87.112:9999/api";
-   // "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
+const magCloudAppKey = "d7fd915c-4185-42a9-bb38-1d300cc3fc51";
+const apiBaseUrl = "https://magcloud.chuyong.kr/api"; //http://100.116.87.112:9999/api
 void main() async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();

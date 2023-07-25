@@ -23,6 +23,7 @@ final map = {
   "friend_profile": "%s님의 프로필",
   "menu_my_profiles": "내 프로필 설정",
   "menu_notification": "알림 설정",
+  "menu_dark_mode": "다크모드 설정",
   "menu_fonts": "글씨체 설정",
   "menu_language": "언어 설정",
   "menu_info": "정보",
@@ -33,6 +34,7 @@ final map = {
   "menu_logout": "로그아웃",
   "generic_add_image": "이미지 추가",
   "generic_me": "나",
+  "generic_dark_mode_list": "모드 목록",
   "generic_app_version": "어플리케이션 버전",
   "generic_app_name": "어플리케이션 이름",
   "generic_app_build_no": "빌드 번호",
@@ -115,6 +117,12 @@ final map = {
   "generic_created_before": "%s 전 생성됨",
   "generic_tap_to_see_comment": "%s개의 댓글 보러가기",
   "generic_comment_page_title": "댓글 목록 (%s)",
+  "generic_dark_mode_system_setting": "시스템 설정",
+  "generic_dark_mode_system_setting_description": "휴대폰 다크모드 설정을 가져올게요",
+  "generic_dark_mode_dark": "다크 모드",
+  "generic_dark_mode_dark_description": "다크 모드 설정을 이용할래요",
+  "generic_dark_mode_light": "라이트 모드",
+  "generic_dark_mode_light_description": "라이트 모드 설정을 이용할래요",
   "message_tap_here_to_diary": "여기를 눌러서 일기를 작성해보세요!",
   "message_font_example_text": "매지구름아 안녕, 한국에 온걸 환영해!",
   "message_login_view_description": "매일 당신의 이야기를 들어드릴게요",
@@ -159,7 +167,8 @@ final map = {
   "message_nickname_cannot_be_same": "닉네임은 이전과 같을 수 없어요",
   "message_nickname_changed": "닉네임이 변경되었어요!",
   "message_leave_dialog_title": "회원 탈퇴를 진행할까요?",
-  "message_leave_dialog_description": "회원 탈퇴 이후 일기, 친구 내역등은 복구할 수 없어요"
+  "message_leave_dialog_description": "회원 탈퇴 이후 일기, 친구 내역등은 복구할 수 없어요",
+"message_dark_mode_settings_info": "다크 모드 설정을 변경할 수 있어요",
 };
 
 final engMap = {
@@ -174,6 +183,7 @@ final engMap = {
   "friend_profile": "%s's Profile",
   "menu_my_profiles": "Customize Profile",
   "menu_notification": "Notification Setting",
+  "menu_dark_mode": "Dark Mode Setting",
   "menu_fonts": "Font Setting",
   "menu_language": "Language Setting",
   "menu_info": "Etc",
@@ -184,6 +194,7 @@ final engMap = {
   "menu_logout": "Logout",
   "generic_add_image": "Add Image",
   "generic_me": "Me",
+  "generic_dark_mode_list": "Mode List",
   "generic_app_version": "Application Version",
   "generic_app_name": "Application Name",
   "generic_app_build_no": "Build Number",
@@ -266,6 +277,12 @@ final engMap = {
   "generic_created_before": "Created %s ago...",
   "generic_tap_to_see_comment": "Tap to see %s comments",
   "generic_comment_page_title": "Comment List (%s)",
+  "generic_dark_mode_system_setting": "System Settings",
+  "generic_dark_mode_system_setting_description": "I'll follow system dark mode",
+  "generic_dark_mode_dark": "Dark Mode",
+  "generic_dark_mode_dark_description": "I'll use Dark Mode",
+  "generic_dark_mode_light": "Light Mode",
+  "generic_dark_mode_light_description": "I'll use Light Mode",
   "message_tap_here_to_diary": "Tab here to write a diary!",
   "message_font_example_text": "Hello MagCloud, Welcome to Korea!",
   "message_login_view_description": "Your daily heart listener,",
@@ -317,6 +334,7 @@ final engMap = {
   "message_nickname_changed": "Nickname changed!",
   "message_leave_dialog_title": "Leave MagCloud?",
   "message_leave_dialog_description": "You cannot recover your diaries and friend list after leave",
+  "message_dark_mode_settings_info": "You can change dark mode settings",
 };
 
 String message(String key) {

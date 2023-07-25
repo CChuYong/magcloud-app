@@ -57,6 +57,12 @@ class MoreViewModel
     });
   }
 
+  Future<void> onTapDarkMode() async {
+    setStateAsync(() async {
+      await GlobalRoute.rightToLeftRouteTo('/settings/dark-mode');
+    });
+  }
+
   Future<void> onTapNotice() async {
     await GlobalRoute.noticePage();
   }

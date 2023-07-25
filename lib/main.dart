@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -37,7 +38,7 @@ void main() async {
           // home: const MyApp(),
           theme: _lightTheme,
           darkTheme: _darkTheme,
-          themeMode: ThemeMode.system,
+          themeMode: StateStore.getThemeMode(),
           home: inject<AuthService>().isAuthenticated()
               ? NavigatorView()
               : LoginView(),
@@ -51,6 +52,10 @@ ThemeData _lightTheme = ThemeData(
   useMaterial3: true,
   appBarTheme: const AppBarTheme(
     backgroundColor: BaseColor.defaultBackgroundColor,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: BaseColor.defaultBackgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ),
   ),
   colorScheme: const ColorScheme(
     onPrimary: BaseColor.blue300, //required
@@ -83,6 +88,10 @@ ThemeData _darkTheme = ThemeData(
   useMaterial3: true,
   appBarTheme: const AppBarTheme(
     backgroundColor: DarkBaseColor.defaultBackgroundColor,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: DarkBaseColor.defaultBackgroundColor,
+      statusBarIconBrightness: Brightness.light,
+    ),
   ),
   colorScheme: const ColorScheme(
     onPrimary: BaseColor.blue300, //required
@@ -105,7 +114,7 @@ ThemeData _darkTheme = ThemeData(
 
 
     onError: BaseColor.blue300, //no use
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
 
   ),
 );

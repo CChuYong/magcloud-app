@@ -113,6 +113,7 @@ class NavigatorViewState extends State<NavigatorView> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: BaseColor.warmGray100,
+      statusBarColor: context.theme.colorScheme.primary,
     ));
     return ScrollsToTop(
       onScrollsToTop: (e) async => onTapSelf?.call(),

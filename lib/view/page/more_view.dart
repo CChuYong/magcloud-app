@@ -158,7 +158,9 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                   action.onTapFonts),
               menuBtn(Icons.language, message('menu_language'),
                   action.onTapLanguage),
-              SizedBox(height: 24.sp),
+              menuBtn(Icons.dark_mode_outlined, message('menu_dark_mode'),
+                  action.onTapDarkMode),
+              SizedBox(height: 18.sp),
               Text(
                 message('menu_info'),
                 style: TextStyle(

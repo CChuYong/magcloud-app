@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,4 +68,16 @@ class StateStore {
   }
 
   static double? getDouble(String key) => sharedPreferences!.getDouble(key);
+
+  static ThemeMode getThemeMode() {
+    final themeMode = sharedPreferences!.getString('themeMode');
+    if (themeMode == null) return ThemeMode.system;
+    return ThemeMode.values.firstWhere(
+        (e) => e.toString() == 'ThemeMode.' + themeMode,
+        orElse: () => ThemeMode.system);
+  }
+
+  static Future<void> setThemeMode(ThemeMode themeMode) async {
+    await sharedPreferences!.setString('themeMode', themeMode.toString().split('.').last);
+  }
 }

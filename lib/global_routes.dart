@@ -13,6 +13,7 @@ import 'package:magcloud_app/view/page/friend_request_view.dart';
 import 'package:magcloud_app/view/page/login_view.dart';
 import 'package:magcloud_app/view/page/profile_view.dart';
 import 'package:magcloud_app/view/page/settings_view/application_info_view.dart';
+import 'package:magcloud_app/view/page/settings_view/dark_mode_config_view.dart';
 import 'package:magcloud_app/view/page/settings_view/font_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/language_setting_view.dart';
 import 'package:magcloud_app/view/page/settings_view/notification_config_view.dart';
@@ -31,6 +32,7 @@ class GlobalRoute {
     '/settings/font': () => FontSettingView(),
     '/settings/notification': () => NotificationConfigView(),
     '/settings/app-info': () => ApplicationInfoView(),
+    '/settings/dark-mode': () => DarkModeConfigView(),
     '/friends/requests': () => FriendRequestView(),
   };
   static String webViewUrl = 'https://bsc-webview.chuyong.kr'; //

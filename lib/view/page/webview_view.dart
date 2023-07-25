@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:magcloud_app/view/designsystem/base_color.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../core/framework/base_view.dart';
@@ -17,7 +17,7 @@ class WebViewScreenView extends BaseView<WebViewScreenView, WebViewScreenAction,
     return Container(
         width: double.infinity,
         height: double.infinity,
-        color: BaseColor.defaultBackgroundColor,
+        color: context.theme.colorScheme.background,
         child: SafeArea(
           child: WebViewWidget(
             controller: action.webViewController,

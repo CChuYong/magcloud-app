@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 
 class BaseNavigationBar extends StatefulWidget {
@@ -23,7 +24,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: BaseColor.warmGray200,
+              color: context.theme.colorScheme.outline,
               width: 1,
             ),
           ),
@@ -34,7 +35,7 @@ class _NavigationBarState extends State<BaseNavigationBar> {
               highlightColor: Colors.transparent,
             ),
             child: BottomNavigationBar(
-              backgroundColor: BaseColor.defaultBackgroundColor,
+              backgroundColor: context.theme.colorScheme.background,
               selectedItemColor: BaseColor.warmGray700,
               unselectedItemColor: BaseColor.warmGray400,
               showSelectedLabels: false,
@@ -42,9 +43,9 @@ class _NavigationBarState extends State<BaseNavigationBar> {
               selectedFontSize: 0,
               unselectedFontSize: 0,
               unselectedIconTheme:
-                  IconThemeData(color: BaseColor.warmGray400, size: 24.sp),
+                  IconThemeData(color: context.theme.colorScheme.inversePrimary, size: 24.sp),
               selectedIconTheme:
-                  IconThemeData(color: BaseColor.warmGray800, size: 24.sp),
+                  IconThemeData(color: context.theme.colorScheme.primary, size: 24.sp),
               selectedLabelStyle: TextStyle(
                 fontSize: 0,
               ),

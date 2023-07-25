@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
@@ -39,7 +40,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 5.sp),
-          titleBar(action),
+          titleBar(context, action),
           SizedBox(height: 3.sp),
           // Divider(),
           state.feeds.isEmpty
@@ -50,7 +51,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
     );
   }
 
-  Widget titleBar(FeedViewModel action) {
+  Widget titleBar(BuildContext context, FeedViewModel action) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Row(
@@ -60,7 +61,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
             Text(
               message('magcloud'),
               style: TextStyle(
-                  color: BaseColor.warmGray700,
+                  color: context.theme.colorScheme.primary,
                   fontSize: 22.sp,
                   fontFamily: 'GmarketSans'),
             ),
@@ -70,7 +71,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                   width: 31.sp,
                   height: 33.sp,
                   child: Icon(Icons.edit_calendar,
-                      size: 22.sp, color: BaseColor.warmGray600),
+                      size: 22.sp, color: context.theme.colorScheme.secondary),
                   //  color: BaseColor.blue300,
                 ))
           ],
@@ -92,7 +93,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                 slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => feed(action, e, width))
+                          .map((e) => feed(context, action, e, width))
                           .toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                 ]),
@@ -167,8 +168,8 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
     );
   }
 
-  Widget feed(FeedViewModel action, FeedElement element, double width) {
-    final divider = Divider(color: BaseColor.warmGray200, thickness: 1.sp);
+  Widget feed(BuildContext context, FeedViewModel action, FeedElement element, double width) {
+    final divider = Divider(color: context.theme.colorScheme.outline, thickness: 1.sp);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -193,7 +194,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                         Text(
                           element.userName,
                           style: TextStyle(
-                              color: BaseColor.warmGray800,
+                              color: context.theme.colorScheme.primary,
                               fontSize: 14.sp,
                               height: 1.3,
                               fontFamily: 'Pretendard'),
@@ -202,7 +203,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                           message('generic_created_before').format(
                               [DateParser.gapBetweenNow(element.createdAt)]),
                           style: TextStyle(
-                              color: BaseColor.warmGray600,
+                              color: context.theme.colorScheme.secondary,
                               fontSize: 12.sp,
                               height: 1.3,
                               fontFamily: 'Pretendard'),
@@ -232,7 +233,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                                 Text(element.likeCount.toString(), style: TextStyle(
                                     fontSize: 17.sp,
                                     height: 1.0,
-                                    color: BaseColor.warmGray600
+                                    color: context.theme.colorScheme.secondary
                                 ))
                               ]),
                           //  color: BaseColor.blue300,
@@ -254,7 +255,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                                 Text(element.commentCount.toString(), style: TextStyle(
                                     fontSize: 17.sp,
                                     height: 1.0,
-                                    color: BaseColor.warmGray600
+                                    color: context.theme.colorScheme.secondary
                                 ))
                               ]),
                           //  color: BaseColor.blue300,
@@ -274,7 +275,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
               Text(
                 DateParser.formatLocaleYmd(element.ymd),
                 style: TextStyle(
-                    color: BaseColor.warmGray700,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
@@ -296,7 +297,7 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
               Text(
                 element.content,
                 style: TextStyle(
-                    color: BaseColor.warmGray700,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: diaryFontSize,
                     fontFamily: diaryFont),
               ),

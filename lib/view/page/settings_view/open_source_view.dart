@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/oss_licenses.dart';
 
 import '../../../core/util/i18n.dart';
@@ -19,14 +20,14 @@ class OpenSourceLicenseView extends StatelessWidget {
               child: CustomScrollView(reverse: false, slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate(
-                        ossLicenses.map(element).toList())),
+                        ossLicenses.map((e) => element(context, e)).toList())),
               ]),
             )
           ])),
     );
   }
 
-  Widget element(Package package) {
+  Widget element(BuildContext context, Package package) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,6 +36,7 @@ class OpenSourceLicenseView extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Pretendard',
             fontSize: 18.sp,
+            color: context.theme.colorScheme.primary,
           ),
         ),
         Text(
@@ -42,6 +44,7 @@ class OpenSourceLicenseView extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Pretendard',
             fontSize: 12.sp,
+            color: context.theme.colorScheme.secondary,
           ),
         ),
         SizedBox(height: 24.sp),

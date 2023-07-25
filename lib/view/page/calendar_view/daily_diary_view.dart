@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/font.dart';
@@ -37,7 +38,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dailyViewTopBar(action, state),
+        dailyViewTopBar(context, action, state),
         scopeData.imageUrl != null
             ? Padding(
                 padding: EdgeInsets.symmetric(),
@@ -114,6 +115,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                             style: TextStyle(
                               fontFamily: diaryFont,
                               fontSize: diaryFontSize,
+                                color: context.theme.colorScheme.secondary
                             ),
                             controller: scopeData.diaryTextController,
                             keyboardType: TextInputType.multiline,
@@ -124,10 +126,10 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                                     ? message('message_tap_here_to_diary')
                                     : message('message_diary_is_empty'),
                                 hintStyle:
-                                    TextStyle(color: BaseColor.warmGray400)),
+                                    TextStyle(color: context.theme.colorScheme.secondary)),
                           )),
                     )),
-                    Divider(color: BaseColor.warmGray200),
+                    Divider(color: context.theme.colorScheme.outline),
                     Padding(
                       padding: EdgeInsets.only(right: 8.sp, bottom: 6.sp),
                       child: Row(
@@ -148,6 +150,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
   }
 
   Widget dailyViewTopBar(
+      BuildContext context,
       CalendarBaseViewModel action, CalendarBaseViewState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
@@ -159,7 +162,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
               child: Text(
                 DateParser.formatLocaleYmd(state.currentDate),
                 style: TextStyle(
-                    color: BaseColor.warmGray600,
+                    color: context.theme.colorScheme.primary,
                     fontSize: 16.sp,
                     fontFamily: 'GmarketSans'),
               )),
@@ -167,10 +170,10 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
             children: [
               TouchableOpacity(
                   onTap: () => action.changeDay(-1),
-                  child: const Icon(BaseIcon.arrowLeft)),
+                  child: Icon(BaseIcon.arrowLeft, color: context.theme.colorScheme.secondary)),
               TouchableOpacity(
                   onTap: () => action.changeDay(1),
-                  child: const Icon(BaseIcon.arrowRight)),
+                  child: Icon(BaseIcon.arrowRight, color: context.theme.colorScheme.secondary)),
             ],
           )
         ],

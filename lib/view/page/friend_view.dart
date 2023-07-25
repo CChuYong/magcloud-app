@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/friend.dart';
 import 'package:magcloud_app/core/util/extension.dart';
@@ -32,18 +33,18 @@ class FriendView
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 5.sp),
-          titleBar(action),
+          titleBar(context, action),
           SizedBox(height: 14.sp),
-          searchBar(action),
+          searchBar(context, action),
           SizedBox(height: 5.sp),
-          Divider(color: BaseColor.warmGray200),
-          Expanded(child: friendContainer(action, state))
+          Divider(color: context.theme.colorScheme.outline),
+          Expanded(child: friendContainer(context, action, state))
         ],
       ),
     );
   }
 
-  Widget titleBar(FriendViewModel action) {
+  Widget titleBar(BuildContext context, FriendViewModel action) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Row(
@@ -53,7 +54,7 @@ class FriendView
             Text(
               message('navigation_friends'),
               style: TextStyle(
-                  color: BaseColor.warmGray700,
+                  color: context.theme.colorScheme.primary,
                   fontSize: 22.sp,
                   fontFamily: 'GmarketSans'),
             ),
@@ -65,7 +66,7 @@ class FriendView
                     //  color: BaseColor.blue300,
                     child: Stack(alignment: Alignment.centerLeft, children: [
                       Icon(Icons.people,
-                          color: BaseColor.warmGray700, size: 24.sp),
+                          color: context.theme.colorScheme.secondary, size: 24.sp),
                       action.state.requestCount != 0
                           ? Positioned(
                               top: 0,
@@ -92,13 +93,13 @@ class FriendView
         ));
   }
 
-  Widget searchBar(FriendViewModel action) {
+  Widget searchBar(BuildContext context, FriendViewModel action) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: BaseColor.warmGray100,
+            color: context.theme.colorScheme.onBackground,
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.sp),
@@ -115,7 +116,7 @@ class FriendView
                     action.focusNode.unfocus();
                   },
                   style: TextStyle(
-                    color: BaseColor.warmGray600,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: 15.sp,
                     height: 1.2,
                   ),
@@ -123,7 +124,7 @@ class FriendView
                       border: InputBorder.none,
                       hintText: message('generic_search'),
                       hintStyle: TextStyle(
-                        color: BaseColor.warmGray400,
+                        color: context.theme.colorScheme.secondary,
                         fontSize: 15.sp,
                       )),
                 ))
@@ -133,7 +134,7 @@ class FriendView
         ));
   }
 
-  Widget friendContainer(FriendViewModel action, FriendViewState state) {
+  Widget friendContainer(BuildContext context, FriendViewModel action, FriendViewState state) {
     final friends = state.getFilteredFriends();
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 17.sp, vertical: 10.sp),
@@ -146,7 +147,7 @@ class FriendView
                 child: CustomScrollView(reverse: false, slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(
-                          friends.map(friendBox).toList())),
+                          friends.map((e) => friendBox(context, e)).toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                   SliverToBoxAdapter(
                       child: Center(
@@ -154,7 +155,7 @@ class FriendView
                     message('message_total_friend_count')
                         .format([friends.length.toString()]),
                     style: TextStyle(
-                      color: BaseColor.warmGray500,
+                      color: context.theme.colorScheme.secondary,
                       fontSize: 12.sp,
                     ),
                   )))
@@ -166,7 +167,7 @@ class FriendView
         ));
   }
 
-  Widget friendBox(Friend friend) {
+  Widget friendBox(BuildContext context, Friend friend) {
     return Column(
       children: [
         Stack(
@@ -199,14 +200,14 @@ class FriendView
                             Text(
                               friend.name,
                               style: TextStyle(
-                                color: BaseColor.warmGray700,
+                                color: context.theme.colorScheme.primary,
                                 fontSize: 14.sp,
                               ),
                             ),
                             Text(
                               friend.nameTag,
                               style: TextStyle(
-                                color: BaseColor.warmGray500,
+                                color: context.theme.colorScheme.secondary,
                                 fontSize: 12.sp,
                               ),
                             ),

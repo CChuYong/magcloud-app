@@ -8,6 +8,7 @@ import '../designsystem/base_color.dart';
 
 Future<bool> confirmDialog(String title, String subtitle,
     {required String confirmText, Color? confirmColor}) async {
+  final context = Get.context!;
   return await showGeneralDialog<bool?>(
         context: Get.context!,
         barrierLabel: '',
@@ -22,7 +23,7 @@ Future<bool> confirmDialog(String title, String subtitle,
         },
         pageBuilder: (_, _1, _2) => Dialog(
           elevation: 0.0,
-          backgroundColor: BaseColor.defaultBackgroundColor,
+          backgroundColor: context.theme.colorScheme.onBackground,
           insetPadding: null,
           alignment: Alignment.bottomCenter,
           shape: const RoundedRectangleBorder(
@@ -48,12 +49,12 @@ Future<bool> confirmDialog(String title, String subtitle,
                                 SizedBox(height: 22.sp),
                                 Text(title,
                                     style: TextStyle(
-                                      color: BaseColor.warmGray700,
+                                      color:context.theme.colorScheme.primary,
                                       fontSize: 16.sp,
                                     )),
                                 Text(subtitle,
                                     style: TextStyle(
-                                      color: BaseColor.warmGray500,
+                                      color: context.theme.colorScheme.secondary,
                                       fontSize: 14.sp,
                                     )),
                                 SizedBox(height: 15.sp),

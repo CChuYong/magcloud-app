@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
+import '../../view/designsystem/base_color.dart';
 import '../../view/designsystem/base_icon.dart';
 
 enum SnackBarType { RED, GREEN, YELLOW, GREY }
@@ -21,11 +22,12 @@ class SnackBarUtil {
     SnackPosition position = SnackPosition.TOP,
   }) async {
     ensureSnackBarClosed();
+    final context = Get.context!;
     _snackbar(
       '',
       message,
       barBlur: 100.0,
-      // backgroundColor: bgColor,
+      backgroundColor: BaseColor.warmGray300,
       // colorText: txtColor,
       icon: Icon(BaseIcon.snackBarError),
       titleText: Container(),
@@ -46,7 +48,7 @@ class SnackBarUtil {
       '',
       message,
       barBlur: 100.0,
-      // backgroundColor: bgColor,
+      backgroundColor: BaseColor.warmGray300,
       // colorText: txtColor,
       icon: Icon(BaseIcon.snackBarInfo),
       titleText: Container(),

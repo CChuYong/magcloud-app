@@ -35,12 +35,9 @@ void main() async {
     runApp(ScreenUtilInit(
         builder: (context, widget) => GetMaterialApp(
           // home: const MyApp(),
-          theme: ThemeData(
-            fontFamily: 'Pretendard',
-            colorScheme: ColorScheme.fromSeed(
-                seedColor: BaseColor.defaultBackgroundColor),
-            useMaterial3: true,
-          ),
+          theme: _lightTheme,
+          darkTheme: _darkTheme,
+          themeMode: ThemeMode.system,
           home: inject<AuthService>().isAuthenticated()
               ? NavigatorView()
               : LoginView(),
@@ -48,3 +45,67 @@ void main() async {
         )));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
+
+ThemeData _lightTheme = ThemeData(
+  fontFamily: 'Pretendard',
+  useMaterial3: true,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: BaseColor.defaultBackgroundColor,
+  ),
+  colorScheme: const ColorScheme(
+    onPrimary: BaseColor.blue300, //required
+    onSecondary: BaseColor.blue300, //required
+    primary: BaseColor.warmGray700, // point color1
+    primaryContainer: BaseColor.blue300, // point color2
+    secondary:BaseColor.warmGray500, // point color3
+    background: BaseColor.defaultBackgroundColor, // app backgound
+    surface: BaseColor.defaultSplashBackgroundColor, // card background
+    outline: BaseColor.warmGray200, // card l
+    outlineVariant: BaseColor.warmGray300, /// ine or divider
+    surfaceVariant: BaseColor.blue300, // disabled
+    onSurface: BaseColor.blue300, // text3
+    onSurfaceVariant: BaseColor.blue300, //text2
+    onBackground: BaseColor.warmGray100, //text1
+    error: BaseColor.blue300,  // danger
+    tertiary: BaseColor.blue300, // normal
+    tertiaryContainer: BaseColor.blue300, // safe
+    inversePrimary: BaseColor.warmGray200,
+
+
+    onError: BaseColor.blue300, //no use
+    brightness: Brightness.light,
+
+  ),
+);
+
+ThemeData _darkTheme = ThemeData(
+  fontFamily: 'Pretendard',
+  useMaterial3: true,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: DarkBaseColor.defaultBackgroundColor,
+  ),
+  colorScheme: const ColorScheme(
+    onPrimary: BaseColor.blue300, //required
+    onSecondary: BaseColor.blue300, //required
+    primary: BaseColor.warmGray50, // point color1
+    primaryContainer: BaseColor.blue300, // point color2
+    secondary:BaseColor.warmGray200, // point color3
+    background: DarkBaseColor.defaultBackgroundColor, // app backgound
+    surface: DarkBaseColor.defaultSplashBackgroundColor, // card background
+    outline: BaseColor.warmGray700, // card line or divider
+    outlineVariant: BaseColor.warmGray700,
+    surfaceVariant: BaseColor.blue300, // disabled
+    onSurface: BaseColor.blue300, // text3
+    onSurfaceVariant: BaseColor.blue300, //text2
+    onBackground: BaseColor.warmGray800, //text1
+    error: BaseColor.blue300,  // danger
+    tertiary: BaseColor.blue300, // normal
+    tertiaryContainer: BaseColor.blue300, // safe
+    inversePrimary: BaseColor.warmGray700,
+
+
+    onError: BaseColor.blue300, //no use
+    brightness: Brightness.light,
+
+  ),
+);

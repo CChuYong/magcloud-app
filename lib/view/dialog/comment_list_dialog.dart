@@ -19,6 +19,7 @@ import '../designsystem/base_color.dart';
 Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> comments) {
   final textController = TextEditingController();
   final focusNode = FocusNode();
+  final context = Get.context!;
   return showGeneralDialog(
     context: Get.context!,
     barrierLabel: '',
@@ -32,7 +33,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
     },
     pageBuilder: (_, _1, _2) => Dialog(
       elevation: 0.0,
-      backgroundColor: BaseColor.defaultBackgroundColor,
+      backgroundColor: context.theme.colorScheme.onBackground,
       insetPadding: null,
       alignment: Alignment.bottomCenter,
       shape: const RoundedRectangleBorder(
@@ -63,7 +64,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                 SizedBox(width: 18.sp),
                                 Text(message('generic_comment_page_title').format([comments.length]),
                                     style: TextStyle(
-                                      color: BaseColor.warmGray700,
+                                      color: context.theme.colorScheme.primary,
                                       fontSize: 16.sp,
                                     )),
                                 TouchableOpacity(
@@ -82,7 +83,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                     reverse: false,
                                     slivers: [
                                       SliverList(
-                                          delegate: SliverChildListDelegate(comments.map((e) => friendBox(e)).toList())),
+                                          delegate: SliverChildListDelegate(comments.map((e) => friendBox(context, e)).toList())),
                                       SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                                     ]),
                               ),
@@ -94,11 +95,12 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                 controller: textController,
                                 decoration: InputDecoration(
                                     hintText:
-                                    "일기에 댓글 달기..",
+                                    message('generic_add_comment_to_diary'),
+                                    hintStyle: TextStyle(
+                                        color: context.theme.colorScheme.secondary,
+                                        fontSize: 12.sp),
                                     contentPadding:
                                     EdgeInsets.fromLTRB(15.sp, 0.sp, 5.sp, 0.sp),
-                                    fillColor: BaseColor.warmGray50,
-                                    filled: false,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(24.sp),
                                         borderSide: BorderSide(
@@ -106,7 +108,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                           width: 1.sp,
                                         ))),
                                 style:
-                                TextStyle(color: BaseColor.warmGray700, fontSize: 12.sp),
+                                TextStyle(color: context.theme.colorScheme.secondary, fontSize: 12.sp),
                               ),
                               Positioned(right: 12.sp,child:
                                   TouchableOpacity(
@@ -120,7 +122,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                         comments = queriedComments;
                                       });
                                     },
-                                    child: Icon(CupertinoIcons.paperplane_fill, color: BaseColor.warmGray400),
+                                    child: Icon(CupertinoIcons.paperplane_fill, color: context.theme.colorScheme.secondary),
                                   )
                               )
 
@@ -134,7 +136,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
   );
 }
 
-Widget friendBox(DiaryCommentResponse response) {
+Widget friendBox(BuildContext context, DiaryCommentResponse response) {
   return Column(
     children: [
       Stack(
@@ -168,7 +170,7 @@ Widget friendBox(DiaryCommentResponse response) {
                             Text(
                             response.username,
                             style: TextStyle(
-                              color: BaseColor.warmGray700,
+                              color: context.theme.colorScheme.primary,
                               fontSize: 14.sp,
                             ),
                           ),
@@ -176,7 +178,7 @@ Widget friendBox(DiaryCommentResponse response) {
                             Text(
                               "${DateParser.gapBetweenNow(response.createdAtTs)} ${message('generic_before')}",
                               style: TextStyle(
-                                color: BaseColor.warmGray500,
+                                color: context.theme.colorScheme.secondary,
                                 fontSize: 10.sp,
                               ),
                             ),
@@ -184,7 +186,7 @@ Widget friendBox(DiaryCommentResponse response) {
                           Text(
                             response.content,
                             style: TextStyle(
-                              color: BaseColor.warmGray500,
+                              color: context.theme.colorScheme.secondary,
                               fontSize: 12.sp,
                             ),
                           ),

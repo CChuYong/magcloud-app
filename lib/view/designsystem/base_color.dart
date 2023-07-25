@@ -32,3 +32,8 @@ final class BaseColor {
   static const defaultBackgroundColor = Colors.white;
   static const defaultSplashBackgroundColor = warmGray200;
 }
+
+final class DarkBaseColor {
+  static const defaultBackgroundColor = Colors.black;
+  static const defaultSplashBackgroundColor = BaseColor.warmGray800;
+}

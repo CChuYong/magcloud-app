@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/daily_user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
@@ -45,7 +46,6 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
       CalendarBaseViewState state) {
     const Curve curve = Curves.easeInOutSine;
     return Container(
-      color: BaseColor.defaultBackgroundColor,
       child: Stack(
         children: [
           SafeArea(
@@ -84,14 +84,13 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           Container(
             width: double.infinity,
             height: 50.sp,
-            color: BaseColor.defaultBackgroundColor,
           ),
           SafeArea(
               child: GestureDetector(
                   onVerticalDragEnd: action.onVerticalDragTopBar,
                   child: Column(
                     children: [
-                      titleBar(action),
+                      titleBar(context, action),
                       AnimatedSwitcher(
                         switchInCurve: curve,
                         switchOutCurve: curve,
@@ -109,20 +108,18 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                             ? Column(
                                 children: [
                                   Container(
-                                      color: BaseColor.defaultBackgroundColor,
                                       height: 18.sp,
                                       width: double.infinity),
                                   Container(
-                                    color: BaseColor.defaultBackgroundColor,
-                                    child: friendBar(action),
+                                    child: friendBar(context, action),
                                   ),
                                 ],
                               )
                             : Container(),
                       ),
                       Container(
-                        color: BaseColor.defaultBackgroundColor,
-                        child: Divider(color: BaseColor.warmGray200),
+                        color: context.theme.colorScheme.background,
+                        child: Divider(color: context.theme.colorScheme.outline),
                       ),
                     ],
                   ))),
@@ -132,9 +129,9 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     );
   }
 
-  Widget titleBar(CalendarBaseViewModel action) {
+  Widget titleBar(BuildContext context, CalendarBaseViewModel action) {
     return Container(
-      color: BaseColor.defaultBackgroundColor,
+      color: context.theme.colorScheme.background,
       child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.sp),
           child: Row(
@@ -150,7 +147,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                             : message("magcloud_with_name").format(
                                 [action.state.selectedUser?.name ?? ''])),
                     style: TextStyle(
-                        color: BaseColor.warmGray800,
+                        color: context.theme.colorScheme.primary,
                         fontSize: action.isFriendBarOpen ? 22.sp : 20.sp,
                         fontFamily: 'GmarketSans'),
                   )),
@@ -160,13 +157,14 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                       action.isFriendBarOpen
                           ? BaseIcon.arrowUp
                           : BaseIcon.arrowDown,
+                      color: context.theme.colorScheme.secondary,
                       size: 22.sp)),
             ],
           )),
     );
   }
 
-  Widget friendBar(CalendarBaseViewModel action) {
+  Widget friendBar(BuildContext context, CalendarBaseViewModel action) {
     final isOnline = action.isOnline();
     return IntrinsicHeight(
         child: Row(
@@ -177,7 +175,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
           // fit: StackFit.expand,
           children: [
             Container(
-              color: BaseColor.defaultBackgroundColor,
+              color: context.theme.colorScheme.background,
               width: double.infinity,
               height: 69.sp,
               child: CustomScrollView(
@@ -186,13 +184,13 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                   slivers: [
                     SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
                     SliverToBoxAdapter(
-                        child: meIcon(action, action.state.dailyMe)),
+                        child: meIcon(context, action, action.state.dailyMe)),
                     SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
                     for (DailyUser user in action.state.dailyFriends) ...[
-                      SliverToBoxAdapter(child: friendIcon(action, user)),
+                      SliverToBoxAdapter(child: friendIcon(context, action, user)),
                       SliverToBoxAdapter(child: SizedBox(width: 10.sp)),
                     ],
-                    SliverToBoxAdapter(child: addFriend(action)),
+                    SliverToBoxAdapter(child: addFriend(context, action)),
                     SliverToBoxAdapter(child: SizedBox(width: 15.sp)),
                   ]),
             ),
@@ -251,7 +249,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
     );
   }
 
-  Widget addFriend(CalendarBaseViewModel action) {
+  Widget addFriend(BuildContext context, CalendarBaseViewModel action) {
     return TouchableOpacity(
         onTap: action.onTapAddFriend,
         child: Column(
@@ -282,7 +280,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             Text(
               message('generic_add_friend'),
               style: TextStyle(
-                color: BaseColor.warmGray500,
+                color: context.theme.colorScheme.secondary,
                 fontSize: 12.sp,
               ),
             ),
@@ -290,7 +288,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
         ));
   }
 
-  Widget friendIcon(CalendarBaseViewModel action, DailyUser user) {
+  Widget friendIcon(BuildContext context, CalendarBaseViewModel action, DailyUser user) {
     final isSelected = action.state.selectedUser == user;
     return TouchableOpacity(
         onTap: () => action.onTapFriendIcon(user),
@@ -306,7 +304,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                   user.name,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: BaseColor.warmGray500,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: 11.sp,
                   ),
                 )
@@ -314,7 +312,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             ))));
   }
 
-  Widget meIcon(CalendarBaseViewModel action, DailyUser? me) {
+  Widget meIcon(BuildContext context, CalendarBaseViewModel action, DailyUser? me) {
     final mood = me?.mood ?? Mood.neutral;
     final isSelected = action.state.selectedUser == me;
     return TouchableOpacity(
@@ -329,7 +327,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                     action.state.selectedUser == me),
                 Text(message('generic_me'),
                     style: TextStyle(
-                      color: BaseColor.warmGray500,
+                      color: context.theme.colorScheme.secondary,
                       fontSize: 11.sp,
                     )),
               ],

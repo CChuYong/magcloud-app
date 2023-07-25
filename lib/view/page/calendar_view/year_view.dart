@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
@@ -34,7 +35,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        yearViewTopBar(action, state),
+        yearViewTopBar(context, action, state),
         SizedBox(height: 20.sp),
         AnimatedSwitcher(
             duration: const Duration(milliseconds: 250),
@@ -55,7 +56,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
                     children: [
                       SizedBox(width: 20.sp),
                       for (int x = (j * 4) + 1; x <= (j * 4) + 4; x++) ...[
-                        createMonthBox(action, month: x, boxWidth: boxWidth),
+                        createMonthBox(context, action, month: x, boxWidth: boxWidth),
                         SizedBox(width: 20.sp),
                       ],
                     ],
@@ -69,6 +70,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
   }
 
   Widget yearViewTopBar(
+      BuildContext context,
       CalendarBaseViewModel action, CalendarBaseViewState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
@@ -79,7 +81,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
               child: Text(
             '${state.currentDate.year}${message("generic_year")}',
             style: TextStyle(
-                color: BaseColor.warmGray600,
+                color: context.theme.colorScheme.secondary,
                 fontSize: 16.sp,
                 fontFamily: 'GmarketSans'),
           )),
@@ -98,7 +100,9 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
     );
   }
 
-  Widget createMonthBox(CalendarBaseViewModel action,
+  Widget createMonthBox(
+      BuildContext context,
+      CalendarBaseViewModel action,
       {required int month, required double boxWidth}) {
     final currentYear = DateParser.getCurrentYear();
     final isInvisible = currentYear < action.state.currentDate.year ||
@@ -120,8 +124,8 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
               DateParser.formatLocaleMonth(month),
               style: TextStyle(
                   color: isInvisible
-                      ? BaseColor.warmGray200
-                      : BaseColor.warmGray500,
+                      ? context.theme.colorScheme.outline
+                      : context.theme.colorScheme.secondary,
                   fontSize: 18.sp,
                   fontFamily: 'GmarketSans'),
             ),

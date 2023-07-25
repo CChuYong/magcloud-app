@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
@@ -116,7 +117,7 @@ class NavigatorViewState extends State<NavigatorView> {
     return ScrollsToTop(
       onScrollsToTop: (e) async => onTapSelf?.call(),
       child: Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
+      backgroundColor: context.theme.colorScheme.background,
       bottomNavigationBar:
           BaseNavigationBar(onTap: onTap, currentPage: currentPage),
       body: AnimatedSwitcher(

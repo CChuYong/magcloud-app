@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
@@ -39,7 +40,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        monthViewTopBar(action, state),
+        monthViewTopBar(context, action, state),
         SizedBox(height: 20.sp),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
@@ -60,10 +61,10 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: boxWidth / 2 - (dayOfWeekFontSize / 2)),
-                  child: dayOfWeekTitle(),
+                  child: dayOfWeekTitle(context),
                 ),
                 SizedBox(height: 10.sp),
-                drawCalendar(action, state, boxWidth: boxWidth, boxGap: boxGap),
+                drawCalendar(context, action, state, boxWidth: boxWidth, boxGap: boxGap),
               ],
             ),
           ),
@@ -73,6 +74,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
   }
 
   Widget monthViewTopBar(
+      BuildContext context,
       CalendarBaseViewModel action, CalendarBaseViewState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
@@ -84,7 +86,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
               child: Text(
                 DateParser.formatLocaleYm(state.currentDate),
                 style: TextStyle(
-                    color: BaseColor.warmGray600,
+                    color: context.theme.colorScheme.primary,
                     fontSize: 16.sp,
                     fontFamily: 'GmarketSans'),
               )),
@@ -92,10 +94,10 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
             children: [
               TouchableOpacity(
                   onTap: () => action.changeMonth(-1),
-                  child: const Icon(BaseIcon.arrowLeft)),
+                  child: Icon(BaseIcon.arrowLeft, color: context.theme.colorScheme.secondary)),
               TouchableOpacity(
                   onTap: () => action.changeMonth(1),
-                  child: const Icon(BaseIcon.arrowRight)),
+                  child: Icon(BaseIcon.arrowRight, color: context.theme.colorScheme.secondary)),
             ],
           )
         ],
@@ -103,7 +105,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
     );
   }
 
-  Widget drawCalendar(CalendarBaseViewModel action, CalendarBaseViewState state,
+  Widget drawCalendar(BuildContext context, CalendarBaseViewModel action, CalendarBaseViewState state,
       {required double boxWidth, required double boxGap}) {
     final monthGrid = state.getMonthGrid();
     return Column(children: [
@@ -113,7 +115,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
             for (int dayOfWeek = 0; dayOfWeek < week.length; dayOfWeek++) ...[
               week[dayOfWeek] == -1
                   ? SizedBox(width: boxWidth, height: boxWidth)
-                  : createDayBox(action,
+                  : createDayBox(context, action,
                       day: week[dayOfWeek], boxWidth: boxWidth),
               if (dayOfWeek != week.length - 1) SizedBox(width: boxGap)
             ]
@@ -124,7 +126,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
     ]);
   }
 
-  Widget createDayBox(CalendarBaseViewModel action,
+  Widget createDayBox(BuildContext context, CalendarBaseViewModel action,
       {required int day, required double boxWidth}) {
     final scopeData = action.state.scopeData as CalendarMonthViewScopeData;
     return TouchableOpacity(
@@ -143,7 +145,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
               day.abs().toString(),
               style: TextStyle(
                   color:
-                      day > 0 ? BaseColor.warmGray500 : BaseColor.warmGray300,
+                      day > 0 ? context.theme.colorScheme.secondary : context.theme.colorScheme.outline,
                   fontSize: 18.sp,
                   fontFamily: 'GmarketSans'),
             ),
@@ -151,7 +153,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
         ));
   }
 
-  Widget dayOfWeekTitle() {
+  Widget dayOfWeekTitle(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -165,35 +167,35 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
         Text(
           message("generic_simple_monday"),
           style: TextStyle(
-              color: BaseColor.warmGray600,
+              color: context.theme.colorScheme.secondary,
               fontSize: dayOfWeekFontSize,
               fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_tuesday"),
           style: TextStyle(
-              color: BaseColor.warmGray600,
+              color: context.theme.colorScheme.secondary,
               fontSize: dayOfWeekFontSize,
               fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_wednesday"),
           style: TextStyle(
-              color: BaseColor.warmGray600,
+              color: context.theme.colorScheme.secondary,
               fontSize: dayOfWeekFontSize,
               fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_thursday"),
           style: TextStyle(
-              color: BaseColor.warmGray600,
+              color: context.theme.colorScheme.secondary,
               fontSize: dayOfWeekFontSize,
               fontFamily: 'GmarketSans'),
         ),
         Text(
           message("generic_simple_friday"),
           style: TextStyle(
-              color: BaseColor.warmGray600,
+              color: context.theme.colorScheme.secondary,
               fontSize: dayOfWeekFontSize,
               fontFamily: 'GmarketSans'),
         ),

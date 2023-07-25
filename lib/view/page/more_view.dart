@@ -1,6 +1,11 @@
-  import 'package:cached_network_image/cached_network_image.dart';
+
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_icon.dart';
@@ -30,17 +35,17 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 5.sp),
-          titleBar(),
+          titleBar(context),
           SizedBox(height: 20.sp),
-          meBox(action, state),
+          meBox(context, action, state),
           SizedBox(height: 15.sp),
-          Expanded(child: menuBox(action))
+          Expanded(child: menuBox(context, action))
         ],
       ),
     );
   }
 
-  Widget titleBar() {
+  Widget titleBar(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Row(
@@ -49,7 +54,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             Text(
               message('navigation_more'),
               style: TextStyle(
-                  color: BaseColor.warmGray700,
+                  color: context.theme.colorScheme.primary,
                   fontSize: 22.sp,
                   fontFamily: 'GmarketSans'),
             ),
@@ -57,7 +62,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
         ));
   }
 
-  Widget meBox(MoreViewModel action, MoreViewState state) {
+  Widget meBox(BuildContext context, MoreViewModel action, MoreViewState state) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: TouchableOpacity(
@@ -65,7 +70,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: BaseColor.warmGray100,
+                  color: context.theme.colorScheme.onBackground,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -107,14 +112,14 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                               Text(
                                 state.me?.name ?? '',
                                 style: TextStyle(
-                                    color: BaseColor.warmGray700,
+                                    color:  context.theme.colorScheme.primary,
                                     fontSize: 16.sp,
                                     fontFamily: 'Pretendard'),
                               ),
                               Text(
                                 state.me?.nameTag ?? '',
                                 style: TextStyle(
-                                    color: BaseColor.warmGray500,
+                                    color:  context.theme.colorScheme.secondary,
                                     fontSize: 12.sp,
                                     fontFamily: 'Pretendard'),
                               ),
@@ -122,13 +127,13 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                           )
                         ],
                       ),
-                      Icon(BaseIcon.arrowRight, color: BaseColor.warmGray400)
+                      Icon(BaseIcon.arrowRight, color: context.theme.colorScheme.secondary)
                     ],
                   ),
                 ))));
   }
 
-  Widget menuBox(MoreViewModel action) {
+  Widget menuBox(BuildContext context, MoreViewModel action) {
     final boxGap = 10.sp;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
@@ -140,7 +145,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               Text(
                 message('menu_settings'),
                 style: TextStyle(
-                    color: BaseColor.warmGray800,
+                    color: context.theme.colorScheme.primary,
                     fontSize: 18.sp,
                     fontFamily: 'Pretendard'),
               ),
@@ -157,7 +162,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               Text(
                 message('menu_info'),
                 style: TextStyle(
-                    color: BaseColor.warmGray800,
+                    color: context.theme.colorScheme.primary,
                     fontSize: 18.sp,
                     fontFamily: 'Pretendard'),
               ),
@@ -178,6 +183,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   final boxPadding = 5.sp;
 
   Widget menuBtn(IconData icon, String name, void Function() onTap) {
+    BuildContext context = Get.context!;
     final iconSize = 19.sp;
     return TouchableOpacity(
         onTap: onTap,
@@ -200,13 +206,13 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                             child: Center(
                                 child: Icon(icon,
                                     size: iconSize,
-                                    color: BaseColor.warmGray700)),
+                                    color: context.theme.colorScheme.secondary)),
                           ),
                           SizedBox(width: 12.sp),
                           Text(
                             name,
                             style: TextStyle(
-                                color: BaseColor.warmGray600,
+                                color: context.theme.colorScheme.secondary,
                                 fontSize: 15.sp,
                                 height: 1.2,
                                 fontFamily: 'Pretendard'),
@@ -214,7 +220,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                         ],
                       ),
                       Icon(BaseIcon.arrowRight,
-                          color: BaseColor.warmGray700, size: 14.sp)
+                          color: context.theme.colorScheme.secondary, size: 14.sp)
                     ],
                   )))
         ]));

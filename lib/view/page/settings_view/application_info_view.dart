@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -30,42 +31,42 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 15.sp),
-              row(
+              row(context,
                   message('generic_app_name'),
                   Text(state.packageInfo?.appName ?? '',
                       style: TextStyle(
-                          color: BaseColor.warmGray400, fontSize: 14.sp))),
+                          color: context.theme.colorScheme.secondary, fontSize: 14.sp))),
               SizedBox(height: gapBetweenElements),
-              row(
+              row(context,
                   message('generic_app_version'),
                   Text(state.packageInfo?.version ?? '',
                       style: TextStyle(
-                          color: BaseColor.warmGray400, fontSize: 14.sp))),
+                          color: context.theme.colorScheme.secondary, fontSize: 14.sp))),
               SizedBox(height: gapBetweenElements),
-              row(
+              row(context,
                   message('generic_app_build_no'),
                   Text(state.packageInfo?.buildNumber ?? '',
                       style: TextStyle(
-                          color: BaseColor.warmGray400, fontSize: 14.sp))),
+                          color: context.theme.colorScheme.secondary, fontSize: 14.sp))),
               SizedBox(height: gapBetweenElements),
-              row(
+              row(context,
                   message('generic_offline_mode'),
                   Text(
                       inject<OnlineService>().isOnlineMode()
                           ? message('generic_disactivated')
                           : message('generic_activated'),
                       style: TextStyle(
-                          color: BaseColor.warmGray400, fontSize: 14.sp))),
+                          color: context.theme.colorScheme.secondary, fontSize: 14.sp))),
               SizedBox(height: 20.sp),
-              const Divider(color: BaseColor.warmGray200, height: 1),
+              Divider(color: context.theme.colorScheme.outline, height: 1),
               SizedBox(height: 20.sp),
-              row(message('generic_reset_cache'),
+              row(context, message('generic_reset_cache'),
                   button(message('generic_reset'), action.resetCacheData)),
               SizedBox(height: gapBetweenElements),
-              row(message('generic_reset_settings'),
+              row(context, message('generic_reset_settings'),
                   button(message('generic_reset'), action.resetSettings)),
               SizedBox(height: gapBetweenElements),
-              row(
+              row(context,
                   message('generic_open_source_license'),
                   button(
                       message('generic_watch'), action.watchOpenSourceLicense)),
@@ -74,12 +75,12 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView,
     );
   }
 
-  Widget row(String title, Widget side) {
+  Widget row(BuildContext context, String title, Widget side) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title,
-            style: TextStyle(color: BaseColor.warmGray600, fontSize: 14.sp)),
+            style: TextStyle(color: context.theme.colorScheme.primary, fontSize: 14.sp)),
         side
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -33,18 +34,18 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
               SizedBox(width: 28.sp),
               Text(message('generic_selected_font'),
                   style:
-                      TextStyle(color: BaseColor.warmGray600, fontSize: 16.sp))
+                      TextStyle(color: context.theme.colorScheme.primary, fontSize: 16.sp))
             ],
           ),
           SizedBox(height: 10.sp),
-          languages(action),
+          languages(context, action),
           Row(
             children: [
               SizedBox(width: 28.sp),
               Flexible(
                   child: Text(message('message_font_settings_info'),
                       style: TextStyle(
-                          color: BaseColor.warmGray500, fontSize: 12.sp))),
+                          color:  context.theme.colorScheme.secondary, fontSize: 12.sp))),
               SizedBox(width: 28.sp),
             ],
           ),
@@ -54,7 +55,7 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
               SizedBox(width: 24.sp),
               Text(message('generic_font_size'),
                   style:
-                      TextStyle(color: BaseColor.warmGray600, fontSize: 16.sp))
+                      TextStyle(color:  context.theme.colorScheme.primary, fontSize: 16.sp))
             ],
           ),
           Row(
@@ -65,7 +66,7 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
             ],
           ),
           SizedBox(height: 30.sp),
-          Divider(thickness: 10.sp, color: BaseColor.warmGray100),
+          Divider(thickness: 10.sp, color:  context.theme.colorScheme.outline),
           SizedBox(height: 10.sp),
           Expanded(
               child: Padding(
@@ -75,6 +76,7 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
               style: TextStyle(
                 fontFamily: diaryFont,
                 fontSize: state.fontSize,
+                color:  context.theme.colorScheme.primary,
               ),
               //controller: scopeData.diaryTextController,
               keyboardType: TextInputType.multiline,
@@ -89,30 +91,31 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
     ));
   }
 
-  Widget languages(FontSettingViewModel action) {
+  Widget languages(BuildContext context, FontSettingViewModel action) {
     final gapBetweenBadge = 11.sp;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Column(
           children: [
-            fontBox(action, 'KyoboHandWriting', '교보손글씨 2021 성지영'),
+            fontBox(context, action, 'KyoboHandWriting', '교보손글씨 2021 성지영'),
             SizedBox(height: gapBetweenBadge),
-            fontBox(action, 'KyoboHandWriting2019', '교보손글씨 2019'),
+            fontBox(context, action, 'KyoboHandWriting2019', '교보손글씨 2019'),
             SizedBox(height: gapBetweenBadge),
-            fontBox(action, 'GmarketSans', 'Gmarket Sans'),
+            fontBox(context, action, 'GmarketSans', 'Gmarket Sans'),
             SizedBox(height: gapBetweenBadge),
           ],
         ));
   }
 
   Widget fontBox(
+      BuildContext context,
       FontSettingViewModel action, String fontName, String fontDisplayName) {
     final isSelected = diaryFont == fontName;
     return TouchableOpacity(
         onTap: () => action.onTapFont(fontName),
         child: Container(
           decoration: BoxDecoration(
-              color: BaseColor.warmGray50,
+              color: context.theme.colorScheme.onBackground,
               borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 20.sp),
@@ -122,10 +125,10 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(fontDisplayName,
                       style: TextStyle(
-                          color: BaseColor.warmGray600, fontSize: 16.sp)),
+                          color: context.theme.colorScheme.primary, fontSize: 16.sp)),
                   Text(message('message_font_example_text'),
                       style: TextStyle(
-                          color: BaseColor.warmGray500,
+                          color: context.theme.colorScheme.secondary,
                           fontSize: 14.sp,
                           fontFamily: fontName))
                 ]),

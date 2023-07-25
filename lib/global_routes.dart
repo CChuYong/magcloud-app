@@ -20,6 +20,8 @@ import 'package:magcloud_app/view/page/settings_view/open_source_view.dart';
 import 'package:magcloud_app/view/page/splash_view.dart';
 import 'package:magcloud_app/view/page/webview_view.dart';
 
+import 'core/util/color_util.dart';
+
 class GlobalRoute {
   static final observer = CommonRouteObserver();
   static final routes = {
@@ -80,7 +82,7 @@ class GlobalRoute {
 
   static Future<void> privacyPage() async {
     if (!assertOnline()) return;
-    await Get.to(WebViewScreenView('$webViewUrl/magcloud/privacy'),
+    await Get.to(WebViewScreenView('$webViewUrl/magcloud/privacy?darkMode=${Get.isDarkMode}'),
         transition: Transition.rightToLeft, popGesture: true);
   }
 
@@ -92,7 +94,7 @@ class GlobalRoute {
 
   static Future<void> noticePage() async {
     if (!assertOnline()) return;
-    await Get.to(WebViewScreenView('$webViewUrl/magcloud/notice'),
+    await Get.to(WebViewScreenView('$webViewUrl/magcloud/notice?darkMode=${Get.isDarkMode}'),
         transition: Transition.rightToLeft, popGesture: true);
   }
 

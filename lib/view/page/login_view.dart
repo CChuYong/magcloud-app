@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view/component/fadeable_switcher.dart';
@@ -22,7 +23,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   Widget render(
       BuildContext context, LoginViewModel action, LoginViewState state) {
     return Scaffold(
-      backgroundColor: BaseColor.defaultSplashBackgroundColor,
+      backgroundColor: context.theme.colorScheme.surface,
       body: SafeArea(
           child: Fadeable(
         child: Padding(
@@ -44,14 +45,14 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                             Text(
                               message("message_login_view_description"),
                               style: TextStyle(
-                                  color: BaseColor.warmGray800,
+                                  color: context.theme.colorScheme.secondary,
                                   fontSize: 12.sp,
                                   fontFamily: 'GmarketSans'),
                             ),
                             Text(
                               message("magcloud"),
                               style: TextStyle(
-                                  color: BaseColor.warmGray800,
+                                  color: context.theme.colorScheme.primary,
                                   fontSize: 30.sp,
                                   fontFamily: 'GmarketSans'),
                             ),
@@ -69,9 +70,11 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                                     vertical: 3.sp, horizontal: 6.sp),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.language),
+                                    Icon(Icons.language,    color: BaseColor.warmGray700,),
                                     SizedBox(width: 3.sp),
-                                    Text(isKorea ? 'KOR' : 'ENG')
+                                    Text(isKorea ? 'KOR' : 'ENG', style: TextStyle(
+                                      color: BaseColor.warmGray700,
+                                    ))
                                   ],
                                 ),
                               ),
@@ -165,6 +168,7 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                                       style: TextStyle(
                                         fontFamily: 'Pretendard',
                                         fontSize: 18.sp,
+                                        color: Colors.black,
                                       ),
                                     )
                                   ])

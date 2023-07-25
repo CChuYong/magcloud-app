@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
@@ -74,14 +75,14 @@ class ProfileView
                               SizedBox(height: 10.sp),
                               Text(state.user.name,
                                   style: TextStyle(
-                                      color: BaseColor.warmGray700,
+                                      color: context.theme.colorScheme.primary,
                                       fontSize: 20.sp)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(state.user.nameTag,
                                       style: TextStyle(
-                                          color: BaseColor.warmGray500,
+                                          color: context.theme.colorScheme.secondary,
                                           fontSize: 14.sp)),
                                   SizedBox(width: 3.sp),
                                   TouchableOpacity(onTap: () =>
@@ -123,7 +124,7 @@ class ProfileView
                           ))),
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => feed(action, e, width))
+                          .map((e) => feed(context, action, e, width))
                           .toList())),
                 ])));
   }
@@ -148,8 +149,8 @@ class ProfileView
         ));
   }
 
-  Widget feed(ProfileViewModel action, FeedElement element, double width) {
-    final divider = Divider(color: BaseColor.warmGray200, thickness: 1.sp);
+  Widget feed(BuildContext context, ProfileViewModel action, FeedElement element, double width) {
+    final divider = Divider(color: context.theme.colorScheme.outline, thickness: 1.sp);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,7 +173,7 @@ class ProfileView
                         Text(
                           element.userName,
                           style: TextStyle(
-                              color: BaseColor.warmGray800,
+                              color: context.theme.colorScheme.primary,
                               fontSize: 14.sp,
                               height: 1.3,
                               fontFamily: 'Pretendard'),
@@ -181,7 +182,7 @@ class ProfileView
                           message('generic_created_before').format(
                               [DateParser.gapBetweenNow(element.createdAt)]),
                           style: TextStyle(
-                              color: BaseColor.warmGray600,
+                              color: context.theme.colorScheme.secondary,
                               fontSize: 12.sp,
                               height: 1.3,
                               fontFamily: 'Pretendard'),
@@ -210,7 +211,7 @@ class ProfileView
               Text(
                 DateParser.formatLocaleYmd(element.ymd),
                 style: TextStyle(
-                    color: BaseColor.warmGray700,
+                    color: context.theme.colorScheme.primary,
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
@@ -232,7 +233,7 @@ class ProfileView
               Text(
                 element.content,
                 style: TextStyle(
-                    color: BaseColor.warmGray700,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: diaryFontSize,
                     fontFamily: diaryFont),
               ),

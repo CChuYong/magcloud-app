@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
@@ -24,25 +25,25 @@ class FriendRequestView extends BaseView<FriendRequestView,
   Widget render(BuildContext context, FriendRequestViewModel action,
       FriendRequestViewState state) {
     return Scaffold(
-      backgroundColor: BaseColor.defaultBackgroundColor,
+      backgroundColor: context.theme.colorScheme.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 5.sp),
-            titleBar(),
+            titleBar(context),
             SizedBox(height: 10.sp),
-            searchBar(action),
+            searchBar(context, action),
             SizedBox(height: 5.sp),
-            Divider(color: BaseColor.warmGray200),
-            Expanded(child: friendContainer(action, state))
+            Divider(color: context.theme.colorScheme.outline),
+            Expanded(child: friendContainer(context, action, state))
           ],
         ),
       ),
     );
   }
 
-  Widget titleBar() {
+  Widget titleBar(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 10.sp),
       child: Row(
@@ -55,11 +56,11 @@ class FriendRequestView extends BaseView<FriendRequestView,
                 height: 32.sp,
                 child: Align(
                     alignment: Alignment.center,
-                    child: Icon(BaseIcon.arrowLeft, size: 16.sp))),
+                    child: Icon(BaseIcon.arrowLeft, size: 16.sp, color: context.theme.colorScheme.secondary))),
           ),
           Text(message('generic_friend_requests'),
               style: TextStyle(
-                  color: BaseColor.warmGray600,
+                  color: context.theme.colorScheme.primary,
                   fontSize: 16.sp,
                   fontFamily: 'Pretendard')),
           TouchableOpacity(
@@ -68,19 +69,19 @@ class FriendRequestView extends BaseView<FriendRequestView,
                   width: 32.sp,
                   height: 32.sp,
                   child: Icon(Icons.add,
-                      color: BaseColor.warmGray700, size: 22.sp)))
+                      color: context.theme.colorScheme.secondary, size: 22.sp)))
         ],
       ),
     );
   }
 
-  Widget searchBar(FriendRequestViewModel action) {
+  Widget searchBar(BuildContext context, FriendRequestViewModel action) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: BaseColor.warmGray100,
+            color: context.theme.colorScheme.onBackground,
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.sp),
@@ -97,7 +98,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                     action.focusNode.unfocus();
                   },
                   style: TextStyle(
-                    color: BaseColor.warmGray600,
+                    color: context.theme.colorScheme.secondary,
                     fontSize: 15.sp,
                     height: 1.2,
                   ),
@@ -105,7 +106,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                       border: InputBorder.none,
                       hintText: message('generic_search'),
                       hintStyle: TextStyle(
-                        color: BaseColor.warmGray400,
+                        color: context.theme.colorScheme.secondary,
                         fontSize: 15.sp,
                       )),
                 ))
@@ -116,6 +117,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
   }
 
   Widget friendContainer(
+      BuildContext context,
       FriendRequestViewModel action, FriendRequestViewState state) {
     final requests = state.getFilteredRequests();
     final sentRequests = state.getFilteredSentRequests();
@@ -133,7 +135,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                     message('message_received_friend_requests_size')
                         .format([state.requests.length]),
                     style: TextStyle(
-                      color: BaseColor.warmGray500,
+                      color: context.theme.colorScheme.secondary,
                       fontSize: 12.sp,
                     ),
                   )),
@@ -148,7 +150,7 @@ class FriendRequestView extends BaseView<FriendRequestView,
                     message('message_sent_friend_requests_size')
                         .format([state.sentRequests.length]),
                     style: TextStyle(
-                      color: BaseColor.warmGray500,
+                      color: context.theme.colorScheme.secondary,
                       fontSize: 12.sp,
                     ),
                   )),

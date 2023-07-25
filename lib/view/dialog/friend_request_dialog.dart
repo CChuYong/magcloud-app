@@ -9,6 +9,7 @@ import '../designsystem/base_color.dart';
 Future<String> friendRequestDialog() async {
   final textController = TextEditingController();
   final focusNode = FocusNode();
+  final context = Get.context!;
   return await showGeneralDialog<String?>(
         context: Get.context!,
         barrierLabel: '',
@@ -23,7 +24,7 @@ Future<String> friendRequestDialog() async {
         },
         pageBuilder: (_, _1, _2) => Dialog(
           elevation: 0.0,
-          backgroundColor: BaseColor.defaultBackgroundColor,
+          backgroundColor: context.theme.colorScheme.onBackground,
           insetPadding: null,
           alignment: Alignment.bottomCenter,
           shape: const RoundedRectangleBorder(
@@ -49,13 +50,13 @@ Future<String> friendRequestDialog() async {
                                 SizedBox(height: 22.sp),
                                 Text(message('generic_request_friend'),
                                     style: TextStyle(
-                                      color: BaseColor.warmGray700,
+                                      color: context.theme.colorScheme.primary,
                                       fontSize: 16.sp,
                                     )),
                                 SizedBox(height: 6.sp),
                                 Text(message('message_request_friend_info'),
                                     style: TextStyle(
-                                      color: BaseColor.warmGray500,
+                                      color: context.theme.colorScheme.secondary,
                                       fontSize: 14.sp,
                                     )),
                                 SizedBox(height: 15.sp),

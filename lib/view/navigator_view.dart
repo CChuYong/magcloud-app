@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/di.dart';
@@ -27,7 +29,7 @@ class NavigatorView extends StatefulWidget {
     0: (e) => FeedView(e),
     1: (e) => CalendarBaseView(),
     3: (e) => MoreView(),
-    2: (e) => FriendView(),
+    2: (e) => FriendView(e),
   };
   static void clearAll() {
     print("clearing navigator routes");
@@ -103,6 +105,7 @@ class NavigatorViewState extends State<NavigatorView> {
       onTapSelf?.call();
       return;
     }
+    onTapSelf = null;
     animationStart = true;
     forwardAction = currentPage < number;
     setState(() {
@@ -130,12 +133,15 @@ class NavigatorViewState extends State<NavigatorView> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: BaseColor.warmGray100,
-      statusBarColor: context.theme.colorScheme.primary,
-    ));
     return ScrollsToTop(
       onScrollsToTop: (e) async => onTapSelf?.call(),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+      systemNavigationBarColor: context.theme.colorScheme.background,
+      statusBarColor: context.theme.colorScheme.onBackground,
+      statusBarIconBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
+      statusBarBrightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
+      ),
       child: Scaffold(
       backgroundColor: context.theme.colorScheme.background,
       bottomNavigationBar:
@@ -160,6 +166,6 @@ class NavigatorViewState extends State<NavigatorView> {
     )
         ,
       ),
-    ));
+    )));
   }
 }

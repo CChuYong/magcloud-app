@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:magcloud_app/core/api/dto/diary/diary_comment_request.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/di.dart';
 
@@ -15,10 +16,10 @@ import '../../core/util/i18n.dart';
 import '../../global_routes.dart';
 import '../component/touchableopacity.dart';
 import '../designsystem/base_color.dart';
+import '../page/profile_view.dart';
 
 Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> comments) {
   final textController = TextEditingController();
-  final focusNode = FocusNode();
   final context = Get.context!;
   return showGeneralDialog(
     context: Get.context!,
@@ -31,7 +32,13 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
         child: child,
       );
     },
-    pageBuilder: (_, _1, _2) => Dialog(
+    pageBuilder: (_, _1, _2) => Dismissible(
+  key: Key("comment_list"),
+  direction: DismissDirection.vertical,
+  onDismissed: (_) {
+  Navigator.of(context).pop();
+  },
+  child: Dialog(
       elevation: 0.0,
       backgroundColor: context.theme.colorScheme.onBackground,
       insetPadding: null,
@@ -57,20 +64,24 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: 22.sp),
+                            SizedBox(height: 11.sp),
+                            Container(
+                              height: 5.sp,
+                              width: 40.sp,
+                              decoration: BoxDecoration(
+                                color: BaseColor.warmGray500,
+                                borderRadius: BorderRadius.circular(2.sp),
+                              ),
+                            ),
+                            SizedBox(height: 20.sp),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(width: 18.sp),
                                 Text(message('generic_comment_page_title').format([comments.length]),
                                     style: TextStyle(
                                       color: context.theme.colorScheme.primary,
                                       fontSize: 16.sp,
                                     )),
-                                TouchableOpacity(
-                                  onTap: () => GlobalRoute.back(),
-                                  child: Icon(CupertinoIcons.xmark, size: 18.sp, color: BaseColor.warmGray500))
-                                ,
                               ],
                             ),
                             SizedBox(height: 16.sp),
@@ -133,7 +144,7 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
         },
       ),
     ),
-  );
+  ));
 }
 
 Widget friendBox(BuildContext context, DiaryCommentResponse response) {
@@ -143,7 +154,10 @@ Widget friendBox(BuildContext context, DiaryCommentResponse response) {
         alignment: Alignment.center,
         children: [
           TouchableOpacity(
-             // onTap: () => action.onTapFriend(friend),
+              onTap: () {
+                Get.back();
+                onTapProfileImage(response.userId);
+              },
               child: SizedBox(
                   width: double.infinity,
                   child: Row(
@@ -199,4 +213,10 @@ Widget friendBox(BuildContext context, DiaryCommentResponse response) {
       SizedBox(height: 10.sp),
     ],
   );
+}
+
+void onTapProfileImage(String userId) async {
+  final user = await inject<OpenAPI>().getUserProfile(userId);
+  route() => ProfileView(user.toDomain(), inject<AuthService>().initialUser?.userId == userId, true);
+  GlobalRoute.rightToLeftRouteToDynamic(route);
 }

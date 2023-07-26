@@ -21,21 +21,6 @@ class StateStore {
     return sharedPreferences!;
   }
 
-  static void saveState(Type key, Map<String, dynamic> state) async {
-    try {
-      print('saving state with ${key.toString()} as ${jsonEncode(state)}');
-      await sharedPreferences!.setString(key.toString(), jsonEncode(state));
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  static Map<String, dynamic>? loadState(Type key) {
-    final data = sharedPreferences!.getString(key.toString());
-    if (data == null) return null;
-    return jsonDecode(data);
-  }
-
   static void clear(String key) {
     sharedPreferences!.remove(key.toString());
   }
@@ -73,7 +58,7 @@ class StateStore {
     final themeMode = sharedPreferences!.getString('themeMode');
     if (themeMode == null) return ThemeMode.system;
     return ThemeMode.values.firstWhere(
-        (e) => e.toString() == 'ThemeMode.' + themeMode,
+        (e) => e.toString().split('.').last == themeMode,
         orElse: () => ThemeMode.system);
   }
 

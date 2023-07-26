@@ -35,7 +35,9 @@ void main() async {
     await initializeDependencies();
 
     runApp(ScreenUtilInit(
-        builder: (context, widget) => GetMaterialApp(
+        builder: (context, widget) =>
+            GetMaterialApp(
+              debugShowCheckedModeBanner: false,
           // home: const MyApp(),
           theme: _lightTheme,
           darkTheme: _darkTheme,
@@ -43,7 +45,7 @@ void main() async {
           home: inject<AuthService>().isAuthenticated()
               ? NavigatorView()
               : LoginView(),
-          navigatorObservers: [GlobalRoute.observer, FirebaseAnalyticsObserver(analytics: analytics)],
+          navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
         )));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
@@ -55,7 +57,8 @@ ThemeData _lightTheme = ThemeData(
     backgroundColor: BaseColor.defaultBackgroundColor,
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: BaseColor.defaultBackgroundColor,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
     ),
   ),
   colorScheme: const ColorScheme(
@@ -91,7 +94,8 @@ ThemeData _darkTheme = ThemeData(
     backgroundColor: DarkBaseColor.defaultBackgroundColor,
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: DarkBaseColor.defaultBackgroundColor,
-      statusBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.dark,
     ),
   ),
   colorScheme: const ColorScheme(

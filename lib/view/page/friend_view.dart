@@ -11,16 +11,18 @@ import 'package:magcloud_app/view/component/touchableopacity.dart';
 import '../../view_model/friend_view/friend_view_model.dart';
 import '../../view_model/friend_view/friend_view_state.dart';
 import '../designsystem/base_color.dart';
+import '../navigator_view.dart';
 
 class FriendView
     extends BaseView<FriendView, FriendViewModel, FriendViewState> {
-  FriendView({super.key});
+  final NavigatorViewState navigator;
+  FriendView(this.navigator, {super.key});
 
   @override
   bool isAutoRemove() => false;
 
   @override
-  FriendViewModel initViewModel() => FriendViewModel();
+  FriendViewModel initViewModel() => FriendViewModel(navigator);
 
   @override
   Color navigationBarColor() => BaseColor.warmGray100;
@@ -137,14 +139,17 @@ class FriendView
   Widget friendContainer(BuildContext context, FriendViewModel action, FriendViewState state) {
     final friends = state.getFilteredFriends();
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.sp, vertical: 10.sp),
+        padding: EdgeInsets.symmetric(horizontal: 17.sp, vertical: 3.sp),
         child: Column(
           children: [
             Expanded(
               child: RefreshIndicator(
                 triggerMode: RefreshIndicatorTriggerMode.onEdge,
                 onRefresh: action.reloadFriends,
-                child: CustomScrollView(reverse: false, slivers: [
+                child: CustomScrollView(
+                  controller: action.scrollController,
+                    reverse: false,
+                    slivers: [
                   SliverList(
                       delegate: SliverChildListDelegate(
                           friends.map((e) => friendBox(context, e)).toList())),
@@ -162,7 +167,6 @@ class FriendView
                 ]),
               ),
             ),
-            SizedBox(height: 8.sp),
           ],
         ));
   }
@@ -191,7 +195,7 @@ class FriendView
                               color: BaseColor.warmGray700,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                  color: BaseColor.warmGray300, width: 0.5)),
+                                  color: context.theme.colorScheme.outline, width: 0.5)),
                         ),
                         SizedBox(width: 10.sp),
                         Column(

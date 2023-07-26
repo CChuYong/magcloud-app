@@ -34,12 +34,6 @@ abstract class BaseViewModel<V extends BaseView<V, A, S>,
 
   void onReloaded() {}
 
-  void setBottomColor(Color color) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: color,
-    ));
-  }
-
   void setLoading(bool loading) {
     isLoading = loading;
     render();

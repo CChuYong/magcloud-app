@@ -24,7 +24,6 @@ import 'package:magcloud_app/view/page/webview_view.dart';
 import 'core/util/color_util.dart';
 
 class GlobalRoute {
-  static final observer = CommonRouteObserver();
   static final routes = {
     '/login': () => LoginView(),
     '/navigator': () => NavigatorView(),

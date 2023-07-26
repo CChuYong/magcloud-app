@@ -11,6 +11,7 @@ import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
+import '../../core/api/dto/diary/diary_comment_response.dart';
 import '../../core/service/auth_service.dart';
 import '../../global_routes.dart';
 import '../../view/dialog/comment_list_dialog.dart';
@@ -52,6 +53,7 @@ class FeedViewModel
 
   @override
   Future<void> initState() async {
+    navigator.onTapSelf = onTapNavigatorSelf;
     await loadForward();
   }
 
@@ -69,24 +71,6 @@ class FeedViewModel
   void onTapNavigatorSelf() {
     scrollController.animateTo(0,
         duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-  }
-
-  void onTapLike(FeedElement element) async {
-    await setStateAsync(() async {
-      final result = await openAPI.likeDiary(element.diaryId);
-      state.feeds.remove(element);
-      state.feeds.add(result.toDomain());
-      SnackBarUtil.infoSnackBar(message: message('message_liked_diary'));
-    });
-  }
-
-  void onTapUnlike(FeedElement element) async {
-    await setStateAsync(() async {
-      final result = await openAPI.unlikeDiary(element.diaryId);
-      state.feeds.remove(element);
-      state.feeds.add(result.toDomain());
-      SnackBarUtil.infoSnackBar(message: message('message_unliked_diary'));
-    });
   }
 
   Future<void> loadForward() async {
@@ -116,10 +100,11 @@ class FeedViewModel
   }
 
   Future<void> onTapCommentBox(String diaryId) async {
+    List<DiaryCommentResponse> comments = List.empty();
     await asyncLoading(() async {
-      final comments = await openAPI.getDiaryComments(diaryId);
-      await openCommentListDialog(diaryId, comments);
+      comments = await openAPI.getDiaryComments(diaryId);
     });
+    await openCommentListDialog(diaryId, comments);
 
   }
 
@@ -127,5 +112,23 @@ class FeedViewModel
     final user = await inject<OpenAPI>().getUserProfile(userId);
     route() => ProfileView(user.toDomain(), isMe(userId), true);
     GlobalRoute.rightToLeftRouteToDynamic(route);
+  }
+
+  void onTapLike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.likeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_liked_diary'));
+    });
+  }
+
+  void onTapUnlike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.unlikeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_unliked_diary'));
+    });
   }
 }

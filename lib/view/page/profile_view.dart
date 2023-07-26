@@ -7,6 +7,7 @@ import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/extension.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/view/component/base_settings_layout.dart';
+import 'package:magcloud_app/view/component/feed_element.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
 import 'package:magcloud_app/view/dialog/image_preview_dialog.dart';
@@ -124,7 +125,11 @@ class ProfileView
                           ))),
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => feed(context, action, e, width))
+                          .map((e) => FeedElementView(e, width,
+                        onTapComment: (elem) => action.onTapCommentBox(e.diaryId),
+                        onTapProfileImage: (elem) => action.onTapProfileImage(elem.userId),
+                        onTapLike: (elem) => action.onTapLike(elem),
+                        onTapUnlike: (elem) => action.onTapUnlike(elem),))
                           .toList())),
                 ])));
   }
@@ -147,133 +152,5 @@ class ProfileView
             ),
           ),
         ));
-  }
-
-  Widget feed(BuildContext context, ProfileViewModel action, FeedElement element, double width) {
-    final divider = Divider(color: context.theme.colorScheme.outline, thickness: 1.sp);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        divider,
-        SizedBox(height: 8.sp),
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.sp),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    friendProfileIcon(
-                        element.mood.moodColor, element.profileImageUrl),
-                    SizedBox(width: 8.sp),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          element.userName,
-                          style: TextStyle(
-                              color: context.theme.colorScheme.primary,
-                              fontSize: 14.sp,
-                              height: 1.3,
-                              fontFamily: 'Pretendard'),
-                        ),
-                        Text(
-                          message('generic_created_before').format(
-                              [DateParser.gapBetweenNow(element.createdAt)]),
-                          style: TextStyle(
-                              color: context.theme.colorScheme.secondary,
-                              fontSize: 12.sp,
-                              height: 1.3,
-                              fontFamily: 'Pretendard'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                TouchableOpacity(
-                    //  onTap: action.onTapAddFriend,
-                    child: Container(
-                  width: 24.sp,
-                  height: 33.sp,
-                  //color: Colors.blueAccent,
-                  //  color: BaseColor.blue300,
-                ))
-              ],
-            )),
-        // divider,
-        SizedBox(height: 8.sp),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.sp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateParser.formatLocaleYmd(element.ymd),
-                style: TextStyle(
-                    color: context.theme.colorScheme.primary,
-                    fontSize: diaryFontSize * 1.2,
-                    fontFamily: diaryFont),
-              ),
-              element.imageUrl != null ? GestureDetector(
-                  onTap: () => imagePreviewDialog(element.imageUrl!),
-                  child:Padding(padding: EdgeInsets.symmetric(),
-                      child: Center(child: Container(
-                        width:  width * 0.9,
-                        height: width * 0.5,
-                        decoration: BoxDecoration(
-                          color: BaseColor.defaultBackgroundColor,
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(element.imageUrl!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ))
-                  )) : Container(),
-              Text(
-                element.content,
-                style: TextStyle(
-                    color: context.theme.colorScheme.secondary,
-                    fontSize: diaryFontSize,
-                    fontFamily: diaryFont),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 30.sp,
-        ),
-      ],
-    );
-  }
-
-  Widget friendProfileIcon(Color color, String? url) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: 36.sp,
-          height: 36.sp,
-          decoration: BoxDecoration(
-            color: BaseColor.defaultBackgroundColor,
-            shape: BoxShape.circle,
-            image: url != null
-                ? DecorationImage(
-                    image: CachedNetworkImageProvider(url),
-                    fit: BoxFit.cover,
-                  )
-                : null,
-          ),
-        ),
-        Container(
-          width: 44.sp,
-          height: 44.sp,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: color, width: 3.0),
-          ),
-        )
-      ],
-    );
   }
 }

@@ -16,14 +16,17 @@ import 'package:magcloud_app/view/dialog/confirm_dialog.dart';
 import 'package:magcloud_app/view/page/friend_view.dart';
 import 'package:magcloud_app/view/page/profile_view.dart';
 
+import '../../view/navigator_view.dart';
 import 'friend_view_state.dart';
 
 class FriendViewModel
     extends BaseViewModel<FriendView, FriendViewModel, FriendViewState> {
+  final NavigatorViewState navigator;
   final TextEditingController searchController = TextEditingController();
   final FocusNode focusNode = FocusNode();
+  final ScrollController scrollController = ScrollController();
 
-  FriendViewModel() : super(FriendViewState()) {
+  FriendViewModel(this.navigator) : super(FriendViewState()) {
     searchController.addListener(applySearch);
   }
 
@@ -33,11 +36,17 @@ class FriendViewModel
 
   @override
   Future<void> initState() async {
+    navigator.onTapSelf = onTapNavigatorSelf;
     if (onlineService.isOnlineMode()) {
       await reloadFriends();
       state.requestCount = (await openAPI.getFriendRequestsCount()).count;
       StateStore.setInt("friendRequestCount", state.requestCount);
     }
+  }
+
+  void onTapNavigatorSelf() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override

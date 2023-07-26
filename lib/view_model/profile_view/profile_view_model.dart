@@ -14,14 +14,19 @@ import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/page/profile_view.dart';
 import 'package:magcloud_app/view_model/profile_view/profile_view_state.dart';
 
+import '../../core/api/dto/diary/diary_comment_response.dart';
 import '../../core/api/dto/friend/friend_request.dart';
+import '../../core/model/feed_element.dart';
 import '../../core/model/user.dart';
 import '../../core/service/online_service.dart';
+import '../../view/dialog/comment_list_dialog.dart';
 import '../../view/dialog/user_nickname_dialog.dart';
 
 class ProfileViewModel
     extends BaseViewModel<ProfileView, ProfileViewModel, ProfileViewState> {
   ProfileViewModel({required User user}) : super(ProfileViewState(user: user));
+
+  final OpenAPI openAPI = inject<OpenAPI>();
 
   @override
   Future<void> initState() async {
@@ -113,6 +118,41 @@ class ProfileViewModel
       final result = await inject<OpenAPI>()
           .breakFriend(FriendAcceptRequest(userId: user.userId));
       SnackBarUtil.infoSnackBar(message: result.message);
+    });
+  }
+
+  Future<void> onTapCommentBox(String diaryId) async {
+    List<DiaryCommentResponse> comments = List.empty();
+    await asyncLoading(() async {
+      comments = await openAPI.getDiaryComments(diaryId);
+    });
+    await openCommentListDialog(diaryId, comments);
+
+  }
+
+  bool isMe(String userId) => inject<AuthService>().initialUser?.userId == userId;
+
+  void onTapProfileImage(String userId) async {
+    final user = await inject<OpenAPI>().getUserProfile(userId);
+    route() => ProfileView(user.toDomain(), isMe(userId), true);
+    GlobalRoute.rightToLeftRouteToDynamic(route);
+  }
+
+  void onTapLike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.likeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_liked_diary'));
+    });
+  }
+
+  void onTapUnlike(FeedElement element) async {
+    await setStateAsync(() async {
+      final result = await openAPI.unlikeDiary(element.diaryId);
+      state.feeds.remove(element);
+      state.feeds.add(result.toDomain());
+      SnackBarUtil.infoSnackBar(message: message('message_unliked_diary'));
     });
   }
 }

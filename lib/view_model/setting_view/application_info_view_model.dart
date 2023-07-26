@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
+import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/util/font.dart';
@@ -53,6 +55,8 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
 
     setDiaryFontSize(defaultFontSize);
     setDiaryFont('KyoboHandWriting2019');
+    StateStore.setThemeMode(ThemeMode.system);
+    Get.changeThemeMode(ThemeMode.system);
     SnackBarUtil.infoSnackBar(message: message('message_reset_completed'));
   }
 

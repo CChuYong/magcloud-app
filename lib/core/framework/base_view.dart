@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:magcloud_app/view/component/splash_overlay.dart';
 import 'package:magcloud_app/view/designsystem/base_color.dart';
@@ -21,11 +22,12 @@ abstract class BaseView<V extends BaseView<V, A, S>,
 
   Color statusBarColor() => Colors.transparent;
 
-  Color navigationBarColor() => BaseColor.defaultBackgroundColor;
+  Color navigationBarColor() {
+    return Get.context!.theme.colorScheme.background;
+  }
 
   @override
   Widget build(BuildContext context) {
-    action.setBottomColor(navigationBarColor());
     if (!isInitialLoad) {
       isInitialLoad = true;
     } else {
@@ -38,7 +40,14 @@ abstract class BaseView<V extends BaseView<V, A, S>,
       didChangeDependencies: (State state) => action.didChangeDependencies(
         state.context,
       ),
-      builder: (A action) => Stack(
+      builder: (A action) => AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            systemNavigationBarColor: navigationBarColor(),
+            statusBarColor: context.theme.colorScheme.onBackground,
+            statusBarIconBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
+            statusBarBrightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
+          ),
+          child: Stack(
         alignment: Alignment.center,
         children: [
           render(context, action, action.state),
@@ -52,7 +61,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
               : Container(),
           action.isLoading ? Positioned(child: SplashOverlay()) : Container(),
         ],
-      ),
+      )),
     );
   }
 

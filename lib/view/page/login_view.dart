@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -18,7 +20,9 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
   LoginViewModel initViewModel() => LoginViewModel();
 
   @override
-  Color navigationBarColor() => BaseColor.defaultSplashBackgroundColor;
+  Color navigationBarColor() {
+    return Get.context!.theme.colorScheme.surface;
+  }
 
   @override
   Widget render(

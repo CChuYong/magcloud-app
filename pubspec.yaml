@@ -1,7 +1,7 @@
 name: magcloud_app
 description: Your daily heart-listener, MagCloud
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.2.0+20230725001
+version: 1.2.0+20230726001
 
 environment:
   sdk: '>=3.0.2 <4.0.0'

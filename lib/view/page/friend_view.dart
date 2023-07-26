@@ -40,7 +40,8 @@ class FriendView
           searchBar(context, action),
           SizedBox(height: 5.sp),
           Divider(color: context.theme.colorScheme.outline),
-          Expanded(child: friendContainer(context, action, state))
+          Expanded(child: friendContainer(context, action, state)),
+          SizedBox(height: 15.sp),
         ],
       ),
     );

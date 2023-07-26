@@ -173,7 +173,8 @@ class _FeedElementViewState extends State<FeedElementView> {
                     fontSize: diaryFontSize * 1.2,
                     fontFamily: diaryFont),
               ),
-              widget.element.imageUrl != null ? GestureDetector(
+              SizedBox(height: 10.sp),
+              widget.element.imageUrl != null ? Column(children: [GestureDetector(
                   onTap: () => imagePreviewDialog(widget.element.imageUrl!),
                   child:Padding(padding: EdgeInsets.symmetric(),
                       child: Center(child: Container(
@@ -187,7 +188,9 @@ class _FeedElementViewState extends State<FeedElementView> {
                           ),
                         ),
                       ))
-                  )) : Container(),
+                  )),
+                SizedBox(height: 10.sp),
+              ]) : Container(),
               RichText(
                 key: Key(widget.element.diaryId),
               text: texts.isEmpty ? TextSpan(

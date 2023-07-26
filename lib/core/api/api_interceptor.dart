@@ -51,7 +51,7 @@ class ApiInterceptor extends Interceptor {
     print("$statusCode ${err.requestOptions.path}");
     if(err.requestOptions.path == "/v1/auth/refresh") {
       await authService.logout(false);
-      GlobalRoute.fadeRoute('/login');
+      GlobalRoute.clearAllAndFadeRoute('/login');
       return handler.next(err);
     }
     if (statusCode == 401) {
@@ -72,7 +72,7 @@ class ApiInterceptor extends Interceptor {
           return handler.resolve(response);
         } else {
           await authService.logout(false);
-          GlobalRoute.fadeRoute('/login');
+          GlobalRoute.clearAllAndFadeRoute('/login');
         }
       }
     } else if (statusCode == 403) {

@@ -108,6 +108,7 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
                             ? Column(
                                 children: [
                                   Container(
+                                    color: context.theme.colorScheme.background,
                                       height: 18.sp,
                                       width: double.infinity),
                                   Container(

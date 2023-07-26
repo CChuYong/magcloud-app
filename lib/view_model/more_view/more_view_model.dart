@@ -82,7 +82,7 @@ class MoreViewModel
     if (result != true) return;
 
     await inject<AuthService>().logout(true);
-    await GlobalRoute.fadeRoute('/login');
+    await GlobalRoute.clearAllAndFadeRoute('/login');
   }
 
   Future<void> leave() async {
@@ -93,6 +93,6 @@ class MoreViewModel
 
     await inject<OpenAPI>().leaveMagCloud();
     await inject<AuthService>().logout(true);
-    await GlobalRoute.fadeRoute('/login');
+    await GlobalRoute.clearAllAndFadeRoute('/login');
   }
 }

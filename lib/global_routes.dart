@@ -37,6 +37,14 @@ class GlobalRoute {
   };
   static String webViewUrl = 'https://bsc-webview.chuyong.kr'; //
 
+  static Future<void> clearAllAndFadeRoute(String target) async {
+    final routeBuilder = routes[target];
+    Get.offAll(routeBuilder,
+        transition: Transition.fadeIn,
+        duration: const Duration(milliseconds: 80));
+    NavigatorView.clearAll();
+  }
+
   static Future<void> fadeRoute(String target) async {
     final routeBuilder = routes[target];
     await Get.off(routeBuilder,
@@ -75,7 +83,7 @@ class GlobalRoute {
   }
 
   static void goMain() {
-    fadeRoute('/navigator');
+    clearAllAndFadeRoute('/navigator');
   }
 
   static Future<void> ossView() async {

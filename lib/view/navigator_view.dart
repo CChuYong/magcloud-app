@@ -11,6 +11,7 @@ import 'package:magcloud_app/view/dialog/new_user_dialog.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
 import '../core/service/notification_service.dart';
+import '../core/util/debouncer.dart';
 import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
 import 'page/calendar_view/calendar_base_view.dart';
@@ -28,6 +29,10 @@ class NavigatorView extends StatefulWidget {
     3: (e) => MoreView(),
     2: (e) => FriendView(),
   };
+  static void clearAll() {
+    print("clearing navigator routes");
+    widgetMap.clear();
+  }
 
   Widget getOrCreateWidget(NavigatorViewState state, int index) {
     Widget? lastWidget = widgetMap[index];
@@ -93,6 +98,7 @@ class NavigatorViewState extends State<NavigatorView> {
   }
 
   void onTap(int number) {
+    if(number > 3 || number < 0) return;
     if (currentPage == number) {
       onTapSelf?.call();
       return;
@@ -109,6 +115,19 @@ class NavigatorViewState extends State<NavigatorView> {
 
   Widget getCurrentPage() => widget.getOrCreateWidget(this, currentPage);
 
+  final Debouncer dragDebouncer = Debouncer(const Duration(milliseconds: 25));
+
+  void onHorizontalDrag(DragEndDetails details) {
+    dragDebouncer.runLastCall(() {
+      final isPositive = (details.primaryVelocity ?? 0) < 0;
+      if(isPositive) {
+        onTap(currentPage + 1);
+      } else {
+        onTap(currentPage - 1);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -121,7 +140,9 @@ class NavigatorViewState extends State<NavigatorView> {
       backgroundColor: context.theme.colorScheme.background,
       bottomNavigationBar:
           BaseNavigationBar(onTap: onTap, currentPage: currentPage),
-      body: AnimatedSwitcher(
+      body: GestureDetector(
+    onHorizontalDragEnd: onHorizontalDrag,
+    child: AnimatedSwitcher(
         duration: navigateDuration,
         transitionBuilder: (Widget child, Animation<double> animation) {
           return SlideTransition(
@@ -135,7 +156,9 @@ class NavigatorViewState extends State<NavigatorView> {
                 child: child,
               ));
         },
-        child: getCurrentPage(),
+        child:  getCurrentPage()
+    )
+        ,
       ),
     ));
   }

@@ -84,7 +84,9 @@ Future<void> openCommentListDialog(String diaryId, List<DiaryCommentResponse> co
                                     )),
                               ],
                             ),
-                            SizedBox(height: 16.sp),
+                            SizedBox(height: 8.sp),
+                            Divider(color: context.theme.colorScheme.outline),
+                            SizedBox(height: 8.sp),
                             Expanded(
                               child: RefreshIndicator(
                                 triggerMode: RefreshIndicatorTriggerMode.onEdge,

@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:magcloud_app/core/model/feed_element.dart';
 import 'package:magcloud_app/core/util/extension.dart';
+import 'package:magcloud_app/view/component/profile_image_icon_with_mood.dart';
 import 'package:magcloud_app/view/component/touchableopacity.dart';
 
+import '../../core/model/mood.dart';
 import '../../core/util/date_parser.dart';
 import '../../core/util/font.dart';
 import '../../core/util/i18n.dart';
@@ -41,8 +43,10 @@ class FeedElementView extends StatelessWidget {
                   children: [
                     TouchableOpacity(
                         onTap: () => onTapProfileImage?.let((it) => it(element)),
-                        child: friendProfileIcon(
-                            element.mood.moodColor, element.profileImageUrl)),
+                        child: ProfileImageIconWithMood(
+                          baseSize: 36,
+                            mood: element.mood,
+                            url: element.profileImageUrl)),
                     SizedBox(width: 8.sp),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +133,7 @@ class FeedElementView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateParser.formatLocaleYmd(element.ymd),
+                "${DateParser.formatLocaleYmd(element.ymd)}, ${element.mood.getLocalizedName()}",
                 style: TextStyle(
                     color: context.theme.colorScheme.secondary,
                     fontSize: diaryFontSize * 1.2,
@@ -175,35 +179,6 @@ class FeedElementView extends StatelessWidget {
         SizedBox(
           height: 5.sp,
         ),
-      ],
-    );
-  }
-  Widget friendProfileIcon(Color color, String? url) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: 36.sp,
-          height: 36.sp,
-          decoration: BoxDecoration(
-            color: BaseColor.defaultBackgroundColor,
-            shape: BoxShape.circle,
-            image: url != null
-                ? DecorationImage(
-              image: CachedNetworkImageProvider(url),
-              fit: BoxFit.cover,
-            )
-                : null,
-          ),
-        ),
-        Container(
-          width: 44.sp,
-          height: 44.sp,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: color, width: 3.0),
-          ),
-        )
       ],
     );
   }

@@ -31,11 +31,12 @@ class FeedViewModel
     scrollController.addListener(() {
       final current = scrollController.position.pixels;
       final max = scrollController.position.maxScrollExtent;
+
       if (current > 0 &&
           current < max &&
           scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
-        if (current / max * 100 > 50) {
+        if (current / max * 100 > 30) {
           scrollDebouncer.runLastCall(() {
             setStateAsync(() async {
               await loadForward();
@@ -49,7 +50,7 @@ class FeedViewModel
   bool isMe(String userId) => authService.initialUser?.userId == userId;
 
   final ScrollController scrollController = ScrollController();
-  final Debouncer scrollDebouncer = Debouncer(Duration(milliseconds: 450));
+  final Debouncer scrollDebouncer = Debouncer(Duration(milliseconds: 300));
 
   @override
   Future<void> initState() async {

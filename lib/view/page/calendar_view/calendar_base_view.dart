@@ -14,6 +14,7 @@ import '../../../core/model/mood.dart';
 import '../../../core/util/i18n.dart';
 import '../../../view_model/calendar_view/calendar_base_view_model.dart';
 import '../../../view_model/calendar_view/calendar_base_view_state.dart';
+import '../../component/profile_image_icon_with_mood.dart';
 import '../../designsystem/base_color.dart';
 
 class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
@@ -299,8 +300,13 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             width: 54.sp,
             child: Column(
               children: [
-                friendProfileIcon(
-                    user.mood.moodColor, user.profileImageUrl, isSelected),
+            Opacity(
+            opacity: isSelected ? 1.0 : 0.25,
+              child:
+                ProfileImageIconWithMood(
+                    baseSize: 40,
+                    mood: user.mood,
+                    url: user.profileImageUrl)),
                 Text(
                   user.name,
                   overflow: TextOverflow.ellipsis,
@@ -324,8 +330,13 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             width: 54.sp,
             child: Column(
               children: [
-                friendProfileIcon(mood.moodColor, me?.profileImageUrl,
-                    action.state.selectedUser == me),
+                Opacity(
+                    opacity: isSelected ? 1.0 : 0.25,
+                    child:
+                    ProfileImageIconWithMood(
+                        baseSize: 40,
+                        mood: mood,
+                        url: me?.profileImageUrl)),
                 Text(message('generic_me'),
                     style: TextStyle(
                       color: context.theme.colorScheme.secondary,

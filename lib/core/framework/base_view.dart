@@ -20,7 +20,9 @@ abstract class BaseView<V extends BaseView<V, A, S>,
 
   bool isAutoRemove() => true;
 
-  Color statusBarColor() => Colors.transparent;
+  Color statusBarColor() {
+    return Get.context!.theme.colorScheme.background;
+  }
 
   Color navigationBarColor() {
     return Get.context!.theme.colorScheme.background;
@@ -43,7 +45,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
       builder: (A action) => AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
             systemNavigationBarColor: navigationBarColor(),
-            statusBarColor: context.theme.colorScheme.onBackground,
+            statusBarColor: statusBarColor(),
             statusBarIconBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
             statusBarBrightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           ),

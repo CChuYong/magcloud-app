@@ -10,6 +10,7 @@ enum SnackBarType { RED, GREEN, YELLOW, GREY }
 class SnackBarUtil {
   //static SnackbarController? lastSnackBar;
   static void ensureSnackBarClosed() {
+  //  SnackbarController.cancelAllSnackbars();
     SnackbarController.cancelAllSnackbars();
     // await lastSnackBar?.close(withAnimations: false);
   }
@@ -44,6 +45,7 @@ class SnackBarUtil {
     int msDuration = 2000,
     SnackPosition position = SnackPosition.TOP,
   }) {
+    ensureSnackBarClosed();
     _snackbar(
       '',
       message,

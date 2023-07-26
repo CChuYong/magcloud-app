@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
@@ -16,6 +17,7 @@ import '../core/service/notification_service.dart';
 import '../core/util/debouncer.dart';
 import 'component/navigation_bar.dart';
 import 'designsystem/base_color.dart';
+import 'dialog/comment_list_dialog.dart';
 import 'page/calendar_view/calendar_base_view.dart';
 import 'page/friend_view.dart';
 import 'package:scrolls_to_top/scrolls_to_top.dart';
@@ -73,7 +75,7 @@ class NavigatorViewState extends State<NavigatorView> {
     }
   }
 
-  void _handleNotification(RemoteMessage message) {
+  void _handleNotification(RemoteMessage message) async {
     if (message.data.containsKey("routePath")) {
       final routePath = message.data["routePath"] as String;
       print("Handle $routePath");
@@ -85,6 +87,10 @@ class NavigatorViewState extends State<NavigatorView> {
         //onTap(2);
       } else if (routePath.startsWith("/feed")) {
         onTap(0);
+      } else  if (routePath.startsWith("/comment")) {
+        final diaryId = routePath.split("/").last;
+        final comments = await inject<OpenAPI>().getDiaryComments(diaryId);
+        openCommentListDialog(diaryId, comments);
       }
     }
   }

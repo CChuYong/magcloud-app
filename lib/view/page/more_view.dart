@@ -189,6 +189,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
               menuBtn(Icons.support_agent_sharp, message('generic_contact_to_developer'), action.onTapContact),
               menuBtn(Icons.person_off, message('menu_user_quit'), action.leave),
               menuBtn(Icons.logout, message('menu_logout'), action.logout),
+              SizedBox(height: 18.sp),
             ],
           ),
         );

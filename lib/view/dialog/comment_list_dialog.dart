@@ -143,7 +143,7 @@ Future<Object?> openCommentListDialog(
                                             BorderRadius.circular(2.sp),
                                       ),
                                     ),
-                                    SizedBox(height: 20.sp),
+                                    SizedBox(height: 10.sp),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

@@ -156,7 +156,6 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
   }
 
   Widget friendPreview(BuildContext context,CalendarBaseViewModel action, User friend) {
-
     return TouchableOpacity(
       onTap: () => action.onTapApplyFriendTag(friend),
         child: Row(children: [Container(
@@ -181,7 +180,9 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
 
   Widget friendPreviewList(BuildContext context, CalendarBaseViewModel action, String currentText) {
     final matches = action.findFriendMatches(currentText);
+    final preview =  matches.map((e) => friendPreview(context, action, e)).toList();
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
                 child: Stack(
@@ -196,9 +197,17 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                           physics: const AlwaysScrollableScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           slivers: [
+                            preview.isNotEmpty ?
                             SliverList(
-                                delegate: SliverChildListDelegate(
-                                    matches.map((e) => friendPreview(context, action, e)).toList())),
+                                delegate: SliverChildListDelegate(preview)) : SliverToBoxAdapter(
+                              child: Text(
+                                message('message_cannot_find_taggable_user'),
+                                style: TextStyle(
+                                    color: context.theme.colorScheme.primary,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'GmarketSans'),
+                              ),
+                            ),
 
                           ]),
                     ),

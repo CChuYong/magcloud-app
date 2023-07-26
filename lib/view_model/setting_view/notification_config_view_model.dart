@@ -34,7 +34,6 @@ class NotificationConfigViewModel extends BaseViewModel<NotificationConfigView,
   }
 
   Future<bool> changeSetting(String type, bool enabled) async {
-    // await openAPI.updateNotification(UpdateNotificationRequest(type, enabled));
     await asyncLoading(() async {
       switch (type) {
         case 'social':

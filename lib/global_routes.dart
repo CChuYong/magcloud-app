@@ -91,8 +91,13 @@ class GlobalRoute {
 
   static Future<void> privacyPage() async {
     if (!assertOnline()) return;
-    print("darkMode = ${Get.isDarkMode}");
     await Get.to(() => WebViewScreenView('$webViewUrl/magcloud/privacy?darkMode=${Get.isDarkMode}'),
+        transition: Transition.rightToLeft, popGesture: true);
+  }
+
+  static Future<void> contact() async {
+    if (!assertOnline()) return;
+    await Get.to(() => WebViewScreenView('$webViewUrl/magcloud/contact?darkMode=${Get.isDarkMode}'),
         transition: Transition.rightToLeft, popGesture: true);
   }
 

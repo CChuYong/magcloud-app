@@ -30,6 +30,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
   @override
   Widget render(
       BuildContext context, MoreViewModel action, MoreViewState state) {
+    final ScrollController controller = ScrollController();
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,9 +38,20 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
           SizedBox(height: 5.sp),
           titleBar(context),
           SizedBox(height: 20.sp),
-          meBox(context, action, state),
-          SizedBox(height: 15.sp),
-          Expanded(child: menuBox(context, action))
+          Expanded(child:
+          Scrollbar(
+            controller: controller,
+          child: ListView(
+              controller: controller,
+          children: [
+            meBox(context, action, state),
+            SizedBox(height: 15.sp),
+            menuBox(context, action)
+            ])
+          )),
+
+
+
         ],
       ),
     );
@@ -137,8 +149,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
     final boxGap = 10.sp;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.sp),
-        child: SingleChildScrollView(
-          child: Column(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.sp),
@@ -175,11 +186,12 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                   action.onTapPrivacy),
               menuBtn(Icons.phone_android, message('menu_app_info'),
                   action.onTapAppInfo),
+              menuBtn(Icons.support_agent_sharp, message('generic_contact_to_developer'), action.onTapContact),
               menuBtn(Icons.person_off, message('menu_user_quit'), action.leave),
               menuBtn(Icons.logout, message('menu_logout'), action.logout),
             ],
           ),
-        ));
+        );
   }
 
   final boxPadding = 5.sp;

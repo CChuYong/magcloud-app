@@ -71,6 +71,11 @@ class MoreViewModel
     await GlobalRoute.privacyPage();
   }
 
+  Future<void> onTapContact() async {
+    await GlobalRoute.contact();
+  }
+
+
   Future<void> onTapAppInfo() async {
     GlobalRoute.rightToLeftRouteTo('/settings/app-info');
   }

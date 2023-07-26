@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:magcloud_app/core/model/diary.dart';
 
 import '../../core/model/mood.dart';
+import '../../view/component/taggable_text_editing_controller.dart';
 
 abstract class CalendarScopeData {
   final bool isMyScope;
@@ -30,9 +31,12 @@ class CalendarMonthViewScopeData extends CalendarScopeData {
 }
 
 class CalendarDailyViewScopeData extends CalendarScopeData {
-  final TextEditingController diaryTextController = TextEditingController();
+  final TaggableTextEditingController diaryTextController = TaggableTextEditingController();
   final FocusNode focusNode = FocusNode();
   final Diary currentDiary;
+ // String? tagSelectionText;
+  int? tagSelectionStart = null;
+  int? tagSelectionEnd = null;
   String? imageUrl;
   late Mood currentMood;
 
@@ -41,6 +45,14 @@ class CalendarDailyViewScopeData extends CalendarScopeData {
     diaryTextController.text = currentDiary.content;
     currentMood = currentDiary.mood;
     imageUrl = currentDiary.imageUrl;
+  }
+
+  String? getTagSelectionText() {
+    if(tagSelectionStart != null && tagSelectionEnd != null){
+      return diaryTextController.text.substring(tagSelectionStart!, tagSelectionEnd!);
+  }
+    return null;
+
   }
 
   static CalendarDailyViewScopeData mock() =>

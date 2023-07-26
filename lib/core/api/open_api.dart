@@ -133,6 +133,9 @@ abstract class OpenAPI {
   @GET('/v1/diaries/{diaryId}/comments')
   Future<List<DiaryCommentResponse>> getDiaryComments(@Path('diaryId') String diaryId);
 
+  @DELETE('/v1/diaries/{diaryId}/comments/{commentId}')
+  Future<APIResponse> deleteComment(@Path('diaryId') String diaryId, @Path('commentId') String commentId);
+
   @POST('/v1/diaries/{diaryId}/like')
   Future<FeedResponse> likeDiary(@Path('diaryId') String diaryId);
 

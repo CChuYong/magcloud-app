@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
@@ -6,8 +9,10 @@ import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/service/diary_service.dart';
 import 'package:magcloud_app/core/service/friend_diary_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
+import 'package:magcloud_app/core/service/tag_resolver.dart';
 import 'package:magcloud_app/core/service/user_service.dart';
 import 'package:magcloud_app/core/util/extension.dart';
+import 'package:magcloud_app/core/util/hash_util.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
 import 'package:magcloud_app/di.dart';
@@ -179,6 +184,14 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     });
   }
 
+  List<User> findFriendMatches(String text) {
+    if(state.scopeData is CalendarDailyViewScopeData) {
+      final matches = inject<TagResolver>().friendCache.values.toList().where((element) => element.nameTag.contains(text)).toList();
+      return matches.sublist(0, min(8, matches.length));
+    }
+    return List.empty();
+  }
+
   Future<void> applyWithMyScope(CalendarViewScope scope) async {
     switch (scope) {
       case CalendarViewScope.YEAR:
@@ -209,10 +222,57 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
             state.currentDate.month, state.currentDate.day, true);
         final dailyScopeData = CalendarDailyViewScopeData(diary, true);
         setScopeData(dailyScopeData);
+        extractULIDFromContent(diary.content).forEach((element) {
+          final cachedUser = inject<TagResolver>().friendCache[element];
+          if(cachedUser != null){
+            dailyScopeData.diaryTextController.addUser(cachedUser);
+          } else {
+            //없으면..
+            inject<TagResolver>().getByUserId(element).then((value) {
+              if(value != null) {
+                setState(() {
+                  dailyScopeData.diaryTextController.addUser(value);
+                });
+              }
+            });
+          }
+
+        });
         dailyScopeData.focusNode.addListener(() {
           if (isFriendBarOpen) {
             toggleFriendBar();
           }
+        });
+        dailyScopeData.diaryTextController.addListener(() {
+          final _controller = dailyScopeData.diaryTextController;
+          final currentTextBlock = _controller.text;
+          int startBlockPosition = _controller.selection.baseOffset - 1;
+          int endBlockPosition = _controller.selection.baseOffset - 1;
+          if(startBlockPosition < 0 || endBlockPosition < 0) return;
+          int maxCursorPosition = currentTextBlock.length;
+          String currentChar = '';
+          while(startBlockPosition > 0 && (currentChar = currentTextBlock[startBlockPosition - 1]) != ' ' && currentChar != '\n') {
+            startBlockPosition--;
+          }
+          while(endBlockPosition >= 0 && endBlockPosition < maxCursorPosition - 1 && (currentChar = currentTextBlock[endBlockPosition + 1]) != ' ' && currentChar != '\n') {
+            endBlockPosition++;
+          }
+          final block = currentTextBlock.substring(startBlockPosition, endBlockPosition + 1);
+          if(block.startsWith("@")) {
+            setState(() {
+              dailyScopeData.tagSelectionStart = startBlockPosition+1;
+              dailyScopeData.tagSelectionEnd = endBlockPosition + 1;
+            });
+          }else {
+            if(dailyScopeData.getTagSelectionText() != null) {
+              setState(() {
+                dailyScopeData.tagSelectionStart = null;
+                dailyScopeData.tagSelectionEnd = null;
+              });
+            }
+          }
+
+
         });
         break;
     }
@@ -514,6 +574,44 @@ class CalendarBaseViewModel extends BaseViewModel<CalendarBaseView,
     setState(() {
       scopeData.imageUrl = null;
     });
+  }
+
+  void onTapApplyFriendTag(User user){
+    if(state.scopeData is CalendarDailyViewScopeData) {
+      final scopeData = state.scopeData as CalendarDailyViewScopeData;
+      if(scopeData.tagSelectionStart == null || scopeData.tagSelectionEnd == null) return;
+      setState(() {
+        scopeData.diaryTextController.addUser(user);
+        final updatedText = replaceSubstringInRange(scopeData.diaryTextController.text, "${user.userId} ", scopeData.tagSelectionStart!, scopeData.tagSelectionEnd!);
+        scopeData.tagSelectionStart = null;
+        scopeData.tagSelectionEnd = null;
+        scopeData.diaryTextController.text = updatedText;
+      });
+    }
+  }
+
+  String replaceSubstringInRange(String originalString, String replacement, int startIndex, int endIndex) {
+    if (startIndex < 0 || endIndex > originalString.length) {
+      throw ArgumentError("startIndex and endIndex must be within the range of the original string.");
+    }
+
+    String firstPart = originalString.substring(0, startIndex);
+    String lastPart = originalString.substring(endIndex);
+
+    return "$firstPart$replacement$lastPart";
+  }
+
+  List<String> extractULIDFromContent(String text) {
+    RegExp regex = RegExp(r"(@\S+)");
+    List<String> result = [];
+
+    for (RegExpMatch match in regex.allMatches(text)) {
+      final exp = (match.group(0) ?? ' ').substring(1);
+      if(HashUtil.isULID(exp)){
+        result.add(exp);
+      }
+    }
+    return result;
   }
 
   bool isDiaryWriteable() {

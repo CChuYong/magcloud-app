@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_child_view.dart';
+import 'package:magcloud_app/core/model/user.dart';
 import 'package:magcloud_app/core/util/date_parser.dart';
 import 'package:magcloud_app/core/util/font.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
@@ -131,15 +132,20 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                     )),
                     Divider(color: context.theme.colorScheme.outline),
                     Padding(
-                      padding: EdgeInsets.only(right: 8.sp, bottom: 6.sp),
+                      padding: EdgeInsets.only(right: 8.sp, bottom: 6.sp, left: 8.sp),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          state.scopeData.isMyScope ? imageAddBox(action,
-                              state.scopeData as CalendarDailyViewScopeData) : Container(),
-                          SizedBox(width: 5.sp),
-                          dailyDiaryMoodBox(action,
-                              state.scopeData as CalendarDailyViewScopeData)
+                          scopeData.getTagSelectionText() != null ? Expanded(child: friendPreviewList(context, action, scopeData.getTagSelectionText()!)) : Container(),
+                          Row(children: [
+                            SizedBox(width: 5.sp),
+                            state.scopeData.isMyScope ? imageAddBox(action,
+                                state.scopeData as CalendarDailyViewScopeData) : Container(),
+                            SizedBox(width: 5.sp),
+                            dailyDiaryMoodBox(action,
+                                state.scopeData as CalendarDailyViewScopeData)
+                          ]),
+
                         ],
                       ),
                     )
@@ -147,6 +153,59 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 )))
       ],
     );
+  }
+
+  Widget friendPreview(BuildContext context,CalendarBaseViewModel action, User friend) {
+
+    return TouchableOpacity(
+      onTap: () => action.onTapApplyFriendTag(friend),
+        child: Row(children: [Container(
+      decoration: BoxDecoration(
+          color: context.theme.colorScheme.onBackground,
+          borderRadius: BorderRadius.circular(10.sp)),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 3.sp),
+            child: Row(
+      children: [
+        Text(friend.name, style: TextStyle(
+            color: context.theme.colorScheme.secondary,
+            fontSize: 14.sp,
+            fontFamily: 'GmarketSans')),
+
+      ],
+    ))),
+      SizedBox(width: 5.sp)
+    ]));
+
+  }
+
+  Widget friendPreviewList(BuildContext context, CalendarBaseViewModel action, String currentText) {
+    final matches = action.findFriendMatches(currentText);
+    return Row(
+          children: [
+            Expanded(
+                child: Stack(
+                  alignment: Alignment.center,
+                  // fit: StackFit.expand,
+                  children: [
+                    Container(
+                      color: context.theme.colorScheme.background,
+                      width: double.infinity,
+                      height: 26.sp,
+                      child: CustomScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          slivers: [
+                            SliverList(
+                                delegate: SliverChildListDelegate(
+                                    matches.map((e) => friendPreview(context, action, e)).toList())),
+
+                          ]),
+                    ),
+                  ],
+                ))
+          ],
+        );
   }
 
   Widget dailyViewTopBar(

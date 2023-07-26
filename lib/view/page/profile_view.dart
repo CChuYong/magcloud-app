@@ -34,6 +34,7 @@ class ProfileView
       BuildContext context, ProfileViewModel action, ProfileViewState state) {
     final width = MediaQuery.of(context).size.width - 30.sp;
     return BaseSettingLayout(
+      key: Key(user.userId),
         title: isMe
             ? message('my_profile')
             : message('friend_profile').format([state.user.name]),
@@ -125,7 +126,8 @@ class ProfileView
                           ))),
                   SliverList(
                       delegate: SliverChildListDelegate(action.state.feeds
-                          .map((e) => FeedElementView(e, width,
+                          .map((e) => FeedElementView(
+                        e, width,
                         onTapComment: (elem) => action.onTapCommentBox(e.diaryId),
                         onTapProfileImage: (elem) => action.onTapProfileImage(elem.userId),
                         onTapLike: (elem) => action.onTapLike(elem),

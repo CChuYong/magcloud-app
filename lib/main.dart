@@ -62,7 +62,7 @@ ThemeData _lightTheme = ThemeData(
     ),
   ),
   colorScheme: const ColorScheme(
-    onPrimary: BaseColor.blue300, //required
+    onPrimary: BaseColor.red300, //required
     onSecondary: BaseColor.blue300, //required
     primary: BaseColor.warmGray700, // point color1
     primaryContainer: BaseColor.blue300, // point color2
@@ -79,6 +79,7 @@ ThemeData _lightTheme = ThemeData(
     tertiary: BaseColor.blue300, // normal
     tertiaryContainer: BaseColor.blue300, // safe
     inversePrimary: BaseColor.warmGray200,
+    secondaryContainer: BaseColor.warmGray600,
 
 
     onError: BaseColor.blue300, //no use
@@ -116,6 +117,7 @@ ThemeData _darkTheme = ThemeData(
     tertiary: BaseColor.blue300, // normal
     tertiaryContainer: BaseColor.blue300, // safe
     inversePrimary: BaseColor.warmGray700,
+    secondaryContainer: BaseColor.warmGray800,
 
 
     onError: BaseColor.blue300, //no use

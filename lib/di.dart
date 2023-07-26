@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:magcloud_app/core/service/friend_diary_service.dart';
 import 'package:magcloud_app/core/service/notification_service.dart';
+import 'package:magcloud_app/core/service/tag_resolver.dart';
 import 'package:magcloud_app/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -50,7 +51,16 @@ Future<void> initializeDependencies() async {
   final userService = UserService(onlineService: onlineService, openAPI: client);
   inject.registerSingleton(userService);
 
+  final tagService = TagResolver(openAPI: client);
+  inject.registerSingleton(tagService);
+
+
 
   await notificationService.initializeNotification();
   await authService.initialize();
+  try {
+    await tagService.loadFriends();
+  }catch(e) {
+
+  }
 }

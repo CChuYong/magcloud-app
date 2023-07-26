@@ -176,6 +176,8 @@ final map = {
   "message_login_privacy_1": "로그인시 ",
   "message_login_privacy_2": "개인정보처리방침",
   "message_login_privacy_3": "에 동의합니다",
+  "message_delete_comment": "댓글 삭제",
+  "message_delete_comment_info": "댓글을 삭제할까요?"
 };
 
 final engMap = {
@@ -349,6 +351,8 @@ final engMap = {
   "message_login_privacy_1": "Agree to ",
   "message_login_privacy_2": "Privacy Policy",
   "message_login_privacy_3": " on Login",
+  "message_delete_comment": "Delete Comment",
+  "message_delete_comment_info": "Delete Comment?"
 };
 
 String message(String key) {

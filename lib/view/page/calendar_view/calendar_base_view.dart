@@ -300,13 +300,10 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             width: 54.sp,
             child: Column(
               children: [
-            Opacity(
-            opacity: isSelected ? 1.0 : 0.25,
-              child:
                 ProfileImageIconWithMood(
                     baseSize: 40,
                     mood: user.mood,
-                    url: user.profileImageUrl)),
+                    url: user.profileImageUrl),
                 Text(
                   user.name,
                   overflow: TextOverflow.ellipsis,
@@ -330,13 +327,10 @@ class CalendarBaseView extends BaseView<CalendarBaseView, CalendarBaseViewModel,
             width: 54.sp,
             child: Column(
               children: [
-                Opacity(
-                    opacity: isSelected ? 1.0 : 0.25,
-                    child:
                     ProfileImageIconWithMood(
                         baseSize: 40,
                         mood: mood,
-                        url: me?.profileImageUrl)),
+                        url: me?.profileImageUrl),
                 Text(message('generic_me'),
                     style: TextStyle(
                       color: context.theme.colorScheme.secondary,

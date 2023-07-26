@@ -109,6 +109,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
         (currentYear == action.state.currentDate.year &&
             DateParser.getCurrentMonth() < month);
     final scopeData = action.state.scopeData as CalendarYearViewScopeData;
+    final monthlyMood = scopeData.monthlyMood[month];
     return TouchableOpacity(
         onTap: () => action.onTapMonthBox(month),
         child: Container(
@@ -117,7 +118,7 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
           decoration: BoxDecoration(
             border: Border.all(color: BaseColor.warmGray300),
             borderRadius: BorderRadius.circular(15),
-            color: scopeData.monthlyMood[month]?.moodColor,
+            color: monthlyMood?.moodColor,
           ),
           child: Center(
             child: Text(
@@ -125,7 +126,8 @@ class CalendarYearView extends BaseChildView<CalendarBaseView,
               style: TextStyle(
                   color: isInvisible
                       ? context.theme.colorScheme.outline
-                      : context.theme.colorScheme.secondary,
+                      : (monthlyMood != null ? context.theme.colorScheme.secondaryContainer : context.theme.colorScheme.secondary),
+
                   fontSize: 18.sp,
                   fontFamily: 'GmarketSans'),
             ),

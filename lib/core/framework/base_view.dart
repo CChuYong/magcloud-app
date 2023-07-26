@@ -56,7 +56,7 @@ abstract class BaseView<V extends BaseView<V, A, S>,
                   child: Container(
                   width: double.infinity,
                   height: double.infinity,
-                  color: Colors.black.withOpacity(0.3),
+                  color: Get.isDarkMode ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.3),
                 ))
               : Container(),
           action.isLoading ? Positioned(child: SplashOverlay()) : Container(),

@@ -129,6 +129,7 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
   Widget createDayBox(BuildContext context, CalendarBaseViewModel action,
       {required int day, required double boxWidth}) {
     final scopeData = action.state.scopeData as CalendarMonthViewScopeData;
+    final dailyMood = scopeData.dailyMood[day];
     return TouchableOpacity(
         onTap: () => day > 0
             ? action.onTapDayBox(day)
@@ -139,13 +140,16 @@ class CalendarMonthView extends BaseChildView<CalendarBaseView,
           decoration: BoxDecoration(
               border: Border.all(color: BaseColor.warmGray300),
               borderRadius: BorderRadius.circular(15),
-              color: scopeData.dailyMood[day]?.moodColor),
+              color: dailyMood?.moodColor),
           child: Center(
             child: Text(
               day.abs().toString(),
               style: TextStyle(
                   color:
-                      day > 0 ? context.theme.colorScheme.secondary : context.theme.colorScheme.outline,
+                      day > 0 ? (
+                      dailyMood != null ?
+                      context.theme.colorScheme.secondaryContainer :context.theme.colorScheme.secondary
+                      ) : context.theme.colorScheme.outline,
                   fontSize: 18.sp,
                   fontFamily: 'GmarketSans'),
             ),

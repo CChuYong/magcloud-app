@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
+import 'package:magcloud_app/core/service/auth_service.dart';
 import 'package:magcloud_app/core/service/online_service.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/core/util/snack_bar_util.dart';
@@ -62,6 +63,11 @@ class GlobalRoute {
     await Get.to(target, transition: Transition.rightToLeft, popGesture: true);
   }
 
+  static Future<void> rightToLeftRouteOffDynamic(
+      Widget Function() target) async {
+    await Get.off(target, transition: Transition.rightToLeft, popGesture: true, preventDuplicates: false);
+  }
+
   static Future<void> back() async {
     Get.back();
   }
@@ -103,8 +109,9 @@ class GlobalRoute {
 
   static Future<void> friendProfileView(String userId) async {
     final user = await inject<OpenAPI>().getUserProfile(userId);
+    final isMe = inject<AuthService>().initialUser?.userId == userId;
     await rightToLeftRouteToDynamic(
-        () => ProfileView(user.toDomain(), false, true));
+        () => ProfileView(user.toDomain(), isMe, true));
   }
 
   static Future<void> noticePage() async {

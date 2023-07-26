@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/framework/base_view.dart';
 import 'package:magcloud_app/core/util/i18n.dart';
+import 'package:magcloud_app/global_routes.dart';
 import 'package:magcloud_app/view/component/fadeable_switcher.dart';
 import 'package:magcloud_app/view_model/login_view/login_view_model.dart';
 
@@ -85,99 +86,101 @@ class LoginView extends BaseView<LoginView, LoginViewModel, LoginViewState> {
                 ),
                 Column(
                   children: [
-                    TouchableOpacity(
-                        onTap: action.onKakaoLogin,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              color: const Color(0xffFEE500),
-                            ),
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 14.sp),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(children: [
-                                    Image.asset('assets/images/kakao.png',
-                                        height: 21.sp, width: 21.sp),
-                                    SizedBox(width: 12.sp),
-                                    Text(
-                                      message('generic_login_with_kakao'),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Pretendard',
-                                        fontSize: 18.sp,
+                    Text(
+                      message('generic_social_login'),
+                      style: TextStyle(
+                          color: context.theme.colorScheme.primary,
+                          fontSize: 14.sp,
+                          fontFamily: 'GmarketSans'),
+                    ),
+                    SizedBox(height: 10.sp),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TouchableOpacity(
+                                  onTap: action.onKakaoLogin,
+                                  child: Container(
+                                      width: 50.sp,
+                                      height: 50.sp,
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xffFEE500),
                                       ),
-                                    )
-                                  ])
-                                ],
-                              ),
-                            ))),
-                    SizedBox(height: 8.sp),
-                    Platform.isIOS ?
-                    TouchableOpacity(
-                        onTap: action.onAppleLogin,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              color: Colors.black,
-                            ),
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 14.sp),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                      child: Image.asset('assets/images/kakao.png', height: 25.sp, width: 25.sp, fit: BoxFit.contain))),
+                              SizedBox(width: 15.sp),
+                              Platform.isIOS ?
+                              Row(
                                 children: [
-                                  Row(children: [
-                                    Image.asset('assets/images/apple_23px.png',
-                                        height: 21.sp, width: 21.sp),
-                                    SizedBox(width: 12.sp),
-                                    Text(
-                                      message('generic_login_with_apple'),
-                                      style: TextStyle(
+                                  TouchableOpacity(
+                                      onTap: action.onAppleLogin,
+                                      child: Container(
+                                          width: 50.sp,
+                                          height: 50.sp,
+                                          alignment: Alignment.center,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black,
+                                          ),
+                                          child: Image.asset('assets/images/apple_23px.png',
+                                              height: 25.sp, width: 25.sp))),
+                                  SizedBox(width: 15.sp),
+                                ],
+                              )
+                                  : Container(),
+                              TouchableOpacity(
+                                  onTap: action.onGoogleLogin,
+                                  child: Container(
+                                      width: 50.sp,
+                                      height: 50.sp,
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
                                         color: Colors.white,
-                                        fontFamily: 'Pretendard',
-                                        fontSize: 18.sp,
                                       ),
-                                    )
-                                  ])
-                                ],
-                              ),
-                            ))): Container(),
-                    SizedBox(height: 8.sp),
-                    TouchableOpacity(
-                        onTap: action.onGoogleLogin,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              color: Colors.white,
-                            ),
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 14.sp),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(children: [
-                                    Image.asset('assets/images/google_23px.png',
-                                        height: 21.sp, width: 21.sp),
-                                    SizedBox(width: 12.sp),
-                                    Text(
-                                      message('generic_login_with_google'),
-                                      style: TextStyle(
-                                        fontFamily: 'Pretendard',
-                                        fontSize: 18.sp,
-                                        color: Colors.black,
-                                      ),
-                                    )
-                                  ])
-                                ],
-                              ),
-                            ))),
-                    SizedBox(height: 4.sp),
+                                      child: Image.asset('assets/images/google_23px.png',
+                                          height: 25.sp, width: 25.sp))),
+                            ],
+                          )]),
+                    SizedBox(height: 10.sp),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          message('message_login_privacy_1'),
+                          style: TextStyle(
+                              color: context.theme.colorScheme.primary,
+                              fontSize: 12.sp,
+                              fontFamily: 'GmarketSans'),
+                        ),
+                        TouchableOpacity(
+                          onTap: () => GlobalRoute.privacyPage(),
+                          child: Text(
+                            message('message_login_privacy_2'),
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: context.theme.colorScheme.secondary,
+                                color: context.theme.colorScheme.primary,
+                                fontSize: 12.sp,
+                                fontFamily: 'GmarketSans'),
+                          )
+                        ),
+                        Text(
+                          message('message_login_privacy_3'),
+                          style: TextStyle(
+                              color: context.theme.colorScheme.primary,
+                              fontSize: 12.sp,
+                              fontFamily: 'GmarketSans'),
+                        ),
+                      ],
+                    )
+
                   ],
                 )
+
               ]),
         ),
       )),

@@ -108,6 +108,7 @@ final map = {
   "generic_local_saved_at": "로컬에 저장된 시간",
   "generic_keep_local_version": "로컬 버전 유지하기",
   "generic_use_server_version": "서버 버전 사용하기",
+  "generic_social_login": "소셜 로그인",
   "generic_friend_requests": "친구 요청",
   "generic_friend_accept": "수락",
   "generic_friend_deny": "거절",
@@ -171,6 +172,9 @@ final map = {
 "message_dark_mode_settings_info": "다크 모드 설정을 변경할 수 있어요",
   "message_liked_diary": "일기에 좋아요를 눌렀어요!",
   "message_unliked_diary": "일기에 좋아요를 해제했어요!",
+  "message_login_privacy_1": "로그인시 ",
+  "message_login_privacy_2": "개인정보처리방침",
+  "message_login_privacy_3": "에 동의합니다",
 };
 
 final engMap = {
@@ -270,6 +274,7 @@ final engMap = {
   "generic_local_saved_at": "Local Updated At",
   "generic_keep_local_version": "Keep Local Version",
   "generic_use_server_version": "Use Server Version",
+  "generic_social_login": "Social Login",
   "generic_friend_requests": "Friend Requests",
   "generic_friend_accept": "Accept",
   "generic_friend_deny": "Deny",
@@ -339,6 +344,9 @@ final engMap = {
   "message_dark_mode_settings_info": "You can change dark mode settings",
   "message_liked_diary": "Liked Diary!",
   "message_unliked_diary": "UnLiked Diary!",
+  "message_login_privacy_1": "Agree to ",
+  "message_login_privacy_2": "Privacy Policy",
+  "message_login_privacy_3": " on Login",
 };
 
 String message(String key) {

@@ -87,12 +87,13 @@ class GlobalRoute {
   }
 
   static Future<void> ossView() async {
-    rightToLeftRouteToDynamic(() => OpenSourceLicenseView());
+    rightToLeftRouteToDynamic(() => const OpenSourceLicenseView());
   }
 
   static Future<void> privacyPage() async {
     if (!assertOnline()) return;
-    await Get.to(WebViewScreenView('$webViewUrl/magcloud/privacy?darkMode=${Get.isDarkMode}'),
+    print("darkMode = ${Get.isDarkMode}");
+    await Get.to(() => WebViewScreenView('$webViewUrl/magcloud/privacy?darkMode=${Get.isDarkMode}'),
         transition: Transition.rightToLeft, popGesture: true);
   }
 
@@ -104,7 +105,7 @@ class GlobalRoute {
 
   static Future<void> noticePage() async {
     if (!assertOnline()) return;
-    await Get.to(WebViewScreenView('$webViewUrl/magcloud/notice?darkMode=${Get.isDarkMode}'),
+    await Get.to(() => WebViewScreenView('$webViewUrl/magcloud/notice?darkMode=${Get.isDarkMode}'),
         transition: Transition.rightToLeft, popGesture: true);
   }
 

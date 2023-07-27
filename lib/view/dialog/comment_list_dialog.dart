@@ -258,6 +258,9 @@ Future<Object?> openCommentListDialog(
                                                 onTap: () async {
                                                   final text =
                                                       textController.text;
+                                                  if(text.isEmpty) {
+                                                    return;
+                                                  }
                                                   textController.text = '';
                                                   final openAPI =
                                                       inject<OpenAPI>();

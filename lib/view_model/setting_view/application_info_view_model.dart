@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:magcloud_app/core/framework/base_action.dart';
 import 'package:magcloud_app/core/framework/state_store.dart';
 import 'package:magcloud_app/core/repository/diary_repository.dart';
@@ -62,5 +63,10 @@ class ApplicationInfoViewModel extends BaseViewModel<ApplicationInfoView,
 
   void watchOpenSourceLicense() async {
     await GlobalRoute.ossView();
+  }
+
+  void goAppPage() async {
+    await LaunchReview.launch(writeReview: false, androidAppId: "co.bearus.magcloud",
+        iOSAppId: "6451067834");
   }
 }

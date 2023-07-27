@@ -179,6 +179,7 @@ final map = {
   "message_delete_comment": "댓글 삭제",
   "message_delete_comment_info": "댓글을 삭제할까요?",
   "message_cannot_find_taggable_user": "태그할 친구를 찾을 수 없어요",
+  "message_move_to_store": "스토어로 이동"
 };
 
 final engMap = {
@@ -355,6 +356,7 @@ final engMap = {
   "message_delete_comment": "Delete Comment",
   "message_delete_comment_info": "Delete Comment?",
 "message_cannot_find_taggable_user": "Cannot find taggable friends!",
+  "message_move_to_store": "Move To Store"
 };
 
 String message(String key) {

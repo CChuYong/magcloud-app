@@ -98,7 +98,8 @@ class ApiInterceptor extends Interceptor {
             ),
           );
           //await NativeDialog.alert(message('message_update_needed'));
-          await LaunchReview.launch(writeReview: false);
+          await LaunchReview.launch(writeReview: false, androidAppId: "co.bearus.magcloud",
+              iOSAppId: "6451067834");
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         }
       } catch (e) {}

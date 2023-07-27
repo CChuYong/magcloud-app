@@ -70,6 +70,11 @@ class ApplicationInfoView extends BaseView<ApplicationInfoView,
                   message('generic_open_source_license'),
                   button(
                       message('generic_watch'), action.watchOpenSourceLicense)),
+              SizedBox(height: gapBetweenElements),
+              row(context,
+                  message('message_move_to_store'),
+                  button(
+                      message('generic_watch'), action.goAppPage)),
             ],
           )),
     );

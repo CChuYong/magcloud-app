@@ -221,13 +221,13 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
                             child: Center(
                                 child: Icon(icon,
                                     size: iconSize,
-                                    color: context.theme.colorScheme.secondary)),
+                                    color: context.theme.colorScheme.primary)),
                           ),
                           SizedBox(width: 12.sp),
                           Text(
                             name,
                             style: TextStyle(
-                                color: context.theme.colorScheme.secondary,
+                                color: context.theme.colorScheme.primary,
                                 fontSize: 15.sp,
                                 height: 1.2,
                                 fontFamily: 'Pretendard'),

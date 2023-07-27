@@ -196,7 +196,7 @@ class _FeedElementViewState extends State<FeedElementView> {
               text: texts.isEmpty ? TextSpan(
                text: widget.element.content,
                   style: TextStyle(
-                      color: context.theme.colorScheme.secondary,
+                      color: context.theme.colorScheme.primary,
                       fontSize: diaryFontSize,
                       fontFamily: diaryFont)
               ) : TextSpan(

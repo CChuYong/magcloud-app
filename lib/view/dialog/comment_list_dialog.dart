@@ -90,16 +90,16 @@ Future<Object?> openCommentListDialog(
       context: Get.context!,
       barrierLabel: '',
       barrierDismissible: true,
-      transitionDuration: Duration(milliseconds: 350),
+      transitionDuration: const Duration(milliseconds: 350),
       transitionBuilder: (context, anim1, anim2, child) {
         return SlideTransition(
           position:
-              Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+              Tween(begin: const Offset(0, 1), end: const Offset(0, 0)).animate(anim1),
           child: child,
         );
       },
       pageBuilder: (_, _1, _2) => Dismissible(
-            key: Key("comment_list"),
+            key: const Key("comment_list"),
             direction: DismissDirection.vertical,
             onDismissed: (_) {
               Navigator.of(context).pop();

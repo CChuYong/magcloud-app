@@ -8,8 +8,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:magcloud_app/core/api/open_api.dart';
 import 'package:magcloud_app/core/service/auth_service.dart';
+import 'package:magcloud_app/core/util/i18n.dart';
 import 'package:magcloud_app/di.dart';
 import 'package:magcloud_app/global_routes.dart';
+import 'package:magcloud_app/view/dialog/confirm_dialog.dart';
 import 'package:magcloud_app/view/dialog/new_user_dialog.dart';
 import 'package:magcloud_app/view/page/feed_view.dart';
 
@@ -148,7 +150,14 @@ class NavigatorViewState extends State<NavigatorView> {
       statusBarIconBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
       statusBarBrightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
       ),
-      child: Scaffold(
+      child: WillPopScope(
+        onWillPop: () async {
+          return await confirmDialog(
+              message('generic_exit_title'),
+              message('generic_exit_subtitle'),
+              confirmText: message('generic_exit_confirm'));
+        },
+          child: Scaffold(
       backgroundColor: context.theme.colorScheme.background,
       bottomNavigationBar:
           BaseNavigationBar(onTap: onTap, currentPage: currentPage),
@@ -172,6 +181,6 @@ class NavigatorViewState extends State<NavigatorView> {
     )
         ,
       ),
-    )));
+    ))));
   }
 }

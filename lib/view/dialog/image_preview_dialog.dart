@@ -29,7 +29,7 @@ Future<void> imagePreviewDialog(String imageUrl) {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(imageUrl),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ));

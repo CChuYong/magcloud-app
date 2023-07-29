@@ -46,7 +46,7 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                 child: Center(
                     child: Stack(
                   children: [
-                    Container(
+                    Center(child: Container(
                       width: width * 0.9,
                       height: width * 0.5,
                       decoration: BoxDecoration(
@@ -57,11 +57,11 @@ class CalendarDailyDiaryView extends BaseChildView<CalendarBaseView,
                           fit: BoxFit.cover,
                         ),
                       ),
-                    ),
+                    )),
                     scopeData.isMyScope
                         ? Positioned(
                         top: 10.sp,
-                        right: 10.sp,
+                        right: 30.sp,
                         child:TouchableOpacity(
                             onTap: action.onTapRemoveImage,
                             child:  Opacity(

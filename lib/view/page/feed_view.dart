@@ -86,7 +86,17 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
           child: RefreshIndicator(
             triggerMode: RefreshIndicatorTriggerMode.onEdge,
             onRefresh: action.refreshFullPage,
-            child: CustomScrollView(
+            child: ShaderMask(
+              shaderCallback: (Rect rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black, Colors.transparent, Colors.transparent, Colors.black],
+                  stops: [0.0, 0.0, 0.95, 1.0], // 10% purple, 80% transparent, 10% purple
+                ).createShader(rect);
+              },
+              blendMode: BlendMode.dstOut,
+              child: CustomScrollView(
                 controller: action.scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 reverse: false,
@@ -102,9 +112,8 @@ class FeedView extends BaseView<FeedView, FeedViewModel, FeedViewState> {
                           .toList())),
                   SliverToBoxAdapter(child: SizedBox(height: 8.sp)),
                 ]),
-          ),
+          )),
         ),
-        SizedBox(height: 8.sp),
       ],
     );
   }

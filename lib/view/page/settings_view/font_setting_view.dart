@@ -135,8 +135,8 @@ class FontSettingView extends BaseView<FontSettingView, FontSettingViewModel,
                 Icon(Icons.check,
                     size: 20.sp,
                     color: isSelected
-                        ? BaseColor.warmGray700
-                        : BaseColor.warmGray300),
+                        ? context.theme.colorScheme.primary
+                        : context.theme.colorScheme.outlineVariant),
               ],
             ),
           ),

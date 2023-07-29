@@ -34,6 +34,9 @@ final map = {
   "menu_logout": "로그아웃",
   "generic_add_image": "이미지 추가",
   "generic_me": "나",
+  "generic_exit_title": "종료할까요?",
+  "generic_exit_subtitle": "정말로 종료하시겠습니까?",
+  "generic_exit_confirm": "종료하기",
   "generic_dark_mode_list": "모드 목록",
   "generic_app_version": "어플리케이션 버전",
   "generic_app_name": "어플리케이션 이름",
@@ -356,7 +359,10 @@ final engMap = {
   "message_delete_comment": "Delete Comment",
   "message_delete_comment_info": "Delete Comment?",
 "message_cannot_find_taggable_user": "Cannot find taggable friends!",
-  "message_move_to_store": "Move To Store"
+  "message_move_to_store": "Move To Store",
+"generic_exit_title":"Exit?",
+"generic_exit_subtitle": "Sure to exit?",
+"generic_exit_confirm": "Exit",
 };
 
 String message(String key) {

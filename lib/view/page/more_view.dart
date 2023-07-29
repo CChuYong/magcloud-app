@@ -39,7 +39,17 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
           titleBar(context),
           SizedBox(height: 20.sp),
           Expanded(child:
-          Scrollbar(
+          ShaderMask(
+              shaderCallback: (Rect rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black, Colors.transparent, Colors.transparent, Colors.black],
+                  stops: [0.0, 0.0, 0.95, 1.0], // 10% purple, 80% transparent, 10% purple
+                ).createShader(rect);
+              },
+              blendMode: BlendMode.dstOut,
+              child:Scrollbar(
             controller: controller,
           child: ListView(
               controller: controller,
@@ -48,7 +58,7 @@ class MoreView extends BaseView<MoreView, MoreViewModel, MoreViewState> {
             SizedBox(height: 15.sp),
             menuBox(context, action)
             ])
-          )),
+          ))),
 
 
 

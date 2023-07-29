@@ -41,7 +41,6 @@ class FriendView
           SizedBox(height: 5.sp),
           Divider(color: context.theme.colorScheme.outline),
           Expanded(child: friendContainer(context, action, state)),
-          SizedBox(height: 15.sp),
         ],
       ),
     );
@@ -144,7 +143,17 @@ class FriendView
         child: Column(
           children: [
             Expanded(
-              child: RefreshIndicator(
+              child: ShaderMask(
+        shaderCallback: (Rect rect) {
+    return LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.black, Colors.transparent, Colors.transparent, Colors.black],
+    stops: [0.0, 0.0, 0.95, 1.0], // 10% purple, 80% transparent, 10% purple
+    ).createShader(rect);
+    },
+      blendMode: BlendMode.dstOut,
+      child: RefreshIndicator(
                 triggerMode: RefreshIndicatorTriggerMode.onEdge,
                 onRefresh: action.reloadFriends,
                 child: CustomScrollView(
@@ -164,10 +173,11 @@ class FriendView
                       color: context.theme.colorScheme.secondary,
                       fontSize: 12.sp,
                     ),
-                  )))
+                  ))),
+                      SliverToBoxAdapter(child: SizedBox(height: 15.sp)),
                 ]),
               ),
-            ),
+            )),
           ],
         ));
   }

@@ -87,7 +87,7 @@ class FeedViewModel
   }
 
   Future<void> refreshFullPage() async {
-    return setStateAsync(() async {
+    return await setStateAsync(() async {
       state.feeds.clear();
       await loadForward();
     });
